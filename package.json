@@ -1,0 +1,39 @@
+{
+  "name": "xinxin-ui",
+  "version": "1.0.0",
+  "files": [
+    "dist"
+  ],
+  "main": "./dist/xin-xin.umd.js",
+  "module": "./dist/xin-xin.es.js",
+  "exports": {
+    ".": {
+      "import": "./dist/xin-xin.es.js",
+      "require": "./dist/xin-xin.umd.js"
+    }
+  },
+  "typings": "dist/typings/main.d.ts",
+  "author": "jinxin",
+  "keywords": [
+    "vue3",
+    "xinxin",
+    "ui",
+    "vue"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build:types": "tsc --project ./tsconfig.json",
+    "build": "vite build --config packages/build/vite.config.js && npm run build:types"
+  },
+  "dependencies": {
+    "vue": "^3.0.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^2.0.1",
+    "@vitejs/plugin-vue-jsx": "^1.3.3",
+    "@vue/compiler-sfc": "^3.0.4",
+    "stylus": "^0.56.0",
+    "typescript": "^4.5.4",
+    "vite": "^2.7.10"
+  }
+}
