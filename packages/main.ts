@@ -1,6 +1,6 @@
 import "./theme-chalk/index.styl";
 import type { App } from "vue";
-import XTop from "./XTop";
+import XTop from "./components/XTop";
 
 // package下组件列表
 const components = [

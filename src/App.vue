@@ -1,10 +1,13 @@
 <template>
   <div style="height: 2000px">
-    <x-top />
+    <XTop />
   </div>
 </template>
 <script lang="ts">
+import XTop from "../packages/components/XTop/__tests__/XTop.test.vue";
+
 export default {
-  name: 'App',
+    name: "App",
+    components: { XTop }
 }
 </script>
