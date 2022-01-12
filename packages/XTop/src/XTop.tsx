@@ -1,5 +1,4 @@
 import { computed, defineComponent, nextTick, ref } from "vue";
-import "../../theme-chalk/XTop.styl";
 
 const XTop = defineComponent({
     props: {

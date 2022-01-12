@@ -1,2 +1,2 @@
 # xinxin-ui
-基于vue3+ts组件库
+基于VUE3+TS的UI组件库
