@@ -1,6 +1,7 @@
 <template>
-    <x-top />
-    <arrow />
+    <x-top>
+        <arrow />
+    </x-top>
 </template>
 
 <script lang="ts">
