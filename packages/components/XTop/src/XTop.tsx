@@ -1,4 +1,4 @@
-import { computed, defineComponent, nextTick, ref } from "vue";
+import { computed, defineComponent, nextTick, ref, watchEffect } from "vue";
 
 const XTop = defineComponent({
     name: "x-top",
@@ -24,7 +24,13 @@ const XTop = defineComponent({
     setup(props) {
         let visible = ref(false);
         let scrollDom: HTMLElement | Document;
-
+        let clickable = true;
+        // 监听visible 设置当组件不可见时点击事件生效
+        watchEffect(() => {
+            if (!visible.value) {
+                clickable = true;
+            }
+        });
         nextTick(() => {
             if (typeof props.listenElement === "string") {
                 scrollDom = document.querySelector(props.listenElement) as HTMLElement;
@@ -44,6 +50,10 @@ const XTop = defineComponent({
             }
         });
         function backToTop() {
+            if (!clickable) {
+                return;
+            }
+            clickable = false;
             let domElement: HTMLElement;
             if (scrollDom instanceof Document) {
                 domElement = scrollDom.documentElement;
