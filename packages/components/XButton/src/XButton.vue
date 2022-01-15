@@ -1,9 +1,11 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
 import type { ButtonType, ButtonSize, ResultType } from "./XButton.types";
+import { buttonTheme, buttonSize, modifyColor } from "./theme";
 
 export default defineComponent({
     name: "x-button",
+    inheritAttrs: false,
     props: {
         type: {
             type: String as PropType<ButtonType>,
@@ -14,7 +16,7 @@ export default defineComponent({
             default: "normal"
         },
     },
-    setup(props) {
+    setup(props, { attrs }) {
         const clickAnimateRef = ref<HTMLDivElement>();
 
         // 劫持用户点击事件
@@ -25,9 +27,12 @@ export default defineComponent({
             setTimeout(() => {
                 clickAnimateRef.value?.classList.remove("x-button__click-active");
             }, 600);
+            if (attrs.secondary !== undefined) {
+                console.log("================");
+            }
         }
         // 设置按钮属性
-        const buttonStyle = Object.assign(buttonTheme[props.type], buttonSize[props.size]);
+        const buttonStyle = Object.assign(buttonTheme[props.type]??{}, buttonSize[props.size]??{});
         return {
             ...buttonStyle,
             clickBtn,
@@ -35,31 +40,6 @@ export default defineComponent({
         } as ResultType;
     },
 });
-
-// 按钮主题
-const buttonTheme = {
-    default: {
-        bgColor: "#0000",
-        border: "1px solid #dcdfe6",
-        textColor: "#606266",
-        borderRadius: "3px",
-        hoverTextColor: "#f8aa00",
-        hoverBorder: "1px solid #f8aa00",
-        visitedTextColor: "#f8aa00",
-        visitedBorder: "1px solid #f8aa00",
-        activeTextColor: "#db9b11",
-        activeBorder: "1px solid #db9b11",
-        waveColor: "#ffa000",
-    },
-};
-
-const buttonSize = {
-    normal: {
-        buttonPadding: "14px",
-        buttonHeight: "34px",
-        buttonFont: "14px"
-    },
-};
 </script>
 <template>
     <button class="x-button" @click="clickBtn">
@@ -80,16 +60,18 @@ const buttonSize = {
     padding 0 v-bind(buttonPadding)
     height v-bind(buttonHeight)
     font-size v-bind(buttonFont)
+    transition color .2s, background-color .5s
     &:hover
-        transition color .2s
         border v-bind(hoverBorder)
         color v-bind(hoverTextColor)
+        background-color v-bind(hoverBgColor)
     &:focus
         border v-bind(visitedBorder)
         color v-bind(visitedTextColor)
     &:active
         border v-bind(activeBorder)
         color v-bind(activeTextColor)
+        background-color v-bind(activeBgColor)
     .x-button__click
         position absolute
         top 0
@@ -110,7 +92,7 @@ const buttonSize = {
         opacity: .85;
     }
     100% {
-        box-shadow: 0 0 0.5px 6px v-bind(waveColor);
+        box-shadow: 0 0 0.5px 5.5px v-bind(waveColor);
         opacity: 0;
     }
 }
