@@ -2,7 +2,6 @@
 import { defineComponent, PropType, ref } from "vue";
 import type { ButtonType, ButtonSize, ResultType } from "./XButton.types";
 import { buttonOutter, buttonSize, getButtonTypeStyle } from "./theme";
-import { arrow } from "xinxin-icons";
 
 export default defineComponent({
     name: "x-button",
@@ -32,7 +31,7 @@ export default defineComponent({
         // 设置按钮属性
         let buttonStyle = Object.assign(
             getButtonTypeStyle(props.type, attrs.secondary as string, attrs.tertiary as string, attrs.quaternary as string,
-                attrs.dashed as string, attrs.plain as string)??{},
+                attrs.dashed as string, attrs.plain as string, attrs.ghost as string)??{},
             buttonSize[props.size]??{});
         // 设置按钮轮廓
         buttonStyle = Object.assign(buttonStyle, buttonOutter.default);
@@ -52,23 +51,27 @@ export default defineComponent({
 </script>
 <template>
     <button class="x-button" @click="clickBtn">
-        <slot>XINXIN-UI</slot>
+        <div class="x-button__text">
+            <slot>XINXIN-UI</slot>
+        </div>
         <div class="x-button__click" ref="clickAnimateRef"></div>
     </button>
 </template>
 <style lang="stylus" scoped>
 .x-button
     cursor pointer
-    line-height 1
     outline none
     position relative
     box-sizing border-box
+    text-align center
+    line-height 1
     background-color v-bind(bgColor)
     border v-bind(border)
     color v-bind(textColor)
     border-radius v-bind(borderRadius)
     padding 0 v-bind(buttonPadding)
     height v-bind(buttonHeight)
+    width v-bind(buttonWidth)
     font-size v-bind(buttonFont)
     transition color .2s, background-color .5s
     &:focus
@@ -82,6 +85,17 @@ export default defineComponent({
         border v-bind(activeBorder)
         color v-bind(activeTextColor)
         background-color v-bind(activeBgColor)
+    .x-button__text
+        width 100%
+        height 100%
+        display flex
+        justify-content center
+        align-items center
+        overflow hidden
+        :deep(.asa-icon)
+            height v-bind(buttonFont)
+            width v-bind(buttonFont)
+            margin-right v-bind(iconMargin)
     .x-button__click
         position absolute
         top 0

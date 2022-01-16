@@ -2,19 +2,25 @@ export const buttonSize = {
     normal: {
         buttonPadding: "14px",
         buttonHeight: "34px",
-        buttonFont: "14px"
+        buttonFont: "14px",
+        buttonWidth: 'auto',
     },
 };
 
 export const buttonOutter = {
     default: {
         borderRadius: "3px",
+        iconMargin: "3px"
     },
     round: {
         borderRadius: "22px",
+        iconMargin: "3px"
     },
     circle: {
         borderRadius: "255px",
+        buttonWidth: "34px",
+        buttonPadding: "0",
+        iconMargin: "0"
     },
 }
 
@@ -27,7 +33,7 @@ const baseColorMap: { [propsName: string]: string } = {
 
 export function getButtonTypeStyle(type: string, secondary: string | undefined, tertiary: string | undefined,
                                 quaternary: string | undefined, dashed: string | undefined,
-                                plain: string | undefined): { [propsName: string]: string } | null {
+                                plain: string | undefined, ghost: string | undefined): { [propsName: string]: string } | null {
     // 获取基础颜色
     let baseColor: string = baseColorMap[type];
     if (baseColor === undefined || !/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/g.test(baseColor)) {
@@ -104,20 +110,20 @@ export function getButtonTypeStyle(type: string, secondary: string | undefined, 
         style.visitedBorder = 'none';
         style.waveColor = "#0000";
     }
-    // 设置了虚线
-    if (dashed !== undefined) {
+    // 设置了虚线或者背景透明
+    if (dashed !== undefined || ghost !== undefined) {
         const dashedColor = baseColor;
         style.textColor = dashedColor;
         style.bgColor = "#0000";
-        style.border = `1px dashed ${dashedColor}`;
+        style.border = `1px ${dashed !== undefined ? "dashed" : "solid"} ${dashedColor}`;
         style.hoverTextColor = modifyColor(dashedColor, -5);
         style.hoverBgColor = "#0000";
-        style.hoverBorder = `1px dashed ${modifyColor(dashedColor, -5)}`;
+        style.hoverBorder = `1px ${dashed !== undefined ? "dashed" : "solid"} ${modifyColor(dashedColor, -5)}`;
         style.activeTextColor = modifyColor(dashedColor, -10);
         style.activeBgColor = "#0000";
-        style.activeBorder = `1px dashed ${modifyColor(dashedColor, -10)}`;
+        style.activeBorder = `1px ${dashed !== undefined ? "dashed" : "solid"} ${modifyColor(dashedColor, -10)}`;
         style.visitedTextColor = dashedColor;
-        style.visitedBorder = `1px dashed ${dashedColor}`;
+        style.visitedBorder = `1px ${dashed !== undefined ? "dashed" : "solid"} ${dashedColor}`;
         style.waveColor = dashedColor;
     }
     // 设置背景透明
