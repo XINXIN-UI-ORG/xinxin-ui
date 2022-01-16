@@ -1,7 +1,8 @@
 <script lang="ts">
 import { defineComponent, PropType, ref } from "vue";
 import type { ButtonType, ButtonSize, ResultType } from "./XButton.types";
-import { buttonTheme, buttonSize, modifyColor } from "./theme";
+import { buttonOutter, buttonSize, getButtonTypeStyle } from "./theme";
+import { arrow } from "xinxin-icons";
 
 export default defineComponent({
     name: "x-button",
@@ -9,7 +10,7 @@ export default defineComponent({
     props: {
         type: {
             type: String as PropType<ButtonType>,
-            default: "default"
+            default: "info"
         },
         size: {
             type: String as PropType<ButtonSize>,
@@ -27,12 +28,20 @@ export default defineComponent({
             setTimeout(() => {
                 clickAnimateRef.value?.classList.remove("x-button__click-active");
             }, 600);
-            if (attrs.secondary !== undefined) {
-                console.log("================");
-            }
         }
         // 设置按钮属性
-        const buttonStyle = Object.assign(buttonTheme[props.type]??{}, buttonSize[props.size]??{});
+        let buttonStyle = Object.assign(
+            getButtonTypeStyle(props.type, attrs.secondary as string, attrs.tertiary as string, attrs.quaternary as string,
+                attrs.dashed as string, attrs.plain as string)??{},
+            buttonSize[props.size]??{});
+        // 设置按钮轮廓
+        buttonStyle = Object.assign(buttonStyle, buttonOutter.default);
+        if (attrs.round !== undefined) {
+            buttonStyle = Object.assign(buttonStyle, buttonOutter.round);
+        }
+        if (attrs.circle !== undefined) {
+            buttonStyle = Object.assign(buttonStyle, buttonOutter.circle);
+        }
         return {
             ...buttonStyle,
             clickBtn,
@@ -53,6 +62,7 @@ export default defineComponent({
     line-height 1
     outline none
     position relative
+    box-sizing border-box
     background-color v-bind(bgColor)
     border v-bind(border)
     color v-bind(textColor)
@@ -61,13 +71,13 @@ export default defineComponent({
     height v-bind(buttonHeight)
     font-size v-bind(buttonFont)
     transition color .2s, background-color .5s
+    &:focus
+        border v-bind(visitedBorder)
+        color v-bind(visitedTextColor)
     &:hover
         border v-bind(hoverBorder)
         color v-bind(hoverTextColor)
         background-color v-bind(hoverBgColor)
-    &:focus
-        border v-bind(visitedBorder)
-        color v-bind(visitedTextColor)
     &:active
         border v-bind(activeBorder)
         color v-bind(activeTextColor)
