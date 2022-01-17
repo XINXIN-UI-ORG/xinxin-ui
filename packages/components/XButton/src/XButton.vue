@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import type { ButtonType, ButtonSize, ResultType } from "./XButton.types";
 import { buttonOutter, buttonSize, getButtonTypeStyle } from "./theme";
 
@@ -46,12 +46,25 @@ export default defineComponent({
             ...buttonStyle,
             clickBtn,
             clickAnimateRef,
+            disabled: computed(() => attrs.disabled !== undefined),
+            disabledStyle: computed(() => {
+                if (attrs.disabled === undefined && attrs.loading === undefined) {
+                    return {};
+                }
+                const disabledStyle = {
+                    'cursor': 'not-allowed',
+                    "opacity": ".5"
+                };
+                // hover、active和focus时不切换样式
+                
+                return disabledStyle;
+            }),
         } as ResultType;
     },
 });
 </script>
 <template>
-    <button class="x-button" @click="clickBtn">
+    <button class="x-button" @click="clickBtn" :disabled="disabled" :style="disabledStyle">
         <div class="x-button__text">
             <slot>XINXIN-UI</slot>
         </div>
@@ -78,6 +91,7 @@ export default defineComponent({
     &:focus
         border v-bind(visitedBorder)
         color v-bind(visitedTextColor)
+        background-color v-bind(visitedBgColor)
     &:hover
         border v-bind(hoverBorder)
         color v-bind(hoverTextColor)

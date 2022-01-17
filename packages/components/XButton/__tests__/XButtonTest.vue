@@ -117,6 +117,11 @@ export default defineComponent({
             <x-button type="success" size="normal">Success</x-button>
             <x-button type="warning" size="large">Warning</x-button>
             <x-button type="warning" size="large" circle>Warning</x-button>
+
+            <x-button type="info" disabled>Info</x-button>
+            <x-button type="success" disabled>Success</x-button>
+            <x-button type="warning" disabled>Warning</x-button>
+            <x-button type="error" disabled>Error</x-button>
         </p>
     </div>
 </template>

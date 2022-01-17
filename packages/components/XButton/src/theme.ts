@@ -71,6 +71,7 @@ export function getButtonTypeStyle(type: string, secondary: string | undefined, 
 
         visitedTextColor: "#fff",
         visitedBorder: "1px solid " + baseColor,
+        visitedBgColor: baseColor,
 
         activeTextColor: "#fff",
         activeBorder: "1px solid " + modifyColor(baseColor, -10),
@@ -92,6 +93,7 @@ export function getButtonTypeStyle(type: string, secondary: string | undefined, 
         style.activeBgColor = baseColor.slice(0, 7) + "4D";
         style.activeBorder = 'none';
         style.visitedBorder = 'none';
+        style.visitedBgColor = style.bgColor;
         style.waveColor = "#0000";
     }
     // 设置次次级按钮
@@ -109,6 +111,7 @@ export function getButtonTypeStyle(type: string, secondary: string | undefined, 
         style.activeBgColor = tertiaryColor.slice(0, 7) + "26";
         style.activeBorder = 'none';
         style.visitedBorder = 'none';
+        style.visitedBgColor = style.bgColor;
         style.waveColor = "#0000";
     }
     // 设置了最低级按钮
@@ -126,6 +129,7 @@ export function getButtonTypeStyle(type: string, secondary: string | undefined, 
         style.activeBgColor = quaternaryColor.slice(0, 7) + "26";
         style.activeBorder = 'none';
         style.visitedBorder = 'none';
+        style.visitedBgColor = style.bgColor;
         style.waveColor = "#0000";
     }
     // 设置了虚线或者背景透明
@@ -142,13 +146,15 @@ export function getButtonTypeStyle(type: string, secondary: string | undefined, 
         style.activeBorder = `1px ${dashed !== undefined ? "dashed" : "solid"} ${modifyColor(dashedColor, -10)}`;
         style.visitedTextColor = dashedColor;
         style.visitedBorder = `1px ${dashed !== undefined ? "dashed" : "solid"} ${dashedColor}`;
+        style.visitedBgColor = style.bgColor;
         style.waveColor = dashedColor;
     }
     // 设置背景透明
     if (plain !== undefined) {
         style.bgColor = baseColor.slice(0, 7) + "33";
         style.textColor = baseColor;
-        style.visitedTextColor = baseColor;
+        style.visitedTextColor = "#fff";
+        style.visitedBgColor = baseColor;
     }
     return style;
 }
