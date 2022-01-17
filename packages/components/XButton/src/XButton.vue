@@ -40,6 +40,7 @@ export default defineComponent({
         }
         if (attrs.circle !== undefined) {
             buttonStyle = Object.assign(buttonStyle, buttonOutter.circle);
+            buttonStyle.buttonWidth = buttonStyle.buttonHeight;
         }
         return {
             ...buttonStyle,
@@ -112,11 +113,11 @@ export default defineComponent({
 
 @keyframes button-click-wave {
     0% {
-        box-shadow: 0 0 0.5px 0 v-bind(waveColor);
+        box-shadow: 0 0 1px 0 v-bind(waveColor);
         opacity: .85;
     }
     100% {
-        box-shadow: 0 0 0.5px 5.5px v-bind(waveColor);
+        box-shadow: 0 0 1px 5.5px v-bind(waveColor);
         opacity: 0;
     }
 }

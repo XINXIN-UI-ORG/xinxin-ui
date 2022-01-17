@@ -1,8 +1,26 @@
 export const buttonSize = {
+    mini: {
+        buttonPadding: "5px",
+        buttonHeight: "20px",
+        buttonFont: "12px",
+        buttonWidth: 'auto',
+    },
+    small: {
+        buttonPadding: "10px",
+        buttonHeight: "30px",
+        buttonFont: "14px",
+        buttonWidth: 'auto',
+    },
     normal: {
         buttonPadding: "14px",
         buttonHeight: "34px",
         buttonFont: "14px",
+        buttonWidth: 'auto',
+    },
+    large: {
+        buttonPadding: "20px",
+        buttonHeight: "45px",
+        buttonFont: "16px",
         buttonWidth: 'auto',
     },
 };
