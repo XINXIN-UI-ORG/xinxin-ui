@@ -1,9 +1,16 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { authSuccess, search, auth, top, refresh, warningMessage } from "xinxin-icons";
 
 export default defineComponent({
     setup() {
+        let disabled = ref(true);
+        return {
+            disabled,
+            disableChange() {
+                disabled.value = !disabled.value;
+            },
+        };
     },
     components: {
         authSuccess,
@@ -75,23 +82,33 @@ export default defineComponent({
             <x-button ghost type="error">Error</x-button>
 
             <x-button>
-                <authSuccess />
+                <template #pre-icon>
+                    <authSuccess />
+                </template>
                 Default
             </x-button>
             <x-button type="info">
-                <search />
+                <template #pre-icon>
+                    <search />
+                </template>
                 Info
             </x-button>
             <x-button type="success">
-                <auth />
+                <template #suf-icon>
+                    <auth />
+                </template>
                 Success
             </x-button>
             <x-button type="warning">
-                <top />
+                <template #pre-icon>
+                    <top />
+                </template>
                 Warning
             </x-button>
             <x-button type="error">
-                <refresh />
+                <template #pre-icon>
+                    <refresh />
+                </template>
                 Error
             </x-button>
         </p>
@@ -119,9 +136,36 @@ export default defineComponent({
             <x-button type="warning" size="large" circle>Warning</x-button>
 
             <x-button type="info" disabled>Info</x-button>
-            <x-button type="success" disabled>Success</x-button>
-            <x-button type="warning" disabled>Warning</x-button>
-            <x-button type="error" disabled>Error</x-button>
+            <x-button type="success" :disabled="disabled">Success</x-button>
+            <x-button type="warning" :disabled="disabled">Warning</x-button>
+            <x-button type="error" :disabled="disabled">Error</x-button>
+            <x-button @click="disableChange">切换禁用</x-button>
+
+            <x-button type="info" loading>
+                <template #pre-icon>
+                    <refresh />
+                </template>
+                Info
+            </x-button>
+            <x-button type="success" :loading="disabled">
+                <template #pre-icon>
+                    <refresh />
+                </template>
+                Success
+            </x-button>
+            <x-button type="warning" :loading="disabled">
+                <template #pre-icon>
+                    <refresh />
+                </template>
+                Warning
+            </x-button>
+            <x-button type="error" :loading="disabled">
+                <template #pre-icon>
+                    <refresh />
+                </template>
+                Error
+            </x-button>
         </p>
     </div>
 </template>
+

@@ -1,3 +1,5 @@
+import { toRefs, UnwrapNestedRefs } from "vue";
+
 export const buttonSize = {
     mini: {
         buttonPadding: "5px",
@@ -311,4 +313,48 @@ function hsl2rgb(h: number, s: number, l: number): number[] {
 		}
 	}
 	return rgb;
+}
+
+export class PersistenceStyle {
+    private style: object;
+
+    constructor() {
+        this.style = {};
+    }
+
+    /**
+     * 持久化对象
+     * @param storeObj 待持久化的对象
+     */
+    public store(storeObj: UnwrapNestedRefs<object>): void {
+        if (Object.keys(storeObj).length > 0) {
+            Object.keys(storeObj).forEach(key => this.style[key] = storeObj[key]);
+        }
+    }
+
+    /**
+     * 将对象状态恢复到持久化之前
+     * @param restoreObj 待恢复对象
+     */
+    public restore(restoreObj: UnwrapNestedRefs<object>): void {
+        if (Object.keys(this.style).length > 0) {
+            Object.keys(this.style).forEach(key => restoreObj[key] = this.style[key]);
+        }
+    }
+
+    /**
+     * 禁用hover active focus等样式
+     * @param disableObj 待禁用的对象
+     */
+    public disable(disableObj: UnwrapNestedRefs<{ [propsName: string]: string }>): void {
+        disableObj.hoverBgColor = disableObj.bgColor;
+        disableObj.hoverTextColor = disableObj.textColor;
+        disableObj.hoverBorder = disableObj.border;
+        disableObj.activeBgColor = disableObj.bgColor;
+        disableObj.activeTextColor = disableObj.textColor;
+        disableObj.activeBorder = disableObj.border;
+        disableObj.visitedBgColor = disableObj.bgColor;
+        disableObj.visitedTextColor = disableObj.textColor;
+        disableObj.visitedBorder = disableObj.border;
+    }
 }
