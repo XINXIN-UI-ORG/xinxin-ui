@@ -2,7 +2,7 @@
 import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import type { ButtonType, ButtonSize } from "./XButton.types";
 import { buttonOutter, buttonSize, getButtonTypeStyle, PersistenceStyle } from "./theme";
-import { loading } from "xinxin-icons";
+import { Load } from "xinxin-icons";
 
 export default defineComponent({
     name: "x-button",
@@ -72,7 +72,7 @@ export default defineComponent({
                 }
                 const disabledStyle = {
                     'cursor': props.disabled ? 'not-allowed' : 'wait',
-                    "opacity": ".5"
+                    "opacity": props.disabled ? ".5" : "1"
                 };
                 // hover、active和focus时不切换样式
                 // 修改前先持久化对象
@@ -83,7 +83,7 @@ export default defineComponent({
         };
     },
     components: {
-        loading,
+        Load,
     },
 });
 </script>
@@ -94,7 +94,7 @@ export default defineComponent({
                 <slot name="pre-icon"></slot>
             </span>
             <span class="pre-icon" v-else>
-                <loading />
+                <Load />
             </span>
             <slot>XINXIN-UI</slot>
             <span class="suf-icon">

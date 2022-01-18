@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { authSuccess, search, auth, top, refresh, warningMessage } from "xinxin-icons";
+import { AuthSuccess, Search, Auth, Top, Refresh, WarningMessage } from "xinxin-icons";
 
 export default defineComponent({
     setup() {
@@ -13,12 +13,12 @@ export default defineComponent({
         };
     },
     components: {
-        authSuccess,
-        search,
-        auth,
-        top,
-        refresh,
-        warningMessage
+        AuthSuccess,
+        Search,
+        Auth,
+        Top,
+        Refresh,
+        WarningMessage
     },
 })
 </script>
@@ -83,50 +83,50 @@ export default defineComponent({
 
             <x-button>
                 <template #pre-icon>
-                    <authSuccess />
+                    <AuthSuccess />
                 </template>
                 Default
             </x-button>
             <x-button type="info">
                 <template #pre-icon>
-                    <search />
+                    <Search />
                 </template>
                 Info
             </x-button>
             <x-button type="success">
                 <template #suf-icon>
-                    <auth />
+                    <Auth />
                 </template>
                 Success
             </x-button>
             <x-button type="warning">
                 <template #pre-icon>
-                    <top />
+                    <Top />
                 </template>
                 Warning
             </x-button>
             <x-button type="error">
                 <template #pre-icon>
-                    <refresh />
+                    <Refresh />
                 </template>
                 Error
             </x-button>
         </p>
         <p style="display: flex; justify-content: space-around;">
             <x-button circle>
-                <authSuccess />
+                <AuthSuccess />
             </x-button>
             <x-button type="info" circle>
-                <search />
+                <Search />
             </x-button>
             <x-button type="success" circle>
-                <auth />
+                <Auth />
             </x-button>
             <x-button type="warning" circle>
-                <top />
+                <Top />
             </x-button>
             <x-button type="error" circle>
-                <refresh />
+                <Refresh />
             </x-button>
 
             <x-button type="error" size="mini">Error</x-button>
@@ -143,25 +143,25 @@ export default defineComponent({
 
             <x-button type="info" loading>
                 <template #pre-icon>
-                    <refresh />
+                    <Refresh />
                 </template>
                 Info
             </x-button>
             <x-button type="success" :loading="disabled">
                 <template #pre-icon>
-                    <refresh />
+                    <Refresh />
                 </template>
                 Success
             </x-button>
             <x-button type="warning" :loading="disabled">
                 <template #pre-icon>
-                    <refresh />
+                    <Refresh />
                 </template>
                 Warning
             </x-button>
             <x-button type="error" :loading="disabled">
                 <template #pre-icon>
-                    <refresh />
+                    <Refresh />
                 </template>
                 Error
             </x-button>
