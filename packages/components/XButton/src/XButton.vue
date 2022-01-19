@@ -33,7 +33,6 @@ export default defineComponent({
             default: undefined
         }
     },
-    expose: ['reactiveButtonStyle'],
     setup(props, { attrs }) {
         const clickAnimateRef = ref<HTMLDivElement>();
 

@@ -1,15 +1,21 @@
 <template>
   <div style="height: 2000px">
-    <XTop />
+    <XTopTest />
     <XButtonTest />
+    <XButtonGroupTest />
   </div>
 </template>
 <script lang="ts">
-import XTop from "../packages/components/XTop/__tests__/XTop.test.vue";
+import XTopTest from "../packages/components/XTop/__tests__/XTop.test.vue";
 import XButtonTest from "../packages/components/XButton/__tests__/XButtonTest.vue";
+import XButtonGroupTest from "../packages/components/XButtonGroup/__tests__/XButtonGroupTest.vue";
 
 export default {
     name: "App",
-    components: { XTop, XButtonTest }
+    components: {
+      XTopTest,
+      XButtonTest,
+      XButtonGroupTest,
+    }
 }
 </script>

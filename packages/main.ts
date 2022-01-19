@@ -2,11 +2,13 @@ import "./theme-chalk/index.styl";
 import type { App } from "vue";
 import XTop from "./components/XTop";
 import XButton from  "./components/XButton";
+import XButtonGroup from "./components/XButtonGroup";
 
 // package下组件列表
 const components = [
     XTop,
     XButton,
+    XButtonGroup,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -30,5 +32,6 @@ export default {
 export {
     XTop,
     XButton,
+    XButtonGroup,
 }
 

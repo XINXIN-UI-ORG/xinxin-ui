@@ -25,6 +25,7 @@ export default defineComponent({
 
 <template>
     <div style="border: 1px solid #aaa; padding: 10px;">
+        <p>按钮：</p>
         <p style="display: flex; justify-content: space-around;">
             <x-button>Default</x-button>
             <x-button type="info">Info</x-button>
