@@ -165,6 +165,15 @@ export default defineComponent({
                 </template>
                 Error
             </x-button>
+
+            <x-button color="#626aef">Info</x-button>
+            <x-button color="#ff69b4" secondary>Success</x-button>
+            <x-button color="#8a2be2" tertiary>Warning</x-button>
+            <x-button color="#626aef" quaternary>Error</x-button>
+            <x-button color="#ff69b4" dashed>Error</x-button>
+            <x-button color="#626aef" plain>Error</x-button>
+            <x-button color="#ff69b4" ghost>Error</x-button>
+            <x-button color="#626aef" ghost round>Error</x-button>
         </p>
         <p>
             <x-button type="info" block>Info</x-button> <br>

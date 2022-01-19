@@ -28,7 +28,12 @@ export default defineComponent({
             type: Boolean,
             default: false
         },
+        color: {
+            type: String,
+            default: undefined
+        }
     },
+    expose: ['reactiveButtonStyle'],
     setup(props, { attrs }) {
         const clickAnimateRef = ref<HTMLDivElement>();
 
@@ -44,7 +49,7 @@ export default defineComponent({
             props.onClick?.(e);
         }
         // 设置按钮样式
-        let buttonStyle = getButtonTypeStyle(props.type, attrs.secondary as string, attrs.tertiary as string, attrs.quaternary as string,
+        let buttonStyle = getButtonTypeStyle(props.type, props.color, attrs.secondary as string, attrs.tertiary as string, attrs.quaternary as string,
                 attrs.dashed as string, attrs.plain as string, attrs.ghost as string)??{};
         // 设置按钮大小
         buttonStyle = Object.assign(buttonStyle, buttonSize[props.size]??{});

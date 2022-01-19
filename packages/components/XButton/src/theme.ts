@@ -51,11 +51,11 @@ const baseColorMap: { [propsName: string]: string } = {
     error: '#d03050',
 };
 
-export function getButtonTypeStyle(type: string, secondary: string | undefined, tertiary: string | undefined,
+export function getButtonTypeStyle(type: string, customerColor: string | undefined, secondary: string | undefined, tertiary: string | undefined,
                                 quaternary: string | undefined, dashed: string | undefined,
                                 plain: string | undefined, ghost: string | undefined): { [propsName: string]: string } | null {
     // 获取基础颜色
-    let baseColor: string = baseColorMap[type];
+    let baseColor: string = customerColor??baseColorMap[type];
     if (baseColor === undefined || !/^#([0-9a-fA-F]{3}|[0-9a-fA-F]{6})$/g.test(baseColor)) {
         return null;
     }
