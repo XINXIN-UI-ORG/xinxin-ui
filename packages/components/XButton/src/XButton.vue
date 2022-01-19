@@ -57,6 +57,11 @@ export default defineComponent({
             buttonStyle = Object.assign(buttonStyle, buttonOutter.circle);
             buttonStyle.buttonWidth = buttonStyle.buttonHeight;
         }
+        // 块级按钮
+        if (attrs.block !== undefined) {
+            buttonStyle.display = "block";
+            buttonStyle.buttonWidth = "100%";
+        }
         // 将样式对象变成响应式对象
         const reactiveButtonStyle = reactive(buttonStyle);
         const persistence: PersistenceStyle = new PersistenceStyle();
@@ -112,6 +117,7 @@ export default defineComponent({
     box-sizing border-box
     text-align center
     line-height 1
+    display v-bind("reactiveButtonStyle.display")
     background-color v-bind('reactiveButtonStyle.bgColor')
     border v-bind('reactiveButtonStyle.border')
     color v-bind('reactiveButtonStyle.textColor')

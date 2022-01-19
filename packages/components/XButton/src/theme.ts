@@ -63,6 +63,7 @@ export function getButtonTypeStyle(type: string, secondary: string | undefined, 
         baseColor = "#" + baseColor[1] + baseColor[1] + baseColor[2] + baseColor[2] + baseColor[3] + baseColor[3];
     }
     const style = {
+        display: "inline-block",
         bgColor: baseColor,
         border: "1px solid " + baseColor,
         textColor: "#fff",
