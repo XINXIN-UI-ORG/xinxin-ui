@@ -1,4 +1,3 @@
-import "./theme-chalk/index.styl";
 import type { App } from "vue";
 import XTop from "./components/XTop";
 import XButton from  "./components/XButton";

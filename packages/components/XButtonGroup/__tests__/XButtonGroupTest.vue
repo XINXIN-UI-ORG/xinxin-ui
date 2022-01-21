@@ -32,13 +32,16 @@ export default defineComponent({
             <x-button-group direction="vertical">
                 <x-button round />
                 <x-button type="warning" />
-                <x-button />
+                <x-button round />
             </x-button-group>
             &nbsp;&nbsp;
             <x-button-group>
                 <x-button ghost />
                 <x-button ghost />
                 <x-button ghost />
+                <x-button ghost />
+                <x-button ghost />
+                <x-button ghost round />
             </x-button-group>
         </p>
     </div>

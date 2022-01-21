@@ -33,7 +33,7 @@ export const buttonOutter = {
         iconMargin: "3px"
     },
     round: {
-        borderRadius: "22px",
+        borderRadius: "50px",
         iconMargin: "3px"
     },
     circle: {

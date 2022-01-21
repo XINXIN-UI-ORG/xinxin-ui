@@ -1,4 +1,5 @@
 import { computed, defineComponent, nextTick, ref, watchEffect } from "vue";
+import style from "../../../theme-chalk/XTop.module.styl";
 
 const XTop = defineComponent({
     name: "x-top",
@@ -76,13 +77,13 @@ const XTop = defineComponent({
     },
     render() {
         return (
-            <div class="x-top"
+            <div class={style['x-top']}
             style={this.topStyle}
             onClick={this.backToTop} ref="topWrapRef">
                 {
                     this.$slots.default ? this.$slots.default() :
-                    <div class="default">
-                        <svg class="icon-top" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="22" height="22">
+                    <div class={style.default}>
+                        <svg class={style['icon-top']} viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" width="22" height="22">
                             <path d="M0 0h1024v1024H0V0z" fill="#202425" opacity=".01" p-id="9538"></path>
                             <path d="M263.645867 496.7424A34.133333 34.133333 0 0 1 294.161067 477.866667h435.677866a34.133333 34.133333 0 0 1 30.5152 18.875733l111.854934 223.675733A68.266667 68.266667 0 0 1 811.1104 819.2H212.8896a68.266667 68.266667 0 0 1-61.064533-98.781867l111.854933-223.675733zM204.8 887.466667a34.133333 34.133333 0 1 1 68.266667 0v34.133333a34.133333 34.133333 0 1 1-68.266667 0v-34.133333z m580.266667-34.133334a34.133333 34.133333 0 0 0-34.133334 34.133334v34.133333a34.133333 34.133333 0 1 0 68.266667 0v-34.133333a34.133333 34.133333 0 0 0-34.133333-34.133334z"
                             fill={this.$props.color || '#FFAA44'}></path>

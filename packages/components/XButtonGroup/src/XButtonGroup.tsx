@@ -1,4 +1,4 @@
-import { defineComponent, onMounted, PropType, ref } from "vue";
+import { defineComponent, PropType, ref, onMounted } from "vue";
 
 type DirectionType = "horizontal" | "vertical";
 
@@ -25,7 +25,6 @@ const XButtonGroup = defineComponent({
                     }
                     item.style.borderRadius = "0";
                 });
-                // x-button__click
                 // 处理首尾按钮 判断按钮排列方向去除不同位置的圆角
                 if (props.direction === "horizontal") {
                     changeHorizontalStyle(xButtonList[0], xButtonList[xButtonList.length - 1]);
