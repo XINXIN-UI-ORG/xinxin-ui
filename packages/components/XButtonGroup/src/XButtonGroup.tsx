@@ -22,19 +22,23 @@ const XButtonGroup = defineComponent({
                     if (index === 0 || index === xButtonList!.length - 1) {
                         // 首尾元素暂时不用处理
                         return;
-                    }
+                }
+
                     item.style.borderRadius = "0";
+                    item.style.borderRightWidth = "0";
                 });
                 // 处理首尾按钮 判断按钮排列方向去除不同位置的圆角
                 if (props.direction === "horizontal") {
                     changeHorizontalStyle(xButtonList[0], xButtonList[xButtonList.length - 1]);
                     changeHorizontalStyle(xButtonList[0].querySelector(".x-button__click")!,
-                                        xButtonList[xButtonList.length - 1].querySelector(".x-button__click")!);
-                }
+                        xButtonList[xButtonList.length - 1].querySelector(".x-button__click")!);
+                    // 设置边框
+                    xButtonList[0].style.borderRightWidth = "0";
+            }
                 if (props.direction === "vertical") {
                     changeVerticalStyle(xButtonList[0], xButtonList[xButtonList.length - 1]);
                     changeVerticalStyle(xButtonList[0].querySelector(".x-button__click")!,
-                                        xButtonList[xButtonList.length - 1].querySelector(".x-button__click")!);
+                        xButtonList[xButtonList.length - 1].querySelector(".x-button__click")!);
                 }
             }
         });

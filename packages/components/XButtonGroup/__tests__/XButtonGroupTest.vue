@@ -3,7 +3,6 @@ import { defineComponent } from 'vue'
 
 export default defineComponent({
     setup() {
-        
     },
 })
 </script>
@@ -40,7 +39,16 @@ export default defineComponent({
                 <x-button ghost />
                 <x-button ghost />
                 <x-button ghost />
+                <x-button ghost type="success" />
+                <x-button ghost round />
+            </x-button-group>
+            &nbsp;&nbsp;
+            <x-button-group direction="vertical">
                 <x-button ghost />
+                <x-button ghost />
+                <x-button ghost />
+                <x-button ghost />
+                <x-button ghost type="success" />
                 <x-button ghost round />
             </x-button-group>
         </p>
