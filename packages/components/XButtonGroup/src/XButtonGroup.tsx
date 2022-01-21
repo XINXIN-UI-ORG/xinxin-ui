@@ -19,22 +19,24 @@ const XButtonGroup = defineComponent({
             if (xButtonList !== undefined && xButtonList.length > 0) {
                 // 处理中间的按钮 将圆角都去掉
                 xButtonList.forEach((item, index) => {
+                    // 处理边框 防止两个按钮见的边框过宽 选择去掉一个按钮的边框
+                    if (index !== xButtonList!.length - 1) {
+                        props.direction === "horizontal"
+                            ? item.style.borderRightWidth = "0"
+                            : item.style.borderBottomWidth = "0";
+                    }
                     if (index === 0 || index === xButtonList!.length - 1) {
                         // 首尾元素暂时不用处理
                         return;
-                }
-
+                    }
                     item.style.borderRadius = "0";
-                    item.style.borderRightWidth = "0";
                 });
                 // 处理首尾按钮 判断按钮排列方向去除不同位置的圆角
                 if (props.direction === "horizontal") {
                     changeHorizontalStyle(xButtonList[0], xButtonList[xButtonList.length - 1]);
                     changeHorizontalStyle(xButtonList[0].querySelector(".x-button__click")!,
                         xButtonList[xButtonList.length - 1].querySelector(".x-button__click")!);
-                    // 设置边框
-                    xButtonList[0].style.borderRightWidth = "0";
-            }
+                }
                 if (props.direction === "vertical") {
                     changeVerticalStyle(xButtonList[0], xButtonList[xButtonList.length - 1]);
                     changeVerticalStyle(xButtonList[0].querySelector(".x-button__click")!,
