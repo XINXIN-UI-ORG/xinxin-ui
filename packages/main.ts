@@ -3,9 +3,10 @@ import XTop from "./components/XTop";
 import XButton from "./components/XButton";
 import XButtonGroup from "./components/XButtonGroup";
 import XMessage from "./components/XMessage";
+import XLoad, { XLoadHandler } from "./components/XLoad";
 
 // package下组件列表
-const components = [XTop, XButton, XButtonGroup, XMessage];
+const components = [XTop, XButton, XButtonGroup, XMessage, XLoad];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
 const install: any = (app: App) => {
@@ -24,4 +25,4 @@ export default {
 };
 
 // 导出具体的组件
-export { XTop, XButton, XButtonGroup, XMessage };
+export { XTop, XButton, XButtonGroup, XMessage, XLoad, XLoadHandler };

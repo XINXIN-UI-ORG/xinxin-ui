@@ -6,7 +6,7 @@ import { createVNode, render, VNode } from "vue";
 const messageInstance: Array<VNode> = [];
 let defaultOffset = 20;
 
-const AsMessage = (options: XMessageOptionsType) => {
+const AsMessage = (options: XMessageOptionsType): void => {
     if (options === undefined) {
         options = {
             message: "XinXin-UI Message!",

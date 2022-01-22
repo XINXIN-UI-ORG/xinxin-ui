@@ -68,7 +68,9 @@ export default defineComponent({
             styles: computed(() => ({
                 top: `${props.offset}px`,
             })),
-            iconComponent: computed(() => props.icon ?? MessageIconMap[props.type]),
+            iconComponent: computed(
+                () => props.icon ?? MessageIconMap[props.type]
+            ),
             iconClass: computed(() => ["message-icon", "icon-" + props.type]),
             closeMessage,
         };
