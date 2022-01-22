@@ -3,8 +3,6 @@ import XButtonGroup from "./src/XButtonGroup";
 
 XButtonGroup.install = (app: App) => {};
 
-export {
-    XButtonGroup
-}
+export { XButtonGroup };
 
 export default XButtonGroup;

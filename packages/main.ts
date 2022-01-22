@@ -1,14 +1,10 @@
 import type { App } from "vue";
 import XTop from "./components/XTop";
-import XButton from  "./components/XButton";
+import XButton from "./components/XButton";
 import XButtonGroup from "./components/XButtonGroup";
 
 // package下组件列表
-const components = [
-    XTop,
-    XButton,
-    XButtonGroup,
-];
+const components = [XTop, XButton, XButtonGroup];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
 const install: any = (app: App) => {
@@ -19,18 +15,12 @@ const install: any = (app: App) => {
         }
         app.component(component.name, component);
     });
-}
-
+};
 
 // 导出对象需要有install才能被Vue.use()方法安装
 export default {
     install,
-}
+};
 
 // 导出具体的组件
-export {
-    XTop,
-    XButton,
-    XButtonGroup,
-}
-
+export { XTop, XButton, XButtonGroup };

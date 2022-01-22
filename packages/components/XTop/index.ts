@@ -3,8 +3,6 @@ import XTop from "./src/XTop";
 
 XTop.install = (app: App) => {};
 
-export {
-    XTop
-};
+export { XTop };
 
 export default XTop;

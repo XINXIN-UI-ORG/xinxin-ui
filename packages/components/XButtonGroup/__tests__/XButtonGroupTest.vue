@@ -1,13 +1,12 @@
 <script lang="ts">
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue";
 
 export default defineComponent({
-    setup() {
-    },
-})
+    setup() {},
+});
 </script>
 <template>
-    <div style="border: 1px solid #aaa; padding: 10px; margin-top: 10px;">
+    <div style="border: 1px solid #aaa; padding: 10px; margin-top: 10px">
         <p>按钮组：</p>
         <p>
             <x-button-group>

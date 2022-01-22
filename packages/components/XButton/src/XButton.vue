@@ -1,7 +1,12 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, reactive, ref } from "vue";
 import type { ButtonType, ButtonSize } from "./XButton.types";
-import { buttonOutter, buttonSize, getButtonTypeStyle, PersistenceStyle } from "./theme";
+import {
+    buttonOutter,
+    buttonSize,
+    getButtonTypeStyle,
+    PersistenceStyle,
+} from "./theme";
 import { Load } from "xinxin-icons";
 
 export default defineComponent({
@@ -10,15 +15,15 @@ export default defineComponent({
     props: {
         type: {
             type: String as PropType<ButtonType>,
-            default: "info"
+            default: "info",
         },
         size: {
             type: String as PropType<ButtonSize>,
-            default: "normal"
+            default: "normal",
         },
         disabled: {
             type: Boolean,
-            default: false
+            default: false,
         },
         onClick: {
             type: Function as PropType<(e: MouseEvent) => void>,
@@ -26,12 +31,12 @@ export default defineComponent({
         },
         loading: {
             type: Boolean,
-            default: false
+            default: false,
         },
         color: {
             type: String,
-            default: undefined
-        }
+            default: undefined,
+        },
     },
     setup(props, { attrs }) {
         const clickAnimateRef = ref<HTMLDivElement>();
@@ -42,16 +47,27 @@ export default defineComponent({
             e.preventDefault();
             clickAnimateRef.value?.classList.add("x-button__click-active");
             setTimeout(() => {
-                clickAnimateRef.value?.classList.remove("x-button__click-active");
+                clickAnimateRef.value?.classList.remove(
+                    "x-button__click-active"
+                );
             }, 600);
             // 执行用户点击事件
             props.onClick?.(e);
         }
         // 设置按钮样式
-        let buttonStyle = getButtonTypeStyle(props.type, props.color, attrs.secondary as string, attrs.tertiary as string, attrs.quaternary as string,
-                attrs.dashed as string, attrs.plain as string, attrs.ghost as string)??{};
+        let buttonStyle =
+            getButtonTypeStyle(
+                props.type,
+                props.color,
+                attrs.secondary as string,
+                attrs.tertiary as string,
+                attrs.quaternary as string,
+                attrs.dashed as string,
+                attrs.plain as string,
+                attrs.ghost as string
+            ) ?? {};
         // 设置按钮大小
-        buttonStyle = Object.assign(buttonStyle, buttonSize[props.size]??{});
+        buttonStyle = Object.assign(buttonStyle, buttonSize[props.size] ?? {});
         // 设置按钮轮廓
         buttonStyle = Object.assign(buttonStyle, buttonOutter.default);
         if (attrs.round !== undefined) {
@@ -80,8 +96,8 @@ export default defineComponent({
                     return {};
                 }
                 const disabledStyle = {
-                    'cursor': props.disabled ? 'not-allowed' : 'wait',
-                    "opacity": props.disabled ? ".5" : "1"
+                    cursor: props.disabled ? "not-allowed" : "wait",
+                    opacity: props.disabled ? ".5" : "1",
                 };
                 // hover、active和focus时不切换样式
                 // 修改前先持久化对象
@@ -97,7 +113,12 @@ export default defineComponent({
 });
 </script>
 <template>
-    <button class="x-button" @click="clickBtn" :disabled="disabled || loading" :style="disabledStyle">
+    <button
+        class="x-button"
+        @click="clickBtn"
+        :disabled="disabled || loading"
+        :style="disabledStyle"
+    >
         <div class="x-button__text">
             <span class="pre-icon" v-if="!loading">
                 <slot name="pre-icon"></slot>
