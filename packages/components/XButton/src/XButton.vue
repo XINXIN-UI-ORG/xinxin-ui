@@ -126,7 +126,7 @@ export default defineComponent({
             <span class="pre-icon" v-else>
                 <Load />
             </span>
-            <slot>XINXIN-UI</slot>
+            <slot>XinXin-UI</slot>
             <span class="suf-icon">
                 <slot name="suf-icon"></slot>
             </span>
