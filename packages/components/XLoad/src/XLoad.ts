@@ -1,91 +1,98 @@
-import {InputData} from "./XLoadOptions.types";
-import AsLoadComponent from "./XLoad.vue";
-import { createVNode, render } from "vue";
+import { InputData } from "./XLoadOptions.types";
+import XLoadComponent from "./XLoad.vue";
+import { createVNode, render, VNode } from "vue";
 
-export default function (args: InputData | string = "加载中..."): LoadHandler | null {
+export default function (
+    args: InputData | string = "加载中..."
+): XLoadHandler | null {
     let argsOption: InputData;
     if (typeof args === "string") {
         argsOption = {
-            description: args
+            description: args,
         };
     } else {
         argsOption = args;
     }
-
-    // 获取load组件要展示的父级对象
-    let parentDom: HTMLElement = document.body;
-    if (argsOption.target !== undefined) {
-        if (typeof argsOption.target === "string") {
-            let parDom = document.querySelector(argsOption.target);
-            if (parDom === null) {
-                return null;
-            }
-            parentDom = parDom as HTMLElement;
-        } else {
-            parentDom = argsOption.target;
-        }
-    }
-    // 设置父级对象定位
-    parentDom.style.position = "relative";
-    // 将load组件插入父级组件下
-    const vm = createVNode(AsLoadComponent, argsOption);
+    // 将load组件插入父级DOM下
+    const vm: VNode = createVNode(XLoadComponent, argsOption);
     // 创建挂载点 将组件挂载到挂载点上
-    const container = document.createElement('div');
+    const container = document.createElement("div");
     render(vm, container);
     if (container.firstElementChild === null) {
         return null;
     }
-    let currentDom: HTMLElement = container.firstElementChild as HTMLElement;
-    currentDom.style.visibility = "hidden";
-    if (argsOption.target === undefined) {
-        // 如果根节点是body需要特殊处理
-        currentDom.style.position = 'fixed';
-    }
-    parentDom.appendChild(container.firstElementChild);
-    const loadHandler: XLoadHandler = new XLoadHandler(argsOption, container, currentDom);
-    return loadHandler;
+    return new XLoadHandler(container.firstElementChild as HTMLElement, vm);
 }
 
-
+/**
+ * XLoad处理对象
+ */
 class XLoadHandler {
-    private argsOption: InputData;
-    private container: Element;
-    private currentDom: HTMLElement;
+    private target: HTMLElement | string | undefined;
+    private loadDom: HTMLElement | null;
+    private loadVDom: VNode;
 
-    constructor(argsOption: InputData, container: Element, currentDom: HTMLElement) {
-        this.argsOption = argsOption;
-        this.container = container;
-        this.currentDom = currentDom;
-
+    constructor(loadDom: HTMLElement, loadVDom: VNode) {
+        this.loadDom = loadDom;
+        this.loadVDom = loadVDom;
     }
-
-    public show(): void {
-        if (this.argsOption.target === undefined) {
+    /**
+     * 将Xload组件挂载到对应的Dom下
+     * @param target 挂载对象
+     * @returns null
+     */
+    public show(target?: HTMLElement | string): void {
+        if (this.loadDom === null) {
+            return;
+        }
+        this.target = target;
+        // 获取load组件要展示的父级对象
+        let parentDom: HTMLElement = document.body;
+        if (target !== undefined) {
+            if (typeof target === "string") {
+                let parDom = document.querySelector(target);
+                if (parDom === null) {
+                    return;
+                }
+                parentDom = parDom as HTMLElement;
+            } else {
+                parentDom = target;
+            }
+        }
+        // 设置父级对象定位
+        parentDom.style.position = "relative";
+        if (target === undefined) {
             // 如果根节点是body需要特殊处理
-            document.body.style.overflow = 'hidden';
+            this.loadDom.style.position = "fixed";
+            // 将body滚动条隐藏
+            parentDom.style.overflow = "hidden";
         }
-        this.currentDom.style.transition = 'none';
-        this.currentDom.style.visibility = 'visible';
-        this.currentDom.style.opacity = '1';
+        parentDom.appendChild(this.loadDom);
+        // 显示组件
+        this.loadVDom.component?.exposed!.showLoad();
     }
-
+    /**
+     * 关闭加载组件
+     */
     public close(): void {
-        this.currentDom.style.transition = 'all .5s';
-        this.currentDom.style.opacity = '0';
-        this.currentDom.style.visibility = 'hidden';
-        if (this.argsOption.target === undefined) {
-            document.body.style.overflow = 'auto';
+        if (this.loadDom === null) {
+            return;
+        }
+        this.loadVDom.component?.exposed!.hiddenLoad();
+        if (this.target === undefined) {
+            document.body.style.overflow = "auto";
         }
     }
-
+    /**
+     * 销毁加载组件
+     */
     public destroy(): void {
         this.close();
         setTimeout(() => {
-            render(null, this.container);
+            this.loadDom && this.loadDom.remove();
+            this.loadDom = null;
         }, 500);
     }
 }
 
-export {
-    XLoadHandler
-};
+export { XLoadHandler };
