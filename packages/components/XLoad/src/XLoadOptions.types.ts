@@ -1,5 +1,5 @@
 export type InputData = {
-    description: string,
+    description: string | undefined,
     alpha?: number,
     color?: string,
     iconSize?: IconSize,

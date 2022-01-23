@@ -138,7 +138,7 @@ export default defineComponent({
                     </rect>
                 </svg>
             </div>
-            <div class="load-desc">
+            <div class="load-desc" v-if="description !== undefined">
                 {{ description }}
             </div>
         </div>

@@ -2,11 +2,9 @@ import { InputData } from "./XLoadOptions.types";
 import XLoadComponent from "./XLoad.vue";
 import { createVNode, render, VNode } from "vue";
 
-export default function (
-    args: InputData | string = "加载中..."
-): XLoadHandler | null {
+export default function (args?: InputData | string): XLoadHandler | null {
     let argsOption: InputData;
-    if (typeof args === "string") {
+    if (typeof args === "string" || typeof args === "undefined") {
         argsOption = {
             description: args,
         };
@@ -86,11 +84,12 @@ class XLoadHandler {
     /**
      * 销毁加载组件
      */
-    public destroy(): void {
+    public destroy(callback?: () => void): void {
         this.close();
         setTimeout(() => {
             this.loadDom && this.loadDom.remove();
             this.loadDom = null;
+            callback?.();
         }, 500);
     }
 }
