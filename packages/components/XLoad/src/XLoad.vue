@@ -11,7 +11,7 @@ export default defineComponent({
     description: String,
     color: {
       type: String,
-      default: "#5ca07a",
+      default: "#f5a31f",
     },
     iconSize: {
       type: String as PropType<IconSize>,
