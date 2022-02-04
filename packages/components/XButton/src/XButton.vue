@@ -142,6 +142,7 @@ export default defineComponent({
     box-sizing border-box
     text-align center
     line-height 1
+    vertical-align middle
     display v-bind("reactiveButtonStyle.display")
     background-color v-bind('reactiveButtonStyle.bgColor')
     border v-bind('reactiveButtonStyle.border')
