@@ -1,4 +1,4 @@
-import XInput from "./src/XInput";
+import XInput from "./src/XInput.vue";
 
 XInput.install = () => {};
 

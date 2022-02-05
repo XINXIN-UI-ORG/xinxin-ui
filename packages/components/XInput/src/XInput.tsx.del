@@ -2,7 +2,6 @@ import { defineComponent, onMounted, PropType, ref, watchEffect } from "vue";
 import type { Ref } from "vue";
 import style from "../../../theme-chalk/XInput.module.styl";
 import { ErrorMessage, PasswordShow, PasswordHide } from "xinxin-icons";
-import { createObjectExpression } from "@vue/compiler-core";
 
 const XInput = defineComponent({
     name: "x-input",
@@ -109,12 +108,14 @@ const XInput = defineComponent({
             // 开启监听
             iconShowFlag?.init();
         });
+        let count = 0;
         return () => (
             <div
                 class={inputWrapperClassList}
                 style={attrs.style as string}
                 ref={inputWrapRef}
             >
+                {count++}
                 {slots.prefix && (
                     <div
                         class={[
@@ -221,7 +222,7 @@ class IconShowFlag {
         this.inputWrapRef.value?.addEventListener(
             "mouseenter",
             (event: MouseEvent) => {
-                console.log(event);
+                console.log(event.relatedTarget);
                 // 输入框内有内容 才显示清除按钮
                 this._showClearCount += 1;
                 this.executeCallback(this._showClearCount > 0);
