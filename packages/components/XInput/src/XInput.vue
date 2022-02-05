@@ -50,7 +50,13 @@ export default defineComponent({
             }
             // 是否开启清除功能
             props.clearable &&
-                clearableGather(clearShow, inputRef, iconShowFlag, clearIconRef);
+                clearableGather(
+                    clearShow,
+                    passwordShow,
+                    inputRef,
+                    iconShowFlag,
+                    clearIconRef
+                );
             // 是否开启密码显示功能
             props.showPasswordOn &&
                 attrs.type === "password" &&
@@ -169,6 +175,7 @@ class IconShowFlag {
  */
 function clearableGather(
     clearShow: Ref<Boolean>,
+    passwordShow: Ref<Boolean>,
     inputRef: Ref<HTMLInputElement | undefined>,
     iconShowFlag: IconShowFlag | null,
     clearIconRef: Ref<HTMLSpanElement | undefined>
@@ -188,6 +195,7 @@ function clearableGather(
         // 清除输入框数据
         inputRef.value!.value = "";
         clearShow.value = false;
+        passwordShow.value = false;
     });
 }
 
@@ -263,8 +271,8 @@ function showPasswordOnGather(
             ref="inputRef"
         />
         <div class="x-input__area" v-if="clearable">
-            <span v-show="clearShow" ref="clearIcon">
-                <ErrorMessage class="x-input__area_icon" />
+            <span v-show="clearShow" ref="clearIconRef">
+                <ErrorMessage class="x-input__area-icon" />
             </span>
         </div>
         <div
@@ -272,16 +280,11 @@ function showPasswordOnGather(
             v-if="showPasswordOn && inputType === 'password'"
         >
             <span
-                class="x-input__area_icon"
                 v-show="passwordShow"
-                @click="passwordBtnClick"
-                @mousedown="passwordBtnDown"
-                @mouseup="passwordBtnUp"
-                @mouseleave="passwordBtnLeave"
                 ref="passwordIconRef"
             >
-                <PasswordShow v-show="passwordIcon" />
-                <PasswordHide v-show="!passwordIcon" />
+                <PasswordShow class="x-input__area-icon" v-show="passwordIcon" />
+                <PasswordHide class="x-input__area-icon" v-show="!passwordIcon" />
             </span>
         </div>
         <div class="x-input__fix x-input__suffix" v-if="suffix">
@@ -339,7 +342,7 @@ function showPasswordOnGather(
         display flex
         align-items center
         padding-left 6px
-        .x-input__area_icon
+        .x-input__area-icon
             color #727577
             cursor pointer
             &:hover
