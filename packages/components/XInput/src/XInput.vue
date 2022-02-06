@@ -24,9 +24,19 @@ export default defineComponent({
             default: false,
         },
         showPasswordOn: {
-            type: String as PropType<string | undefined>,
+            type: String,
             default: undefined,
         },
+        status: {
+            type: String,
+            default: undefined,
+        },
+        placeholder: String,
+        size: {
+            type: [Number, String],
+            default: 20,
+        },
+        style: Object,
     },
     setup(props, { attrs, slots, emit }) {
         let clearShow = ref<Boolean>(false);
@@ -76,13 +86,17 @@ export default defineComponent({
                 "x-input",
                 "x-input-" + props.mode,
                 props.disabled && "x-input-disabled",
+                props.status && "x-input-" + props.status,
             ]),
-            style: attrs.style as Object,
             prefix: slots.prefix,
             suffix: slots.suffix,
-            inputType: (attrs.type as string) ?? "text",
-            placeholder: attrs.placeholder as string,
-            inputSize: (attrs.size as number) ?? 20,
+            inputType: () => {
+                let type: string = <string>attrs.type ?? "text";
+                if (["text", "password", "number"].indexOf(type) === -1) {
+                    return "text";
+                }
+                return type;
+            },
             inputEvent(e: Event) {
                 const inputDom = e.target as HTMLInputElement;
                 // 获取value值更新到外面
@@ -261,11 +275,11 @@ function showPasswordOnGather(
             <slot name="prefix"></slot>
         </div>
         <input
-            :type="inputType"
+            :type="inputType()"
             class="x-input__input"
             :placeholder="placeholder"
-            autocomplete="false"
-            :size="inputSize"
+            autocomplete="new-password"
+            :size="size"
             @input="inputEvent"
             :disabled="disabled"
             ref="inputRef"
@@ -277,14 +291,17 @@ function showPasswordOnGather(
         </div>
         <div
             class="x-input__area"
-            v-if="showPasswordOn && inputType === 'password'"
+            v-if="showPasswordOn && inputType() === 'password'"
         >
-            <span
-                v-show="passwordShow"
-                ref="passwordIconRef"
-            >
-                <PasswordShow class="x-input__area-icon" v-show="passwordIcon" />
-                <PasswordHide class="x-input__area-icon" v-show="!passwordIcon" />
+            <span v-show="passwordShow" ref="passwordIconRef">
+                <PasswordShow
+                    class="x-input__area-icon"
+                    v-show="passwordIcon"
+                />
+                <PasswordHide
+                    class="x-input__area-icon"
+                    v-show="!passwordIcon"
+                />
             </span>
         </div>
         <div class="x-input__fix x-input__suffix" v-if="suffix">
@@ -322,6 +339,10 @@ function showPasswordOnGather(
         outline none
         background-color transparent
         caret-color #f5a31f
+        &::-webkit-inner-spin-button, &::-webkit-outer-spin-button
+            -webkit-appearance none
+        &[type="number"]
+            -moz-appearance textfield
         &:focus
             ~ .x-input__border
                 border-color #f5a31f
@@ -363,4 +384,16 @@ function showPasswordOnGather(
             border-color #e0e0e6
     .x-input__input
         cursor not-allowed
+.x-input-error
+    .x-input__border
+        border-color #F56C6C
+    .x-input__input
+        caret-color #F56C6C
+        &:focus
+            ~ .x-input__border
+                border-color #F56C6C
+                box-shadow 0 0 1px 2px rgba(245, 108, 108, .25)
+    &:hover
+        .x-input__border
+            border-color #F56C6C
 </style>

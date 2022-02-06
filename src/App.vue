@@ -1,11 +1,12 @@
 <template>
-    <div style="padding-bottom: 300px;">
+    <div style="padding-bottom: 300px">
         <XTopTest />
         <XButtonTest />
         <XButtonGroupTest />
         <XMessageTest />
         <XLoadTest />
         <XInputTest />
+        <XNumberInputTest />
     </div>
 </template>
 <script lang="ts">
@@ -15,6 +16,7 @@ import XButtonGroupTest from "../packages/components/XButtonGroup/__tests__/XBut
 import XMessageTest from "../packages/components/XMessage/__tests__/XMessageTest.vue";
 import XLoadTest from "../packages/components/XLoad/__tests__/XLoadTest.vue";
 import XInputTest from "../packages/components/XInput/__tests__/XInputTest.vue";
+import XNumberInputTest from "../packages/components/XNumberInput/__tests__/XNumberInputTest.vue";
 
 export default {
     name: "App",
@@ -25,6 +27,7 @@ export default {
         XMessageTest,
         XLoadTest,
         XInputTest,
+        XNumberInputTest,
     },
 };
 </script>

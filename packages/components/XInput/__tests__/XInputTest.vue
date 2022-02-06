@@ -24,7 +24,7 @@ export default defineComponent({
         <p>Input框：</p>
         <p>
             基础用法：
-            <x-input placeholder="请输入" type="text" v-model="test" />
+            <x-input placeholder="请输入" v-model="test" />
             <span>{{ test }}</span>
         </p>
         <p>
@@ -102,6 +102,16 @@ export default defineComponent({
                     <Search />
                 </template>
             </x-input>
+            &nbsp;&nbsp;
+            <x-input placeholder="请输入" type="password" show-password-on="click" />
+        </p>
+        <p>
+            输入框状态：
+            <x-input placeholder="请输入" type="password" status="error" />
+        </p>
+        <p>
+            输入框样式：
+            <x-input placeholder="请输入" type="password" style="background-color: #aaa;" />
         </p>
     </div>
 </template>
