@@ -1,8 +1,13 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
-    setup() {},
+    setup() {
+        let numberValue = ref(123);
+        return {
+            numberValue,
+        };
+    },
 });
 </script>
 <template>
@@ -14,15 +19,23 @@ export default defineComponent({
         </p>
         <p>
             带加减按钮：
-            <x-number-input placeholder="数字输入" number-button />
-        </p>
-        <p>
-            大：
-            <x-number-input placeholder="数字输入" mode="small" number-button />
+            <x-number-input placeholder="数字输入" clearable number-button v-model="numberValue" />
+            {{numberValue}}
         </p>
         <p>
             小：
+            <x-number-input placeholder="数字输入" mode="small" number-button />
+        </p>
+        <p>
+            大：
             <x-number-input placeholder="数字输入" mode="large" number-button />
+        </p>
+        <p>
+            设置步长：
+            <x-number-input placeholder="数字输入" mode="large" number-button clearable step="2" />
+            &nbsp;
+            &nbsp;
+            <x-number-input placeholder="数字输入" mode="large" number-button clearable :step="3" />
         </p>
     </div>
 </template>

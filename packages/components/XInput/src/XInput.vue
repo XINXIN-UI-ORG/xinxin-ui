@@ -12,7 +12,7 @@ export default defineComponent({
             default: "normal",
         },
         modelValue: {
-            type: String,
+            type: [String, Number],
             default: "",
         },
         disabled: {
@@ -38,7 +38,7 @@ export default defineComponent({
         },
         style: Object,
     },
-    setup(props, { attrs, slots, emit }) {
+    setup(props, { attrs, slots, emit, expose }) {
         let clearShow = ref<Boolean>(false);
         let passwordShow = ref<Boolean>(false);
         let passwordIcon = ref<Boolean>(false);
@@ -50,7 +50,10 @@ export default defineComponent({
         onMounted(() => {
             // 为input设置初始值
             props.modelValue &&
-                inputRef.value?.setAttribute("value", props.modelValue);
+                inputRef.value?.setAttribute(
+                    "value",
+                    props.modelValue.toString()
+                );
             let iconShowFlag: IconShowFlag | null = null;
             if (
                 props.clearable ||
@@ -65,7 +68,8 @@ export default defineComponent({
                     passwordShow,
                     inputRef,
                     iconShowFlag,
-                    clearIconRef
+                    clearIconRef,
+                    emit
                 );
             // 是否开启密码显示功能
             props.showPasswordOn &&
@@ -80,6 +84,16 @@ export default defineComponent({
                 );
             // 开启监听
             iconShowFlag?.init();
+        });
+        // 提供操作input的方法
+        expose({
+            changeInputValue(value: string) {
+                emit("update:modelValue", value);
+                inputRef.value!.value = value;
+            },
+            getCurrentValue(): string {
+                return inputRef.value!.value;
+            }
         });
         return {
             inputWrapperClassList: computed(() => [
@@ -192,7 +206,8 @@ function clearableGather(
     passwordShow: Ref<Boolean>,
     inputRef: Ref<HTMLInputElement | undefined>,
     iconShowFlag: IconShowFlag | null,
-    clearIconRef: Ref<HTMLSpanElement | undefined>
+    clearIconRef: Ref<HTMLSpanElement | undefined>,
+    emit: (event: string, ...args: any[]) => void
 ): void {
     // 输入框输入时检查是否需要显示
     inputRef.value?.addEventListener("input", () => {
@@ -210,6 +225,7 @@ function clearableGather(
         inputRef.value!.value = "";
         clearShow.value = false;
         passwordShow.value = false;
+        emit("update:modelValue", "");
     });
 }
 
