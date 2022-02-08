@@ -37,5 +37,15 @@ export default defineComponent({
             &nbsp;
             <x-number-input placeholder="数字输入" mode="large" number-button clearable :step="3" />
         </p>
+        <p>
+            最大最小限制：
+            <x-number-input placeholder="数字输入" number-button clearable :max="6" />
+            &nbsp;
+            &nbsp;
+            <x-number-input placeholder="数字输入" number-button clearable :min="1" />
+            &nbsp;
+            &nbsp;
+            <x-number-input placeholder="数字输入" number-button clearable :max="6" :min="1" />
+        </p>
     </div>
 </template>

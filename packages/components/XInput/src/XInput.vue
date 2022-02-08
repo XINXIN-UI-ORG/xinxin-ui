@@ -38,6 +38,11 @@ export default defineComponent({
         },
         style: Object,
     },
+    emits: {
+        onInputChange: null,
+        onInputBlur: null,
+        "update:modelValue": null,
+    },
     setup(props, { attrs, slots, emit, expose }) {
         let clearShow = ref<Boolean>(false);
         let passwordShow = ref<Boolean>(false);
@@ -90,10 +95,11 @@ export default defineComponent({
             changeInputValue(value: string) {
                 emit("update:modelValue", value);
                 inputRef.value!.value = value;
+                emit("onInputChange", value);
             },
             getCurrentValue(): string {
                 return inputRef.value!.value;
-            }
+            },
         });
         return {
             inputWrapperClassList: computed(() => [
@@ -115,6 +121,11 @@ export default defineComponent({
                 const inputDom = e.target as HTMLInputElement;
                 // 获取value值更新到外面
                 emit("update:modelValue", inputDom.value);
+                emit("onInputChange", inputDom.value);
+            },
+            blurEvent(e: Event) {
+                const inputDom = e.target as HTMLInputElement;
+                emit("onInputBlur", inputDom.value);
             },
             clearShow,
             inputRef,
@@ -207,7 +218,7 @@ function clearableGather(
     inputRef: Ref<HTMLInputElement | undefined>,
     iconShowFlag: IconShowFlag | null,
     clearIconRef: Ref<HTMLSpanElement | undefined>,
-    emit: (event: string, ...args: any[]) => void
+    emit: any
 ): void {
     // 输入框输入时检查是否需要显示
     inputRef.value?.addEventListener("input", () => {
@@ -226,6 +237,7 @@ function clearableGather(
         clearShow.value = false;
         passwordShow.value = false;
         emit("update:modelValue", "");
+        emit("onInputChange", "");
     });
 }
 
@@ -297,6 +309,7 @@ function showPasswordOnGather(
             autocomplete="new-password"
             :size="size"
             @input="inputEvent"
+            @blur="blurEvent"
             :disabled="disabled"
             ref="inputRef"
         />

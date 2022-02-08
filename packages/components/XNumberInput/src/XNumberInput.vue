@@ -15,10 +15,19 @@ export default defineComponent({
             type: [String, Number],
             default: 1,
         },
+        min: Number,
+        max: Number,
     },
     setup(props, { attrs }) {
         let xInputRef = ref();
-        let { upValue, downValue } = modifyValue(xInputRef, props.step);
+        let upBtnRef = ref<HTMLDivElement>();
+        let downBtnRef = ref<HTMLDivElement>();
+        let { upValue, downValue, disabledBtn, blurInput } = modifyValue(
+            xInputRef,
+            props,
+            upBtnRef,
+            downBtnRef
+        );
         return {
             numberInputClassList: computed(() => [
                 "x-number-input",
@@ -27,6 +36,10 @@ export default defineComponent({
             xInputRef,
             upValue,
             downValue,
+            disabledBtn,
+            blurInput,
+            upBtnRef,
+            downBtnRef,
         };
     },
     components: {
@@ -37,22 +50,29 @@ export default defineComponent({
 
 function modifyValue(
     xInputRef: Ref,
-    step: number | string
+    props: any,
+    upBtnRef: Ref<HTMLDivElement | undefined>,
+    downBtnRef: Ref<HTMLDivElement | undefined>
 ): {
-    [propsName: string]: (e: Event) => void;
+    [propsName: string]: (param: any) => void;
 } {
     let stepLen: number = 1;
-    if (typeof step === "string") {
-        stepLen = parseInt(step);
+    if (typeof props.step === "string") {
+        stepLen = parseInt(props.step);
     } else {
-        stepLen = step;
+        stepLen = props.step;
     }
     let upValue = (e: Event) => {
         // 获取当前值
         let currentValue: number =
             xInputRef.value.getCurrentValue() === ""
-                ? 0
+                ? props.min === undefined
+                    ? -stepLen
+                    : props.min - stepLen
                 : parseFloat(xInputRef.value.getCurrentValue());
+        if (props.max !== undefined && currentValue + stepLen > props.max) {
+            return;
+        }
         xInputRef.value.changeInputValue((currentValue + stepLen).toString());
     };
 
@@ -60,28 +80,78 @@ function modifyValue(
         // 获取当前值
         let currentValue: number =
             xInputRef.value.getCurrentValue() === ""
-                ? 0
+                ? props.min === undefined
+                    ? stepLen
+                    : props.min + stepLen
                 : parseFloat(xInputRef.value.getCurrentValue());
+        if (props.min !== undefined && currentValue - stepLen < props.min) {
+            return;
+        }
         xInputRef.value.changeInputValue((currentValue - stepLen).toString());
+    };
+    let disabledBtn = (inputValue: string) => {
+        if (inputValue === "") {
+            upBtnRef.value!.classList.remove("x-number-input__button__disable");
+            downBtnRef.value!.classList.remove(
+                "x-number-input__button__disable"
+            );
+        }
+        let currentValue = parseFloat(inputValue);
+        // 设置按钮禁用
+        if (props.max !== undefined && currentValue + stepLen > props.max) {
+            upBtnRef.value!.classList.add("x-number-input__button__disable");
+        } else {
+            upBtnRef.value!.classList.remove("x-number-input__button__disable");
+        }
+        if (props.min !== undefined && currentValue - stepLen < props.min) {
+            downBtnRef.value!.classList.add("x-number-input__button__disable");
+        } else {
+            downBtnRef.value!.classList.remove(
+                "x-number-input__button__disable"
+            );
+        }
+    };
+    let blurInput = (inputValue: string) => {
+        if (inputValue === "") {
+            return;
+        }
+        let currentValue = parseFloat(inputValue);
+        // 判断输入
+        if (props.max !== undefined && currentValue > props.max) {
+            xInputRef.value.changeInputValue(props.max.toString());
+        }
+        if (props.min !== undefined && currentValue < props.min) {
+            xInputRef.value.changeInputValue(props.min.toString());
+        }
     };
     return {
         upValue,
         downValue,
+        disabledBtn,
+        blurInput,
     };
 }
 </script>
 <template>
     <div :class="numberInputClassList">
-        <XInput v-bind="$attrs" type="number" ref="xInputRef" />
+        <XInput
+            v-bind="$attrs"
+            type="number"
+            ref="xInputRef"
+            @onInputChange="disabledBtn"
+            @onInputBlur="blurInput"
+        />
         <div class="x-number-input__button" v-if="numberButton">
             <div
                 class="x-number-input__button__top x-number-input__button__half"
+                ref="upBtnRef"
                 @click="upValue"
             >
                 <Up />
             </div>
             <div
                 class="x-number-input__button__bottom x-number-input__button__half"
+                ref="downBtnRef"
                 @click="downValue"
             >
                 <Up />
@@ -102,9 +172,10 @@ function modifyValue(
         flex-direction column
         .x-number-input__button__half
             height 50%
-            padding 0 2px
+            padding 0 3px
             display flex
             align-items center
+            background-color #fff
             &:hover
                 background-color #f4f5f5
             &:active
@@ -113,6 +184,12 @@ function modifyValue(
                 color #888a8c
                 width 8px
                 height 8px
+        .x-number-input__button__disable
+            cursor not-allowed
+            &:hover
+                background-color #fff
+            &:active
+                background-color #fff
         .x-number-input__button__bottom
             .asa-icon
                 transform rotateX(180deg)
