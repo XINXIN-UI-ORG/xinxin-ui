@@ -41,6 +41,7 @@ export default defineComponent({
     emits: {
         onInputChange: null,
         onInputBlur: null,
+        onInputFocus: null,
         "update:modelValue": null,
     },
     setup(props, { attrs, slots, emit, expose }) {
@@ -126,6 +127,10 @@ export default defineComponent({
             blurEvent(e: Event) {
                 const inputDom = e.target as HTMLInputElement;
                 emit("onInputBlur", inputDom.value);
+            },
+            focusEvent(e: Event) {
+                const inputDom = e.target as HTMLInputElement;
+                emit("onInputFocus", inputDom.value);
             },
             clearShow,
             inputRef,
@@ -310,11 +315,12 @@ function showPasswordOnGather(
             :size="size"
             @input="inputEvent"
             @blur="blurEvent"
+            @focus="focusEvent"
             :disabled="disabled"
             ref="inputRef"
         />
         <div class="x-input__area" v-if="clearable">
-            <span v-show="clearShow" ref="clearIconRef">
+            <span v-show="clearShow  && !disabled" ref="clearIconRef">
                 <ErrorMessage class="x-input__area-icon" />
             </span>
         </div>

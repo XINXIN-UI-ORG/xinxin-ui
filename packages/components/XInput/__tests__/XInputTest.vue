@@ -12,6 +12,15 @@ export default defineComponent({
             InputDisabled() {
                 inputDisabled.value = !inputDisabled.value;
             },
+            inputChange(inputValue: string) {
+                console.log(inputValue);
+            },
+            inputBlur(inputValue: string) {
+                console.log(inputValue);
+            },
+            inputFocus(inputValue: string) {
+                console.log(inputValue);
+            },
         };
     },
     components: {
@@ -45,6 +54,7 @@ export default defineComponent({
                 placeholder="请输入"
                 type="text"
                 :disabled="inputDisabled"
+                clearable
             />
             &nbsp;&nbsp;
             <x-button type="success" @click="InputDisabled"
@@ -112,6 +122,18 @@ export default defineComponent({
         <p>
             输入框样式：
             <x-input placeholder="请输入" type="password" style="background-color: #aaa;" />
+        </p>
+        <p>
+            onInput事件：
+            <x-input placeholder="请输入" @onInputChange="inputChange" />
+        </p>
+        <p>
+            onBlur事件：
+            <x-input placeholder="请输入" @onInputBlur="inputBlur" />
+        </p>
+        <p>
+            onFocus事件：
+            <x-input placeholder="请输入" @onInputFocus="inputFocus" />
         </p>
     </div>
 </template>

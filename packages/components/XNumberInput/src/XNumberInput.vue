@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, Ref, ref } from "vue";
+import { computed, ComputedRef, defineComponent, Ref, ref } from "vue";
 import XInput from "../../XInput";
 import { Up } from "xinxin-icons";
 
@@ -22,17 +22,26 @@ export default defineComponent({
         let xInputRef = ref();
         let upBtnRef = ref<HTMLDivElement>();
         let downBtnRef = ref<HTMLDivElement>();
+        // 是否禁用
+        let disabled = computed(() => {
+            if (attrs.disabled === undefined || attrs.disabled === false) {
+                return false;
+            }
+            return true;
+        });
         let { upValue, downValue, disabledBtn, blurInput } = modifyValue(
             xInputRef,
             props,
             upBtnRef,
-            downBtnRef
+            downBtnRef,
+            disabled
         );
         return {
             numberInputClassList: computed(() => [
                 "x-number-input",
                 "x-number-input-" + (<string>attrs.mode ?? "normal"),
             ]),
+            disabled,
             xInputRef,
             upValue,
             downValue,
@@ -52,17 +61,21 @@ function modifyValue(
     xInputRef: Ref,
     props: any,
     upBtnRef: Ref<HTMLDivElement | undefined>,
-    downBtnRef: Ref<HTMLDivElement | undefined>
+    downBtnRef: Ref<HTMLDivElement | undefined>,
+    disabled: ComputedRef<boolean>
 ): {
     [propsName: string]: (param: any) => void;
 } {
-    let stepLen: number = 1;
+    let stepLen: number;
     if (typeof props.step === "string") {
         stepLen = parseInt(props.step);
     } else {
         stepLen = props.step;
     }
     let upValue = (e: Event) => {
+        if (disabled.value) {
+            return;
+        }
         // 获取当前值
         let currentValue: number =
             xInputRef.value.getCurrentValue() === ""
@@ -77,6 +90,9 @@ function modifyValue(
     };
 
     let downValue = (e: Event) => {
+        if (disabled.value) {
+            return;
+        }
         // 获取当前值
         let currentValue: number =
             xInputRef.value.getCurrentValue() === ""
@@ -143,14 +159,22 @@ function modifyValue(
         />
         <div class="x-number-input__button" v-if="numberButton">
             <div
-                class="x-number-input__button__top x-number-input__button__half"
+                :class="[
+                    'x-number-input__button__top',
+                    'x-number-input__button__half',
+                    disabled ? 'x-number-input__button__disable' : '',
+                ]"
                 ref="upBtnRef"
                 @click="upValue"
             >
                 <Up />
             </div>
             <div
-                class="x-number-input__button__bottom x-number-input__button__half"
+                :class="[
+                    'x-number-input__button__bottom',
+                    'x-number-input__button__half',
+                    disabled ? 'x-number-input__button__disable' : '',
+                ]"
                 ref="downBtnRef"
                 @click="downValue"
             >
@@ -164,8 +188,7 @@ function modifyValue(
     display inline-flex
     .x-number-input__button
         border 1px solid #e0e0e6
-        margin-left 5px
-        margin-top -1px
+        margin -1px 0 1px 5px
         border-radius 3px
         cursor pointer
         display flex
@@ -186,10 +209,11 @@ function modifyValue(
                 height 8px
         .x-number-input__button__disable
             cursor not-allowed
+            background-color #f7f7f7
             &:hover
-                background-color #fff
+                background-color #f7f7f7
             &:active
-                background-color #fff
+                background-color #f7f7f7
         .x-number-input__button__bottom
             .asa-icon
                 transform rotateX(180deg)
