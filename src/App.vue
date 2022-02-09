@@ -7,6 +7,7 @@
         <XLoadTest />
         <XInputTest />
         <XNumberInputTest />
+        <XRadioTest />
     </div>
 </template>
 <script lang="ts">
@@ -17,6 +18,7 @@ import XMessageTest from "../packages/components/XMessage/__tests__/XMessageTest
 import XLoadTest from "../packages/components/XLoad/__tests__/XLoadTest.vue";
 import XInputTest from "../packages/components/XInput/__tests__/XInputTest.vue";
 import XNumberInputTest from "../packages/components/XNumberInput/__tests__/XNumberInputTest.vue";
+import XRadioTest from "../packages/components/XRadio/__tests__/XRadioTest.vue";
 
 export default {
     name: "App",
@@ -28,6 +30,7 @@ export default {
         XLoadTest,
         XInputTest,
         XNumberInputTest,
+        XRadioTest,
     },
 };
 </script>
