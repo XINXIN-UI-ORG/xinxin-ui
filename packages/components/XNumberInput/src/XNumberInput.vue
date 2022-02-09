@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, ComputedRef, defineComponent, Ref, ref } from "vue";
 import XInput from "../../XInput";
-import { Up } from "xinxin-icons";
+import { Up, Down } from "xinxin-icons";
 
 export default defineComponent({
     name: "x-number-input",
@@ -54,6 +54,7 @@ export default defineComponent({
     components: {
         XInput,
         Up,
+        Down,
     },
 });
 
@@ -178,7 +179,7 @@ function modifyValue(
                 ref="downBtnRef"
                 @click="downValue"
             >
-                <Up />
+                <Down />
             </div>
         </div>
     </div>
@@ -205,8 +206,8 @@ function modifyValue(
                 background-color #eceded
             .asa-icon
                 color #888a8c
-                width 8px
-                height 8px
+                width 10px
+                height 10px
         .x-number-input__button__disable
             cursor not-allowed
             background-color #f7f7f7
@@ -214,9 +215,6 @@ function modifyValue(
                 background-color #f7f7f7
             &:active
                 background-color #f7f7f7
-        .x-number-input__button__bottom
-            .asa-icon
-                transform rotateX(180deg)
 .x-number-input-small
     height 30px
 .x-number-input-normal
