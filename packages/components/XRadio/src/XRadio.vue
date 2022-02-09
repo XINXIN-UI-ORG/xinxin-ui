@@ -7,5 +7,5 @@ export default defineComponent({
 });
 </script>
 <template>
-dasdsad
+<input type="radio" />
 </template>
