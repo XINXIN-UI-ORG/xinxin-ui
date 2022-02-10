@@ -45,8 +45,8 @@ export default defineComponent({
             <x-input placeholder="请输入" type="text" mode="large" />
         </p>
         <p>
-            size：
-            <x-input placeholder="请输入" type="text" size="50" />
+            width：
+            <x-input placeholder="请输入" type="text" width="50" />
         </p>
         <p>
             禁用：
@@ -118,6 +118,19 @@ export default defineComponent({
         <p>
             输入框状态：
             <x-input placeholder="请输入" type="password" status="error" />
+        </p>
+        <p>
+            块级输入框：
+            <x-input placeholder="块级输入" block />
+            <br>
+            <x-input placeholder="请输入" type="text" block>
+                <template #prefix>
+                    <Search />
+                </template>
+                <template #suffix>
+                    <Search />
+                </template>
+            </x-input>
         </p>
         <p>
             输入框样式：

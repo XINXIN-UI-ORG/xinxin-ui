@@ -32,11 +32,15 @@ export default defineComponent({
             default: undefined,
         },
         placeholder: String,
-        size: {
+        width: {
             type: [Number, String],
-            default: 20,
+            default: 200,
         },
         style: Object,
+        block: {
+            type: Boolean,
+            default: false,
+        },
     },
     emits: {
         onInputChange: null,
@@ -108,6 +112,7 @@ export default defineComponent({
                 "x-input-" + props.mode,
                 props.disabled && "x-input-disabled",
                 props.status && "x-input-" + props.status,
+                props.block ? "x-input-block" : "x-input-inline",
             ]),
             prefix: slots.prefix,
             suffix: slots.suffix,
@@ -139,6 +144,15 @@ export default defineComponent({
             passwordIcon,
             clearIconRef,
             passwordIconRef,
+            inputStyle: computed(() => {
+                let result = props.style ?? {};
+                if (!props.block) {
+                    Object.assign(result, {
+                        width: `${props.width}px`,
+                    });
+                }
+                return result;
+            }),
         };
     },
     components: {
@@ -303,7 +317,7 @@ function showPasswordOnGather(
 }
 </script>
 <template>
-    <div :class="inputWrapperClassList" :style="style" ref="inputWrapRef">
+    <div :class="inputWrapperClassList" :style="inputStyle" ref="inputWrapRef">
         <div class="x-input__fix x-input__prefix" v-if="prefix">
             <slot name="prefix"></slot>
         </div>
@@ -312,7 +326,6 @@ function showPasswordOnGather(
             class="x-input__input"
             :placeholder="placeholder"
             autocomplete="new-password"
-            :size="size"
             @input="inputEvent"
             @blur="blurEvent"
             @focus="focusEvent"
@@ -320,7 +333,7 @@ function showPasswordOnGather(
             ref="inputRef"
         />
         <div class="x-input__area" v-if="clearable">
-            <span v-show="clearShow  && !disabled" ref="clearIconRef">
+            <span v-show="clearShow && !disabled" ref="clearIconRef">
                 <ErrorMessage class="x-input__area-icon" />
             </span>
         </div>
@@ -346,8 +359,11 @@ function showPasswordOnGather(
     </div>
 </template>
 <style lang="stylus" scoped>
-.x-input
+.x-input-block
+    display flex
+.x-input-inline
     display inline-flex
+.x-input
     border-radius 3px
     padding 0 12px
     cursor text
@@ -374,6 +390,7 @@ function showPasswordOnGather(
         outline none
         background-color transparent
         caret-color #f5a31f
+        flex 1
         &::-webkit-inner-spin-button, &::-webkit-outer-spin-button
             -webkit-appearance none
         &[type="number"]
@@ -390,6 +407,7 @@ function showPasswordOnGather(
         color #333639
     .x-input__prefix
         padding-right 12px
+        flex 1
     .x-input__suffix
         padding-left 12px
     .x-input__area
