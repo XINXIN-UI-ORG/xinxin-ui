@@ -130,5 +130,26 @@ export default defineComponent({
                 @onInputFocus="inputFocus"
             />
         </p>
+        <p>
+            块级输入：
+            <x-number-input
+                placeholder="数字输入"
+                number-button
+                clearable
+                block
+            />
+            <br>
+            <x-number-input
+                placeholder="数字输入"
+                :number-button="false"
+                clearable
+                block
+            />
+            <br>
+            <x-number-input
+                placeholder="数字输入"
+                block
+            />
+        </p>
     </div>
 </template>

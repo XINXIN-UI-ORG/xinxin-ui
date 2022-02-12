@@ -5,7 +5,6 @@ import { Up, Down } from "xinxin-icons";
 
 export default defineComponent({
     name: "x-number-input",
-    inheritAttrs: false,
     props: {
         numberButton: {
             type: Boolean,
@@ -40,6 +39,9 @@ export default defineComponent({
             numberInputClassList: computed(() => [
                 "x-number-input",
                 "x-number-input-" + (<string>attrs.mode ?? "normal"),
+                attrs.block === undefined || attrs.block === false
+                    ? "x-number-input-inline"
+                    : "x-number-input-block",
             ]),
             disabled,
             xInputRef,
@@ -157,6 +159,7 @@ function modifyValue(
             ref="xInputRef"
             @onInputChange="disabledBtn"
             @onInputBlur="blurInput"
+            class="x-number-input__input"
         />
         <div class="x-number-input__button" v-if="numberButton">
             <div
@@ -185,8 +188,13 @@ function modifyValue(
     </div>
 </template>
 <style lang="stylus" scoped>
-.x-number-input
+.x-number-input-block
+    display flex
+.x-number-input-inline
     display inline-flex
+.x-number-input
+    .x-number-input__input
+        flex 1
     .x-number-input__button
         border 1px solid #e0e0e6
         margin -1px 0 1px 5px

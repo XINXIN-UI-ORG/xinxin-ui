@@ -5,7 +5,6 @@ import { ErrorMessage, PasswordShow, PasswordHide } from "xinxin-icons";
 
 export default defineComponent({
     name: "x-input",
-    inheritAttrs: false,
     props: {
         mode: {
             type: String,
@@ -32,11 +31,10 @@ export default defineComponent({
             default: undefined,
         },
         placeholder: String,
-        width: {
+        size: {
             type: [Number, String],
-            default: 200,
+            default: 20,
         },
-        style: Object,
         block: {
             type: Boolean,
             default: false,
@@ -144,15 +142,6 @@ export default defineComponent({
             passwordIcon,
             clearIconRef,
             passwordIconRef,
-            inputStyle: computed(() => {
-                let result = props.style ?? {};
-                if (!props.block) {
-                    Object.assign(result, {
-                        width: `${props.width}px`,
-                    });
-                }
-                return result;
-            }),
         };
     },
     components: {
@@ -317,7 +306,7 @@ function showPasswordOnGather(
 }
 </script>
 <template>
-    <div :class="inputWrapperClassList" :style="inputStyle" ref="inputWrapRef">
+    <div :class="inputWrapperClassList" ref="inputWrapRef">
         <div class="x-input__fix x-input__prefix" v-if="prefix">
             <slot name="prefix"></slot>
         </div>
@@ -330,6 +319,7 @@ function showPasswordOnGather(
             @blur="blurEvent"
             @focus="focusEvent"
             :disabled="disabled"
+            :size="size"
             ref="inputRef"
         />
         <div class="x-input__area" v-if="clearable">
@@ -407,7 +397,6 @@ function showPasswordOnGather(
         color #333639
     .x-input__prefix
         padding-right 12px
-        flex 1
     .x-input__suffix
         padding-left 12px
     .x-input__area
