@@ -142,6 +142,10 @@ export default defineComponent({
             passwordIcon,
             clearIconRef,
             passwordIconRef,
+            stopBlur(e: Event) {
+                e.preventDefault();
+                return false;
+            },
         };
     },
     components: {
@@ -286,22 +290,14 @@ function showPasswordOnGather(
         }
         inputRef.value!.type = "text";
         passwordIcon.value = true;
-    });
-    passwordIconRef.value?.addEventListener("mouseup", () => {
-        if ("mousedown" !== eventType) {
-            return;
-        }
-        // 重新设置密码为密文
-        inputRef.value!.type = "password";
-        passwordIcon.value = false;
-    });
-    passwordIconRef.value?.addEventListener("mouseleave", () => {
-        if ("mousedown" !== eventType) {
-            return;
-        }
-        // 重新设置密码为密文
-        inputRef.value!.type = "password";
-        passwordIcon.value = false;
+        document.addEventListener("mouseup", () => {
+            if ("mousedown" !== eventType) {
+                return;
+            }
+            // 重新设置密码为密文
+            inputRef.value!.type = "password";
+            passwordIcon.value = false;
+        });
     });
 }
 </script>
@@ -324,7 +320,11 @@ function showPasswordOnGather(
         />
         <div class="x-input__area" v-if="clearable">
             <span v-show="clearShow && !disabled" ref="clearIconRef">
-                <ErrorMessage class="x-input__area-icon" />
+                <ErrorMessage
+                    class="x-input__area-icon"
+                    @mousedown="stopBlur"
+                    @mouseup="stopBlur"
+                />
             </span>
         </div>
         <div
@@ -335,10 +335,14 @@ function showPasswordOnGather(
                 <PasswordShow
                     class="x-input__area-icon"
                     v-show="passwordIcon"
+                    @mousedown="stopBlur"
+                    @mouseup="stopBlur"
                 />
                 <PasswordHide
                     class="x-input__area-icon"
                     v-show="!passwordIcon"
+                    @mousedown="stopBlur"
+                    @mouseup="stopBlur"
                 />
             </span>
         </div>
