@@ -353,6 +353,8 @@ function showPasswordOnGather(
     </div>
 </template>
 <style lang="stylus" scoped>
+@import '../../../theme-chalk/variable.styl';
+
 .x-input-block
     display flex
 .x-input-inline
@@ -366,7 +368,7 @@ function showPasswordOnGather(
     vertical-align middle
     &:hover
         .x-input__border
-            border-color #f5a31f
+            border-color $base_theme_color
     .x-input__border
         border 1px solid #e0e0e6
         transition border-color .3s, box-shadow .3s
@@ -391,8 +393,8 @@ function showPasswordOnGather(
             -moz-appearance textfield
         &:focus
             ~ .x-input__border
-                border-color #f5a31f
-                box-shadow 0 0 1px 2px rgba(245, 163, 31, .25)
+                border-color $base_theme_color
+                box-shadow $base_theme_shadow
     .x-input__fix
         height 100%
         overflow hidden
