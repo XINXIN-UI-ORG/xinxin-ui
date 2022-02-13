@@ -17,7 +17,7 @@ export default defineComponent({
     emits: {
         "update:modelValue": null,
     },
-    setup(props, { emit }) {
+    setup(props, { emit, slots }) {
         let radioInputRef = ref<HTMLInputElement>();
         return {
             radioInputRef,
@@ -26,12 +26,13 @@ export default defineComponent({
                     props.modelValue !== undefined &&
                     props.value !== undefined &&
                     props.modelValue === props.value,
-                set: value => {
+                set: (value) => {
                     if (value) {
                         emit("update:modelValue", props.value);
                     }
                 },
             }),
+            description: computed(() => slots.description),
         };
     },
 });
@@ -47,9 +48,21 @@ export default defineComponent({
                 :checked="checked"
                 v-model="checked"
             />
-            <div :class="['x-radio__icon__check', checked && 'x-radio__icon__checked']"></div>
+            <div
+                :class="[
+                    'x-radio__icon__check',
+                    checked && 'x-radio__icon__checked',
+                ]"
+            ></div>
         </div>
-        <div class="x-radio__description">fdfds</div>
+        <div class="x-radio__description">
+            <span class="x-radio__description__label">
+                <slot></slot>
+            </span>
+            <span class="x-radio__description__second-text" v-if="description">
+                <slot name="description"></slot>
+            </span>
+        </div>
     </label>
 </template>
 <style lang="stylus" scoped>
@@ -59,6 +72,7 @@ export default defineComponent({
     display inline-flex
     cursor pointer
     .x-radio__icon
+        flex 0 0 16px
         height 16px
         width 16px
         position relative
@@ -97,4 +111,14 @@ export default defineComponent({
                 transform translate(-50%, -50%)
                 border-radius 50%
                 background-color #fff
+    .x-radio__description
+        user-select none
+        margin-left 8px
+        font-size 14px
+        display flex
+        flex-direction column
+        .x-radio__description__label
+            margin-top -1px
+        .x-radio__description__second-text
+            color #1c1f2399
 </style>
