@@ -12,7 +12,6 @@
     "noImplicitAny": false,
     "sourceMap": true,
     "baseUrl": ".",
-    "isolatedModules": true,
     "declaration": true,
     // 只输出类型声明文件
     "emitDeclarationOnly": true,

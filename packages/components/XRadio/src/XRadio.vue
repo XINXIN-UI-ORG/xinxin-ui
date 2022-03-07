@@ -27,9 +27,8 @@ export default defineComponent({
                     props.value !== undefined &&
                     props.modelValue === props.value,
                 set: (value) => {
-                    if (value) {
-                        emit("update:modelValue", props.value);
-                    }
+                    emit("update:modelValue", value);
+                    radioInputRef.value!.checked = props.modelValue === props.value;
                 },
             }),
             description: computed(() => slots.description),
@@ -44,8 +43,8 @@ export default defineComponent({
                 type="radio"
                 class="x-radio__icon_input"
                 ref="radioInputRef"
+                :value="value"
                 :name="name"
-                :checked="checked"
                 v-model="checked"
             />
             <div

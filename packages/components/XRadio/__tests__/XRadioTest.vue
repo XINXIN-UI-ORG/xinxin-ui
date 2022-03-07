@@ -6,6 +6,7 @@ export default defineComponent({
         return {
             r1: ref("1"),
             r2: ref("1"),
+            radioValue: ref(""),
         };
     },
 });
@@ -13,6 +14,11 @@ export default defineComponent({
 <template>
     <div style="border: 1px solid #aaa; padding: 10px; margin-top: 10px">
         <p>单选框：</p>
+        <p>
+            单选：
+            <x-radio v-model="radioValue" value="1">单选</x-radio>
+            {{radioValue}}
+        </p>
         <p>
             基础使用：
             <x-radio v-model="r1" value="1" name="r1">允许取消选择</x-radio>

@@ -23,18 +23,30 @@
   "scripts": {
     "dev": "vite",
     "build:types": "tsc --project ./tsconfig.json",
-    "build": "vite build --config packages/build/vite.config.js && npm run build:types"
+    "build": "vite build --config packages/build/vite.config.js && npm run build:types",
+    "test": "jest src --watch"
   },
   "dependencies": {
     "vue": "^3.0.4"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.2",
+    "@testing-library/user-event": "^13.5.0",
+    "@testing-library/vue": "^6.4.2",
+    "@types/jest": "^27.4.1",
     "@vitejs/plugin-vue": "^2.0.1",
     "@vitejs/plugin-vue-jsx": "^1.3.3",
+    "@vue/babel-preset-app": "^5.0.1",
     "@vue/compiler-sfc": "^3.0.4",
+    "@vue/test-utils": "^2.0.0-rc.18",
+    "babel-jest": "^26.0.0",
+    "jest": "^26.0.0",
+    "jest-html-reporter": "^3.4.2",
     "stylus": "^0.56.0",
+    "ts-jest": "^26.4.4",
     "typescript": "^4.5.4",
     "vite": "^2.7.10",
+    "vue-jest": "^5.0.0-alpha.10",
     "xinxin-icons": "file:../xinxin-icons/xinxin-icons-1.0.1.tgz"
   }
 }
