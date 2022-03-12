@@ -1,64 +1,71 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
+import { radioProps, radioEmit, radioGather } from "./XRadio";
+import { generateClassName } from "../../../utils"
 
 export default defineComponent({
-    name: "x-radio",
-    props: {
-        modelValue: {
-            type: [Number, String, Boolean],
-            default: undefined,
-        },
-        value: {
-            type: [Number, String, Boolean],
-            default: undefined,
-        },
-        name: String,
-    },
-    emits: {
-        "update:modelValue": null,
-    },
+    name: 'x-radio',
+    props: radioProps,
+    emits: radioEmit,
+    inheritAttrs: false,
     setup(props, { emit, slots }) {
+        let gcn = generateClassName("radio");
         let radioInputRef = ref<HTMLInputElement>();
+        let { checkValue, blurEvent, focusEvent } = radioGather(props, emit, radioInputRef);
         return {
             radioInputRef,
-            checked: computed({
-                get: () =>
-                    props.modelValue !== undefined &&
-                    props.value !== undefined &&
-                    props.modelValue === props.value,
-                set: (value) => {
-                    emit("update:modelValue", value);
-                    radioInputRef.value!.checked = props.modelValue === props.value;
-                },
-            }),
+            checkValue,
             description: computed(() => slots.description),
+            gcn,
+            blurEvent,
+            focusEvent,
         };
     },
 });
 </script>
 <template>
-    <label class="x-radio">
-        <div class="x-radio__icon">
+    <label :class="[
+        gcn.base(),
+        gcn.is('disabled', disabled),
+        gcn.is('checked', checkValue),
+        gcn.is('card', card),
+    ]">
+        <div :class="[
+            gcn.e('icon'),
+        ]">
             <input
                 type="radio"
-                class="x-radio__icon_input"
+                :class="[
+                    gcn.e('icon', 'input')
+                ]"
                 ref="radioInputRef"
                 :value="value"
                 :name="name"
-                v-model="checked"
+                v-model="checkValue"
+                :disabled="disabled"
+                @blur="blurEvent"
+                @focus="focusEvent"
+                @change="changeEvent"
             />
             <div
                 :class="[
-                    'x-radio__icon__check',
-                    checked && 'x-radio__icon__checked',
+                    gcn.e('icon', 'check'),
                 ]"
             ></div>
         </div>
-        <div class="x-radio__description">
-            <span class="x-radio__description__label">
+        <div :class="[
+            gcn.e('description')
+        ]">
+            <span :class="[
+                gcn.e('description', 'label')
+            ]">
                 <slot></slot>
             </span>
-            <span class="x-radio__description__second-text" v-if="description">
+            <span
+                :class="[
+                    gcn.e('description', 'second-text')
+                ]"
+                v-if="description">
                 <slot name="description"></slot>
             </span>
         </div>
@@ -70,12 +77,13 @@ export default defineComponent({
 .x-radio
     display inline-flex
     cursor pointer
+    box-sizing border-box
     .x-radio__icon
         flex 0 0 16px
         height 16px
         width 16px
         position relative
-        .x-radio__icon_input
+        .x-radio__icon__input
             position absolute
             top 0
             left 0
@@ -96,20 +104,7 @@ export default defineComponent({
             position relative
             z-index 1
             border-radius 50%
-        .x-radio__icon__checked
-            transition all .5s
-            background-color $base_theme_color
-            border-color $base_theme_color
-            &::before
-                content ''
-                height 7px
-                width 7px
-                position absolute
-                top 50%
-                left 50%
-                transform translate(-50%, -50%)
-                border-radius 50%
-                background-color #fff
+            background-color #fff
     .x-radio__description
         user-select none
         margin-left 8px
@@ -120,4 +115,48 @@ export default defineComponent({
             margin-top -1px
         .x-radio__description__second-text
             color #1c1f2399
+.x-radio-card
+    padding 10px
+    border-radius 4px
+    border 1px solid transparent
+    &:hover
+        background-color #f4f5f5    
+    .x-radio__description__label
+        font-weight bolder
+.x-radio-checked
+    &:hover
+        background transparent
+    .x-radio__icon__check
+        transition all .5s
+        background-color $base_theme_color !important
+        border-color $base_theme_color !important
+        &::before
+            content ''
+            height 7px
+            width 7px
+            position absolute
+            top 50%
+            left 50%
+            transform translate(-50%, -50%)
+            border-radius 50%
+            background-color #fff
+    &.x-radio-card
+        background-color $base_theme_color_opacity
+        border-color $base_theme_color
+.x-radio-disabled
+    cursor not-allowed
+    .x-radio__icon
+        cursor not-allowed
+        .x-radio__icon__input
+            cursor not-allowed
+            &:hover
+                ~ .x-radio__icon__check
+                    border-color $base_theme_disabled_border-color
+        .x-radio__icon__check
+            background-color $base_theme_disabled_bg-color !important
+            border-color $base_theme_disabled_border-color !important
+    .x-radio__description
+        color $base_theme_disabled_color
+        .x-radio__description__second-text
+            color $base_theme_disabled_second-text-color
 </style>
