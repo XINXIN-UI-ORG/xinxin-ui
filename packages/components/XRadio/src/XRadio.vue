@@ -45,7 +45,6 @@ export default defineComponent({
                 :disabled="disabled"
                 @blur="blurEvent"
                 @focus="focusEvent"
-                @change="changeEvent"
             />
             <div
                 :class="[
