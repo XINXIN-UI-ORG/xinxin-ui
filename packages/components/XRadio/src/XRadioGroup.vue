@@ -27,3 +27,11 @@ export default defineComponent({
         <slot></slot>
     </section>
 </template>
+<style lang="stylus" scoped>
+.x-radio-group
+    display inline-block
+    :deep(.x-radio)
+        margin-right 16px
+    :deep(.x-radio:last-child)
+        margin-right 0
+</style>
