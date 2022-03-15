@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent, ref } from "vue";
 import { radioProps, radioEmit, radioGather } from "./XRadio";
-import { generateClassName } from "../../../utils"
+import { generateClassName } from "@xinxin-ui/utils";
 
 export default defineComponent({
     name: 'x-radio',
@@ -11,7 +11,7 @@ export default defineComponent({
     setup(props, { emit, slots }) {
         let gcn = generateClassName("radio");
         let radioInputRef = ref<HTMLInputElement>();
-        let { checkValue, blurEvent, focusEvent } = radioGather(props, emit, radioInputRef);
+        let { checkValue, blurEvent, focusEvent, inputName } = radioGather(props, emit, radioInputRef);
         return {
             radioInputRef,
             checkValue,
@@ -19,17 +19,21 @@ export default defineComponent({
             gcn,
             blurEvent,
             focusEvent,
+            inputName,
         };
     },
 });
 </script>
 <template>
-    <label :class="[
-        gcn.base(),
-        gcn.is('disabled', disabled),
-        gcn.is('checked', checkValue),
-        gcn.is('card', card),
-    ]">
+    <label
+        :class="[
+            gcn.base(),
+            gcn.is('disabled', disabled),
+            gcn.is('checked', checkValue),
+            gcn.is('card', card),
+        ]"
+        tag="radio"
+    >
         <div :class="[
             gcn.e('icon'),
         ]">
@@ -40,7 +44,7 @@ export default defineComponent({
                 ]"
                 ref="radioInputRef"
                 :value="value"
-                :name="name"
+                :name="inputName"
                 v-model="checkValue"
                 :disabled="disabled"
                 @blur="blurEvent"

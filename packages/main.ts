@@ -6,7 +6,7 @@ import XMessage from "./components/XMessage";
 import XLoad, { XLoadHandler } from "./components/XLoad";
 import XInput from "./components/XInput";
 import XNumberInput from "./components/XNumberInput";
-import XRadio from "./components/XRadio";
+import XRadio, { XRadioGroup } from "./components/XRadio";
 
 // package下组件列表
 const components = [
@@ -18,6 +18,7 @@ const components = [
     XInput,
     XNumberInput,
     XRadio,
+    XRadioGroup,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -47,4 +48,5 @@ export {
     XInput,
     XNumberInput,
     XRadio,
+    XRadioGroup,
 };

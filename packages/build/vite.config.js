@@ -1,4 +1,4 @@
-import path from "path";
+import path, { resolve } from "path";
 import { defineConfig } from "vite";
 import vueJsx from "@vitejs/plugin-vue-jsx";
 import vue from "@vitejs/plugin-vue";
@@ -8,6 +8,11 @@ export default defineConfig({
     vue(),
     vueJsx(),
   ],
+  resolve: {
+    alias: {
+      "@xinxin-ui": resolve(__dirname, "packages"),
+    },
+  },
   build: {
     lib: {
       entry: path.resolve(__dirname, '../main.ts'),

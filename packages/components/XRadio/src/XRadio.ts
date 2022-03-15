@@ -1,4 +1,8 @@
-import { computed, ExtractPropTypes, onMounted, Ref, SetupContext } from "vue";
+import { computed, ExtractPropTypes, inject, onMounted, Ref, SetupContext } from "vue";
+import { radioGroupKey } from "@xinxin-ui/symbols";
+import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
+import { isString } from "@vue/shared";
+import { isBoolean, isNumber } from "@vueuse/core";
 
 export const radioProps = {
     modelValue: {
@@ -9,7 +13,10 @@ export const radioProps = {
         type: [Number, String, Boolean],
         default: undefined,
     },
-    name: String,
+    name: {
+        type: String,
+        default: ''
+    },
     disabled: {
         type: Boolean,
         default: false,
@@ -21,9 +28,10 @@ export const radioProps = {
 };
 
 export const radioEmit = {
-    "update:modelValue": null,
-    "blur": null,
-    "focus": null,
+    [MODEL_VALUE_UPDATE]: (val: string | boolean | number) =>
+        isString(val) || isBoolean(val) || isNumber(val),
+    blur: null,
+    focus: null,
 };
 
 export function radioGather(
@@ -31,15 +39,32 @@ export function radioGather(
     emit: SetupContext<typeof radioEmit>['emit'],
     radioInputRef: Ref<HTMLInputElement | undefined>
 ) {
+    // 接收从radioGroup传来的参数
+    const radioGroupProps = inject(radioGroupKey, undefined);
+    const isGroup = computed(() => !!radioGroupProps);
+    const inputName = computed(() => {
+        // 如果radioGroup有值则使用radioGroup的值
+        return isGroup.value ? radioGroupProps!.name : props.name;
+    });
     // 是否选中
     const checkValue = computed<boolean>({
-        get: () =>
-            props.modelValue !== undefined &&
-            props.value !== undefined &&
-            props.modelValue === props.value,
+        get: () => {
+            const finalModelValue = isGroup.value
+                ? radioGroupProps!.modelValue
+                : props.modelValue;
+            return finalModelValue !== undefined
+                && props.value !== undefined
+                && finalModelValue === props.value;
+        },
         set: (value) => {
-            emit("update:modelValue", value);
-            radioInputRef.value!.checked = props.modelValue === props.value;
+            let finalModelValue = props.modelValue;
+            if (isGroup.value) {
+                finalModelValue = radioGroupProps!.modelValue;
+                radioGroupProps!.changeEvent(value);
+            } else {
+                emit(MODEL_VALUE_UPDATE, value);
+            }
+            radioInputRef.value!.checked = finalModelValue === props.value;
         },
     });
     const blurEvent = (event: Event) => {
@@ -58,5 +83,6 @@ export function radioGather(
         checkValue,
         blurEvent,
         focusEvent,
+        inputName,
     };
 }

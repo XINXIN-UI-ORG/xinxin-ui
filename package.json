@@ -27,6 +27,7 @@
     "test": "jest src --watch"
   },
   "dependencies": {
+    "@vueuse/core": "^8.0.1",
     "vue": "^3.0.4"
   },
   "devDependencies": {

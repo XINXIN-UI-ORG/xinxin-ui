@@ -12,6 +12,9 @@
     "noImplicitAny": false,
     "sourceMap": true,
     "baseUrl": ".",
+    "paths": {
+      "@xinxin-ui/*": ["packages/*"]
+    },
     "declaration": true,
     // 只输出类型声明文件
     "emitDeclarationOnly": true,
@@ -22,7 +25,7 @@
       "dom",
       "dom.iterable",
       "scripthost"
-    ]
+    ],
   },
   "include": [
     "packages/**/*.ts",

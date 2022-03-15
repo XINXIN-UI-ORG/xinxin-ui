@@ -1,9 +1,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import XRadio from "../src/XRadio.vue";
 
 export default defineComponent({
-  components: { XRadio },
     setup() {
         let r3Disabled = ref(true);
         return {
@@ -20,6 +18,7 @@ export default defineComponent({
             r6: ref(1),
             r7: ref(1),
             r8: ref(1),
+            r9: ref(1),
             blurEvent(event: Event) {
                 console.log(event);
             },
@@ -125,6 +124,17 @@ export default defineComponent({
             <x-radio v-model="r6" :value="2" name="event" @focus="focusEvent">
                 focus事件
             </x-radio>
+        </p>
+        <hr>
+        <p>
+            按钮组：
+            <x-radio-group name="test" v-model="r9">
+                <x-radio :value="1">组1</x-radio>
+                <x-radio :value="2">组2</x-radio>
+                <x-radio :value="3">组3</x-radio>
+            </x-radio-group>
+            &nbsp;
+            {{r9}}
         </p>
     </div>
 </template>
