@@ -31,7 +31,6 @@ export type RadioGroupProps = ExtractPropTypes<typeof radioGroupProps>;
 export const radioGroupGather = (
     props: RadioGroupProps,
     emit: SetupContext<typeof radioGroupEmits>['emit'],
-    radioGroupRef: Ref<HTMLTableSectionElement | undefined>
 ) => {
     // 触发change事件
     const changeEvent = (value: RadioGroupProps['modelValue']) => {

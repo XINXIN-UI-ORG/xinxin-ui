@@ -8,19 +8,16 @@ export default defineComponent({
     props: radioGroupProps,
     emits: radioGroupEmits,
     setup(props, {emit}) {
-        let radioGroupRef = ref<HTMLTableSectionElement>();
         let gcn = generateClassName('radio-group');
-        let {} = radioGroupGather(props, emit, radioGroupRef);
+        let {} = radioGroupGather(props, emit);
         return {
             gcn,
-            radioGroupRef,
         };
     }
 });
 </script>
 <template>
     <section
-        ref="radioGroupRef"
         :class="[
             gcn.base(),
         ]">
