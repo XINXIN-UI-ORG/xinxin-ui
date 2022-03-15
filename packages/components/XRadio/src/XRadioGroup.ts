@@ -12,7 +12,11 @@ export const radioGroupProps = {
     name: {
         type: String,
         default: ''
-    }
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 };
 
 export const radioGroupEmits = {

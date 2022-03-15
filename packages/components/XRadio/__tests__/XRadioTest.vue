@@ -19,6 +19,7 @@ export default defineComponent({
             r7: ref(1),
             r8: ref(1),
             r9: ref(1),
+            r10: ref(2),
             blurEvent(event: Event) {
                 console.log(event);
             },
@@ -135,6 +136,49 @@ export default defineComponent({
             </x-radio-group>
             &nbsp;
             {{r9}}
+        </p>
+        <p>
+            按钮组禁用：
+            <x-radio-group name="test1" v-model="r10" :disabled="r3Disabled">
+                <x-radio :value="1">组1</x-radio>
+                <x-radio :value="2">组2</x-radio>
+                <x-radio :value="3">组3</x-radio>
+            </x-radio-group>
+            &nbsp;
+            {{r10}}
+            <x-button type="success" @click="toogleDisabledClick">Toogle Disabled</x-button>
+        </p>
+        <p>
+            卡片按钮组：
+            <x-radio-group name="test1" v-model="r10"
+                style="width: 250px;">
+                <x-radio :value="1" card>
+                    组1
+                    <template #description>
+                        组1组1组1组1组1组1
+                        组1组1组1组1组1组1
+                        组1组1组1组1组1组1
+                    </template>
+                </x-radio>
+                <x-radio :value="2" card>
+                    组2
+                    <template #description>
+                        组2组2组2组2组2组2
+                        组2组2组2组2组2组2
+                        组2组2组2组2组2组2
+                    </template>
+                </x-radio>
+                <x-radio :value="3" card>
+                    组3
+                    <template #description>
+                        组3组3组3组3组3组3
+                        组3组3组3组3组3组3
+                        组3组3组3组3组3组3
+                    </template>
+                </x-radio>
+            </x-radio-group>
+            &nbsp;
+            {{r10}}
         </p>
     </div>
 </template>

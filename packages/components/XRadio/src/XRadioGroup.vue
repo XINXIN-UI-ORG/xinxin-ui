@@ -34,4 +34,9 @@ export default defineComponent({
         margin-right 16px
     :deep(.x-radio:last-child)
         margin-right 0
+    :deep(.x-radio-card)
+        margin-right 0
+        margin-bottom 10px
+    :deep(.x-radio-card:last-child)
+        margin-bottom 0
 </style>

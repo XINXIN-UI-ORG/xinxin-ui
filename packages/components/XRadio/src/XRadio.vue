@@ -11,7 +11,7 @@ export default defineComponent({
     setup(props, { emit, slots }) {
         let gcn = generateClassName("radio");
         let radioInputRef = ref<HTMLInputElement>();
-        let { checkValue, blurEvent, focusEvent, inputName } = radioGather(props, emit, radioInputRef);
+        let { checkValue, blurEvent, focusEvent, inputName, disabled } = radioGather(props, emit, radioInputRef);
         return {
             radioInputRef,
             checkValue,
@@ -20,6 +20,7 @@ export default defineComponent({
             blurEvent,
             focusEvent,
             inputName,
+            disabled,
         };
     },
 });
@@ -119,6 +120,7 @@ export default defineComponent({
         .x-radio__description__second-text
             color #1c1f2399
 .x-radio-card
+    display flex 
     padding 10px
     border-radius 4px
     border 1px solid transparent

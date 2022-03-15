@@ -42,10 +42,14 @@ export function radioGather(
     // 接收从radioGroup传来的参数
     const radioGroupProps = inject(radioGroupKey, undefined);
     const isGroup = computed(() => !!radioGroupProps);
-    const inputName = computed(() => {
+    const inputName = computed(() =>
         // 如果radioGroup有值则使用radioGroup的值
-        return isGroup.value ? radioGroupProps!.name : props.name;
-    });
+        isGroup.value ? radioGroupProps!.name : props.name
+    );
+    // 是否禁用
+    const disabled = computed(() =>
+        isGroup.value ? radioGroupProps!.disabled : props.disabled
+    );
     // 是否选中
     const checkValue = computed<boolean>({
         get: () => {
@@ -84,5 +88,6 @@ export function radioGather(
         blurEvent,
         focusEvent,
         inputName,
+        disabled,
     };
 }
