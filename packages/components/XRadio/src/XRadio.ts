@@ -1,8 +1,9 @@
-import { computed, ExtractPropTypes, inject, onMounted, Ref, SetupContext } from "vue";
+import { computed, ExtractPropTypes, inject, onMounted, PropType, Ref, SetupContext } from "vue";
 import { radioGroupKey } from "@xinxin-ui/symbols";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isString } from "@vue/shared";
 import { isBoolean, isNumber } from "@vueuse/core";
+import { NormalSize } from "@xinxin-ui/typings";
 
 export const radioProps = {
     modelValue: {
@@ -24,7 +25,11 @@ export const radioProps = {
     card: {
         type: Boolean,
         default: false,
-    }
+    },
+    size: {
+        type: String as PropType<NormalSize>,
+        default: "normal"
+    },
 };
 
 export const radioEmit = {
@@ -49,6 +54,10 @@ export function radioGather(
     // 是否禁用
     const disabled = computed(() =>
         isGroup.value ? radioGroupProps!.disabled : props.disabled
+    );
+    // radio大小
+    const size = computed(() =>
+        isGroup.value ? radioGroupProps!.size : props.size
     );
     // 是否选中
     const checkValue = computed<boolean>({
@@ -89,5 +98,6 @@ export function radioGather(
         focusEvent,
         inputName,
         disabled,
+        size,
     };
 }

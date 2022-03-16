@@ -1,9 +1,11 @@
 type resultType = {
     base: () => string,
     is: (block: string, flag: boolean) => string,
+    bm: (content: string) => string,
     middle: (...args: string[]) => {
         is: (block: string, flag: boolean) => string,
-        base: () => string
+        base: () => string,
+        bm: (content: string) => string,
     },
     e: (...args: string[]) => string,
 };
@@ -23,6 +25,12 @@ export function generateClassName(tag: string): resultType {
             return flag ? `${prefix}-${block}` : "";
         };
     };
+    // 根据传入的内容生成标签
+    const bm = (prefix: string) => {
+        return (content: string) => {
+            return `${prefix}-${content}`;
+        };
+    }
     // 生成中间tag
     const middle = (...middleName: string[]) => {
         let middle: string = prefixTagName;
@@ -30,6 +38,7 @@ export function generateClassName(tag: string): resultType {
         return {
             is: is(middle),
             base: base(middle),
+            bm: bm(middle),
         };
     };
     // 生成多级标签
@@ -40,6 +49,7 @@ export function generateClassName(tag: string): resultType {
     return {
         base: base(prefixTagName),
         is: is(prefixTagName),
+        bm: bm(prefixTagName),
         middle,
         e,
     };

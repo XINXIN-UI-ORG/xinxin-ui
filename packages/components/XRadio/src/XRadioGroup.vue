@@ -36,4 +36,10 @@ export default defineComponent({
         margin-bottom 10px
     :deep(.x-radio-card:last-child)
         margin-bottom 0
+    :deep(.x-radio-button:first-child)
+        padding-left 4px
+    :deep(.x-radio-button:first-child)
+        border-radius 4px 0 0 4px
+    :deep(.x-radio-button:last-child)
+        border-radius 0 4px 4px 0
 </style>

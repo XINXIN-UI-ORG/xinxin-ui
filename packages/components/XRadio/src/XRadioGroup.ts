@@ -1,8 +1,9 @@
-import { Ref, ExtractPropTypes, provide, toRefs, reactive, SetupContext, nextTick } from "vue";
+import { ExtractPropTypes, provide, toRefs, reactive, SetupContext, nextTick, PropType } from "vue";
 import { radioGroupKey } from "@xinxin-ui/symbols"
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isString } from "@vue/shared";
 import { isBoolean, isNumber } from "@vueuse/core";
+import { NormalSize } from "@xinxin-ui/typings";
 
 export const radioGroupProps = {
     modelValue: {
@@ -16,6 +17,10 @@ export const radioGroupProps = {
     disabled: {
         type: Boolean,
         default: false,
+    },
+    size: {
+        type: String as PropType<NormalSize>,
+        default: "normal"
     },
 };
 

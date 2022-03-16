@@ -1,9 +1,13 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import XMessage from "@xinxin-ui/components/XMessage";
+import { RadioGroupProps } from "@xinxin-ui/main"
+
 
 export default defineComponent({
     setup() {
         let r3Disabled = ref(true);
+        let r13Disabled = ref(true);
         return {
             r1: ref("1"),
             r2: ref("1"),
@@ -20,11 +24,24 @@ export default defineComponent({
             r8: ref(1),
             r9: ref(1),
             r10: ref(2),
+            r11: ref(1),
+            r12: ref(1),
+            r13: ref(2),
+            r13Disabled,
+            r13ToogleDisabledClick() {
+                r13Disabled.value = !r13Disabled.value;
+            },
             blurEvent(event: Event) {
                 console.log(event);
             },
             focusEvent(event: Event) {
                 console.log(event);
+            },
+            changeEvent(value: RadioGroupProps['modelValue']) {
+                XMessage({
+                    message: '' + value,
+                    closable: true,
+                });
             },
         };
     },
@@ -179,6 +196,111 @@ export default defineComponent({
             </x-radio-group>
             &nbsp;
             {{r10}}
+        </p>
+        <p>
+            change事件：
+            <x-radio-group name="test2" v-model="r11"
+                @change="changeEvent">
+                <x-radio :value="1">
+                    组1
+                </x-radio>
+                <x-radio :value="2">
+                    组2
+                </x-radio>
+                <x-radio :value="3">
+                    组3
+                </x-radio>
+            </x-radio-group>
+        </p>
+        <hr>
+        <p>
+            radio button组合：
+            <x-radio-group name="test button" v-model="r12">
+                <x-radio-button :value="1">
+                    动态推送
+                </x-radio-button>
+                <x-radio-button :value="2">
+                    即时推送
+                </x-radio-button>
+                <x-radio-button :value="3">
+                    定时推送
+                </x-radio-button>
+            </x-radio-group>
+            &nbsp;
+            {{r12}}
+        </p>
+        <p>
+            radio button size：
+            <br>
+            <x-radio-group name="test button" v-model="r12" size="small">
+                <x-radio-button :value="1">
+                    动态推送
+                </x-radio-button>
+                <x-radio-button :value="2">
+                    即时推送
+                </x-radio-button>
+                <x-radio-button :value="3">
+                    定时推送
+                </x-radio-button>
+            </x-radio-group>
+            <br><br>
+            <x-radio-group name="test button" v-model="r12">
+                <x-radio-button :value="1">
+                    动态推送
+                </x-radio-button>
+                <x-radio-button :value="2">
+                    即时推送
+                </x-radio-button>
+                <x-radio-button :value="3">
+                    定时推送
+                </x-radio-button>
+            </x-radio-group>
+            <br><br>
+            <x-radio-group name="test button" v-model="r12" size="large">
+                <x-radio-button :value="1">
+                    动态推送
+                </x-radio-button>
+                <x-radio-button :value="2">
+                    即时推送
+                </x-radio-button>
+                <x-radio-button :value="3">
+                    定时推送
+                </x-radio-button>
+            </x-radio-group>
+        </p>
+        <p>
+            radio button禁用：
+            <x-radio-group name="test button" v-model="r13"
+            :disabled="r13Disabled">
+                <x-radio-button :value="1">
+                    动态推送
+                </x-radio-button>
+                <x-radio-button :value="2">
+                    即时推送
+                </x-radio-button>
+                <x-radio-button :value="3">
+                    定时推送
+                </x-radio-button>
+            </x-radio-group>
+            &nbsp;
+            {{r13}}
+            &nbsp;
+            <x-button type="warning" @click="r13ToogleDisabledClick">Disabled Toggle</x-button>
+        </p>
+        <p>
+            radio button change事件：
+            <x-radio-group name="test button" v-model="r13"
+            @change="changeEvent">
+                <x-radio-button :value="1">
+                    动态推送
+                </x-radio-button>
+                <x-radio-button :value="2">
+                    即时推送
+                </x-radio-button>
+                <x-radio-button :value="3">
+                    定时推送
+                </x-radio-button>
+            </x-radio-group>
         </p>
     </div>
 </template>
