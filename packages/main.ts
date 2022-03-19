@@ -7,6 +7,7 @@ import XLoad, { XLoadHandler } from "./components/XLoad";
 import XInput from "./components/XInput";
 import XNumberInput from "./components/XNumberInput";
 import XRadio, { XRadioGroup, XRadioButton } from "./components/XRadio";
+import XCheckbox from "./components/XCheckbox";
 
 // package下组件列表
 const components = [
@@ -20,6 +21,7 @@ const components = [
     XRadio,
     XRadioGroup,
     XRadioButton,
+    XCheckbox,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -51,6 +53,7 @@ export {
     XRadio,
     XRadioGroup,
     XRadioButton,
+    XCheckbox,
 };
 
 export * from "./components";

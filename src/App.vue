@@ -8,6 +8,7 @@
         <XInputTest />
         <XNumberInputTest />
         <XRadioTest />
+        <XCheckboxTest />
     </div>
 </template>
 <script lang="ts">
@@ -19,18 +20,20 @@ import XLoadTest from "../packages/components/XLoad/__tests__/XLoadTest.vue";
 import XInputTest from "../packages/components/XInput/__tests__/XInputTest.vue";
 import XNumberInputTest from "../packages/components/XNumberInput/__tests__/XNumberInputTest.vue";
 import XRadioTest from "../packages/components/XRadio/__tests__/XRadioTest.vue";
+import XCheckboxTest from "../packages/components/XCheckbox/__tests__/XCheckboxTest.vue";
 
 export default {
     name: "App",
     components: {
-        XTopTest,
-        XButtonTest,
-        XButtonGroupTest,
-        XMessageTest,
-        XLoadTest,
-        XInputTest,
-        XNumberInputTest,
-        XRadioTest,
-    },
+    XTopTest,
+    XButtonTest,
+    XButtonGroupTest,
+    XMessageTest,
+    XLoadTest,
+    XInputTest,
+    XNumberInputTest,
+    XRadioTest,
+    XCheckboxTest
+},
 };
 </script>
