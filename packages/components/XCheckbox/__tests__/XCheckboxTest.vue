@@ -12,7 +12,7 @@ export default defineComponent({
         <p>复选框：</p>
         <p>
             基础用法：
-            <x-checkbox></x-checkbox>
+            <x-checkbox label="和客户"></x-checkbox>
         </p>
     </div>
 </template>

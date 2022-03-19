@@ -5,6 +5,10 @@ export const checkboxProps = {
         type: [Number, Boolean, String],
         default: undefined,
     },
+    value: {
+        type: [Number, Boolean, String],
+        default: undefined,
+    },
     label: {
         type: String,
         default: "xinxin-ui"
