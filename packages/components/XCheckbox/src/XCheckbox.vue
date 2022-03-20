@@ -8,7 +8,6 @@ export default defineComponent({
     props: checkboxProps,
     setup() {
         const gcn = generateClassName("checkbox");
-
         return {
             gcn,
         };
@@ -26,6 +25,8 @@ export default defineComponent({
                 gcn.e('input'),
             ]"
             type="checkbox"
+            :value="value"
+            v-model="modelValue"
         />
         <section
             :class="[

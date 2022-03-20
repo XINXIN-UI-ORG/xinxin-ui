@@ -28,7 +28,7 @@ export default defineComponent({
     <label
         :class="[
             gcn.base(),
-            gcn.is('checked', checkValue),
+            gcn.is('checked', checkValue === value),
             gcn.is('disabled', disabled),
             gcn.bm(size),
         ]"

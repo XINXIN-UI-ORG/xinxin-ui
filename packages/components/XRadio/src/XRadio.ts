@@ -33,14 +33,16 @@ export const radioProps = {
 };
 
 export const radioEmit = {
-    [MODEL_VALUE_UPDATE]: (val: string | boolean | number) =>
+    [MODEL_VALUE_UPDATE]: (val: RadioProps['modelValue']) =>
         isString(val) || isBoolean(val) || isNumber(val),
     blur: null,
     focus: null,
 };
 
+export type RadioProps = ExtractPropTypes<typeof radioProps>; 
+
 export function radioGather(
-    props: ExtractPropTypes<typeof radioProps>,
+    props: RadioProps,
     emit: SetupContext<typeof radioEmit>['emit'],
     radioInputRef: Ref<HTMLInputElement | undefined>
 ) {
@@ -60,14 +62,11 @@ export function radioGather(
         isGroup.value ? radioGroupProps!.size : props.size
     );
     // 是否选中
-    const checkValue = computed<boolean>({
+    const checkValue = computed<RadioProps['modelValue']>({
         get: () => {
-            const finalModelValue = isGroup.value
+            return isGroup.value
                 ? radioGroupProps!.modelValue
                 : props.modelValue;
-            return finalModelValue !== undefined
-                && props.value !== undefined
-                && finalModelValue === props.value;
         },
         set: (value) => {
             let finalModelValue = props.modelValue;

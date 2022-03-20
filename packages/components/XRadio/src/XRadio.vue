@@ -30,7 +30,7 @@ export default defineComponent({
         :class="[
             gcn.base(),
             gcn.is('disabled', disabled),
-            gcn.is('checked', checkValue),
+            gcn.is('checked', checkValue === value),
             gcn.is('card', card),
         ]"
         tag="radio"

@@ -1,4 +1,4 @@
-import { ExtractPropTypes } from "vue";
+import { computed, ExtractPropTypes } from "vue";
 
 export const checkboxProps = {
     modelValue: {
@@ -17,3 +17,16 @@ export const checkboxProps = {
 
 export type CheckboxProps = ExtractPropTypes<typeof checkboxProps>;
 
+export function checkboxGather() {
+    let modelValue = computed({
+        get() {
+            
+        },
+        set(value) {
+
+        }
+    });
+    return {
+
+    };
+}
