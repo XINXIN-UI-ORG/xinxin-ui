@@ -2,15 +2,22 @@
 import { defineComponent } from 'vue';
 import { checkboxProps } from "./XCheckbox";
 import { generateClassName } from "@xinxin-ui/utils";
+import { checkboxGather } from "./XCheckbox";
+import { Checked } from "xinxin-icons";
 
 export default defineComponent({
     name: "x-checkbox",
     props: checkboxProps,
-    setup() {
+    setup(props, { emit }) {
         const gcn = generateClassName("checkbox");
+        const { checked } = checkboxGather(props, emit);
         return {
             gcn,
+            checked,
         };
+    },
+    components: {
+        Checked,
     },
 })
 </script>
@@ -18,6 +25,8 @@ export default defineComponent({
     <label
         :class="[
             gcn.base(),
+            gcn.is('checked', checked),
+            gcn.is('disabled', disabled),
         ]"
     >
         <input
@@ -26,13 +35,21 @@ export default defineComponent({
             ]"
             type="checkbox"
             :value="value"
-            v-model="modelValue"
+            v-model="checked"
+            :name="name"
+            :disabled="disabled"
         />
         <section
             :class="[
                 gcn.e('selector'),
             ]"
-        ></section>
+        >
+            <Checked
+                :class="[
+                    gcn.e('selector', 'icons'),
+                ]"
+            />
+        </section>
         <section
             :class="[
                 gcn.e('label'),
@@ -52,6 +69,7 @@ export default defineComponent({
     align-items center
     cursor pointer
     position relative
+    user-select none
     &:hover
         .x-checkbox__selector
             border-color $base_theme_color
@@ -61,7 +79,9 @@ export default defineComponent({
         z-index -1
         opacity 0
     .x-checkbox__selector
-        display inline-block
+        display inline-flex
+        align-items center
+        justify-content center
         vertical-align text-bottom
         width 16px
         height 16px
@@ -69,8 +89,31 @@ export default defineComponent({
         border-radius 3px
         border 1px solid #b0b1b2
         margin-right 5px
+        transition all .2s
+        .x-checkbox__selector__icons
+            color #fff
+            transition all .2s
+            width 14px
+            height 0
     .x-checkbox__label
         display inline-block
         vertical-align middle
         font-size 14px
+.x-checkbox-checked
+    .x-checkbox__selector
+        background-color $base_theme_color
+        border-color $base_theme_color
+        .x-checkbox__selector__icons
+            height 14px
+.x-checkbox-disabled
+    opacity .3
+    cursor not-allowed
+    .x-checkbox__selector
+        border-color #b0b1b2 !important
+        background-color $base_theme_disabled_bg-color !important
+        .x-checkbox__selector__icons
+            color #b0b1b2
+    &:hover
+        .x-checkbox__selector
+            border-color #b0b1b2
 </style>

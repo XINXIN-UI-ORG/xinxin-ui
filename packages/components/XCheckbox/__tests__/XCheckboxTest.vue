@@ -1,9 +1,17 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 
 export default defineComponent({
     setup() {
-        
+        let c2Disabled = ref(true);
+        return {
+            c1: ref(false),
+            c2: ref(false),
+            c2Disabled,
+            c2ButtonToogle() {
+                c2Disabled.value = !c2Disabled.value;
+            }
+        };
     },
 })
 </script>
@@ -12,7 +20,16 @@ export default defineComponent({
         <p>复选框：</p>
         <p>
             基础用法：
-            <x-checkbox label="和客户"></x-checkbox>
+            <x-checkbox name="test" v-model:checked="c1" value="2" label="和客户"></x-checkbox>
+            {{c1}}
+        </p>
+        <p>
+            禁用：
+            <x-checkbox v-model:checked="c2" 
+            label="客户" :disabled="c2Disabled"></x-checkbox>
+            &nbsp;
+            {{c2}}
+            <x-button @click="c2ButtonToogle">disable toogle</x-button>
         </p>
     </div>
 </template>
