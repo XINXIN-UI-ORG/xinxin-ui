@@ -188,7 +188,6 @@ export default defineComponent({
         bottom 0
         left 0
         right 0
-        z-index -1
         animation-iteration-count 1
         animation-timing-function cubic-bezier(0, 0, 0.2, 1)
         animation-duration .6s
@@ -197,6 +196,17 @@ export default defineComponent({
         animation-name button-click-wave
 
 @keyframes button-click-wave {
+    0% {
+        box-shadow: 0 0 1px 0 v-bind('reactiveButtonStyle.waveColor');
+        opacity: .85;
+    }
+    100% {
+        box-shadow: 0 0 1px 5.5px v-bind('reactiveButtonStyle.waveColor');
+        opacity: 0;
+    }
+}
+
+@-webkit-keyframes button-click-wave {
     0% {
         box-shadow: 0 0 1px 0 v-bind('reactiveButtonStyle.waveColor');
         opacity: .85;

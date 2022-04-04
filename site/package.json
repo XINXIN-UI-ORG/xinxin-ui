@@ -1,0 +1,22 @@
+{
+  "name": "@xinxin-ui/site",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "gen": "esno ./scripts/gc.ts"
+  },
+  "dependencies": {
+    "vue": "^3.0.4",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@vicons/fluent": "^0.12.0",
+    "@vue/compiler-sfc": "^3.0.4",
+    "@xinxin-ui/xinxin-icons": "workspace:^1.0.0",
+    "highlight.js": "^11.5.0",
+    "naive-ui": "^2.27.0",
+    "vfonts": "^0.0.3",
+    "xinxin-ui": "workspace:^1.0.0"
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "xinxin-ui",
+  "version": "1.0.0",
+  "description": "一个Vue3 UI组件库",
+  "main": "index.ts",
+  "module": "index.ts",
+  "exports": {
+    ".": {
+      "import": "./index.ts",
+      "require": "./index.ts"
+    }
+  },
+  "keywords": [
+    "vue3",
+    "vue",
+    "ui",
+    "xinxin-ui",
+    "ui framework",
+    "ui"
+  ],
+  "author": "Eric Jin",
+  "license": "MIT",
+  "dependencies": {
+    "@xinxin-ui/components": "workspace:^1.0.0"
+  }
+}

@@ -1,18 +1,16 @@
 import path from "path";
 import { defineConfig } from "vite";
-import vueJsx from "@vitejs/plugin-vue-jsx";
 import vue from "@vitejs/plugin-vue";
 
 export default defineConfig({
   plugins: [
     vue(),
-    vueJsx(),
   ],
   build: {
     lib: {
-      entry: path.resolve(__dirname, './packages/xinxin-ui/index.ts'),
-      name: 'xinxin',
-      fileName: (format) => `xin-xin.${format}.js`
+      entry: path.resolve(__dirname, '../main.ts'),
+      name: 'xinxin-icons',
+      fileName: (format) => `xinxin-icons.${format}.js`
     },
     rollupOptions: {
       // 确保外部化处理那些你不想打包进库的依赖

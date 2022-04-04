@@ -12,9 +12,6 @@
     "noImplicitAny": false,
     "sourceMap": true,
     "baseUrl": ".",
-    "paths": {
-      "@xinxin-ui/*": ["packages/*"]
-    },
     "declaration": true,
     // 只输出类型声明文件
     "emitDeclarationOnly": true,
@@ -29,13 +26,14 @@
   },
   "include": [
     "packages/**/*.ts",
+    "site/**/*.ts",
+    "xinxin-icons/**/*.ts",
     "packages/**/*.tsx",
     "packages/**/*.vue",
     "./shims-vue.d.ts"
   ],
   "exclude": [
     "node_modules",
-    "src/**",
-    "dist/**"
+    "**/dist/**"
   ]
 }

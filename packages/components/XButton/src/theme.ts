@@ -46,7 +46,7 @@ export const buttonOutter = {
 
 const baseColorMap: { [propsName: string]: string } = {
     info: "#0077fa",
-    success: "#67c23a",
+    success: "#41b883",
     warning: "#f0a020",
     error: "#d03050",
 };

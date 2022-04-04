@@ -1,0 +1,9 @@
+{
+  "name": "@xinxin-ui/components",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "module": "index.ts",
+  "types": "index.d.ts",
+  "license": "MIT"
+}
