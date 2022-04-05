@@ -139,24 +139,115 @@ const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
-            props: "tips",
-            describe: "滑动区域提示字",
+            props: "type",
+            describe: "按钮类型。",
             type: 'String',
-            defaultValue: '移动滑块，完成拼图'
+            defaultValue: 'default',
+            selectList: ['default', 'info', 'success', 'warning', 'error'],
+        },
+        {
+            props: "secondary",
+            describe: "设置二级按钮",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "tertiary",
+            describe: "设置三级按钮",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "quaternary",
+            describe: "设置四级按钮",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "dashed",
+            describe: "设置虚线边框",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "plain",
+            describe: "设置透明背景",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "round",
+            describe: "设置按钮圆角",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "circle",
+            describe: "设置圆形按钮",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "ghost",
+            describe: "设置无背景按钮",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "size",
+            describe: "设置按钮属性",
+            type: 'String',
+            defaultValue: 'normal',
+            selectList: ['mini', 'small', 'normal', 'large'],
+        },
+        {
+            props: "disabled",
+            describe: "设置按钮禁用",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "loading",
+            describe: "设置按钮加载",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "color",
+            describe: "自定义按钮颜色",
+            type: 'String',
+        },
+        {
+            props: "block",
+            describe: "设置块级按钮",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "pre-icon",
+            describe: "前置图标",
+            type: 'slot',
+        },
+        {
+            props: "suf-icon",
+            describe: "后置图标",
+            type: 'slot',
         },
     ],
 };
 
 const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
-    content: [
-        {
-            event: "module.auth",
-            describe: "认证方法",
-            result: [
-                "true",
-                "false"
-            ]
-        },
-    ],
+    content: [],
 };

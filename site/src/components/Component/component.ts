@@ -1,20 +1,33 @@
 import { MenuType, MenuListType } from "./Menu/Menu.typing";
 import { ActionType } from "./Action/Action.typing";
-import { Apps20Regular } from "@vicons/fluent";
+import { Apps20Regular, AlertOn20Filled } from "@vicons/fluent";
 
 export const menuList: MenuListType[] = [
     {
-        id: 0,
+        id: 100,
         type: MenuType.category,
         content: "通用组件",
         icon: Apps20Regular,
         size: 1,
     },
     {
-        id: 1,
+        id: 101,
         type: MenuType.link,
         content: "按钮",
         name: "Button",
+    },
+    {
+        id: 200,
+        type: MenuType.category,
+        content: "反馈组件",
+        icon: AlertOn20Filled,
+        size: 1,
+    },
+    {
+        id: 201,
+        type: MenuType.link,
+        content: "消息提示",
+        name: "Message",
     },
 ];
 
@@ -99,6 +112,11 @@ export const actionList: { [propName: string]: ActionType[] } = {
             name: "带图标的按钮",
             link: "/component/button#icons",
             key: 15
+        },
+        {
+            name: "属性",
+            link: "/component/button#props",
+            key: 16
         },
     ],
 };

@@ -41,6 +41,7 @@ export default defineComponent({
 <style lang="stylus" scoped>
 .content
     margin 0 50px
+    padding-bottom 100px
     .title
         margin-top 30px
         font-size 32px
