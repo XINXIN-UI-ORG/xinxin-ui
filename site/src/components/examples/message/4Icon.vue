@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { XMessage } from "xinxin-ui";
-import { Rocket } from "xinxin-icons";
+import { Rocket } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     setup() {

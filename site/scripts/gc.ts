@@ -34,24 +34,31 @@ function getPureName(name: string): string {
     return name;
 }
 
+function solveEscape(content: string): string {
+    return content.replace("/script", "\\/script");
+}
+
 function singleExample(examplesPath: string, exampleName: string, side: ExampleDisplaySide, result: Result): void {
     let pureExampleName = getPureName(exampleName);
     // 获取vue组件下的内容
-    let codeContent: string = fs.readFileSync(path.join(examplesPath, exampleName + ".vue"), 'utf-8');
+    let codeContent: string = solveEscape(fs.readFileSync(path.join(examplesPath, exampleName + ".vue"), 'utf-8'));
     // 生成import内容
     result.import += `
         import ${pureExampleName} from "./${exampleName}.vue";
+
+        const ${toLowName(pureExampleName)}Content = \`${codeContent}\`;
     `;
     // 生成setup函数返回的内容
     result.setupReturn += `
         ${pureExampleName},
+        ${toLowName(pureExampleName)}Content,
         ${toLowName(pureExampleName)}Info: info.${toLowName(pureExampleName)},
     `;
     // 生成代码区域
     const codeDisplay = `
         <CodeExample
             id="${toLowName(pureExampleName)}"
-            code='${codeContent}'
+            :code='${toLowName(pureExampleName)}Content'
             :title="${toLowName(pureExampleName)}Info.title"
             :code-v-node="${pureExampleName}"
             :code-desc="${toLowName(pureExampleName)}Info.desc">

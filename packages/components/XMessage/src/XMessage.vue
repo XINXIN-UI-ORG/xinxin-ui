@@ -15,7 +15,7 @@ import {
     SuccessMessage,
     WarningMessage,
     Close,
-} from "xinxin-icons";
+} from "@xinxin-ui/xinxin-icons";
 
 const MessageIconMap = {
     success: SuccessMessage,

@@ -26,7 +26,10 @@ importers:
       vite: 2.7.10_stylus@0.57.0
 
   packages/components:
-    specifiers: {}
+    specifiers:
+      '@xinxin-ui/xinxin-icons': workspace:^1.0.0
+    devDependencies:
+      '@xinxin-ui/xinxin-icons': link:../../xinxin-icons
 
   packages/xinxin-ui:
     specifiers:

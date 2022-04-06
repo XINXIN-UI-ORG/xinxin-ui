@@ -7,7 +7,7 @@ import {
     getButtonTypeStyle,
     PersistenceStyle,
 } from "./theme";
-import { Load } from "xinxin-icons";
+import { Load } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: "x-button",
