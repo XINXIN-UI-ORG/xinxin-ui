@@ -1,6 +1,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useRouter } from "vue-router";
+import { Components, Document } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     setup() {
@@ -18,6 +19,10 @@ export default defineComponent({
             }
         };
     },
+    components: {
+        Components,
+        Document
+    }
 })
 </script>
 
@@ -35,8 +40,18 @@ export default defineComponent({
             <img src="../../assets/homepage.svg" alt="Homepage">
         </div>
         <div class="homepage__links">
-            <x-button type="success" size="large" @click="toInstall">下载使用</x-button>
-            <x-button type="warning" size="large" @click="toComponent">组件使用</x-button>
+            <x-button type="success" size="large" @click="toInstall">
+                <template #pre-icon>
+                    <Document />
+                </template>
+                下载使用
+            </x-button>
+            <x-button type="warning" size="large" @click="toComponent">
+                <template #pre-icon>
+                    <Components />
+                </template>
+                组件使用
+            </x-button>
         </div>
         <footer class="homepage__footer">
             Looks like I have to put something here, but I don't want to. \(^o^)/~

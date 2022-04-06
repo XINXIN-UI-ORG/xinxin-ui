@@ -51,11 +51,40 @@ const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
-            props: "type",
-            describe: "按钮类型。",
+            props: "message",
+            describe: "消息提示文字",
             type: 'String',
-            defaultValue: 'default',
-            selectList: ['default', 'info', 'success', 'warning', 'error'],
+            defaultValue: 'XinXin-UI Message!'
+        },
+        {
+            props: "type",
+            describe: "消息类型",
+            type: 'String',
+            defaultValue: 'info',
+            selectList: ['info', 'success', 'warning', 'error'],
+        },
+        {
+            props: "duration",
+            describe: "关闭时间，单位ms",
+            type: 'Number',
+            defaultValue: '3000',
+        },
+        {
+            props: "closable",
+            describe: "显示关闭按钮",
+            type: 'Boolean',
+            defaultValue: 'false',
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "onClose",
+            describe: "关闭回调",
+            type: 'Function'
+        },
+        {
+            props: "icon",
+            describe: "自定义消息",
+            type: 'Component'
         },
     ],
 };

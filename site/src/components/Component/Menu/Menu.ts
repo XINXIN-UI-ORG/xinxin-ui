@@ -28,4 +28,10 @@ export const menuList: MenuListType[] = [
         content: "消息提示",
         name: "Message",
     },
+    {
+        id: 202,
+        type: MenuType.link,
+        content: "加载中",
+        name: "Loading",
+    },
 ];

@@ -30,5 +30,6 @@ export const useContent = (componentName: () => string) => {
  */
 const componentNameDesc = {
     "button": "一个好看的按钮会让人心情愉悦。",
-    "message": "常用于操作后不需要与用户交互的信息提示",
+    "message": "常用于操作后不需要与用户交互的信息提示。",
+    "loading": "加载数据时不枯燥。",
 };
