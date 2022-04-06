@@ -28,7 +28,7 @@ importers:
   packages/components:
     specifiers:
       '@xinxin-ui/xinxin-icons': workspace:^1.0.0
-    devDependencies:
+    dependencies:
       '@xinxin-ui/xinxin-icons': link:../../xinxin-icons
 
   packages/xinxin-ui:

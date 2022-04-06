@@ -6,7 +6,7 @@
   "module": "index.ts",
   "types": "index.d.ts",
   "license": "MIT",
-  "devDependencies": {
+  "dependencies": {
     "@xinxin-ui/xinxin-icons": "workspace:^1.0.0"
   }
 }
