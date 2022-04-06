@@ -147,7 +147,7 @@ import Icon from './4Icon.vue'
 const iconContent = `<script lang="ts">
 import { defineComponent } from "vue";
 import { XMessage } from "xinxin-ui";
-import { Rocket } from "xinxin-icons";
+import { Rocket } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     setup() {

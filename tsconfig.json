@@ -30,7 +30,8 @@
     "xinxin-icons/**/*.ts",
     "packages/**/*.tsx",
     "packages/**/*.vue",
-    "./shims-vue.d.ts"
+    "./shims-vue.d.ts",
+    "scripts/**/*.ts"
   ],
   "exclude": [
     "node_modules",

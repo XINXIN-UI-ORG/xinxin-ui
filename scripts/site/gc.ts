@@ -1,13 +1,14 @@
 import * as path from "path";
 import * as fs from "fs";
 import { format } from "prettier";
+import { Command } from "commander";
 
 /**
  * 读取../src/components/examples下所有目录
  * 循环读取目录下的文件并组装到当前目录的Index.vue文件内
  * 在../src/components/examples内的index.ts导出文件
  */
-const baseDir = path.resolve(__dirname, "../src/components/examples");
+const baseDir = path.resolve(__dirname, "../../site/src/components/examples");
 
 enum ExampleDisplaySide {
     left,
@@ -119,7 +120,8 @@ function compositionIndex(result: Result, filePath: string): void {
 
 function dealWithComponent(componentFullPath: string): void {
     // 获取该路径下所有文件
-    const files: string[] = fs.readdirSync(componentFullPath).filter(item => item !== "Index.vue" && item !== "info.ts");
+    const files: string[] = fs.readdirSync(componentFullPath)
+    .filter(item => item !== "Index.vue" && item !== "info.ts" && item !== "action.ts");
     // 获取所有的示例名
     const fileWithoutSuffix: string[] = files.map(item => item.split(".")[0]);
     // 保存结果
@@ -129,25 +131,75 @@ function dealWithComponent(componentFullPath: string): void {
         codeDisplayLeft: '',
         codeDisplayRight: ''
     };
+    // 侧边栏llist
+    const actionList: Array<string> = [];
     // 处理单个示例
     fileWithoutSuffix.forEach((item, index) => {
+        // 生成组件演示代码
         singleExample(componentFullPath, item, index % 2 === 0 ? ExampleDisplaySide.left : ExampleDisplaySide.right, result);
+        // 生成action侧边栏
+        actionList.push(generateSingleSideBar(path.basename(componentFullPath), item, index));
     });
     // 组织Index.vue文件内容
     compositionIndex(result, path.join(componentFullPath, "Index.vue"));
+    // 生成action文件的内容
+    compositionAction(componentFullPath, actionList);
+}
+
+function compositionAction(componentFullPath: string, actionList: string[]): void {
+    let content = `
+        import * as info from "./info";
+
+        export default [${actionList.toString()}];
+    `;
+    let filePath = path.join(componentFullPath, "action.ts");
+    // 格式化
+    content = format(content, {
+        parser: 'typescript',
+        semi: false,
+        singleQuote: true
+    });
+    // 写入文件
+    fs.promises.writeFile(filePath, content, 'utf-8');
+}
+
+function generateSingleSideBar(exampleName: string, modelName: string, key: number): string {
+    return `
+        {
+            key: ${key},
+            link: "/component/${exampleName}#${toLowName(getPureName(modelName))}",
+            name: info.${toLowName(getPureName(modelName))}.title
+        }
+    `;
 }
 
 (async () => {
+    // 解析命令参数
+    const program = new Command();
+    program
+    .name('Eric Jin')
+    .version('1.0.0')
+    .option('-c --component <name>', '指定组件名称生成组件展示文档')
+    .parse(process.argv);
+    
     // 读取改路径下所有的目录
     const dirs: string[] = fs.readdirSync(baseDir).filter(item => item !== "index.ts" && item !== "example.typing.ts");
     let indexImport: string = '';
     let indexExport: string = '';
     dirs.forEach(dir => {
-        const currentComponentDir = path.join(baseDir, dir);
-        dealWithComponent(currentComponentDir);
+        if (!program.getOptionValue('component') || program.getOptionValue('component').split(',').indexOf(dir) !== -1) {
+            const currentComponentDir = path.join(baseDir, dir);
+            dealWithComponent(currentComponentDir);   
+        }
         // 获取导出内容
-        indexImport += `import ${dir} from "./${dir}/Index.vue";\n`;
-        indexExport += `${dir},\n`;
+        indexImport += `
+            import ${dir} from "./${dir}/Index.vue";
+            import ${dir}Action from "./${dir}/action";
+        `;
+        indexExport += `
+            ${dir},
+            ${dir}Action,
+        `;
     });
     let indexContent = `
         ${indexImport}

@@ -8,8 +8,5 @@
     "build:icons": "esno ./packages/build/generate.ts",
     "build": "npm run build:icons && vite build --config packages/build/vite.config.js && npm run build:types"
   },
-  "license": "MIT",
-  "devDependencies": {
-    "fs-extra": "^10.0.1"
-  }
+  "license": "MIT"
 }

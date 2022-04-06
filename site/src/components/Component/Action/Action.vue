@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { actionList } from "../component";
 import { ActionType } from "./Action.typing";
+import * as Examples from "../../examples";
 
 export default defineComponent({
     props: {
@@ -11,12 +11,11 @@ export default defineComponent({
     },
     setup(props) {
         return {
-            "actions": computed<ActionType[]>(() => actionList[props.componentName!]),
+            "actions": computed<ActionType[]>(() => Examples[`${props.componentName!}Action`]),
         };
     },
 })
 </script>
-
 <template>
     <div class="action">
         <n-anchor :show-rail="true" :show-background="true">

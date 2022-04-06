@@ -25,7 +25,10 @@ export const useContent = (componentName: () => string) => {
     };
 };
 
-
+/**
+ * 记录描述工具
+ */
 const componentNameDesc = {
     "button": "一个好看的按钮会让人心情愉悦。",
+    "message": "常用于操作后不需要与用户交互的信息提示",
 };

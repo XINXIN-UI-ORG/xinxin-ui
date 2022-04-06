@@ -4,7 +4,7 @@ import { emptyDir } from "fs-extra";
 import { format } from 'prettier';
 import chalk from "chalk";
 
-const baseDir = path.resolve(__dirname, "..");
+const baseDir = path.resolve(__dirname, "../../xinxin-icons/packages");
 
 function getSvgFilePathList(): string[] {
     const svgFiles = fs.readdirSync(path.join(baseDir, "svg"));

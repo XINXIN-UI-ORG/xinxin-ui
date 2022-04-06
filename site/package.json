@@ -3,8 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
-    "gen": "esno ./scripts/gc.ts"
+    "build": "vite build"
   },
   "dependencies": {
     "vue": "^3.0.4",

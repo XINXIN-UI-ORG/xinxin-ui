@@ -1,6 +1,6 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
-import { menuList } from "../component";
+import { menuList } from "../Menu/Menu";
 import { MenuListType } from "../Menu/Menu.typing";
 import { Compose24Regular } from "@vicons/fluent";
 import { useContent } from "./content";

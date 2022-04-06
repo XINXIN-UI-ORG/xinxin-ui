@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent } from 'vue';
 import { MenuType, MenuListType } from "./Menu.typing";
-import { menuList } from "../component";
+import { menuList } from "./Menu";
 
 export default defineComponent({
     props: {
