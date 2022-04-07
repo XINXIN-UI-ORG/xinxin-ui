@@ -1,35 +1,30 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
-import { XLoad, XMessage } from "xinxin-ui";
+import { XLoad } from "xinxin-ui";
 
 export default defineComponent({
     setup() {
         let targetRef = ref<HTMLDivElement>();
         let load = XLoad({
-            description: "加载中..."
+            description: "加载中...",
+            color: "#0077fa"
         });
 
         return {
             targetRef,
             loadOnTarget() {
                 load?.show(targetRef.value);
-            },
-            close() {
-                load?.close();
-            },
-            destory() {
-                load?.destroy(() => {
-                    XMessage("销毁成功，无法再调用show方法");
-                });
-            },
+                setTimeout(() => {
+                    load?.destroy();
+                    targetRef.value!.textContent = "数据请求成功，展示数据";
+                }, 3000);
+            }
         };
     },
 })
 </script>
 <template>
-    <x-button type="success" @click="loadOnTarget">加载</x-button>
-    <x-button type="warning" @click="close">关闭</x-button>
-    <x-button type="error" @click="destory">销毁</x-button>
+    <x-button type="success" @click="loadOnTarget">在目标处加载</x-button>
     <div class="target" ref="targetRef">
         等待数据展示
     </div>

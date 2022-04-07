@@ -169,6 +169,7 @@ export default defineComponent({
         line-height 1
         .x-load__container__desc
             margin-bottom 5px
+            text-align center
 .x-load-show
     transition none
     visibility visible

@@ -21,4 +21,24 @@ export default [
     link: '/component/loading#noText',
     name: info.noText.title,
   },
+  {
+    key: 4,
+    link: '/component/loading#customerColor',
+    name: info.customerColor.title,
+  },
+  {
+    key: 5,
+    link: '/component/loading#iconSize',
+    name: info.iconSize.title,
+  },
+  {
+    key: 6,
+    link: '/component/loading#fullScreenLoad',
+    name: info.fullScreenLoad.title,
+  },
+  {
+    key: 7,
+    link: '/component/loading#alpha',
+    name: info.alpha.title,
+  },
 ]
