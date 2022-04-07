@@ -1,11 +1,12 @@
 import type { App } from "vue";
-import { XButton, XButtonGroup, XMessage } from "@xinxin-ui/components";
+import { XButton, XButtonGroup, XMessage, XLoad } from "@xinxin-ui/components";
 
 // package下组件列表
 const components = [
     XButton,
     XButtonGroup,
     XMessage,
+    XLoad,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -29,4 +30,5 @@ export {
     XButton,
     XButtonGroup,
     XMessage,
+    XLoad,
 };
