@@ -72,17 +72,14 @@ export default defineComponent({
         user-select none
         cursor pointer
         border-radius 4px
-        transition all .5s
         a
             display block
             height 100%
             width 100%
             padding 10px 0 10px 26px
-            transition all .5s
             .content
                 margin-right 5px
             .name
-                transition all .5s
                 color #8c7c92
         &:hover
             background-color #f3f3f5
