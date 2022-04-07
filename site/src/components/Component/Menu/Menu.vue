@@ -90,6 +90,7 @@ export default defineComponent({
             background-color #f5a31f2e
             a
                 color #f5a31f
+                font-weight 700
                 .name
                     color #f5a31f
 </style>

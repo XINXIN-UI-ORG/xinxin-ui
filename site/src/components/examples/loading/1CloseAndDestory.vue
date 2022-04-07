@@ -39,7 +39,7 @@ export default defineComponent({
     width: 100%;
     height: 260px;
     line-height: 260px;
-    border: 1px solid #aaa;
+    border: 1px solid #EBEEF5;
     margin-top: 10px;
     border-radius: 4px;
     text-align: center;
