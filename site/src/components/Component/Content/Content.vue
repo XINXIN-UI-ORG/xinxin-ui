@@ -1,9 +1,10 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, onActivated } from 'vue';
 import { menuList } from "../Menu/Menu";
 import { MenuListType } from "../Menu/Menu.typing";
 import { Compose24Regular } from "@vicons/fluent";
 import { useContent } from "./content";
+import { useLoadingBar } from 'naive-ui';
 
 export default defineComponent({
     props: {
@@ -13,6 +14,11 @@ export default defineComponent({
     },
     setup(props) {
         const { content } = useContent(() => props.componentName!);
+        let loadingBar = useLoadingBar();
+        loadingBar.start();
+        
+        
+
         return {
             currentMenuItem: computed<MenuListType | undefined>(() => {
                 return menuList.find(item => item.name?.toLowerCase() === props.componentName);
