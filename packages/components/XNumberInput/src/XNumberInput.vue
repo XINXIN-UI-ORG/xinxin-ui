@@ -208,7 +208,8 @@ function modifyValue(
     .x-number-input__button
         border 1px solid #e0e0e6
         margin -1px 0 1px 5px
-        border-radius 3px
+        border-radius 4px
+        overflow hidden
         cursor pointer
         display flex
         flex-direction column
