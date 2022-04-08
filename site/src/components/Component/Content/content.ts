@@ -9,9 +9,7 @@ export const useContent = (componentName: () => string) => {
             class: "content__wrap__desc"
         }, componentNameDesc[componentName()]);
         // 构建组件演示区域
-        const componentDisplayArea: VNode = h(Examples[componentName()], {});
-        // 构建api说明区域
-        
+        const componentDisplayArea: VNode = h(Examples[componentName().replace("-", "")], {});
         return h('div', {
             class: "content__wrap",
         }, [
@@ -33,4 +31,6 @@ const componentNameDesc = {
     "message": "常用于操作后不需要与用户交互的信息提示。",
     "loading": "加载数据时不枯燥。",
     "input": "接收用户输入。",
+    "input-number": "也是文本输入框，但是只能输入数字哦。",
+    "radio": "备胎有很多，只能选一个。",
 };

@@ -4,7 +4,7 @@ export const format = (originStr: string): string => {
     let swapStr: string = '';
     for (let i = 0; i < originStr.length; i++) {
         let currentWord = originStr[i];
-        if (/[a-zA-Z-]/g.test(currentWord)) {
+        if (/[a-zA-Z-@]/g.test(currentWord)) {
             swapStr += currentWord;
         } else {
             if (swapStr !== '') {

@@ -20,13 +20,25 @@ export const menuList: MenuListType[] = [
         type: MenuType.category,
         content: "表单组件",
         icon: FormNew48Regular,
-        size: 1,
+        size: 3,
     },
     {
         id: 301,
         type: MenuType.link,
-        content: "输入框",
+        content: "文本输入框",
         name: "Input",
+    },
+    {
+        id: 302,
+        type: MenuType.link,
+        content: "数字输入框",
+        name: "Input-Number",
+    },
+    {
+        id: 303,
+        type: MenuType.link,
+        content: "单选",
+        name: "Radio",
     },
     {
         id: 200,

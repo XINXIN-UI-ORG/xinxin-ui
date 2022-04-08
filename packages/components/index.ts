@@ -5,3 +5,7 @@ export * from "./XButtonGroup";
 export * from "./XMessage";
 
 export * from "./XLoad";
+
+export * from "./XInput";
+
+export * from "./XNumberInput";

@@ -193,12 +193,12 @@ function generateSingleSideBar(exampleName: string, modelName: string, key: numb
         }
         // 获取导出内容
         indexImport += `
-            import ${dir} from "./${dir}/Index.vue";
-            import ${dir}Action from "./${dir}/action";
+            import ${dir.replace("-", "")} from "./${dir}/Index.vue";
+            import ${dir.replace("-", "")}Action from "./${dir}/action";
         `;
         indexExport += `
-            ${dir},
-            ${dir}Action,
+            ${dir.replace("-", "")},
+            ${dir.replace("-", "")}Action,
         `;
     });
     let indexContent = `

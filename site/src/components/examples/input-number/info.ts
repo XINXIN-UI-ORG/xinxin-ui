@@ -2,69 +2,41 @@ import { ExampleInfo, ApiTable, ApiProps, ApiEvent } from "../example.typing";
 import { format } from "../../../utils";
 
 const base: ExampleInfo = {
-    title: "基础用法",
+    title: "基础使用",
     desc: format(`
-        使用x-input展示输入框。
+        使用x-number-input使用数字输入框。
     `)
 };
 
-const mode: ExampleInfo = {
-    title: "模式",
+const plusAndMinus: ExampleInfo = {
+    title: "展示加减按钮",
     desc: format(`
-        通过mode设置大小，有small、normal、large可选。
+        设置number-button为true展示加减按钮。
     `)
 };
 
-const size: ExampleInfo = {
-    title: "尺寸",
+const step: ExampleInfo = {
+    title: "设置步长",
     desc: format(`
-        输入框默认是行内的，通过size控制长度，可设置任意的数值。
+        通过step可以设置每次点击增加的步长。
+    `)
+};
+
+const limit: ExampleInfo = {
+    title: "大小限制",
+    desc: format(`
+        通过max和min可以限制输入的最大最小值。
     `)
 };
 
 const disabled: ExampleInfo = {
-    title: "禁用",
+    title: "禁用输入",
     desc: format(`
-        通过disabled属性设置输入框禁用。
+        设置disabled可以禁用输入框。
     `)
 };
 
-const fix: ExampleInfo = {
-    title: "前后缀",
-    desc: format(`
-        通过x-input提供的prefix和suffix插槽可以在输入框前后设置文字或图标。
-    `)
-};
-
-const clear: ExampleInfo = {
-    title: "一键清除",
-    desc: format(`
-        设置clearable属性为true可显示一键清除按钮。
-    `)
-};
-
-const password: ExampleInfo = {
-    title: "密码模式",
-    desc: format(`
-        当type设置为password后可以使用show-password-on显示密码。使用show-password-on可以配置显示密码的触发器，可以设置click和mousedown。
-    `)
-};
-
-const status: ExampleInfo = {
-    title: "输入框状态",
-    desc: format(`
-        设置status为error可触发输入框错误状态，错误状态会修改边框的样式。
-    `)
-};
-
-const block: ExampleInfo = {
-    title: "块级输入框",
-    desc: format(`
-        input框默认是行内的，如果希望input框填充整行可以通过设置block为true来实现。
-    `)
-};
-
-const inputEvent: ExampleInfo = {
+const onInput: ExampleInfo = {
     title: "事件-onInput",
     desc: format(`
         通过@onInputChange可以设置输入框的input事件。
@@ -80,15 +52,11 @@ const focusAndBlur: ExampleInfo = {
 
 export {
     focusAndBlur,
-    inputEvent,
-    block,
-    status,
-    password,
-    clear,
-    fix,
+    onInput,
     disabled,
-    size,
-    mode,
+    limit,
+    step,
+    plusAndMinus,
     base,
     apiProps,
     apiEvent
@@ -98,13 +66,6 @@ export {
 const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
-        {
-            props: "type",
-            describe: "输入框内容类型",
-            type: 'Stirng',
-            defaultValue: "text",
-            selectList: ["text", "password", "number"],
-        },
         {
             props: "block",
             describe: "是否显示为块级元素",
@@ -133,16 +94,6 @@ const apiProps: ApiTable<ApiProps> = {
             selectList: ["true", "false"],
         },
         {
-            props: "prefix",
-            describe: "前缀插槽",
-            type: "slot"
-        },
-        {
-            props: "suffix",
-            describe: "后缀插槽",
-            type: "slot"
-        },
-        {
             props: "clearable",
             describe: "是否显示清除按钮",
             type: "Boolean",
@@ -150,11 +101,27 @@ const apiProps: ApiTable<ApiProps> = {
             selectList: ["true", "false"]
         },
         {
-            props: "show-password-on",
-            describe: "是否展示显示密码按钮",
-            type: "Boolean",
+            props: "step",
+            describe: "步长",
+            type: "String | Number",
+            defaultValue: "1",
+        },
+        {
+            props: "max",
+            describe: "最大限制",
+            type: "Number",
+        },
+        {
+            props: "min",
+            describe: "最小限制",
+            type: "Number",
+        },
+        {
+            props: "number-button",
+            describe: "是否展示加减按钮",
             defaultValue: "false",
-            selectList: ["true", "false"]
+            type: "Boolean",
+            selectList: ["true", "false"],
         },
         {
             props: "status",

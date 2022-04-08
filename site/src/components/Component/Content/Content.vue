@@ -31,7 +31,7 @@ export default defineComponent({
         <div class="content">
             <div class="title">
                 <span class="name">{{ currentMenuItem.content }}</span>
-                <span class="component">{{ currentMenuItem.name }}</span>
+                <span class="component">{{ currentMenuItem.name.replace("-", " ") }}</span>
                 <Compose24Regular class="icon" />
             </div>
             <component :is="content" />

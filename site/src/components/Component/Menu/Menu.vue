@@ -46,7 +46,7 @@ export default defineComponent({
             >
                 <router-link :to="{name: 'componentItem', params: { componentName: item.name.toLowerCase() }}">
                     <span class="content">{{ item.content }}</span>
-                    <span class="name">{{ item.name }}</span>
+                    <span class="name">{{ item.name.replace("-", " ") }}</span>
                 </router-link>
             </div>
         </template>

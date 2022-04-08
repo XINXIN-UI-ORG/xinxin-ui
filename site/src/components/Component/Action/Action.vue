@@ -11,7 +11,7 @@ export default defineComponent({
     },
     setup(props) {
         return {
-            "actions": computed<ActionType[]>(() => Examples[`${props.componentName!}Action`]),
+            "actions": computed<ActionType[]>(() => Examples[`${props.componentName!.replace("-", "")}Action`]),
         };
     },
 })
