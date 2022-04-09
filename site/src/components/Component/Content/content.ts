@@ -33,4 +33,6 @@ const componentNameDesc = {
     "input": "接收用户输入。",
     "input-number": "也是文本输入框，但是只能输入数字哦。",
     "radio": "备胎有很多，只能选一个。",
+    "checkbox": "你选这么多不怕我伤心嘛？",
+    "icon": "图标是灵魂。",
 };

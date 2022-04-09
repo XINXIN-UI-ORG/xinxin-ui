@@ -11,3 +11,5 @@ export * from "./XInput";
 export * from "./XNumberInput";
 
 export * from "./XRadio";
+
+export * from "./XCheckbox";

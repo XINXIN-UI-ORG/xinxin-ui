@@ -7,7 +7,7 @@ export const menuList: MenuListType[] = [
         type: MenuType.category,
         content: "通用组件",
         icon: Apps20Regular,
-        size: 1,
+        size: 2,
     },
     {
         id: 101,
@@ -16,11 +16,17 @@ export const menuList: MenuListType[] = [
         name: "Button",
     },
     {
+        id: 102,
+        type: MenuType.link,
+        content: "图标",
+        name: "Icon",
+    },
+    {
         id: 300,
         type: MenuType.category,
         content: "表单组件",
         icon: FormNew48Regular,
-        size: 3,
+        size: 4,
     },
     {
         id: 301,
@@ -37,8 +43,14 @@ export const menuList: MenuListType[] = [
     {
         id: 303,
         type: MenuType.link,
-        content: "单选",
+        content: "单选框",
         name: "Radio",
+    },
+    {
+        id: 304,
+        type: MenuType.link,
+        content: "复选框",
+        name: "Checkbox",
     },
     {
         id: 200,

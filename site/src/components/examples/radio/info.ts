@@ -83,16 +83,70 @@ const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
-            props: "block",
-            describe: "是否显示为块级元素",
+            props: "value",
+            describe: "radio的value值，当radio被选中时，该value会被设置给v-model绑定的变量。",
+            type: 'Boolean | Number | String',
+        },
+        {
+            props: "description",
+            describe: "描述插槽",
+            type: 'Slot',
+        },
+        {
+            props: "disabled",
+            describe: "禁用",
             type: 'Boolean',
             defaultValue: "false",
             selectList: ["true", "false"],
+        },
+        {
+            props: "card",
+            describe: "卡片样式",
+            type: 'Boolean',
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "card",
+            describe: "卡片样式",
+            type: 'Boolean',
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "按钮组",
+            describe: "-----",
+            type: "-----"
+        },
+        {
+            props: "name",
+            describe: "设置radio名称",
+            type: 'String',
+        },
+        {
+            props: "disabled",
+            describe: "禁用按钮组",
+            type: 'Boolean',
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "size",
+            describe: "按钮组大小，只对x-radio-button有效",
+            type: 'String',
+            defaultValue: "normal",
+            selectList: ["small", "normal", "large"],
         },
     ],
 };
 
 const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
-    content: [],
+    content: [
+        {
+            event: "change",
+            describe: "按钮组change事件，当radio切换时触发",
+            props: ["value"]
+        }
+    ],
 };

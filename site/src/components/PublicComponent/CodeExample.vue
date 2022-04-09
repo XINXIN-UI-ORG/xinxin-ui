@@ -4,8 +4,7 @@ import { computed, nextTick, ref, defineComponent } from "vue";
 import hljs from 'highlight.js/lib/core';
 import xml from 'highlight.js/lib/languages/xml';
 import javascript from 'highlight.js/lib/languages/javascript';
-// import { XMessage } from "xinxin-ui";
-// import { copyToClipboard } from "../../utils/commonFunc";
+import { copyToClipBoard } from "../../utils";
 
 export default defineComponent({
     props: {
@@ -14,7 +13,7 @@ export default defineComponent({
         codeVNode: Object,
         codeDesc: String
     },
-    setup() {
+    setup(props) {
         hljs.registerLanguage('xml', xml);
         hljs.registerLanguage('javascript', javascript);
         const codeRef = ref();
@@ -44,7 +43,7 @@ export default defineComponent({
             },
             copyCode() {
                 throttle(async () => {
-                    // copyToClipboard(props.code);
+                    copyToClipBoard(props.code!);
                 })();
             },
             refreshComponent() {
