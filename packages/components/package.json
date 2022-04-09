@@ -7,6 +7,10 @@
   "types": "index.d.ts",
   "license": "MIT",
   "dependencies": {
+    "@xinxin-ui/constants": "workspace:^1.0.0",
+    "@xinxin-ui/symbols": "workspace:^1.0.0",
+    "@xinxin-ui/typings": "workspace:^1.0.0",
+    "@xinxin-ui/utils": "workspace:^1.0.0",
     "@xinxin-ui/xinxin-icons": "workspace:^1.0.0"
   }
 }

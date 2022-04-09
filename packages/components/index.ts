@@ -9,3 +9,5 @@ export * from "./XLoad";
 export * from "./XInput";
 
 export * from "./XNumberInput";
+
+export * from "./XRadio";

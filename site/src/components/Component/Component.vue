@@ -34,9 +34,7 @@ export default defineComponent({
     </div>
     <router-view v-slot="{ Component }" class="component__content">
         <keep-alive :max="10">
-            <n-loading-bar-provider>
-                <component :is="Component" />
-            </n-loading-bar-provider>
+            <component :is="Component" />
         </keep-alive>
     </router-view>
     <router-view name="componentAction" class="component__action"></router-view>

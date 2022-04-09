@@ -10,7 +10,6 @@ export default defineComponent({
         },
     },
     setup(props) {
-        
         return {
             menuList: computed<MenuListType[]>(() => {
                 menuList.forEach(item => {
