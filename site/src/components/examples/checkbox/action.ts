@@ -11,4 +11,9 @@ export default [
     link: '/component/checkbox#disabled',
     name: info.disabled.title,
   },
+  {
+    key: 2,
+    link: '/component/checkbox#indeterminate',
+    name: info.indeterminate.title,
+  },
 ]

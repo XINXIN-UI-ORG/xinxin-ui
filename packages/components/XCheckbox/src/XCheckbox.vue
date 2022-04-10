@@ -3,11 +3,12 @@ import { defineComponent } from 'vue';
 import { checkboxProps } from "./XCheckbox";
 import { generateClassName } from "@xinxin-ui/utils";
 import { checkboxGather } from "./XCheckbox";
-import { Checked } from "@xinxin-ui/xinxin-icons";
+import { Checked, Indeterminate } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: "x-checkbox",
     props: checkboxProps,
+    inheritAttrs: false,
     setup(props, { emit }) {
         const gcn = generateClassName("checkbox");
         const { checked } = checkboxGather(props, emit);
@@ -18,6 +19,7 @@ export default defineComponent({
     },
     components: {
         Checked,
+        Indeterminate,
     },
 })
 </script>
@@ -25,7 +27,7 @@ export default defineComponent({
     <label
         :class="[
             gcn.base(),
-            gcn.is('checked', checked),
+            gcn.is('checked', indeterminate || checked),
             gcn.is('disabled', disabled),
         ]"
     >
@@ -44,10 +46,11 @@ export default defineComponent({
                 gcn.e('selector'),
             ]"
         >
-            <Checked
+            <component
                 :class="[
                     gcn.e('selector', 'icons'),
                 ]"
+                :is="indeterminate ? 'Indeterminate' : 'Checked'"
             />
         </section>
         <section

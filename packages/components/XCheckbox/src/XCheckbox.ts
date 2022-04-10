@@ -12,13 +12,17 @@ export const checkboxProps = {
     },
     label: {
         type: String,
-        default: "xinxin-ui"
+        default: ""
     },
     name: {
         type: String,
         default: ""
     },
     disabled: {
+        type: Boolean,
+        default: false,
+    },
+    indeterminate: {
         type: Boolean,
         default: false,
     },

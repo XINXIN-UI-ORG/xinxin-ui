@@ -15,7 +15,15 @@ const disabled: ExampleInfo = {
     `)
 };
 
+const indeterminate: ExampleInfo = {
+    title: "部分选中",
+    desc: format(`
+        在选中和未选中之间还有一个中间态indeterminate，表示部分选中。
+    `)
+};
+
 export {
+    indeterminate,
     disabled,
     base,
     apiProps,

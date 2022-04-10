@@ -28,8 +28,65 @@ export default defineComponent({
 import Disabled from './1Disabled.vue'
 
 const disabledContent = `<template>
-sfd
+    <x-checkbox disabled>禁用复选框</x-checkbox>
 </template>`
+
+import Indeterminate from './2Indeterminate.vue'
+
+const indeterminateContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let checkValue = ref<boolean>(false);
+        let indeterminateValue = ref<boolean>(false);
+        return {
+            checkValue,
+            indeterminateValue,
+            selectCheckBox() {
+                checkValue.value = !checkValue.value;
+            },
+            indeterminateCheckbox() {
+                indeterminateValue.value = !indeterminateValue.value;
+            }
+        };
+    },
+})
+<\/script>
+<template>
+    <div class="show">
+        <x-checkbox
+            v-model:checked="checkValue"
+            :indeterminate="indeterminateValue"
+        />
+        &nbsp;&nbsp;
+        <x-button
+            size="small"
+            ghost
+            type="warning"
+            @click="selectCheckBox"
+        >
+            选中
+        </x-button>
+        <x-button
+            size="small"
+            ghost
+            type="warning"
+            @click="indeterminateCheckbox"
+        >
+            部分选中
+        </x-button>
+    </div>
+</template>
+<style scoped>
+.show {
+    display: flex;
+    align-items: center;
+}
+.show :deep(.x-button) {
+    margin-top: 0;
+}
+</style>`
 
 export default defineComponent({
   setup() {
@@ -41,6 +98,10 @@ export default defineComponent({
       Disabled,
       disabledContent,
       disabledInfo: info.disabled,
+
+      Indeterminate,
+      indeterminateContent,
+      indeterminateInfo: info.indeterminate,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -62,6 +123,15 @@ export default defineComponent({
         :title="baseInfo.title"
         :code-v-node="Base"
         :code-desc="baseInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="indeterminate"
+        :code="indeterminateContent"
+        :title="indeterminateInfo.title"
+        :code-v-node="Indeterminate"
+        :code-desc="indeterminateInfo.desc"
       >
       </CodeExample>
     </template>

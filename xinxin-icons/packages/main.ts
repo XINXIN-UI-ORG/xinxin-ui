@@ -24,6 +24,8 @@ import Execute from './src/execute.vue'
 
 import Fail from './src/fail.vue'
 
+import Indeterminate from './src/indeterminate.vue'
+
 import InfoMessage from './src/info-message.vue'
 
 import Load from './src/load.vue'
@@ -69,6 +71,7 @@ const componentList = [
   Error,
   Execute,
   Fail,
+  Indeterminate,
   InfoMessage,
   Load,
   Loading,
@@ -114,6 +117,7 @@ export {
   Error,
   Execute,
   Fail,
+  Indeterminate,
   InfoMessage,
   Load,
   Loading,
