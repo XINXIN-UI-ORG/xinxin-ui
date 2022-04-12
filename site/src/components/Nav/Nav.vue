@@ -19,6 +19,7 @@ export default defineComponent({
         return {
             searchValue,
             options,
+            appName: import.meta.env.VITE_APP_TITLE,
         };
     },
     components: {
@@ -33,7 +34,7 @@ export default defineComponent({
         <div class="xinxin-nav__logo">
             <router-link class="xinxin-nav__logo__a" :to="{name: 'homepage'}">
                 <img src="../../assets/logo.png" alt="XINXIN-UI" class="xinxin-nav__logo__img">
-                <div class="xinxin-nav__logo__text">XinXin UI</div>
+                <div class="xinxin-nav__logo__text">{{ appName }}</div>
             </router-link>
         </div>
         <div class="xinxin-nav__nav">

@@ -1,5 +1,7 @@
-import { computed, ExtractPropTypes, SetupContext } from "vue";
+import { computed, ExtractPropTypes, SetupContext, inject, PropType } from "vue";
 import { isBoolean } from "@vueuse/core";
+import { checkboxGroupInjectKey } from "@xinxin-ui/symbols";
+import { ModelValueTypeVue } from "@xinxin-ui/typings";
 
 export const checkboxProps = {
     checked: {
@@ -7,8 +9,8 @@ export const checkboxProps = {
         default: false,
     },
     value: {
-        type: [Number, Boolean, String],
-        default: undefined,
+        type: ModelValueTypeVue,
+        default: '',
     },
     label: {
         type: String,
@@ -42,12 +44,32 @@ export function checkboxGather(
     props: CheckboxProps,
     emit: SetupContext<CheckboxEmits>['emit'],
 ) {
+    // 接收group传过来的参数
+    const checkboxGroupProps = inject(checkboxGroupInjectKey, undefined);
+    // 判断外层是否包裹了checkboxGroup
+    const isGroup = computed<boolean>(() => !!checkboxGroupProps);
     let checked = computed<boolean>({
         get() {
+            if (isGroup.value) {
+                let isCheck = checkboxGroupProps?.modelValue.indexOf(props.value) !== -1;
+                // 当选项组中初始值包含该checkbox的value时，需要将checked设置为选中
+                emit("update:checked", isCheck);
+                return isCheck;
+            }
             return props.checked;
         },
         set(checked: boolean) {
             emit("update:checked", checked);
+            if (isGroup.value) {
+                // 判断是否是选中状态
+                if (checked === true) {
+                    // 将当前的value添加到group的modelValue中
+                    checkboxGroupProps?.addToGroup(props.value);
+                } else {
+                    // 将当前value从group的modelValue中移除以保证当前选项框未选中
+                    checkboxGroupProps?.removeFromGroup(props.value);
+                }
+            }
         }
     });
     return {

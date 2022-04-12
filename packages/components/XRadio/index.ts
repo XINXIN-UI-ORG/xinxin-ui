@@ -10,3 +10,7 @@ XRadioButton.install = (app: App) => {};
 export { XRadio, XRadioGroup, XRadioButton };
 
 export default XRadio;
+
+export * from "./src/XRadioGroup";
+
+export * from "./src/XRadio";

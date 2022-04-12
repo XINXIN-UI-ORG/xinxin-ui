@@ -22,7 +22,15 @@ const indeterminate: ExampleInfo = {
     `)
 };
 
+const checkboxGroup: ExampleInfo = {
+    title: "多选组",
+    desc: format(`
+        将多个勾选框的value绑定到同一数组。
+    `)
+};
+
 export {
+    checkboxGroup,
     indeterminate,
     disabled,
     base,
@@ -55,6 +63,13 @@ const apiProps: ApiTable<ApiProps> = {
         {
             props: "disabled",
             describe: "禁用复选框",
+            type: 'Boolean',
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "indeterminate",
+            describe: "部分选中样式",
             type: 'Boolean',
             defaultValue: "false",
             selectList: ["true", "false"],

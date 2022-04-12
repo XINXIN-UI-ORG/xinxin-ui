@@ -88,6 +88,28 @@ export default defineComponent({
 }
 </style>`
 
+import CheckboxGroup from './3CheckboxGroup.vue'
+
+const checkboxGroupContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let groupValue = ref(['0', '1']);
+        return {
+            groupValue,
+        };
+    },
+})
+<\/script>
+<template>
+    <x-checkbox-group v-model="groupValue">
+        <x-checkbox value="0">独坐敬亭山</x-checkbox>
+        <x-checkbox value="1">望天门山</x-checkbox>
+        <x-checkbox value="2">侠客行</x-checkbox>
+    </x-checkbox-group>
+</template>`
+
 export default defineComponent({
   setup() {
     return {
@@ -102,6 +124,10 @@ export default defineComponent({
       Indeterminate,
       indeterminateContent,
       indeterminateInfo: info.indeterminate,
+
+      CheckboxGroup,
+      checkboxGroupContent,
+      checkboxGroupInfo: info.checkboxGroup,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -142,6 +168,15 @@ export default defineComponent({
         :title="disabledInfo.title"
         :code-v-node="Disabled"
         :code-desc="disabledInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="checkboxGroup"
+        :code="checkboxGroupContent"
+        :title="checkboxGroupInfo.title"
+        :code-v-node="CheckboxGroup"
+        :code-desc="checkboxGroupInfo.desc"
       >
       </CodeExample>
     </template>

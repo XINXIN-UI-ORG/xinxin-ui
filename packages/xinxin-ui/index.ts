@@ -10,6 +10,7 @@ import {
     XRadioGroup,
     XRadioButton,
     XCheckbox,
+    XCheckboxGroup,
 } from "@xinxin-ui/components";
 
 // package下组件列表
@@ -24,6 +25,7 @@ const components = [
     XRadioGroup,
     XRadioButton,
     XCheckbox,
+    XCheckboxGroup,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -54,4 +56,5 @@ export {
     XRadioGroup,
     XRadioButton,
     XCheckbox,
+    XCheckboxGroup,
 };

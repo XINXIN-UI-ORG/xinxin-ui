@@ -8,5 +8,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@xinxin-ui/components": "workspace:^1.0.0",
+    "@xinxin-ui/typings": "workspace:^1.0.0"
+  }
 }

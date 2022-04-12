@@ -47,6 +47,14 @@ importers:
       '@xinxin-ui/utils': link:../utils
       '@xinxin-ui/xinxin-icons': link:../../xinxin-icons
 
+  packages/symbols:
+    specifiers:
+      '@xinxin-ui/components': workspace:^1.0.0
+      '@xinxin-ui/typings': workspace:^1.0.0
+    dependencies:
+      '@xinxin-ui/components': link:../components
+      '@xinxin-ui/typings': link:../typings
+
   packages/xinxin-ui:
     specifiers:
       '@xinxin-ui/components': workspace:^1.0.0

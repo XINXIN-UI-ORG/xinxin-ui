@@ -9,3 +9,5 @@ XCheckboxGroup.install = (app: App) => {};
 export { XCheckbox, XCheckboxGroup };
 
 export default XCheckbox;
+
+export * from "./src/CheckboxGroup";

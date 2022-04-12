@@ -16,4 +16,9 @@ export default [
     link: '/component/checkbox#indeterminate',
     name: info.indeterminate.title,
   },
+  {
+    key: 3,
+    link: '/component/checkbox#checkboxGroup',
+    name: info.checkboxGroup.title,
+  },
 ]

@@ -1,18 +1,17 @@
 <script lang="ts">
-import { defineComponent, onBeforeUpdate, onMounted } from 'vue';
+import { defineComponent } from 'vue';
 import { generateClassName } from "@xinxin-ui/utils";
-import { checkboxGroupProps } from "./XCheckboxGroup";
+import { checkboxGroupProps, useCheckboxGroup, checkboxGroupEmits } from "./CheckboxGroup";
 
 export default defineComponent({
     name: "x-checkbox-group",
     props: checkboxGroupProps,
-    setup(props, { slots }) {
+    emits: checkboxGroupEmits,
+    setup(props, { emit }) {
         let gcn = generateClassName("checkbox-group");
-        const subSlots = slots.default?.();
-        subSlots![0].props!.label = "wwwww";
+        useCheckboxGroup(props, emit);
         return {
             gcn,
-            subSlots,
         };
     },
 })
@@ -23,10 +22,7 @@ export default defineComponent({
             gcn.base(),
         ]"
     >
-        <!-- <template v-for="item in subSlots">
-            <component :is="item" />
-        </template> -->
-        <component :is="subSlots![0]" />
+        <slot></slot>
     </section>
 </template>
 <style lang="stylus" scoped>

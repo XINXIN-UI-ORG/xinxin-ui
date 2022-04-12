@@ -163,7 +163,7 @@ export default defineComponent({
         height 100%
         margin 0 20px 0 10px
         svg
-          color #ff7744
+          color #606266
           width 30px
           height 30px
           margin-top 12.5px
