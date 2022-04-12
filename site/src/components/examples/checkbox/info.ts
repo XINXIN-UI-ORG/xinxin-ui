@@ -22,6 +22,20 @@ const indeterminate: ExampleInfo = {
     `)
 };
 
+const description: ExampleInfo = {
+    title: "带描述",
+    desc: format(`
+        通过名为description的slot为选框添加描述信息。
+    `)
+};
+
+const card: ExampleInfo = {
+    title: "卡片样式",
+    desc: format(`
+        通过设置card为true展示卡片样式。
+    `)
+};
+
 const checkboxGroup: ExampleInfo = {
     title: "多选组",
     desc: format(`
@@ -30,6 +44,8 @@ const checkboxGroup: ExampleInfo = {
 };
 
 export {
+    card,
+    description,
     checkboxGroup,
     indeterminate,
     disabled,
@@ -70,6 +86,18 @@ const apiProps: ApiTable<ApiProps> = {
         {
             props: "indeterminate",
             describe: "部分选中样式",
+            type: 'Boolean',
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "description",
+            describe: "为选项添加描述信息",
+            type: 'slot',
+        },
+        {
+            props: "card",
+            describe: "使用卡片样式",
             type: 'Boolean',
             defaultValue: "false",
             selectList: ["true", "false"],

@@ -62,6 +62,13 @@ export default defineComponent({
                 {{label}}
             </slot>
         </section>
+        <section
+            :class="[
+                gcn.e('desc'),
+            ]"
+        >
+            <slot name="description"></slot>
+        </section>
     </label>
 </template>
 <style lang="stylus" scoped>
@@ -69,7 +76,6 @@ export default defineComponent({
 
 .x-checkbox
     display inline-block
-    align-items center
     cursor pointer
     position relative
     user-select none
@@ -102,6 +108,9 @@ export default defineComponent({
         display inline-block
         vertical-align middle
         font-size 14px
+    .x-checkbox__desc
+        color rgba(28,31,35,0.6)
+        margin-left 21px
 .x-checkbox-checked
     .x-checkbox__selector
         background-color $base_theme_color

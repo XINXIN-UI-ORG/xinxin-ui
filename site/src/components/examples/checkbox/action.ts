@@ -18,6 +18,16 @@ export default [
   },
   {
     key: 3,
+    link: '/component/checkbox#description',
+    name: info.description.title,
+  },
+  {
+    key: 4,
+    link: '/component/checkbox#card',
+    name: info.card.title,
+  },
+  {
+    key: 5,
     link: '/component/checkbox#checkboxGroup',
     name: info.checkboxGroup.title,
   },

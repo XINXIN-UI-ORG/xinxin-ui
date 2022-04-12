@@ -88,7 +88,39 @@ export default defineComponent({
 }
 </style>`
 
-import CheckboxGroup from './3CheckboxGroup.vue'
+import Description from './3Description.vue'
+
+const descriptionContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let checkboxValue = ref(false);
+        return {
+            checkboxValue,
+        };
+    },
+})
+<\/script>
+<template>
+    <x-checkbox v-model:checked="checkboxValue">
+        菩萨蛮·举头忽见衡阳雁
+        <template #description>
+            <p>举头忽见衡阳雁。千声万字情何限。</p>
+            <p>叵耐薄情夫。一行书也无。</p>
+            <p>泣归香阁恨。和泪掩红粉。</p>
+            <p>待雁却回时。也无书寄伊。</p>
+        </template>
+    </x-checkbox>
+</template>`
+
+import Card from './4Card.vue'
+
+const cardContent = `<template>
+    sfsdfds
+</template>`
+
+import CheckboxGroup from './9CheckboxGroup.vue'
 
 const checkboxGroupContent = `<script lang="ts">
 import { defineComponent, ref } from "vue";
@@ -125,6 +157,14 @@ export default defineComponent({
       indeterminateContent,
       indeterminateInfo: info.indeterminate,
 
+      Description,
+      descriptionContent,
+      descriptionInfo: info.description,
+
+      Card,
+      cardContent,
+      cardInfo: info.card,
+
       CheckboxGroup,
       checkboxGroupContent,
       checkboxGroupInfo: info.checkboxGroup,
@@ -160,6 +200,15 @@ export default defineComponent({
         :code-desc="indeterminateInfo.desc"
       >
       </CodeExample>
+
+      <CodeExample
+        id="card"
+        :code="cardContent"
+        :title="cardInfo.title"
+        :code-v-node="Card"
+        :code-desc="cardInfo.desc"
+      >
+      </CodeExample>
     </template>
     <template #right>
       <CodeExample
@@ -168,6 +217,15 @@ export default defineComponent({
         :title="disabledInfo.title"
         :code-v-node="Disabled"
         :code-desc="disabledInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="description"
+        :code="descriptionContent"
+        :title="descriptionInfo.title"
+        :code-v-node="Description"
+        :code-desc="descriptionInfo.desc"
       >
       </CodeExample>
 
