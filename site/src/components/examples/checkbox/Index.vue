@@ -155,19 +155,15 @@ export default defineComponent({
         <x-checkbox card value="0">
             望天门山
             <template #description>
-                <p>天门中断楚江开，</p>
-                <p>碧水东流至此回。</p>
-                <p>两岸青山相对出，</p>
-                <p>孤帆一片日边来。</p>
+                <p>天门中断楚江开，碧水东流至此回。</p>
+                <p>两岸青山相对出，孤帆一片日边来。</p>
             </template>
         </x-checkbox>
         <x-checkbox card value="1">
             峨眉山月歌
             <template #description>
-                <p>峨眉山月半轮秋，</p>
-                <p>影入平羌江水流。</p>
-                <p>夜发清溪向三峡，</p>
-                <p>思君不见下渝州。</p>
+                <p>峨眉山月半轮秋，影入平羌江水流。</p>
+                <p>夜发清溪向三峡，思君不见下渝州。</p>
             </template>
         </x-checkbox>
         <x-checkbox card disabled value="2">
@@ -233,11 +229,40 @@ export default defineComponent({
 
 import CheckboxButton from './8CheckboxButton.vue'
 
-const checkboxButtonContent = `<template>
-    <x-checkbox-group>
-        <x-checkbox-button>独坐敬亭山</x-checkbox-button>
-        <x-checkbox-button>望天门山</x-checkbox-button>
-        <x-checkbox-button>侠客行</x-checkbox-button>
+const checkboxButtonContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            checkboxValue: ref([]),
+        };
+    },
+})
+<\/script>
+<template>
+    <x-checkbox-group v-model="checkboxValue" size="large">
+        <x-checkbox-button value="0">独坐敬亭山</x-checkbox-button>
+        <x-checkbox-button value="1">望天门山</x-checkbox-button>
+        <x-checkbox-button value="2">侠客行</x-checkbox-button>
+    </x-checkbox-group>
+    <br><br>
+    <x-checkbox-group v-model="checkboxValue" size="normal">
+        <x-checkbox-button value="0">独坐敬亭山</x-checkbox-button>
+        <x-checkbox-button value="1">望天门山</x-checkbox-button>
+        <x-checkbox-button value="2">侠客行</x-checkbox-button>
+    </x-checkbox-group>
+    <br><br>
+    <x-checkbox-group v-model="checkboxValue" size="small">
+        <x-checkbox-button value="0">独坐敬亭山</x-checkbox-button>
+        <x-checkbox-button value="1">望天门山</x-checkbox-button>
+        <x-checkbox-button value="2">侠客行</x-checkbox-button>
+    </x-checkbox-group>
+    <br><br>
+    <x-checkbox-group v-model="checkboxValue" disabled>
+        <x-checkbox-button value="0">独坐敬亭山</x-checkbox-button>
+        <x-checkbox-button value="1">望天门山</x-checkbox-button>
+        <x-checkbox-button value="2">侠客行</x-checkbox-button>
     </x-checkbox-group>
 </template>`
 
