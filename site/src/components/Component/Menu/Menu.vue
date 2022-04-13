@@ -83,10 +83,10 @@ export default defineComponent({
         &:hover
             background-color #f3f3f5
         &.active
-            background-color #f5a31f2e
+            background-color #f5a31f
             a
-                color #f5a31f
+                color #fff
                 font-weight 700
                 .name
-                    color #f5a31f
+                    color #fff
 </style>
