@@ -26,7 +26,7 @@ export const menuList: MenuListType[] = [
         type: MenuType.category,
         content: "表单组件",
         icon: FormNew48Regular,
-        size: 4,
+        size: 5,
     },
     {
         id: 301,
@@ -51,6 +51,12 @@ export const menuList: MenuListType[] = [
         type: MenuType.link,
         content: "复选框",
         name: "Checkbox",
+    },
+    {
+        id: 305,
+        type: MenuType.link,
+        content: "选择器",
+        name: "Select",
     },
     {
         id: 200,
