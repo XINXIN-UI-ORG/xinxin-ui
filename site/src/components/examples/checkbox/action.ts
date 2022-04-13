@@ -23,12 +23,27 @@ export default [
   },
   {
     key: 4,
+    link: '/component/checkbox#checkboxGroup',
+    name: info.checkboxGroup.title,
+  },
+  {
+    key: 5,
     link: '/component/checkbox#card',
     name: info.card.title,
   },
   {
-    key: 5,
-    link: '/component/checkbox#checkboxGroup',
-    name: info.checkboxGroup.title,
+    key: 6,
+    link: '/component/checkbox#groupDisabled',
+    name: info.groupDisabled.title,
+  },
+  {
+    key: 7,
+    link: '/component/checkbox#change',
+    name: info.change.title,
+  },
+  {
+    key: 8,
+    link: '/component/checkbox#checkboxButton',
+    name: info.checkboxButton.title,
   },
 ]

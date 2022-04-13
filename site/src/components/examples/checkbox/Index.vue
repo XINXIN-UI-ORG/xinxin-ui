@@ -114,13 +114,7 @@ export default defineComponent({
     </x-checkbox>
 </template>`
 
-import Card from './4Card.vue'
-
-const cardContent = `<template>
-    sfsdfds
-</template>`
-
-import CheckboxGroup from './9CheckboxGroup.vue'
+import CheckboxGroup from './4CheckboxGroup.vue'
 
 const checkboxGroupContent = `<script lang="ts">
 import { defineComponent, ref } from "vue";
@@ -139,6 +133,111 @@ export default defineComponent({
         <x-checkbox value="0">独坐敬亭山</x-checkbox>
         <x-checkbox value="1">望天门山</x-checkbox>
         <x-checkbox value="2">侠客行</x-checkbox>
+    </x-checkbox-group>
+</template>`
+
+import Card from './5Card.vue'
+
+const cardContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let groupList = ref(['2']);
+        return {
+            groupList
+        };
+    },
+})
+<\/script>
+<template>
+    <x-checkbox-group v-model="groupList">
+        <x-checkbox card value="0">
+            望天门山
+            <template #description>
+                <p>天门中断楚江开，</p>
+                <p>碧水东流至此回。</p>
+                <p>两岸青山相对出，</p>
+                <p>孤帆一片日边来。</p>
+            </template>
+        </x-checkbox>
+        <x-checkbox card value="1">
+            峨眉山月歌
+            <template #description>
+                <p>峨眉山月半轮秋，</p>
+                <p>影入平羌江水流。</p>
+                <p>夜发清溪向三峡，</p>
+                <p>思君不见下渝州。</p>
+            </template>
+        </x-checkbox>
+        <x-checkbox card disabled value="2">
+            送友人
+            <template #description>
+                <p>青山横北郭，白水绕东城。</p>
+                <p>此地一为别，孤蓬万里征。</p>
+                <p>浮云游子意，落日故人情。</p>
+                <p>挥手自兹去，萧萧班马鸣。</p>
+            </template>
+        </x-checkbox>
+    </x-checkbox-group>
+</template>`
+
+import GroupDisabled from './6GroupDisabled.vue'
+
+const groupDisabledContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let groupValue = ref(['0', '1']);
+        return {
+            groupValue,
+        };
+    },
+})
+<\/script>
+<template>
+    <x-checkbox-group v-model="groupValue" name="按钮组禁用" disabled>
+        <x-checkbox value="0">独坐敬亭山</x-checkbox>
+        <x-checkbox value="1">望天门山</x-checkbox>
+        <x-checkbox value="2">侠客行</x-checkbox>
+    </x-checkbox-group>
+</template>`
+
+import Change from './7Change.vue'
+
+const changeContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+import { XMessage } from "xinxin-ui";
+
+export default defineComponent({
+    setup() {
+        let groupValue = ref([]);
+        return {
+            groupValue,
+            change(change: string[]) {
+                XMessage("[" + change + "]");
+            }
+        };
+    },
+})
+<\/script>
+<template>
+    <x-checkbox-group v-model="groupValue" name="按钮组禁用" @change="change">
+        <x-checkbox value="独坐敬亭山">独坐敬亭山</x-checkbox>
+        <x-checkbox value="望天门山">望天门山</x-checkbox>
+        <x-checkbox value="侠客行">侠客行</x-checkbox>
+    </x-checkbox-group>
+</template>
+`
+
+import CheckboxButton from './8CheckboxButton.vue'
+
+const checkboxButtonContent = `<template>
+    <x-checkbox-group>
+        <x-checkbox-button>独坐敬亭山</x-checkbox-button>
+        <x-checkbox-button>望天门山</x-checkbox-button>
+        <x-checkbox-button>侠客行</x-checkbox-button>
     </x-checkbox-group>
 </template>`
 
@@ -161,13 +260,25 @@ export default defineComponent({
       descriptionContent,
       descriptionInfo: info.description,
 
+      CheckboxGroup,
+      checkboxGroupContent,
+      checkboxGroupInfo: info.checkboxGroup,
+
       Card,
       cardContent,
       cardInfo: info.card,
 
-      CheckboxGroup,
-      checkboxGroupContent,
-      checkboxGroupInfo: info.checkboxGroup,
+      GroupDisabled,
+      groupDisabledContent,
+      groupDisabledInfo: info.groupDisabled,
+
+      Change,
+      changeContent,
+      changeInfo: info.change,
+
+      CheckboxButton,
+      checkboxButtonContent,
+      checkboxButtonInfo: info.checkboxButton,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -202,11 +313,29 @@ export default defineComponent({
       </CodeExample>
 
       <CodeExample
-        id="card"
-        :code="cardContent"
-        :title="cardInfo.title"
-        :code-v-node="Card"
-        :code-desc="cardInfo.desc"
+        id="checkboxGroup"
+        :code="checkboxGroupContent"
+        :title="checkboxGroupInfo.title"
+        :code-v-node="CheckboxGroup"
+        :code-desc="checkboxGroupInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="groupDisabled"
+        :code="groupDisabledContent"
+        :title="groupDisabledInfo.title"
+        :code-v-node="GroupDisabled"
+        :code-desc="groupDisabledInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="checkboxButton"
+        :code="checkboxButtonContent"
+        :title="checkboxButtonInfo.title"
+        :code-v-node="CheckboxButton"
+        :code-desc="checkboxButtonInfo.desc"
       >
       </CodeExample>
     </template>
@@ -230,11 +359,20 @@ export default defineComponent({
       </CodeExample>
 
       <CodeExample
-        id="checkboxGroup"
-        :code="checkboxGroupContent"
-        :title="checkboxGroupInfo.title"
-        :code-v-node="CheckboxGroup"
-        :code-desc="checkboxGroupInfo.desc"
+        id="card"
+        :code="cardContent"
+        :title="cardInfo.title"
+        :code-v-node="Card"
+        :code-desc="cardInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="change"
+        :code="changeContent"
+        :title="changeInfo.title"
+        :code-v-node="Change"
+        :code-desc="changeInfo.desc"
       >
       </CodeExample>
     </template>

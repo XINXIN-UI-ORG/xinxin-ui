@@ -43,7 +43,31 @@ const checkboxGroup: ExampleInfo = {
     `)
 };
 
+const groupDisabled: ExampleInfo = {
+    title: "多选组禁用",
+    desc: format(`
+        在按钮组上使用disabled属性禁用一组多选框。
+    `)
+};
+
+const change: ExampleInfo = {
+    title: "change事件",
+    desc: format(`
+        通过@change事件可以监听多选组的变化。
+    `)
+};
+
+const checkboxButton: ExampleInfo = {
+    title: "Button样式",
+    desc: format(`
+        将x-checkbox替换成x-checkbox-button即可体验Button样式。size属性还可以选择Button大小，有small、normal、large可选。
+    `)
+};
+
 export {
+    checkboxButton,
+    change,
+    groupDisabled,
     card,
     description,
     checkboxGroup,
@@ -102,10 +126,45 @@ const apiProps: ApiTable<ApiProps> = {
             defaultValue: "false",
             selectList: ["true", "false"],
         },
+        {
+            props: "CheckboxGroup",
+            describe: "-----",
+            type: '-----',
+        },
+        {
+            props: "name",
+            describe: "设置多选框name",
+            type: 'String',
+        },
+        {
+            props: "disabled",
+            describe: "禁用多选框",
+            type: 'Boolean',
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "CheckboxButton",
+            describe: "-----",
+            type: '-----',
+        },
+        {
+            props: "size",
+            describe: "设置按钮大小",
+            type: 'String',
+            defaultValue: "normal",
+            selectList: ["small", "normal", "large"],
+        },
     ],
 };
 
 const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
-    content: [],
+    content: [
+        {
+            event: "change",
+            describe: "监听多选组值的变化",
+            props: ["value"],
+        }
+    ],
 };

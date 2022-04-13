@@ -20,6 +20,7 @@ export default defineComponent({
     <section
         :class="[
             gcn.base(),
+            gcn.is('disabled', disabled),
         ]"
     >
         <slot></slot>
@@ -27,8 +28,21 @@ export default defineComponent({
 </template>
 <style lang="stylus" scoped>
 .x-checkbox-group
+    display inline-block
     :deep(.x-checkbox)
         margin-right 16px
         &:last-child
             margin-right 0
+    :deep(.x-checkbox-card)
+        margin-right 0
+        margin-bottom 10px
+        &:last-child
+            margin-bottom 0
+    :deep(.x-checkbox-button:first-child)
+        border-radius 4px 0 0 4px
+        padding-left 4px
+    :deep(.x-checkbox-button:last-child)
+        border-radius 0 4px 4px 0
+.x-checkbox-group-disabled
+    cursor not-allowed
 </style>

@@ -125,7 +125,7 @@ export default defineComponent({
     border-radius 4px
     border 1px solid transparent
     &:hover
-        background-color #f4f5f5    
+        background-color #f4f5f5
     .x-radio__description__label
         font-weight bolder
 .x-radio-checked

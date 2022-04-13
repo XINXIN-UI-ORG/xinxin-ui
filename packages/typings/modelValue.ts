@@ -1,2 +1,2 @@
-export type ModelValueType = String | Number | Boolean;
+export type ModelValueType = string | number | boolean;
 export const ModelValueTypeVue = [String, Number, Boolean];

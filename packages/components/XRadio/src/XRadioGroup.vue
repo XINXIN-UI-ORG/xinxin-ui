@@ -21,6 +21,7 @@ export default defineComponent({
     <section
         :class="[
             gcn.base(),
+            gcn.is('disabled', disabled),
         ]">
         <slot></slot>
     </section>
@@ -43,4 +44,6 @@ export default defineComponent({
         border-radius 4px 0 0 4px
     :deep(.x-radio-button:last-child)
         border-radius 0 4px 4px 0
+.x-radio-group
+    cursor not-allowed
 </style>

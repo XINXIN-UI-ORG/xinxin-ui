@@ -1,7 +1,8 @@
 import { computed, ExtractPropTypes, SetupContext, inject, PropType } from "vue";
 import { isBoolean } from "@vueuse/core";
 import { checkboxGroupInjectKey } from "@xinxin-ui/symbols";
-import { ModelValueTypeVue } from "@xinxin-ui/typings";
+import { ModelValueTypeVue, NormalSize } from "@xinxin-ui/typings";
+import { groupCombineItemStatus } from "@xinxin-ui/constants";
 
 export const checkboxProps = {
     checked: {
@@ -28,10 +29,18 @@ export const checkboxProps = {
         type: Boolean,
         default: false,
     },
+    card: {
+        type: Boolean,
+        default: false,
+    },
+    size: {
+        type: String as PropType<NormalSize>,
+        default: "normal"
+    },
 };
 
 export const checkboxEmits = {
-    "update:checked": (val: Boolean) => {
+    "update:checked": (val: boolean) => {
         return isBoolean(val);
     },
 };
@@ -74,5 +83,8 @@ export function checkboxGather(
     });
     return {
         checked,
+        name: groupCombineItemStatus<string>(isGroup.value, props.name, checkboxGroupProps ? checkboxGroupProps.name : ''),
+        disabled: groupCombineItemStatus<boolean>(isGroup.value, props.disabled, checkboxGroupProps ? checkboxGroupProps.disabled : false),
+        size: isGroup.value ? checkboxGroupProps!.size : props.size,
     };
 }

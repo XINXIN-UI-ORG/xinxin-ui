@@ -11,10 +11,12 @@ export default defineComponent({
     inheritAttrs: false,
     setup(props, { emit }) {
         const gcn = generateClassName("checkbox");
-        const { checked } = checkboxGather(props, emit);
+        const { checked, name, disabled } = checkboxGather(props, emit);
         return {
             gcn,
             checked,
+            name,
+            disabled,
         };
     },
     components: {
@@ -29,6 +31,7 @@ export default defineComponent({
             gcn.base(),
             gcn.is('checked', indeterminate || checked),
             gcn.is('disabled', disabled),
+            gcn.is('card', card),
         ]"
     >
         <input
@@ -111,12 +114,26 @@ export default defineComponent({
     .x-checkbox__desc
         color rgba(28,31,35,0.6)
         margin-left 21px
+.x-checkbox-card
+    display block
+    padding 10px
+    border-radius 4px
+    border 1px solid transparent
+    &:hover
+        background-color #f4f5f5
+    .x-checkbox__label
+        font-weight bolder
+    &.x-checkbox-disabled:hover
+        background-color transparent
 .x-checkbox-checked
     .x-checkbox__selector
         background-color $base_theme_color
         border-color $base_theme_color
         .x-checkbox__selector__icons
             height 14px
+    &.x-checkbox-card
+        background-color $base_theme_color_opacity !important
+        border-color $base_theme_color !important
 .x-checkbox-disabled
     opacity .3
     cursor not-allowed
