@@ -6,3 +6,4 @@ dist-ssr
 test-reporter
 coverage
 xinxin-icons/packages/src
+.idea
