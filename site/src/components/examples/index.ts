@@ -22,6 +22,9 @@ import messageAction from './message/action'
 import radio from './radio/Index.vue'
 import radioAction from './radio/action'
 
+import select from './select/Index.vue'
+import selectAction from './select/action'
+
 export {
   button,
   buttonAction,
@@ -39,4 +42,6 @@ export {
   messageAction,
   radio,
   radioAction,
+  select,
+  selectAction,
 }
