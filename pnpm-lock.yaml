@@ -4,6 +4,7 @@ importers:
 
   .:
     specifiers:
+      '@popperjs/core': ^2.11.5
       '@vitejs/plugin-vue': ^2.3.1
       '@vitejs/plugin-vue-jsx': ^1.3.9
       '@vue/shared': ^3.2.31
@@ -18,6 +19,7 @@ importers:
       vite: 2.7.10
       vue: ^3.0.4
     dependencies:
+      '@popperjs/core': 2.11.5
       vue: 3.2.31
     devDependencies:
       '@vitejs/plugin-vue': 2.3.1_vite@2.7.10+vue@3.2.31
@@ -53,6 +55,12 @@ importers:
       '@xinxin-ui/typings': workspace:^1.0.0
     dependencies:
       '@xinxin-ui/components': link:../components
+      '@xinxin-ui/typings': link:../typings
+
+  packages/utils:
+    specifiers:
+      '@xinxin-ui/typings': workspace:^1.0.0
+    dependencies:
       '@xinxin-ui/typings': link:../typings
 
   packages/xinxin-ui:
@@ -425,6 +433,10 @@ packages:
       '@jridgewell/resolve-uri': 3.0.5
       '@jridgewell/sourcemap-codec': 1.4.11
     dev: true
+
+  /@popperjs/core/2.11.5:
+    resolution: {integrity: sha512-9X2obfABZuDVLCgPK9aX0a/x4jaOEweTTWE2+9sr0Qqqevj2Uv5XorvusThmc9XGYpS9yI+fhh8RTafBtGposw==}
+    dev: false
 
   /@rollup/pluginutils/4.2.0:
     resolution: {integrity: sha512-2WUyJNRkyH5p487pGnn4tWAsxhEFKN/pT8CMgHshd5H+IXkOnKvKZwsz5ZWz+YCXkleZRAU5kwbfgF8CPfDRqA==}

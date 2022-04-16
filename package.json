@@ -15,6 +15,7 @@
     "build:icons": "esno ./scripts/icons/generate.ts"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.5",
     "vue": "^3.0.4"
   },
   "devDependencies": {

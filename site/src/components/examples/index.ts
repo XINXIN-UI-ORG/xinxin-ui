@@ -19,6 +19,9 @@ import loadingAction from './loading/action'
 import message from './message/Index.vue'
 import messageAction from './message/action'
 
+import popover from './popover/Index.vue'
+import popoverAction from './popover/action'
+
 import radio from './radio/Index.vue'
 import radioAction from './radio/action'
 
@@ -40,6 +43,8 @@ export {
   loadingAction,
   message,
   messageAction,
+  popover,
+  popoverAction,
   radio,
   radioAction,
   select,

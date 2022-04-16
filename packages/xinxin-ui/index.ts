@@ -13,6 +13,7 @@ import {
     XCheckboxGroup,
     CheckboxButton,
     Select,
+    Popover,
 } from "@xinxin-ui/components";
 
 // package下组件列表
@@ -30,6 +31,7 @@ const components = [
     XCheckboxGroup,
     CheckboxButton,
     Select,
+    Popover,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -63,4 +65,5 @@ export {
     XCheckboxGroup,
     CheckboxButton,
     Select,
+    Popover,
 };

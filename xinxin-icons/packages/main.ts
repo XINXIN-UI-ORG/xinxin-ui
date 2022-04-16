@@ -44,6 +44,8 @@ import Rocket from './src/rocket.vue'
 
 import Search from './src/search.vue'
 
+import Select from './src/select.vue'
+
 import SourceCode from './src/source-code.vue'
 
 import Star from './src/star.vue'
@@ -81,6 +83,7 @@ const componentList = [
   Restart,
   Rocket,
   Search,
+  Select,
   SourceCode,
   Star,
   SuccessMessage,
@@ -127,6 +130,7 @@ export {
   Restart,
   Rocket,
   Search,
+  Select,
   SourceCode,
   Star,
   SuccessMessage,

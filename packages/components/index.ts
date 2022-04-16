@@ -15,3 +15,5 @@ export * from "./XRadio";
 export * from "./XCheckbox";
 
 export * from "./Select";
+
+export * from "./Popover";

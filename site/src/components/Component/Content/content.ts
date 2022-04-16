@@ -36,4 +36,5 @@ const componentNameDesc = {
     "checkbox": "你选这么多不怕我伤心嘛？",
     "icon": "图标是灵魂。",
     "select": "下拉菜单选择数据。",
+    "popover": "点击目标元素弹出气泡卡片。",
 };

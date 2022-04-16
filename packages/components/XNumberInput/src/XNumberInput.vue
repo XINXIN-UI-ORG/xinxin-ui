@@ -23,10 +23,8 @@ export default defineComponent({
         let downBtnRef = ref<HTMLDivElement>();
         // 是否禁用
         let disabled = computed(() => {
-            if (attrs.disabled === undefined || attrs.disabled === false) {
-                return false;
-            }
-            return true;
+            return !(attrs.disabled === undefined || attrs.disabled === false);
+
         });
         let { upValue, downValue, disabledBtn, blurInput } = modifyValue(
             xInputRef,

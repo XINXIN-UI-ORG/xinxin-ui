@@ -27,6 +27,7 @@
   "include": [
     "packages/**/*.ts",
     "site/**/*.ts",
+    "site/**/*.vue",
     "xinxin-icons/**/*.ts",
     "packages/**/*.tsx",
     "packages/**/*.vue",
@@ -34,7 +35,7 @@
     "scripts/**/*.ts"
   ],
   "exclude": [
-    "node_modules",
+    "**/node_modules/**",
     "**/dist/**"
   ]
 }

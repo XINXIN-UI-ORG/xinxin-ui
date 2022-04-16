@@ -63,7 +63,7 @@ export const menuList: MenuListType[] = [
         type: MenuType.category,
         content: "反馈组件",
         icon: AlertOn20Filled,
-        size: 2,
+        size: 3,
     },
     {
         id: 201,
@@ -76,5 +76,11 @@ export const menuList: MenuListType[] = [
         type: MenuType.link,
         content: "加载中",
         name: "Loading",
+    },
+    {
+        id: 203,
+        type: MenuType.link,
+        content: "气泡卡片",
+        name: "Popover",
     },
 ];
