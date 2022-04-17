@@ -3,49 +3,59 @@ import { defineComponent, ref } from "vue";
 import { popoverProps, usePopover } from "./popover.ts";
 import { generateClassName } from "@xinxin-ui/utils";
 import PopoverTrigger from "./PopoverTrigger.tsx";
-import PopoverArrow from "./popoverArrow.tsx";
 
 export default defineComponent({
     name: "x-popover",
     props: popoverProps,
     setup(props) {
+        let gcn = generateClassName("popover");
+        let popoverShow = ref<boolean>(false);
         // 被定位的内容
         let popoverContentRef = ref<HTMLDivElement | null>(null);
-        let gcn = generateClassName("popover");
         usePopover(popoverContentRef, props);
         return {
             gcn,
             popoverContentRef,
+            popoverShow,
         };
     },
     components: {
         PopoverTrigger,
-        PopoverArrow,
     },
 });
 </script>
 <template>
-    <popover-trigger>
+    <popover-trigger
+        v-model:popover-show="popoverShow"
+    >
         <slot />
     </popover-trigger>
     <teleport to="body">
-        <div
-            ref="popoverContentRef"
-            :class="[
-                gcn.base(),
-                gcn.bm(theme),
-            ]"
-        >
-            <slot name="content">
-                {{content}}
-            </slot>
-            <popover-arrow
-                v-bind="$props"
+        <transition name="x-popover-transition">
+            <div
+                ref="popoverContentRef"
                 :class="[
-                    gcn.e('arrow'),
+                    gcn.base(),
+                    gcn.bm(theme),
                 ]"
-            />
-        </div>
+                v-if="popoverShow"
+            >
+                <slot name="content">
+                    {{content}}
+                </slot>
+                <div
+                    :class="[
+                        gcn.e('arrow'),
+                    ]"
+                >
+                    <div
+                        :class="[
+                            gcn.e('arrow', 'triangle'),
+                        ]"
+                    />
+                </div>
+            </div>
+        </transition>
     </teleport>
 </template>
 <style lang="stylus" scoped src="../style/popover.styl"></style>

@@ -45,6 +45,13 @@ const apiProps: ApiTable<ApiProps> = {
             type: 'Number',
             defaultValue: "12",
         },
+        {
+            props: "boundary",
+            describe: `当popover向指定方向弹出时，如果该方向的可视区间边界距离目标的空间小于popover的大小，则popover会展示到相反或用户指定的方向，
+            默认的可视区间按照document计算，可以通过此属性修改可视区间的对象。`,
+            type: 'HTMLElement | Document',
+            defaultValue: "document",
+        },
     ],
 };
 

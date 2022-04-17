@@ -1,10 +1,24 @@
-import type { VNode } from "vue";
+import type { VNode, ExtractPropTypes, SetupContext } from "vue";
 import { h, Comment, defineComponent, Fragment, inject, Text, withDirectives } from "vue";
 import { isObject } from "@vue/shared";
 import { ReferenceInjectKey } from "@xinxin-ui/symbols";
+import { isBoolean } from "@vueuse/core";
+
+const triggerProps = {
+    popoverShow: Boolean,
+
+};
+
+const triggerEmit = {
+    "update:popoverShow": (val) => {
+        return isBoolean(val);
+    },
+};
 
 export default defineComponent({
-    setup(_, { slots }) {
+    props: triggerProps,
+    emits: triggerEmit,
+    setup(props, { slots, emit }) {
         const defaultSlot = findFirstLegitChild(slots.default?.());
         if (defaultSlot === null) {
             console.warn("popover未传入合法触发器！");
@@ -12,11 +26,11 @@ export default defineComponent({
         }
         // 获取父组件传过来的triggerRef对象 将真实trigger dom赋值给父组件的对象供父组件操作
         const fatherReferenceGather = inject(ReferenceInjectKey, undefined);
-        let { test } = useTrigger();
+        let { checkPopoverShow } = useTrigger(props, emit);
         return () => {
             // 绑定指令 在指令中将真实dom传出去
             return withDirectives(h(defaultSlot!, {
-                onClick: test,
+                onClick: checkPopoverShow,
             }), [
                 [{
                     mounted(el) {
@@ -67,11 +81,16 @@ function wrapTextChild(s: string | VNode) {
 }
 
 
-function useTrigger() {
+function useTrigger(
+    props: ExtractPropTypes<typeof triggerProps>,
+    emit: SetupContext<typeof triggerEmit>['emit']
+) {
+    // 切换popover的显示状态
+    let checkPopoverShow = () => {
+        emit("update:popoverShow", !props.popoverShow);
+    };
     return {
-        test: () => {
-            alert(1);
-        },
+        checkPopoverShow,
     };
 }
 

@@ -21,13 +21,17 @@ export const popoverProps = {
         type: Number,
         default: 12,
     },
+    boundary: {
+        type: Object as PropType<HTMLElement | Document>,
+        default: document
+    },
 };
 
 export type PopoverPropsType = ExtractPropTypes<typeof popoverProps>;
 
 export function usePopover(
     popoverContentRef: Ref<HTMLDivElement | null>,
-    props: PopoverPropsType
+    props: PopoverPropsType,
 ): void {
     // 注册reference
     let popoverRefGather: ReferenceGather = {
@@ -37,9 +41,13 @@ export function usePopover(
     // 定位popper
     onMounted(() => {
         watchEffect(() => {
+            if (!unref(popoverContentRef)) {
+                return;
+            }
             usePopper(unref(popoverRefGather.triggerRef)!, unref(popoverContentRef) as HTMLElement, {
                 placement: props.placement,
                 offset: props.offset,
+                boundary: props.boundary,
             });
         });
     })
