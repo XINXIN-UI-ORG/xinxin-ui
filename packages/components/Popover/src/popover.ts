@@ -31,6 +31,7 @@ export type PopoverPropsType = ExtractPropTypes<typeof popoverProps>;
 
 export function usePopover(
     popoverContentRef: Ref<HTMLDivElement | null>,
+    popoverArrow: Ref<HTMLDivElement | null>,
     props: PopoverPropsType,
 ): void {
     // 注册reference
@@ -48,6 +49,7 @@ export function usePopover(
                 placement: props.placement,
                 offset: props.offset,
                 boundary: props.boundary,
+                arrowDom: unref(popoverArrow)!,
             });
         });
     })

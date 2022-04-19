@@ -5,6 +5,7 @@ type Options = {
     placement: PlacementType,
     offset: number,
     boundary: HTMLElement | Document,
+    arrowDom?: HTMLElement,
 };
 
 export function usePopper(referenceDom: HTMLElement, popperDom: HTMLElement, option: Options) {
@@ -29,6 +30,13 @@ export function usePopper(referenceDom: HTMLElement, popperDom: HTMLElement, opt
                 options: {
                     padding: 5,
                     boundary: option.boundary,
+                },
+            },
+            {
+                name: "arrow",
+                options: {
+                    element: option.arrowDom,
+                    padding: 3,
                 },
             },
         ],

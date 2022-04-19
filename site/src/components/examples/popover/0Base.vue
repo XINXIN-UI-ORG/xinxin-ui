@@ -5,7 +5,7 @@ export default defineComponent({
     setup() {
         let containerRef = ref<HTMLDivElement>();
         onMounted(() => {
-            containerRef.value!.scrollTop = 520;
+            containerRef.value!.scrollTop = 220;
         })
         return {
             containerRef
@@ -16,11 +16,17 @@ export default defineComponent({
 <template>
     <div :class="classes.wrapper" ref="containerRef">
         <x-popover
-            content="Lately did you ever feel the pain In the morning rain as it soaks it to the bone"
-            placement="bottom"
+            placement="right-end"
             :boundary="containerRef"
         >
             <x-button>点击弹出</x-button>
+            <template #content>
+                <p>Lately did you ever feel the pain In</p>
+                <p>Lately did you ever feel the pain In</p>
+                <p>Lately did you ever feel the pain In</p>
+                <p>Lately did you ever feel the pain In</p>
+                <p>Lately did you ever feel the pain In</p>
+            </template>
         </x-popover>
     </div>
 </template>
@@ -36,5 +42,5 @@ export default defineComponent({
 </style>
 <style lang="stylus" scoped>
 .x-button
-    margin: 400px 0 200px 10px !important
+    margin: 400px 0 400px 10px !important
 </style>

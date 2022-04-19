@@ -7,43 +7,13 @@
     &.x-popover-light
         background-color #fff
         box-shadow 0 0 12px rgba(0, 0, 0, .12)
-    &[data-popper-placement^='right']
-        .x-popover__arrow
-            left 0
-            top 50%
-            transform translate(-50%, -50%)
-            .x-popover__arrow__triangle
-                border-right-color transparent
-                border-top-color transparent
-    &[data-popper-placement^='top']
-        .x-popover__arrow
-            left 50%
-            bottom 0
-            transform translate(-50%, 50%)
-            .x-popover__arrow__triangle
-                border-top-color transparent
-                border-left-color transparent
-    &[data-popper-placement^='left']
-        .x-popover__arrow
-            right 0
-            top 50%
-            transform translate(50%, -50%)
-            .x-popover__arrow__triangle
-                border-left-color transparent
-                border-bottom-color transparent
-    &[data-popper-placement^='bottom']
-        .x-popover__arrow
-            top 0
-            left 50%
-            transform translate(-50%, -50%)
-            .x-popover__arrow__triangle
-                border-bottom-color transparent
-                border-right-color transparent
     .x-popover__arrow
         width 10px
         height 10px
         position absolute
-        .x-popover__arrow__triangle
+        &::before
+            content ''
+            display block
             transform rotate(45deg)
             height 10px
             width 10px
@@ -51,6 +21,33 @@
             border-radius 2px
             box-sizing border-box
             background-color #fff
+    &[data-popper-placement^='right']
+        .x-popover__arrow
+            left -5px
+            &::before
+                border-right-color transparent
+                border-top-color transparent
+    &[data-popper-placement^='top']
+        .x-popover__arrow
+            bottom -5px
+            &::before
+                border-top-color transparent
+                border-left-color transparent
+    &[data-popper-placement^='left']
+        .x-popover__arrow
+            right -5px
+            &::before
+                border-left-color transparent
+                border-bottom-color transparent
+    &[data-popper-placement^='bottom']
+        .x-popover__arrow
+            top -5px
+            &::before
+                border-bottom-color transparent
+                border-right-color transparent
+    &[data-popper-reference-hidden]
+        visibility: hidden;
+        pointer-events: none;
 .x-popover-transition-enter-active, .x-popover-transition-leave-active
     transition opacity .5s
 .x-popover-transition-enter-from, .x-popover-transition-leave-to

@@ -12,11 +12,14 @@ export default defineComponent({
         let popoverShow = ref<boolean>(false);
         // 被定位的内容
         let popoverContentRef = ref<HTMLDivElement | null>(null);
-        usePopover(popoverContentRef, props);
+        // arrow内容
+        let popoverArrow = ref<HTMLDivElement | null>(null);
+        usePopover(popoverContentRef, popoverArrow, props);
         return {
             gcn,
             popoverContentRef,
             popoverShow,
+            popoverArrow,
         };
     },
     components: {
@@ -47,13 +50,8 @@ export default defineComponent({
                     :class="[
                         gcn.e('arrow'),
                     ]"
-                >
-                    <div
-                        :class="[
-                            gcn.e('arrow', 'triangle'),
-                        ]"
-                    />
-                </div>
+                    ref="popoverArrow"
+                />
             </div>
         </transition>
     </teleport>
