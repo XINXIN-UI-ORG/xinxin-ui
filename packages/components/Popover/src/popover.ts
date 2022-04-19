@@ -1,6 +1,6 @@
 import { PlacementType } from "@xinxin-ui/typings";
 import type { ExtractPropTypes, PropType, Ref } from "vue";
-import { onMounted, provide, ref, unref, watchEffect } from "vue";
+import { onMounted, provide, ref, unref, watch } from "vue";
 import { usePopper } from "@xinxin-ui/utils";
 import { ReferenceGather, ReferenceInjectKey } from "@xinxin-ui/symbols";
 
@@ -41,15 +41,24 @@ export function usePopover(
     provide(ReferenceInjectKey, popoverRefGather);
     // 定位popper
     onMounted(() => {
-        watchEffect(() => {
-            if (!unref(popoverContentRef)) {
-                return;
+        let popperInstance;
+        watch(
+            () => popoverContentRef.value,
+            (popoverContentRef) => {
+                if (!popoverContentRef) {
+                    return;
+                }
+                popperInstance = usePopper(unref(popoverRefGather.triggerRef)!, popoverContentRef, {
+                    placement: props.placement,
+                    offset: props.offset,
+                    boundary: props.boundary,
+                    arrowDom: unref(popoverArrow)!,
+                });
             }
-            usePopper(unref(popoverRefGather.triggerRef)!, unref(popoverContentRef) as HTMLElement, {
-                placement: props.placement,
-                offset: props.offset,
-                boundary: props.boundary,
-                arrowDom: unref(popoverArrow)!,
+        );
+        watch(() => props.placement, (placement) => {
+            popperInstance.setOptions({
+                placement: placement,
             });
         });
     })

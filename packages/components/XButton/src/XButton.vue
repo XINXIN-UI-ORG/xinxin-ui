@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent, PropType, reactive, ref } from "vue";
+import { computed, defineComponent, PropType, ref } from "vue";
 import type { ButtonType, ButtonSize } from "./XButton.types";
 import {
     buttonOutter,
@@ -11,7 +11,6 @@ import { Load } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: "x-button",
-    inheritAttrs: false,
     props: {
         type: {
             type: String as PropType<ButtonType>,
