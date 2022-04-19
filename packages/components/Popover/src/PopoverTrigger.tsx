@@ -134,7 +134,7 @@ function useTrigger(
     let clickOtherToClosePopper = (e) => {
         let stopPrevent = e.path.some(item => item === fatherReferenceGather?.popperRef.value || item === fatherReferenceGather?.triggerRef.value);
         if (stopPrevent) {
-            // 如果点在了popover上 则不关闭
+            // 如果点在了popover或者reference上 则不关闭
             return;
         }
         closePopper();

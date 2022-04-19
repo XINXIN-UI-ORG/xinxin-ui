@@ -67,7 +67,11 @@ export function usePopover(
                 }
                 popperInstance = usePopper(unref(popoverRefGather.triggerRef)!, popoverContentRef, {
                     placement: props.placement,
-                    offset: props.ignoreContent ? props.offset : 0,
+                    offset: props.ignoreContent
+                        ? props.showArrow
+                            ? props.offset
+                            : 5
+                        : 0,
                     boundary: props.boundary,
                     arrowDom: unref(popoverArrow)!,
                 });

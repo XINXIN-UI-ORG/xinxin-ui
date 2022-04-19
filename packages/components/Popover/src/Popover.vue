@@ -26,8 +26,16 @@ export default defineComponent({
             popoverShow,
             popoverArrow,
             popperStyle: computed(() => ({
-                "--margin": `${(<any>props).ignoreContent ? 0 : (<any>props).offset}px`,
-                "--position": `${(<any>props).ignoreContent ? 0 : -(<any>props).offset}px`,
+                "--margin": `${(<any>props).ignoreContent
+                    ? 0
+                    : (<any>props).showArrow
+                        ? (<any>props).offset
+                        : 5}px`,
+                "--position": `${(<any>props).ignoreContent
+                    ? 0
+                    : (<any>props).showArrow
+                        ? -(<any>props).offset
+                        : -5}px`,
             })),
         };
     },
