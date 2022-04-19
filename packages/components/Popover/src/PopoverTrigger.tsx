@@ -1,7 +1,7 @@
 import type { VNode, ExtractPropTypes, SetupContext } from "vue";
 import { h, Comment, defineComponent, Fragment, inject, Text, withDirectives } from "vue";
 import { isObject } from "@vue/shared";
-import { ReferenceInjectKey } from "@xinxin-ui/symbols";
+import { ReferenceInjectKey, ReferenceGather } from "@xinxin-ui/symbols";
 import { isBoolean } from "@vueuse/core";
 
 const triggerProps = {
@@ -28,7 +28,7 @@ export default defineComponent({
         }
         // 获取父组件传过来的triggerRef对象 将真实trigger dom赋值给父组件的对象供父组件操作
         const fatherReferenceGather = inject(ReferenceInjectKey, undefined);
-        let { checkPopoverShow, openPopper, closePopper, clickOtherToClosePopper } = useTrigger(props, emit);
+        let { checkPopoverShow, openPopper, closePopper, clickOtherToClosePopper } = useTrigger(props, emit, fatherReferenceGather);
         // 绑定popover触发展示的事件
         let directiveFunc = (el) => {
             fatherReferenceGather && (fatherReferenceGather.triggerRef.value = el);
@@ -106,7 +106,8 @@ function wrapTextChild(s: string | VNode) {
 
 function useTrigger(
     props: ExtractPropTypes<typeof triggerProps>,
-    emit: SetupContext<typeof triggerEmit>['emit']
+    emit: SetupContext<typeof triggerEmit>['emit'],
+    fatherReferenceGather: ReferenceGather | undefined,
 ) {
     // 切换popover的显示状态
     let checkPopoverShow = (e?: Event) => {
@@ -131,7 +132,8 @@ function useTrigger(
         emit("update:popoverShow", true);
     };
     let clickOtherToClosePopper = (e) => {
-        if (e.path.some(item => item.className && item.className.includes("x-popover"))) {
+        let stopPrevent = e.path.some(item => item === fatherReferenceGather?.popperRef.value || item === fatherReferenceGather?.triggerRef.value);
+        if (stopPrevent) {
             // 如果点在了popover上 则不关闭
             return;
         }
