@@ -7,6 +7,15 @@
     &.x-popover-light
         background-color #fff
         box-shadow 0 0 12px rgba(0, 0, 0, .12)
+    &::after
+        content ''
+        display block
+        position absolute
+        top 0
+        bottom 0
+        left 0
+        right 0
+        z-index -1
     .x-popover__arrow
         width 10px
         height 10px
@@ -22,24 +31,36 @@
             box-sizing border-box
             background-color #fff
     &[data-popper-placement^='right']
+        margin-left var(--margin) !important
+        &::after
+            left var(--position) !important
         .x-popover__arrow
             left -5px
             &::before
                 border-right-color transparent
                 border-top-color transparent
     &[data-popper-placement^='top']
+        margin-bottom var(--margin) !important
+        &::after
+            bottom var(--position) !important
         .x-popover__arrow
             bottom -5px
             &::before
                 border-top-color transparent
                 border-left-color transparent
     &[data-popper-placement^='left']
+        margin-right var(--margin) !important
+        &::after
+            right var(--position) !important
         .x-popover__arrow
             right -5px
             &::before
                 border-left-color transparent
                 border-bottom-color transparent
     &[data-popper-placement^='bottom']
+        margin-top var(--margin) !important
+        &::after
+            top var(--position) !important
         .x-popover__arrow
             top -5px
             &::before

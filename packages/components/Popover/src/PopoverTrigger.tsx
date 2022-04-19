@@ -8,6 +8,7 @@ const triggerProps = {
     popoverShow: Boolean,
     show: Boolean,
     trigger: String,
+    ignoreContent: Boolean,
 };
 
 const triggerEmit = {
@@ -27,23 +28,31 @@ export default defineComponent({
         }
         // 获取父组件传过来的triggerRef对象 将真实trigger dom赋值给父组件的对象供父组件操作
         const fatherReferenceGather = inject(ReferenceInjectKey, undefined);
-        let { checkPopoverShow, checkPopoverShowByProps } = useTrigger(props, emit);
-        return () => {
-            let directiveFunc = (el) => {
-                fatherReferenceGather && (fatherReferenceGather.triggerRef.value = el);
-                if (props.show === undefined) {
-                    // 当用户设置了show属性，则不触发click和hover事件
-                    if (props.trigger === 'click') {
-                        el.addEventListener('click', checkPopoverShow);
-                    } else if (props.trigger === 'hover') {
-                        el.addEventListener('mouseover', () => checkPopoverShowByProps(true));
-                        el.addEventListener('mouseout', () => checkPopoverShowByProps(false));
-                    } else if (props.trigger === 'focus') {
-                        el.addEventListener('focus', () => checkPopoverShowByProps(true));
-                        el.addEventListener('blur', () => checkPopoverShowByProps(false));
+        let { checkPopoverShow, openPopper, closePopper, clickOtherToClosePopper } = useTrigger(props, emit);
+        // 绑定popover触发展示的事件
+        let directiveFunc = (el) => {
+            fatherReferenceGather && (fatherReferenceGather.triggerRef.value = el);
+            if (props.show === undefined) {
+                // 当用户设置了show属性，则不触发click和hover等事件
+                if (props.trigger === 'click' || props.trigger === 'contextmenu') {
+                    el.addEventListener(props.trigger, checkPopoverShow, false);
+                } else if (props.trigger === 'focus') {
+                    el.addEventListener('focus', openPopper, false);
+                    el.addEventListener('blur', closePopper, false);
+                } else if (props.trigger === 'hover') {
+                    el.addEventListener('mouseenter', openPopper, false);
+                    el.addEventListener('mouseleave', closePopper, false);
+                    if (!props.ignoreContent) {
+                        // 设置鼠标停留在reference和popper上都显示
+                        fatherReferenceGather?.popperRef.value?.addEventListener("mouseenter", openPopper, false);
+                        fatherReferenceGather?.popperRef.value?.addEventListener("mouseleave", closePopper, false);
                     }
                 }
-            };
+                // 点击其他地方隐藏popover
+                document.addEventListener('click', clickOtherToClosePopper);
+            }
+        };
+        return () => {
             // 绑定指令 在指令中将真实dom传出去
             return withDirectives(h(defaultSlot!, null), [
                 [{
@@ -100,15 +109,39 @@ function useTrigger(
     emit: SetupContext<typeof triggerEmit>['emit']
 ) {
     // 切换popover的显示状态
-    let checkPopoverShow = () => {
+    let checkPopoverShow = (e?: Event) => {
+        e?.preventDefault();
         emit("update:popoverShow", !props.popoverShow);
     };
-    let checkPopoverShowByProps = (show: boolean) => {
-        emit("update:popoverShow", show);
+    let timer;
+    let closePopper = () => {
+        if (!props.popoverShow) {
+            return;
+        }
+        timer = setTimeout(() => {
+            emit("update:popoverShow", false);
+        }, 200);
+    };
+    let openPopper = () => {
+        // 对于hover触发的popover 如果鼠标移动到popover上需要保证popover不能消失 所以当检测到closePopper操作在200ms内则立即清除
+        clearTimeout(timer);
+        if (props.popoverShow) {
+            return;
+        }
+        emit("update:popoverShow", true);
+    };
+    let clickOtherToClosePopper = (e) => {
+        if (e.path.some(item => item.className && item.className.includes("x-popover"))) {
+            // 如果点在了popover上 则不关闭
+            return;
+        }
+        closePopper();
     };
     return {
         checkPopoverShow,
-        checkPopoverShowByProps,
+        openPopper,
+        closePopper,
+        clickOtherToClosePopper,
     };
 }
 

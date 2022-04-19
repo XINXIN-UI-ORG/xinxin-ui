@@ -118,27 +118,37 @@ export default defineComponent({
 <template>
     <x-popover
         trigger="click"
-        content="A vue UI repository!"
+        content="故人西辞黄鹤楼，烟花三月下扬州。"
     >
         <x-button plain type="success">Click to active</x-button>
     </x-popover>
     <x-popover
         trigger="hover"
-        content="A vue UI repository!"
+        content="孤帆远影碧空尽，唯见长江天际流。"
     >
         <x-button plain type="warning">Hover to active</x-button>
     </x-popover>
     <x-popover
         trigger="focus"
-        content="A vue UI repository!"
+        content="杨花落尽子规啼，闻道龙标过五溪。"
     >
         <x-button plain type="warning">Focus to active</x-button>
     </x-popover>
     <x-popover
         :show="visible"
-        content="A vue UI repository!"
+        content="我寄愁心与明月，随君直到夜郎西。"
     >
         <x-button plain type="error" @click="visible = !visible">Manual to active</x-button>
+    </x-popover>
+</template>`
+
+import ShowArrow from './2ShowArrow.vue'
+
+const showArrowContent = `<template>
+    <x-popover
+
+    >
+        <x-button dashed>去除箭头</x-button>
     </x-popover>
 </template>`
 
@@ -152,6 +162,10 @@ export default defineComponent({
       Active,
       activeContent,
       activeInfo: info.active,
+
+      ShowArrow,
+      showArrowContent,
+      showArrowInfo: info.showArrow,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -173,6 +187,15 @@ export default defineComponent({
         :title="baseInfo.title"
         :code-v-node="Base"
         :code-desc="baseInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="showArrow"
+        :code="showArrowContent"
+        :title="showArrowInfo.title"
+        :code-v-node="ShowArrow"
+        :code-desc="showArrowInfo.desc"
       >
       </CodeExample>
     </template>

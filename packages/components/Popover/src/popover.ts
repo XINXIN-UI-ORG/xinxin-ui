@@ -33,6 +33,14 @@ export const popoverProps = {
         type: String as PropType<"click" | "hover">,
         default: 'click',
     },
+    showArrow: {
+        type: Boolean,
+        default: true,
+    },
+    ignoreContent: {
+        type: Boolean,
+        default: false,
+    },
 };
 
 export type PopoverPropsType = ExtractPropTypes<typeof popoverProps>;
@@ -45,6 +53,7 @@ export function usePopover(
     // 注册reference
     let popoverRefGather: ReferenceGather = {
         triggerRef: ref<HTMLElement | null>(null),
+        popperRef: popoverContentRef,
     };
     provide(ReferenceInjectKey, popoverRefGather);
     // 定位popper
@@ -58,7 +67,7 @@ export function usePopover(
                 }
                 popperInstance = usePopper(unref(popoverRefGather.triggerRef)!, popoverContentRef, {
                     placement: props.placement,
-                    offset: props.offset,
+                    offset: props.ignoreContent ? props.offset : 0,
                     boundary: props.boundary,
                     arrowDom: unref(popoverArrow)!,
                 });

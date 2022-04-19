@@ -12,11 +12,19 @@ const base: ExampleInfo = {
 const active: ExampleInfo = {
     title: "触发方式",
     desc: format(`
-        使用trigger属性决定popover展示的触发方式，触发方式分别有：click、hover、focus，也可以直接通过show属性手动控制popover展示。
+        使用trigger属性决定popover展示的触发方式，触发方式分别有：click、hover、focus、contextmenu，也可以直接通过show属性手动控制popover展示。
+    `)
+};
+
+const showArrow: ExampleInfo = {
+    title: "无箭头",
+    desc: format(`
+        设置show-arrow属性为false可以去除popover的箭头。
     `)
 };
 
 export {
+    showArrow,
     active,
     base,
     apiProps,
@@ -71,7 +79,21 @@ const apiProps: ApiTable<ApiProps> = {
             describe: '控制popover的展示方式',
             type: 'String',
             defaultValue: "click",
-            selectList: ['click', 'hover', 'focus'],
+            selectList: ['click', 'hover', 'focus', 'contextmenu'],
+        },
+        {
+            props: "show-arrow",
+            describe: '控制popover是否展示箭头',
+            type: 'Boolean',
+            defaultValue: "true",
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "ignore-content",
+            describe: '当trigger设置为hover时，如果将该属性设置为true，则当鼠标移开触发元素时popover消失',
+            type: 'Boolean',
+            defaultValue: "false",
+            selectList: ['true', 'false'],
         },
     ],
 };

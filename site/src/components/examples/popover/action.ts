@@ -11,4 +11,9 @@ export default [
     link: '/component/popover#active',
     name: info.active.title,
   },
+  {
+    key: 2,
+    link: '/component/popover#showArrow',
+    name: info.showArrow.title,
+  },
 ]

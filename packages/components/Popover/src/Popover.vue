@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from "vue";
+import { computed, defineComponent, ref, watchEffect } from "vue";
 import { popoverProps, usePopover } from "./popover.ts";
 import { generateClassName } from "@xinxin-ui/utils";
 import PopoverTrigger from "./PopoverTrigger.tsx";
@@ -25,6 +25,10 @@ export default defineComponent({
             popoverContentRef,
             popoverShow,
             popoverArrow,
+            popperStyle: computed(() => ({
+                "--margin": `${(<any>props).ignoreContent ? 0 : (<any>props).offset}px`,
+                "--position": `${(<any>props).ignoreContent ? 0 : -(<any>props).offset}px`,
+            })),
         };
     },
     components: {
@@ -48,11 +52,13 @@ export default defineComponent({
                     gcn.bm(theme),
                 ]"
                 v-if="popoverShow"
+                :style="popperStyle"
             >
                 <slot name="content">
                     {{content}}
                 </slot>
                 <div
+                    v-if="showArrow"
                     :class="[
                         gcn.e('arrow'),
                     ]"
