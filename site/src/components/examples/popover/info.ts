@@ -9,12 +9,19 @@ const base: ExampleInfo = {
     `)
 };
 
+const active: ExampleInfo = {
+    title: "触发方式",
+    desc: format(`
+        使用trigger属性决定popover展示的触发方式，触发方式分别有：click、hover、focus，也可以直接通过show属性手动控制popover展示。
+    `)
+};
+
 export {
+    active,
     base,
     apiProps,
     apiEvent
 }
-
 
 const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
@@ -51,6 +58,20 @@ const apiProps: ApiTable<ApiProps> = {
             默认的可视区间按照document计算，可以通过此属性修改可视区间的对象。`,
             type: 'HTMLElement | Document',
             defaultValue: "document",
+        },
+        {
+            props: "show",
+            describe: '控制popover的展示，会使trigger属性失效',
+            type: 'Boolean',
+            defaultValue: "false",
+            selectList: ['true', 'false'],
+        },
+        {
+            props: "trigger",
+            describe: '控制popover的展示方式',
+            type: 'String',
+            defaultValue: "click",
+            selectList: ['click', 'hover', 'focus'],
         },
     ],
 };

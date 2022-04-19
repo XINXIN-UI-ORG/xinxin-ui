@@ -6,7 +6,8 @@ import { isBoolean } from "@vueuse/core";
 
 const triggerProps = {
     popoverShow: Boolean,
-
+    show: Boolean,
+    trigger: String,
 };
 
 const triggerEmit = {
@@ -26,18 +27,31 @@ export default defineComponent({
         }
         // 获取父组件传过来的triggerRef对象 将真实trigger dom赋值给父组件的对象供父组件操作
         const fatherReferenceGather = inject(ReferenceInjectKey, undefined);
-        let { checkPopoverShow } = useTrigger(props, emit);
+        let { checkPopoverShow, checkPopoverShowByProps } = useTrigger(props, emit);
         return () => {
+            let directiveFunc = (el) => {
+                fatherReferenceGather && (fatherReferenceGather.triggerRef.value = el);
+                if (props.show === undefined) {
+                    // 当用户设置了show属性，则不触发click和hover事件
+                    if (props.trigger === 'click') {
+                        el.addEventListener('click', checkPopoverShow);
+                    } else if (props.trigger === 'hover') {
+                        el.addEventListener('mouseover', () => checkPopoverShowByProps(true));
+                        el.addEventListener('mouseout', () => checkPopoverShowByProps(false));
+                    } else if (props.trigger === 'focus') {
+                        el.addEventListener('focus', () => checkPopoverShowByProps(true));
+                        el.addEventListener('blur', () => checkPopoverShowByProps(false));
+                    }
+                }
+            };
             // 绑定指令 在指令中将真实dom传出去
-            return withDirectives(h(defaultSlot!, {
-                onClick: checkPopoverShow,
-            }), [
+            return withDirectives(h(defaultSlot!, null), [
                 [{
                     mounted(el) {
-                        fatherReferenceGather && (fatherReferenceGather.triggerRef.value = el);
+                        directiveFunc(el);
                     },
                     updated(el) {
-                        fatherReferenceGather && (fatherReferenceGather.triggerRef.value = el);
+                        directiveFunc(el);
                     }
                 }]
             ]);
@@ -89,8 +103,12 @@ function useTrigger(
     let checkPopoverShow = () => {
         emit("update:popoverShow", !props.popoverShow);
     };
+    let checkPopoverShowByProps = (show: boolean) => {
+        emit("update:popoverShow", show);
+    };
     return {
         checkPopoverShow,
+        checkPopoverShowByProps,
     };
 }
 

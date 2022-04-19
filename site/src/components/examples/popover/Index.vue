@@ -101,12 +101,57 @@ export default defineComponent({
 </style>
 `
 
+import Active from './1Active.vue'
+
+const activeContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let visible = ref<boolean>(false);
+        return {
+            visible,
+        };
+    }
+});
+<\/script>
+<template>
+    <x-popover
+        trigger="click"
+        content="A vue UI repository!"
+    >
+        <x-button plain type="success">Click to active</x-button>
+    </x-popover>
+    <x-popover
+        trigger="hover"
+        content="A vue UI repository!"
+    >
+        <x-button plain type="warning">Hover to active</x-button>
+    </x-popover>
+    <x-popover
+        trigger="focus"
+        content="A vue UI repository!"
+    >
+        <x-button plain type="warning">Focus to active</x-button>
+    </x-popover>
+    <x-popover
+        :show="visible"
+        content="A vue UI repository!"
+    >
+        <x-button plain type="error" @click="visible = !visible">Manual to active</x-button>
+    </x-popover>
+</template>`
+
 export default defineComponent({
   setup() {
     return {
       Base,
       baseContent,
       baseInfo: info.base,
+
+      Active,
+      activeContent,
+      activeInfo: info.active,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -131,7 +176,16 @@ export default defineComponent({
       >
       </CodeExample>
     </template>
-    <template #right> </template>
+    <template #right>
+      <CodeExample
+        id="active"
+        :code="activeContent"
+        :title="activeInfo.title"
+        :code-v-node="Active"
+        :code-desc="activeInfo.desc"
+      >
+      </CodeExample>
+    </template>
   </Layout>
   <Table :api-event="apiEvent" :api-props="apiProps" />
 </template>

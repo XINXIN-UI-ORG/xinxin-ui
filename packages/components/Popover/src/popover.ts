@@ -25,6 +25,14 @@ export const popoverProps = {
         type: Object as PropType<HTMLElement | Document>,
         default: document
     },
+    show: {
+        type: Boolean,
+        default: undefined,
+    },
+    trigger: {
+        type: String as PropType<"click" | "hover">,
+        default: 'click',
+    },
 };
 
 export type PopoverPropsType = ExtractPropTypes<typeof popoverProps>;
@@ -57,7 +65,7 @@ export function usePopover(
             }
         );
         watch(() => props.placement, (placement) => {
-            popperInstance.setOptions({
+            popperInstance && popperInstance.setOptions({
                 placement: placement,
             });
         });

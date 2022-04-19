@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref, watchEffect } from "vue";
 import { popoverProps, usePopover } from "./popover.ts";
 import { generateClassName } from "@xinxin-ui/utils";
 import PopoverTrigger from "./PopoverTrigger.tsx";
@@ -10,6 +10,11 @@ export default defineComponent({
     setup(props) {
         let gcn = generateClassName("popover");
         let popoverShow = ref<boolean>(false);
+        watchEffect(() => {
+            if ((<any>props).show !== undefined) {
+                popoverShow.value = (<any>props).show;
+            }
+        });
         // 被定位的内容
         let popoverContentRef = ref<HTMLDivElement | null>(null);
         // arrow内容
@@ -30,6 +35,7 @@ export default defineComponent({
 <template>
     <popover-trigger
         v-model:popover-show="popoverShow"
+        v-bind="$props"
     >
         <slot />
     </popover-trigger>
