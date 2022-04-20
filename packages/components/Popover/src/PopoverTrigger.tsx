@@ -111,10 +111,10 @@ function useTrigger(
 ) {
     // 切换popover的显示状态
     let checkPopoverShow = (e?: Event) => {
-        e?.preventDefault();
+        e?.stopPropagation();
         emit("update:popoverShow", !props.popoverShow);
     };
-    let timer;
+    let timer: NodeJS.Timer;
     let closePopper = () => {
         if (!props.popoverShow) {
             return;
@@ -131,8 +131,9 @@ function useTrigger(
         }
         emit("update:popoverShow", true);
     };
-    let clickOtherToClosePopper = (e) => {
-        let stopPrevent = e.path.some(item => item === fatherReferenceGather?.popperRef.value || item === fatherReferenceGather?.triggerRef.value);
+    let clickOtherToClosePopper = (e: Event) => {
+        const path = (e as any).path || (e.composedPath && e.composedPath());
+        let stopPrevent = path.some((item: Element) => item === fatherReferenceGather?.popperRef.value || item === fatherReferenceGather?.triggerRef.value);
         if (stopPrevent) {
             // 如果点在了popover或者reference上 则不关闭
             return;

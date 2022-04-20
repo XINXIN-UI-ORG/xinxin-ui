@@ -1,19 +1,19 @@
 <script lang="ts">
 import { computed, defineComponent, ref, watchEffect } from "vue";
-import { popoverProps, usePopover } from "./popover.ts";
+import { popoverProps, usePopover, PopoverPropsType } from "./popover";
 import { generateClassName } from "@xinxin-ui/utils";
-import PopoverTrigger from "./PopoverTrigger.tsx";
+import PopoverTrigger from "./PopoverTrigger";
 
 export default defineComponent({
     name: "x-popover",
     props: popoverProps,
     inheritAttrs: false,
-    setup(props) {
+    setup(props: PopoverPropsType) {
         let gcn = generateClassName("popover");
         let popoverShow = ref<boolean>(false);
         watchEffect(() => {
-            if ((<any>props).show !== undefined) {
-                popoverShow.value = (<any>props).show;
+            if (props.show !== undefined) {
+                popoverShow.value = props.show;
             }
         });
         // 被定位的内容
@@ -27,15 +27,15 @@ export default defineComponent({
             popoverShow,
             popoverArrow,
             popperStyle: computed(() => ({
-                "--margin": `${(<any>props).ignoreContent
+                "--margin": `${props.ignoreContent
                     ? 0
-                    : (<any>props).showArrow
-                        ? (<any>props).offset
+                    : props.showArrow
+                        ? props.offset
                         : 5}px`,
-                "--position": `${(<any>props).ignoreContent
+                "--position": `${props.ignoreContent
                     ? 0
-                    : (<any>props).showArrow
-                        ? -(<any>props).offset
+                    : props.showArrow
+                        ? -props.offset
                         : -5}px`,
             })),
         };
@@ -48,7 +48,10 @@ export default defineComponent({
 <template>
     <popover-trigger
         v-model:popover-show="popoverShow"
-        v-bind="$props"
+        :popover-show="popoverShow"
+        :show="show"
+        :trigger="trigger"
+        :ignore-content="ignoreContent"
     >
         <slot />
     </popover-trigger>
