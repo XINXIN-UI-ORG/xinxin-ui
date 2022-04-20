@@ -58,13 +58,13 @@ export default defineComponent({
     <teleport to="body">
         <transition name="x-popover-transition">
             <div
+                :style="(popperStyle as any)"
                 ref="popoverContentRef"
                 :class="[
                     gcn.base(),
                     gcn.bm(theme),
                 ]"
                 v-if="popoverShow"
-                :style="popperStyle"
             >
                 <div
                     v-if="title"

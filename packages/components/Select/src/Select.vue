@@ -35,7 +35,6 @@ export default defineComponent({
                     gcn.e('options', 'option'),
                 ]"
                 v-for="item in options"
-                :key="item.value"
             >
                 {{item.label}}
             </div>
