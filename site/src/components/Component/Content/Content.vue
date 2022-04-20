@@ -26,7 +26,8 @@ export default defineComponent({
 })
 </script>
 <template>
-    <n-scrollbar style="max-height: calc(100vh - 60px)">
+    <x-top listen-element=".scroll-content .n-scrollbar-container" />
+    <n-scrollbar style="max-height: calc(100vh - 60px)" class="scroll-content">
         <div class="content">
             <div class="title">
                 <span class="name">{{ currentMenuItem.content }}</span>

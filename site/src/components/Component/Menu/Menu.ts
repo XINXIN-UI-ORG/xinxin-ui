@@ -1,5 +1,5 @@
 import { MenuType, MenuListType } from "./Menu.typing";
-import { Apps20Regular, AlertOn20Filled, FormNew48Regular } from "@vicons/fluent";
+import { Apps20Regular, AlertOn20Filled, FormNew48Regular, NavigationUnread24Regular } from "@vicons/fluent";
 
 export const menuList: MenuListType[] = [
     {
@@ -57,6 +57,19 @@ export const menuList: MenuListType[] = [
         type: MenuType.link,
         content: "选择器",
         name: "Select",
+    },
+    {
+        id: 400,
+        type: MenuType.category,
+        content: "导航组件",
+        icon: NavigationUnread24Regular,
+        size: 1,
+    },
+    {
+        id: 401,
+        type: MenuType.link,
+        content: "回到顶部",
+        name: "Back-Top",
     },
     {
         id: 200,

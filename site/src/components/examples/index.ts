@@ -1,3 +1,6 @@
+import backtop from './back-top/Index.vue'
+import backtopAction from './back-top/action'
+
 import button from './button/Index.vue'
 import buttonAction from './button/action'
 
@@ -29,6 +32,8 @@ import select from './select/Index.vue'
 import selectAction from './select/action'
 
 export {
+  backtop,
+  backtopAction,
   button,
   buttonAction,
   checkbox,

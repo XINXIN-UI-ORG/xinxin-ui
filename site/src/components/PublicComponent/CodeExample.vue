@@ -84,36 +84,39 @@ function throttle(callback: Function) {
         content-style="overflow: hidden;"
     >
         <template #header-extra>
-            <n-tooltip trigger="hover">
-                <template #trigger>
-                    <n-button text style="font-size: 0.9rem; margin-right: .5rem;" @click="refreshComponent">
-                        <n-icon>
-                            <ArrowClockwise20Regular />
-                        </n-icon>
-                    </n-button>
-                </template>
-                刷新
-            </n-tooltip>
-            <n-tooltip trigger="hover">
-                <template #trigger>
-                    <n-button text style="font-size: 0.9rem; margin-right: .5rem;" @click="copyCode">
-                        <n-icon>
-                            <CopySelect20Regular />
-                        </n-icon>
-                    </n-button>
-                </template>
-                复制代码
-            </n-tooltip>
-            <n-tooltip trigger="hover">
-                <template #trigger>
-                    <n-button text style="font-size: 0.9rem;" @click="codeToggle">
-                        <n-icon>
-                            <Code20Regular />
-                        </n-icon>
-                    </n-button>
-                </template>
-                查看源码
-            </n-tooltip>
+            <x-popover
+                content="刷新"
+                trigger="hover"
+                theme="dark"
+            >
+                <n-button text style="font-size: 0.9rem; margin-right: .5rem;" @click="refreshComponent">
+                    <n-icon>
+                        <ArrowClockwise20Regular />
+                    </n-icon>
+                </n-button>
+            </x-popover>
+            <x-popover
+                content="复制代码"
+                trigger="hover"
+                theme="dark"
+            >
+                <n-button text style="font-size: 0.9rem; margin-right: .5rem;" @click="copyCode">
+                    <n-icon>
+                        <CopySelect20Regular />
+                    </n-icon>
+                </n-button>
+            </x-popover>
+            <x-popover
+                content="查看源码"
+                trigger="hover"
+                theme="dark"
+            >
+                <n-button text style="font-size: 0.9rem;" @click="codeToggle">
+                    <n-icon>
+                        <Code20Regular />
+                    </n-icon>
+                </n-button>
+            </x-popover>
         </template>
         <!-- 组件描述 -->
         <p v-html="codeDesc" class="component-desc"></p>

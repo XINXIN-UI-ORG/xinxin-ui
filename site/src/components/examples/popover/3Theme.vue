@@ -6,7 +6,7 @@
         <x-button ghost type="success">Light</x-button>
     </x-popover>
     <x-popover
-        content="玉帐鸳鸯喷兰麝，时落银灯香灺。"
+        content="刷新"
         theme="dark"
     >
         <x-button ghost type="success">Dark</x-button>

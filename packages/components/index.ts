@@ -17,3 +17,5 @@ export * from "./XCheckbox";
 export * from "./Select";
 
 export * from "./Popover";
+
+export * from "./XTop";
