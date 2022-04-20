@@ -41,6 +41,10 @@ export const popoverProps = {
         type: Boolean,
         default: false,
     },
+    title: {
+        type: String,
+        default: undefined
+    },
 };
 
 export type PopoverPropsType = ExtractPropTypes<typeof popoverProps>;

@@ -16,4 +16,14 @@ export default [
     link: '/component/popover#showArrow',
     name: info.showArrow.title,
   },
+  {
+    key: 3,
+    link: '/component/popover#theme',
+    name: info.theme.title,
+  },
+  {
+    key: 4,
+    link: '/component/popover#title',
+    name: info.title.title,
+  },
 ]

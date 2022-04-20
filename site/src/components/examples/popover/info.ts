@@ -23,7 +23,23 @@ const showArrow: ExampleInfo = {
     `)
 };
 
+const theme: ExampleInfo = {
+    title: "主题",
+    desc: format(`
+        通过theme可以定制主题，popover内置了light和dark两款主题，还可以通过自定义样式来切换主题。
+    `)
+};
+
+const title: ExampleInfo = {
+    title: "标题",
+    desc: format(`
+        通过title设置popover标题。
+    `)
+};
+
 export {
+    title,
+    theme,
     showArrow,
     active,
     base,
@@ -94,6 +110,11 @@ const apiProps: ApiTable<ApiProps> = {
             type: 'Boolean',
             defaultValue: "false",
             selectList: ['true', 'false'],
+        },
+        {
+            props: "title",
+            describe: '为popover设置title',
+            type: 'String',
         },
     ],
 };

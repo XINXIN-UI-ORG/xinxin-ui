@@ -37,6 +37,7 @@ export default defineComponent({
             default: undefined,
         },
     },
+    inheritAttrs: false,
     setup(props, { attrs }) {
         const clickAnimateRef = ref<HTMLDivElement>();
         // 劫持用户点击事件

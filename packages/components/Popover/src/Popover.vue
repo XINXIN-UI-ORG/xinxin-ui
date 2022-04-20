@@ -7,6 +7,7 @@ import PopoverTrigger from "./PopoverTrigger.tsx";
 export default defineComponent({
     name: "x-popover",
     props: popoverProps,
+    inheritAttrs: false,
     setup(props) {
         let gcn = generateClassName("popover");
         let popoverShow = ref<boolean>(false);
@@ -62,6 +63,14 @@ export default defineComponent({
                 v-if="popoverShow"
                 :style="popperStyle"
             >
+                <div
+                    v-if="title"
+                    :class="[
+                        gcn.e('title')
+                    ]"
+                >
+                    {{title}}
+                </div>
                 <slot name="content">
                     {{content}}
                 </slot>
