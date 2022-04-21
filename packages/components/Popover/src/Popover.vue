@@ -31,12 +31,12 @@ export default defineComponent({
                     ? 0
                     : props.showArrow
                         ? props.offset
-                        : 5}px`,
+                        : 4}px`,
                 "--position": `${props.ignoreContent
                     ? 0
                     : props.showArrow
                         ? -props.offset
-                        : -5}px`,
+                        : -4}px`,
             })),
         };
     },

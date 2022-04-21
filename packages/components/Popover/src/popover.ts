@@ -74,7 +74,7 @@ export function usePopover(
                     offset: props.ignoreContent
                         ? props.showArrow
                             ? props.offset
-                            : 5
+                            : 4
                         : 0,
                     boundary: props.boundary,
                     arrowDom: unref(popoverArrow)!,

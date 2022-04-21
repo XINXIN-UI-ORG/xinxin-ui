@@ -30,7 +30,7 @@ export default defineComponent({
         const fatherReferenceGather = inject(ReferenceInjectKey, undefined);
         let { checkPopoverShow, openPopper, closePopper, clickOtherToClosePopper } = useTrigger(props, emit, fatherReferenceGather);
         // 绑定popover触发展示的事件
-        let directiveFunc = (el) => {
+        let directiveFunc = (el: HTMLElement) => {
             fatherReferenceGather && (fatherReferenceGather.triggerRef.value = el);
             if (props.show === undefined) {
                 // 当用户设置了show属性，则不触发click和hover等事件
@@ -111,7 +111,7 @@ function useTrigger(
 ) {
     // 切换popover的显示状态
     let checkPopoverShow = (e?: Event) => {
-        e?.stopPropagation();
+        e?.preventDefault();
         emit("update:popoverShow", !props.popoverShow);
     };
     let timer: NodeJS.Timer;
