@@ -15,6 +15,7 @@ import {
     CheckboxButton,
     Select,
     Popover,
+    Scrollbar,
 } from "@xinxin-ui/components";
 
 // package下组件列表
@@ -34,6 +35,7 @@ const components = [
     CheckboxButton,
     Select,
     Popover,
+    Scrollbar,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -69,4 +71,5 @@ export {
     CheckboxButton,
     Select,
     Popover,
+    Scrollbar,
 };

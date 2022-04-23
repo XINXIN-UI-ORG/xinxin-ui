@@ -26,4 +26,9 @@ export default [
     link: '/component/popover#title',
     name: info.title.title,
   },
+  {
+    key: 5,
+    link: '/component/popover#maxHeight',
+    name: info.maxHeight.title,
+  },
 ]

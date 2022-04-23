@@ -1,6 +1,6 @@
 import { PlacementType } from "@xinxin-ui/typings";
 import type { ExtractPropTypes, PropType, Ref } from "vue";
-import { onMounted, provide, ref, unref, watch } from "vue";
+import { onMounted, provide, ref, unref, watch, computed } from "vue";
 import { usePopper } from "@xinxin-ui/utils";
 import { ReferenceGather, ReferenceInjectKey } from "@xinxin-ui/symbols";
 
@@ -45,6 +45,10 @@ export const popoverProps = {
         type: String,
         default: undefined
     },
+    maxHeight: {
+        type: [Number, String],
+        default: undefined,
+    },
 };
 
 export type PopoverPropsType = ExtractPropTypes<typeof popoverProps>;
@@ -53,7 +57,7 @@ export function usePopover(
     popoverContentRef: Ref<HTMLDivElement | null>,
     popoverArrow: Ref<HTMLDivElement | null>,
     props: PopoverPropsType,
-): void {
+) {
     // 注册reference
     let popoverRefGather: ReferenceGather = {
         triggerRef: ref<HTMLElement | null>(null),
@@ -62,7 +66,7 @@ export function usePopover(
     provide(ReferenceInjectKey, popoverRefGather);
     // 定位popper
     onMounted(() => {
-        let popperInstance;
+        let popperInstance: any;
         watch(
             () => popoverContentRef.value,
             (popoverContentRef) => {
@@ -86,6 +90,21 @@ export function usePopover(
                 placement: placement,
             });
         });
-    })
+    });
+
+    return {
+        popperStyle: computed(() => ({
+            "--margin": `${props.ignoreContent
+                ? 0
+                : props.showArrow
+                    ? props.offset
+                    : 4}px`,
+            "--position": `${props.ignoreContent
+                ? 0
+                : props.showArrow
+                    ? -props.offset
+                    : -4}px`,
+        })),
+    };
 }
 

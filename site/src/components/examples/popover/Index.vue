@@ -198,11 +198,28 @@ const themeContent = `<template>
 }
 </style>`
 
-import title from './4title.vue'
+import Title from './4Title.vue'
 
 const titleContent = `<template>
     <x-popover
         title="宣州谢朓楼饯别校书叔云"
+    >
+        <x-button dashed type="error">带标题</x-button>
+        <template #content>
+            <p>弃我去者，昨日之日不可留；乱我心者，今日之日多烦忧。</p>
+            <p>长风万里送秋雁，对此可以酣高楼。蓬莱文章建安骨，中间小谢又清发。</p>
+            <p>俱怀逸兴壮思飞，欲上青天览明月。抽刀断水水更流，举杯消愁愁更愁。</p>
+            <p>人生在世不称意，明朝散发弄扁舟。</p>
+        </template>
+    </x-popover>
+</template>`
+
+import MaxHeight from './5MaxHeight.vue'
+
+const maxHeightContent = `<template>
+    <x-popover
+        title="宣州谢朓楼饯别校书叔云"
+        max-height="100"
     >
         <x-button dashed type="error">带标题</x-button>
         <template #content>
@@ -233,9 +250,13 @@ export default defineComponent({
       themeContent,
       themeInfo: info.theme,
 
-      title,
+      Title,
       titleContent,
       titleInfo: info.title,
+
+      MaxHeight,
+      maxHeightContent,
+      maxHeightInfo: info.maxHeight,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -273,7 +294,7 @@ export default defineComponent({
         id="title"
         :code="titleContent"
         :title="titleInfo.title"
-        :code-v-node="title"
+        :code-v-node="Title"
         :code-desc="titleInfo.desc"
       >
       </CodeExample>
@@ -294,6 +315,15 @@ export default defineComponent({
         :title="themeInfo.title"
         :code-v-node="Theme"
         :code-desc="themeInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="maxHeight"
+        :code="maxHeightContent"
+        :title="maxHeightInfo.title"
+        :code-v-node="MaxHeight"
+        :code-desc="maxHeightInfo.desc"
       >
       </CodeExample>
     </template>

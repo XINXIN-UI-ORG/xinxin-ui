@@ -1,0 +1,41 @@
+.x-scrollbar
+    overflow hidden
+    position relative
+    &:hover
+        .x-scrollbar__bar
+            visibility visible
+            opacity 1
+    .x-scrollbar__container
+        overflow scroll
+        overscroll-behavior contain
+        &::-webkit-scrollbar
+            display none
+        .x-scrollbar__container__content
+            width fit-content
+    .x-scrollbar__vertical
+        position absolute
+        top 2px
+        right 4px
+        bottom 2px
+        width 5px
+        user-select none
+    .x-scrollbar__horizontal
+        position absolute
+        left 2px
+        right 2px
+        height 5px
+        bottom 4px
+        user-select none
+        .x-scrollbar__horizontal__bar
+            height 100%
+            width 0
+    .x-scrollbar__bar
+        background-color var(--backgroundColor)
+        cursor pointer
+        border-radius 22px
+        visibility hidden
+        opacity 0
+        transition visibility .5s, opacity .5s
+        &:hover
+            background-color var(--backgroundColorHover)
+

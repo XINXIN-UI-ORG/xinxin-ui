@@ -1,5 +1,5 @@
 import { MenuType, MenuListType } from "./Menu.typing";
-import { Apps20Regular, AlertOn20Filled, FormNew48Regular, NavigationUnread24Regular } from "@vicons/fluent";
+import { Apps20Regular, AlertOn20Filled, FormNew48Regular, NavigationUnread24Regular, WindowWrench32Filled } from "@vicons/fluent";
 
 export const menuList: MenuListType[] = [
     {
@@ -95,5 +95,18 @@ export const menuList: MenuListType[] = [
         type: MenuType.link,
         content: "气泡卡片",
         name: "Popover",
+    },
+    {
+        id: 500,
+        type: MenuType.category,
+        content: "工具组件",
+        icon: WindowWrench32Filled,
+        size: 1,
+    },
+    {
+        id: 501,
+        type: MenuType.link,
+        content: "滚动条",
+        name: "Scrollbar",
     },
 ];

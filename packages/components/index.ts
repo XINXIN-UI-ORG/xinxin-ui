@@ -19,3 +19,5 @@ export * from "./Select";
 export * from "./Popover";
 
 export * from "./XTop";
+
+export * from "./Scrollbar";

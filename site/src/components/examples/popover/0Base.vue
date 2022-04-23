@@ -29,7 +29,12 @@ export default defineComponent({
                 <x-button tertiary type="success" @click="placement = 'top'">Top</x-button>
                 <x-button tertiary type="warning" @click="placement = 'top-end'">Top End</x-button>
             </div>
-            <div :class="classes.wrapper" ref="containerRef">
+            <x-scrollbar
+                :class="classes.wrapper"
+                ref="containerRef"
+                max-height="350"
+            >
+            <!-- <div :class="classes.wrapper" ref="containerRef"> -->
                 <x-popover
                     :placement="placement"
                     :boundary="containerRef"
@@ -41,7 +46,8 @@ export default defineComponent({
                         <p>npm install xinxin-ui</p>
                     </template>
                 </x-popover>
-            </div>
+            <!-- </div> -->
+            </x-scrollbar>
             <div :class="classes.top">
                 <x-button ghost type="info" @click="placement = 'bottom-start'">Bottom Start</x-button>
                 <x-button ghost type="success" @click="placement = 'bottom'">Bottom</x-button>
@@ -60,11 +66,7 @@ export default defineComponent({
     border 2px dashed rgb(255, 107, 129)
     background-color rgb(40, 30, 54)
     border-radius 10px
-    overflow auto
-    overscroll-behavior contain
     position relative !important
-    height 350px
-    box-sizing border-box
 .container
     display flex
     width 100%

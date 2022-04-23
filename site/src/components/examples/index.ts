@@ -28,6 +28,9 @@ import popoverAction from './popover/action'
 import radio from './radio/Index.vue'
 import radioAction from './radio/action'
 
+import scrollbar from './scrollbar/Index.vue'
+import scrollbarAction from './scrollbar/action'
+
 import select from './select/Index.vue'
 import selectAction from './select/action'
 
@@ -52,6 +55,8 @@ export {
   popoverAction,
   radio,
   radioAction,
+  scrollbar,
+  scrollbarAction,
   select,
   selectAction,
 }

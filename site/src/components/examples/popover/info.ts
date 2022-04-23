@@ -37,7 +37,15 @@ const title: ExampleInfo = {
     `)
 };
 
+const maxHeight: ExampleInfo = {
+    title: "最大高度",
+    desc: format(`
+        通过maxHeight设置popover可展示的最大高度，这在一些场景中很实用，譬如select。
+    `)
+};
+
 export {
+    maxHeight,
     title,
     theme,
     showArrow,
@@ -115,6 +123,11 @@ const apiProps: ApiTable<ApiProps> = {
             props: "title",
             describe: '为popover设置title',
             type: 'String',
+        },
+        {
+            props: "maxHeight",
+            describe: '为popover设置最大高度',
+            type: 'String | Number',
         },
     ],
 };

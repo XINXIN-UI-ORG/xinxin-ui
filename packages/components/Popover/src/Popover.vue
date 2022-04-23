@@ -1,8 +1,9 @@
 <script lang="ts">
-import { computed, defineComponent, ref, watchEffect } from "vue";
+import { defineComponent, ref, watchEffect } from "vue";
 import { popoverProps, usePopover, PopoverPropsType } from "./popover";
 import { generateClassName } from "@xinxin-ui/utils";
 import PopoverTrigger from "./PopoverTrigger";
+import XScrollbar from "../../Scrollbar";
 
 export default defineComponent({
     name: "x-popover",
@@ -20,28 +21,18 @@ export default defineComponent({
         let popoverContentRef = ref<HTMLDivElement | null>(null);
         // arrow内容
         let popoverArrow = ref<HTMLDivElement | null>(null);
-        usePopover(popoverContentRef, popoverArrow, props);
+        let { popperStyle } = usePopover(popoverContentRef, popoverArrow, props);
         return {
             gcn,
             popoverContentRef,
             popoverShow,
             popoverArrow,
-            popperStyle: computed(() => ({
-                "--margin": `${props.ignoreContent
-                    ? 0
-                    : props.showArrow
-                        ? props.offset
-                        : 4}px`,
-                "--position": `${props.ignoreContent
-                    ? 0
-                    : props.showArrow
-                        ? -props.offset
-                        : -4}px`,
-            })),
+            popperStyle,
         };
     },
     components: {
         PopoverTrigger,
+        XScrollbar,
     },
 });
 </script>
@@ -66,17 +57,21 @@ export default defineComponent({
                 ]"
                 v-if="popoverShow"
             >
-                <div
-                    v-if="title"
-                    :class="[
-                        gcn.e('title')
-                    ]"
+                <x-scrollbar
+                    :max-height="maxHeight"
                 >
-                    {{title}}
-                </div>
-                <slot name="content">
-                    {{content}}
-                </slot>
+                    <div
+                        v-if="title"
+                        :class="[
+                            gcn.e('title')
+                        ]"
+                    >
+                        {{title}}
+                    </div>
+                    <slot name="content">
+                        {{content}}
+                    </slot>
+                </x-scrollbar>
                 <div
                     v-if="showArrow"
                     :class="[
