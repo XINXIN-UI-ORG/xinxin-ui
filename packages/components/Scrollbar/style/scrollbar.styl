@@ -11,7 +11,9 @@
         &::-webkit-scrollbar
             display none
         .x-scrollbar__container__content
-            width fit-content
+            min-width 100%
+            overflow hidden
+            box-sizing border-box
     .x-scrollbar__vertical
         position absolute
         top 2px

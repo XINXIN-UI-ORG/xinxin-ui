@@ -1,4 +1,4 @@
-import { ExtractPropTypes, computed, onMounted, ref, nextTick } from "vue";
+import { ExtractPropTypes, computed, onMounted, watchEffect } from "vue";
 import type { Ref } from "vue";
 import { numberReg, matchNumberReg } from "@xinxin-ui/utils";
 
@@ -14,6 +14,10 @@ export const scrollbarProps = {
     hoverColor: {
         type: String,
         default: "#999"
+    },
+    horizontal: {
+        type: Boolean,
+        default: false,
     },
 };
 
@@ -40,51 +44,34 @@ export function useScrollbar(
     // 滚动条是否初始化
     let verticalInitialize = false;
     let horizontalInitialize = false;
-    // 判断是否显示竖向滚动条
-    let contentHeight = ref<number>(0);
-    let showVerticalBar = computed<boolean>(() => {
-        return !!(refObject.scrollbarContainerRef.value?.clientHeight && contentHeight.value > refObject.scrollbarContainerRef.value?.clientHeight);
-    });
-    // 是否显示横向滚动
-    let contentWidth = ref<number>(0);
-    let showHorizontalBar = computed<boolean>(() => {
-        return !!(refObject.scrollbarContainerRef.value?.clientWidth && contentWidth.value > refObject.scrollbarContainerRef.value?.clientWidth);
-    });
     onMounted(() => {
-        // 当dom加载完成后获取容器的尺寸
-        contentHeight.value = refObject.scrollbarContentRef.value!.clientHeight;
-        contentWidth.value = refObject.scrollbarContentRef.value!.clientWidth;
-        nextTick(() => {
+        watchEffect(() => {
             // 竖向滚动
-            showVerticalBar.value && initVerticalScrollBar(refObject) && (verticalInitialize = true);
+            showVerticalBar(refObject) && initVerticalScrollBar(refObject) && (verticalInitialize = true);
             // 横向滚动
-            showHorizontalBar.value && initHorizontalScrollBar(refObject) && (horizontalInitialize = true);
+            showHorizontalBar(refObject, props) && initHorizontalScrollBar(refObject) && (horizontalInitialize = true);
         });
         // 监听容器高度的变化 同步更新滚动条的长度
         const observer = new MutationObserver(() => {
-            // 重新获取内容长度从而计算是否需要显示滚动条
-            contentHeight.value = refObject.scrollbarContentRef.value!.clientHeight;
-            contentWidth.value = refObject.scrollbarContentRef.value!.clientWidth;
-            nextTick(() => {
-                if (showVerticalBar.value) {
-                    recomputedScrollBarVertical(refObject);
-                    // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
-                    if (!verticalInitialize) {
-                        initVerticalScrollBar(refObject);
-                        verticalInitialize = false;
-                    }
+            // 计算是否需要显示滚动条
+            if (showVerticalBar(refObject)) {
+                recomputedScrollBarVertical(refObject);
+                // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
+                if (!verticalInitialize) {
+                    initVerticalScrollBar(refObject);
+                    verticalInitialize = false;
                 }
-                if (showHorizontalBar.value) {
-                    recomputedScrollBarHorizontal(refObject);
-                    // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
-                    if (!horizontalInitialize) {
-                        initHorizontalScrollBar(refObject);
-                        horizontalInitialize = false;
-                    }
+            }
+            if (showHorizontalBar(refObject, props)) {
+                recomputedScrollBarHorizontal(refObject);
+                // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
+                if (!horizontalInitialize) {
+                    initHorizontalScrollBar(refObject);
+                    horizontalInitialize = false;
                 }
-            });
+            }
         });
-        observer.observe(refObject.scrollbarContentRef.value!, { attributes: true, childList: true, subtree: true });
+        observer.observe(refObject.scrollbarContentRef.value!, { attributes: true, childList: true, subtree: true, characterData: true });
     });
     // 导出方法
     expose({
@@ -115,13 +102,35 @@ export function useScrollbar(
                 "max-height": height,
             };
         }),
+        contentStyle: computed(() => ({
+            "width": props.horizontal ? "fit-content" : "auto",
+        })),
         barStyle: computed(() => ({
             "--backgroundColor": props.color,
             "--backgroundColorHover": props.hoverColor,
         })),
-        showVerticalBar,
-        showHorizontalBar,
     };
+}
+
+function showVerticalBar(refObject: RefObject): boolean {
+    let result = false;
+    if (refObject.scrollbarContainerRef.value && refObject.scrollbarContentRef.value) {
+        result = refObject.scrollbarContentRef.value.clientHeight > refObject.scrollbarContainerRef.value.clientHeight;
+    }
+    refObject.scrollVerticalTrackRef.value && (refObject.scrollVerticalTrackRef.value.style.display = result ? 'block' : 'none');
+    return result;
+}
+
+function showHorizontalBar(refObject: RefObject, props: ScrollbarPropsType): boolean {
+    if (!props.horizontal) {
+        return false;
+    }
+    let result = false;
+    if (refObject.scrollbarContainerRef.value && refObject.scrollbarContentRef.value) {
+        result = refObject.scrollbarContentRef.value.clientWidth > refObject.scrollbarContainerRef.value.clientWidth;
+    }
+    refObject.scrollHorizontalTrackRef.value && (refObject.scrollHorizontalTrackRef.value.style.display = result ? 'block' : 'none');
+    return result;
 }
 
 /**
@@ -134,7 +143,7 @@ function initHorizontalScrollBar(refObject: RefObject) {
     let recomputedScrollBarHBind = recomputedScrollBarHorizontal.bind(null, refObject);
     refObject.scrollbarContainerRef.value?.addEventListener("scroll", recomputedScrollBarHBind);
     // 监听横向滚动条拖拽事件
-    refObject.scrollHorizontalBarRef.value!.addEventListener("mousedown", (e: MouseEvent) => {
+    refObject.scrollHorizontalBarRef.value?.addEventListener("mousedown", (e: MouseEvent) => {
         // 禁用滚动事件
         refObject.scrollbarContainerRef.value?.removeEventListener("scroll", recomputedScrollBarHBind);
         // 记录初始偏移量
@@ -201,7 +210,7 @@ function initVerticalScrollBar(refObject: RefObject) {
     let recomputedScrollBarHBind = recomputedScrollBarVertical.bind(null, refObject);
     refObject.scrollbarContainerRef.value?.addEventListener("scroll", recomputedScrollBarHBind);
     // 监听竖向滚动条拖拽事件
-    refObject.scrollVerticalBarRef.value!.addEventListener("mousedown", (e: MouseEvent) => {
+    refObject.scrollVerticalBarRef.value?.addEventListener("mousedown", (e: MouseEvent) => {
         // 禁用滚动事件
         refObject.scrollbarContainerRef.value?.removeEventListener("scroll", recomputedScrollBarHBind);
         // 记录初始高度

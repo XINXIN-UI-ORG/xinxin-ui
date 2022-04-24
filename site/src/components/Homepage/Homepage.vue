@@ -27,7 +27,7 @@ export default defineComponent({
 </script>
 
 <template>
-    <n-scrollbar style="max-height: calc(100vh - 60px)">
+    <x-scrollbar max-height="calc(100vh - 60px)">
         <div class="homepage__introduce">
             <div class="homepage__introduce__title">
                 XinXin UI
@@ -56,7 +56,7 @@ export default defineComponent({
         <footer class="homepage__footer">
             Looks like I have to put something here, but I don't want to. \(^o^)/~
         </footer>
-    </n-scrollbar>
+    </x-scrollbar>
 </template>
 <style lang="stylus" scoped>
 .homepage__introduce

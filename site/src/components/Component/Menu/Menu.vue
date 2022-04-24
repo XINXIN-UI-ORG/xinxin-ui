@@ -27,7 +27,9 @@ export default defineComponent({
 })
 </script>
 <template>
-<n-scrollbar style="max-height: 100%">
+<x-scrollbar
+    max-height="calc(100vh - 60px)"
+>
     <div class="menu">
         <template v-for="item in menuList">
             <div class="menu__category" :key="item.id" v-if="item.type === MenuType.category">
@@ -43,14 +45,14 @@ export default defineComponent({
                 :key="item.id"
                 v-if="item.type === MenuType.link"
             >
-                <router-link :to="{name: 'componentItem', params: { componentName: item.name.toLowerCase() }}">
+                <router-link :to="{name: 'componentItem', params: { componentName: item.name?.toLowerCase() }}">
                     <span class="content">{{ item.content }}</span>
-                    <span class="name">{{ item.name.replace("-", " ") }}</span>
+                    <span class="name">{{ item.name?.replace("-", " ") }}</span>
                 </router-link>
             </div>
         </template>
     </div>
-</n-scrollbar>
+</x-scrollbar>
 </template>
 <style lang="stylus" scoped>
 .menu

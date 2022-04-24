@@ -39,6 +39,7 @@ export default defineComponent({
                 :class="classes.wrapper"
                 ref="containerRef"
                 max-height="350"
+                horizontal
             >
                 <x-popover
                     :placement="placement"

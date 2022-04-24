@@ -35,7 +35,7 @@ export default defineComponent({
             codeToggle() {
                 throttle(() => {
                     if (codeHeight.value === 0) {
-                        codeHeight.value = codeRef.value.offsetHeight;
+                        codeHeight.value = Math.min(codeRef.value.offsetHeight, 500);
                     } else {
                         codeHeight.value = 0;
                     }
@@ -124,13 +124,13 @@ function throttle(callback: Function) {
             <component :is="codeVNode" v-if="showComponent" />
         </div>
         <template #footer>
-            <n-scrollbar x-scrollable>
+            <x-scrollbar max-height="500">
                 <n-config-provider :hljs="hljs">
                     <div class="code" ref="codeRef">
                         <n-code :code="code" language="xml"/>
                     </div>
                 </n-config-provider>
-            </n-scrollbar>
+            </x-scrollbar>
         </template>
     </n-card>
 </template>

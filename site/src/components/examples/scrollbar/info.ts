@@ -11,7 +11,7 @@ const base: ExampleInfo = {
 const horizontal: ExampleInfo = {
     title: "横向滚动",
     desc: format(`
-        x-scrollbar自适应父级容器的宽度，如果内容超过了该宽度则出现横向滚动条。
+        设置horizontal属性开启横向滚动，x-scrollbar自适应父级容器的宽度，如果内容超过了该宽度则出现横向滚动条。
     `)
 };
 
@@ -51,6 +51,13 @@ const apiProps: ApiTable<ApiProps> = {
             describe: "设置鼠标移动到滚动条上时滚动条的颜色",
             type: 'String',
             defaultValue: "#999"
+        },
+        {
+            props: "horizontal",
+            describe: "设置允许横向滚动",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"],
         },
     ],
 };

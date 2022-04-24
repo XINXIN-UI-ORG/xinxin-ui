@@ -1,5 +1,5 @@
 <script lang="ts">
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { menuList } from "../Menu/Menu";
 import { MenuListType } from "../Menu/Menu.typing";
 import { Compose24Regular } from "@vicons/fluent";
@@ -26,8 +26,10 @@ export default defineComponent({
 })
 </script>
 <template>
-    <x-top listen-element=".scroll-content .n-scrollbar-container" />
-    <n-scrollbar style="max-height: calc(100vh - 60px)" class="scroll-content">
+    <x-scrollbar
+        max-height="calc(100vh - 60px)"
+        class="scroll-content"
+    >
         <div class="content">
             <div class="title">
                 <span class="name">{{ currentMenuItem.content }}</span>
@@ -36,7 +38,8 @@ export default defineComponent({
             </div>
             <component :is="content" />
         </div>
-    </n-scrollbar>
+        <x-top listen-element=".scroll-content .x-scrollbar__container__content" />
+    </x-scrollbar>
 </template>
 <style lang="stylus" scoped>
 .content

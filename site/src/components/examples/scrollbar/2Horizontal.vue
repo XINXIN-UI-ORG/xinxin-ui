@@ -1,5 +1,5 @@
 <template>
-    <x-scrollbar>
+    <x-scrollbar horizontal>
         <div :class="classes.container">
             噫吁嚱，危乎高哉！蜀道之难，难于上青天！
             蚕丛及鱼凫，开国何茫然！

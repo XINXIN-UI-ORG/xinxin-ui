@@ -20,6 +20,7 @@ export default defineComponent({
     <x-scrollbar
         max-height="350"
         ref="scrollbarRef"
+        horizontal
     >
         <img :class="classes.context" src="/logo.png" alt="NO IMG" />
     </x-scrollbar>
