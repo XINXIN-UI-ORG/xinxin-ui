@@ -11,11 +11,19 @@ const base: ExampleInfo = {
 const horizontal: ExampleInfo = {
     title: "横向滚动",
     desc: format(`
-        设置max-height来限制高度从而出现滚动条，如果不设置则默认500像素。
+        x-scrollbar自适应父级容器的宽度，如果内容超过了该宽度则出现横向滚动条。
+    `)
+};
+
+const scrollTo: ExampleInfo = {
+    title: "指定滚动位置",
+    desc: format(`
+        通过组件暴露出来的scrollTo方法可以手动设置滚动条滚动到的位置，传入一个对象，对象中支持设置top跟left值。
     `)
 };
 
 export {
+    scrollTo,
     horizontal,
     base,
     apiProps,
@@ -32,11 +40,33 @@ const apiProps: ApiTable<ApiProps> = {
             type: 'Number | String',
             defaultValue: "500px"
         },
+        {
+            props: "color",
+            describe: "设置滚动条的颜色",
+            type: 'String',
+            defaultValue: "#bfbfbf"
+        },
+        {
+            props: "hover-color",
+            describe: "设置鼠标移动到滚动条上时滚动条的颜色",
+            type: 'String',
+            defaultValue: "#999"
+        },
     ],
 };
 
 const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
     content: [
+        {
+            event: "getContainerDom",
+            describe: "获取滚动容器的dom对象",
+            result: ["HTMLDivElement"]
+        },
+        {
+            event: "scrollTo",
+            describe: "将滚动条滚动到指定位置，可设置左侧偏移量和顶部偏移量。",
+            props: ["{ left?: number, top?: number }"]
+        },
     ],
 };

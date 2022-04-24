@@ -34,7 +34,8 @@ type RefObject = {
 
 export function useScrollbar(
     props: ScrollbarPropsType,
-    refObject: RefObject
+    refObject: RefObject,
+    expose: (exposed?: Record<string, any>) => void,
 ) {
     // 滚动条是否初始化
     let verticalInitialize = false;
@@ -84,6 +85,20 @@ export function useScrollbar(
             });
         });
         observer.observe(refObject.scrollbarContentRef.value!, { attributes: true, childList: true, subtree: true });
+    });
+    // 导出方法
+    expose({
+        getContainerDom(): HTMLDivElement {
+            return refObject.scrollbarContainerRef.value!;
+        },
+        scrollTo(options: { top?: number, left?: number }) {
+            if (options.top) {
+                refObject.scrollbarContainerRef.value && (refObject.scrollbarContainerRef.value.scrollTop = options.top);
+            }
+            if (options.left) {
+                refObject.scrollbarContainerRef.value && (refObject.scrollbarContainerRef.value.scrollLeft = options.left);
+            }
+        }
     });
     return {
         scrollStyle: computed(() => {

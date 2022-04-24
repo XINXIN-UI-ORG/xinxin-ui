@@ -7,7 +7,7 @@ import type { ScrollbarPropsType } from "./scrollbar";
 export default defineComponent({
     name: "x-scrollbar",
     props: scrollbarProps,
-    setup(props: ScrollbarPropsType) {
+    setup(props: ScrollbarPropsType, { expose }) {
         let scrollbarContainerRef = ref<HTMLDivElement | null>(null);
         let scrollbarContentRef = ref<HTMLDivElement | null>(null);
         let scrollVerticalBarRef = ref<HTMLDivElement | null>(null);
@@ -22,7 +22,7 @@ export default defineComponent({
             scrollVerticalTrackRef,
             scrollHorizontalTrackRef,
             scrollHorizontalBarRef,
-        });
+        }, expose);
         return {
             scrollHorizontalTrackRef,
             scrollHorizontalBarRef,

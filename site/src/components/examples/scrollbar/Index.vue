@@ -30,7 +30,43 @@ const baseContent = `<template>
     </x-scrollbar>
 </template>`
 
-import Horizontal from './1Horizontal.vue'
+import ScrollTo from './1ScrollTo.vue'
+
+const scrollToContent = `<script lang="ts">
+import { defineComponent, ref, onMounted } from "vue";
+
+export default defineComponent({
+    setup() {
+        let scrollbarRef = ref();
+        onMounted(() => {
+            scrollbarRef.value.scrollTo({
+                top: 200,
+                left: 120
+            });
+        });
+        return {
+            scrollbarRef,
+        };
+    }
+});
+<\/script>
+<template>
+    <x-scrollbar
+        max-height="350"
+        ref="scrollbarRef"
+    >
+        <img :class="classes.context" src="/logo.png" alt="NO IMG" />
+    </x-scrollbar>
+</template>
+<style module="classes" lang="stylus" scoped>
+.context
+    margin 350px 400px !important
+    width 60px
+    height 60px
+    cursor pointer
+</style>`
+
+import Horizontal from './2Horizontal.vue'
 
 const horizontalContent = `<template>
     <x-scrollbar>
@@ -73,6 +109,10 @@ export default defineComponent({
       baseContent,
       baseInfo: info.base,
 
+      ScrollTo,
+      scrollToContent,
+      scrollToInfo: info.scrollTo,
+
       Horizontal,
       horizontalContent,
       horizontalInfo: info.horizontal,
@@ -99,14 +139,23 @@ export default defineComponent({
         :code-desc="baseInfo.desc"
       >
       </CodeExample>
-    </template>
-    <template #right>
+
       <CodeExample
         id="horizontal"
         :code="horizontalContent"
         :title="horizontalInfo.title"
         :code-v-node="Horizontal"
         :code-desc="horizontalInfo.desc"
+      >
+      </CodeExample>
+    </template>
+    <template #right>
+      <CodeExample
+        id="scrollTo"
+        :code="scrollToContent"
+        :title="scrollToInfo.title"
+        :code-v-node="ScrollTo"
+        :code-desc="scrollToInfo.desc"
       >
       </CodeExample>
     </template>

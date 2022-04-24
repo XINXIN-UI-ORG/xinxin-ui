@@ -8,6 +8,11 @@ export default [
   },
   {
     key: 1,
+    link: '/component/scrollbar#scrollTo',
+    name: info.scrollTo.title,
+  },
+  {
+    key: 2,
     link: '/component/scrollbar#horizontal',
     name: info.horizontal.title,
   },

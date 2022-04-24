@@ -8,18 +8,24 @@ import * as info from './info'
 import Base from './0Base.vue'
 
 const baseContent = `<script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 
 export default defineComponent({
     setup() {
-        let containerRef = ref<HTMLDivElement>();
+        let containerRef = ref();
         let placement = ref<string>("right");
+        let popoverShow = ref<boolean>(false);
+        const container = computed(() => containerRef.value && containerRef.value.getContainerDom());
         onMounted(() => {
-            containerRef.value!.scrollTop = 220;
-            containerRef.value!.scrollLeft = 230;
-        })
+            containerRef.value.scrollTo({
+                top: 220,
+                left: 230,
+            });
+        });
         return {
             containerRef,
+            popoverShow,
+            container,
             placement
         };
     }
@@ -38,19 +44,24 @@ export default defineComponent({
                 <x-button tertiary type="success" @click="placement = 'top'">Top</x-button>
                 <x-button tertiary type="warning" @click="placement = 'top-end'">Top End</x-button>
             </div>
-            <div :class="classes.wrapper" ref="containerRef">
+            <x-scrollbar
+                :class="classes.wrapper"
+                ref="containerRef"
+                max-height="350"
+            >
                 <x-popover
                     :placement="placement"
-                    :boundary="containerRef"
+                    :boundary="container"
+                    :show="popoverShow"
                 >
-                    <img :class="classes.context" src="/logo.png" alt="NO IMG" />
+                    <img :class="classes.context" src="/logo.png" alt="NO IMG" @click="popoverShow = !popoverShow" />
                     <template #content>
                         <p>XinXin UI</p>
                         <p>A vue3+ts ui repository</p>
                         <p>npm install xinxin-ui</p>
                     </template>
                 </x-popover>
-            </div>
+            </x-scrollbar>
             <div :class="classes.top">
                 <x-button ghost type="info" @click="placement = 'bottom-start'">Bottom Start</x-button>
                 <x-button ghost type="success" @click="placement = 'bottom'">Bottom</x-button>
@@ -69,11 +80,7 @@ export default defineComponent({
     border 2px dashed rgb(255, 107, 129)
     background-color rgb(40, 30, 54)
     border-radius 10px
-    overflow auto
-    overscroll-behavior contain
     position relative !important
-    height 350px
-    box-sizing border-box
 .container
     display flex
     width 100%
@@ -218,15 +225,34 @@ import MaxHeight from './5MaxHeight.vue'
 
 const maxHeightContent = `<template>
     <x-popover
-        title="宣州谢朓楼饯别校书叔云"
+        title="梦游天姥吟留别"
         max-height="100"
     >
-        <x-button dashed type="error">带标题</x-button>
+        <x-button dashed type="warning">最大高度</x-button>
         <template #content>
-            <p>弃我去者，昨日之日不可留；乱我心者，今日之日多烦忧。</p>
-            <p>长风万里送秋雁，对此可以酣高楼。蓬莱文章建安骨，中间小谢又清发。</p>
-            <p>俱怀逸兴壮思飞，欲上青天览明月。抽刀断水水更流，举杯消愁愁更愁。</p>
-            <p>人生在世不称意，明朝散发弄扁舟。</p>
+            <p>[唐] 李白</p>
+            <p>海客谈瀛洲，烟涛微茫信难求。</p>
+            <p>越人语天姥，云霞明灭或可睹。</p>
+            <p>天姥连天向天横，势拔五岳掩赤城。</p>
+            <p>天台一万八千丈，对此欲倒东南倾。</p>
+            <p>我欲因之梦吴越，一夜飞度镜湖月。</p>
+            <p>湖月照我影，送我至剡溪。</p>
+            <p>谢公宿处今尚在，渌水荡漾清猿啼。</p>
+            <p>脚著谢公屐，身登青云梯。</p>
+            <p>半壁见海日，空中闻天鸡。</p>
+            <p>千岩万转路不定，迷花倚石忽已暝。</p>
+            <p>熊咆龙吟殷岩泉，栗深林兮惊层巅。</p>
+            <p>云青青兮欲雨，水澹澹兮生烟。</p>
+            <p>列缺霹雳，丘峦崩摧。洞天石扉，訇然中开。</p>
+            <p>青冥浩荡不见底，日月照耀金银台。</p>
+            <p>霓为衣兮风为马，云之君兮纷纷而来下。</p>
+            <p>虎鼓瑟兮鸾回车，仙之人兮列如麻。</p>
+            <p>忽魂悸以魄动，恍惊起而长嗟。</p>
+            <p>惟觉时之枕席，失向来之烟霞。</p>
+            <p>世间行乐亦如此，古来万事东流水。</p>
+            <p>别君去兮何时还，且放白鹿青崖间，</p>
+            <p>须行即骑访名山。安能摧眉折腰事权贵，</p>
+            <p>使我不得开心颜。</p>
         </template>
     </x-popover>
 </template>`

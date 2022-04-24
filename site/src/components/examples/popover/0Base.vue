@@ -1,16 +1,22 @@
 <script lang="ts">
-import { defineComponent, ref, onMounted } from "vue";
+import { defineComponent, ref, onMounted, computed } from "vue";
 
 export default defineComponent({
     setup() {
-        let containerRef = ref<HTMLDivElement>();
+        let containerRef = ref();
         let placement = ref<string>("right");
+        let popoverShow = ref<boolean>(false);
+        const container = computed(() => containerRef.value && containerRef.value.getContainerDom());
         onMounted(() => {
-            containerRef.value!.scrollTop = 220;
-            containerRef.value!.scrollLeft = 230;
-        })
+            containerRef.value.scrollTo({
+                top: 220,
+                left: 230,
+            });
+        });
         return {
             containerRef,
+            popoverShow,
+            container,
             placement
         };
     }
@@ -34,19 +40,18 @@ export default defineComponent({
                 ref="containerRef"
                 max-height="350"
             >
-            <!-- <div :class="classes.wrapper" ref="containerRef"> -->
                 <x-popover
                     :placement="placement"
-                    :boundary="containerRef"
+                    :boundary="container"
+                    :show="popoverShow"
                 >
-                    <img :class="classes.context" src="/logo.png" alt="NO IMG" />
+                    <img :class="classes.context" src="/logo.png" alt="NO IMG" @click="popoverShow = !popoverShow" />
                     <template #content>
                         <p>XinXin UI</p>
                         <p>A vue3+ts ui repository</p>
                         <p>npm install xinxin-ui</p>
                     </template>
                 </x-popover>
-            <!-- </div> -->
             </x-scrollbar>
             <div :class="classes.top">
                 <x-button ghost type="info" @click="placement = 'bottom-start'">Bottom Start</x-button>
@@ -61,7 +66,7 @@ export default defineComponent({
         </div>
     </div>
 </template>
-<style module="classes" lang="stylus">
+<style module="classes" lang="stylus" scoped>
 .wrapper
     border 2px dashed rgb(255, 107, 129)
     background-color rgb(40, 30, 54)
