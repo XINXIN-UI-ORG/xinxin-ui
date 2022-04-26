@@ -6,17 +6,24 @@ export default defineComponent({
         let scrollbarRef = ref();
         onMounted(() => {
             scrollbarRef.value.scrollTo({
-                top: 200,
-                left: 120
+                top: 100,
+                left: 120,
             });
         });
         return {
             scrollbarRef,
+            scrollByClick() {
+                scrollbarRef.value.scrollBy({
+                    top: 100,
+                    behavior: 'smooth'
+                }); 
+            },
         };
     }
 });
 </script>
 <template>
+    <x-button @click="scrollByClick">scrollBy滚动</x-button>
     <x-scrollbar
         max-height="350"
         ref="scrollbarRef"

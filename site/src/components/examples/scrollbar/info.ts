@@ -18,7 +18,8 @@ const horizontal: ExampleInfo = {
 const scrollTo: ExampleInfo = {
     title: "指定滚动位置",
     desc: format(`
-        通过组件暴露出来的scrollTo方法可以手动设置滚动条滚动到的位置，传入一个对象，对象中支持设置top跟left值。
+        通过组件暴露出来的scrollTo方法可以手动设置滚动条滚动到的位置，传入一个对象，对象中支持设置top、left值以及behavior值，behavior支持auto和smooth两个选项，决定滚动条是平滑滚动还是瞬时滚动。
+        scrollBy与scrollTo很相似，只是scrollBy滚动的是相对距离。
     `)
 };
 
@@ -73,7 +74,12 @@ const apiEvent: ApiTable<ApiEvent> = {
         {
             event: "scrollTo",
             describe: "将滚动条滚动到指定位置，可设置左侧偏移量和顶部偏移量。",
-            props: ["{ left?: number, top?: number }"]
+            props: ["{ left?: number, top?: number, behavior?: string }"]
+        },
+        {
+            event: "scrollBy",
+            describe: "相对于滚动条现在的位置，将滚动条滚动相对距离。",
+            props: ["{ left?: number, top?: number, behavior?: string }"]
         },
     ],
 };

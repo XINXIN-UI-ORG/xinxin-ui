@@ -81,14 +81,12 @@ export function useScrollbar(
         getContainerDom(): HTMLDivElement {
             return refObject.scrollbarContainerRef.value!;
         },
-        scrollTo(options: { top?: number, left?: number }) {
-            if (options.top) {
-                refObject.scrollbarContainerRef.value && (refObject.scrollbarContainerRef.value.scrollTop = options.top);
-            }
-            if (options.left) {
-                refObject.scrollbarContainerRef.value && (refObject.scrollbarContainerRef.value.scrollLeft = options.left);
-            }
-        }
+        scrollTo(options: ScrollToOptions) {
+            refObject.scrollbarContainerRef.value && refObject.scrollbarContainerRef.value.scrollTo(options);
+        },
+        scrollBy(options: ScrollToOptions) {
+            refObject.scrollbarContainerRef.value && refObject.scrollbarContainerRef.value.scrollBy(options);
+        },
     });
     return {
         scrollStyle: computed(() => {
