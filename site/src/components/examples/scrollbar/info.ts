@@ -4,7 +4,7 @@ import { format } from "../../../utils";
 const base: ExampleInfo = {
     title: "基础使用",
     desc: format(`
-        设置max-height来限制高度从而出现滚动条，如果不设置则默认500像素。
+        设置max-height来限制高度从而出现滚动条。
     `)
 };
 

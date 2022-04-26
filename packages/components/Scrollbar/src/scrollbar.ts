@@ -44,40 +44,37 @@ export function useScrollbar(
     // 滚动条是否初始化
     let verticalInitialize = false;
     let horizontalInitialize = false;
-    // 滚动条是否显示
-    let verticalBarDisplay = ref<boolean>(false);
-    let horizontalBarDisplay = ref<boolean>(false);
+    // 重新计算滚动条事件以及位置
+    let scrollbarInitGather = () => {
+        // 计算是否需要显示滚动条
+        if (showVerticalBar(refObject)) {
+            recomputedScrollBarVertical(refObject);
+            // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
+            if (!verticalInitialize) {
+                initVerticalScrollBar(refObject);
+                verticalInitialize = true;
+            }
+        }
+        if (showHorizontalBar(refObject, props)) {
+            recomputedScrollBarHorizontal(refObject);
+            // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
+            if (!horizontalInitialize) {
+                initHorizontalScrollBar(refObject);
+                horizontalInitialize = true;
+            }
+        }
+    };
     onMounted(() => {
-        watchEffect(() => {
-            // 竖向滚动
-            (verticalBarDisplay.value = showVerticalBar(refObject)) && initVerticalScrollBar(refObject) && (verticalInitialize = true);
-            // 横向滚动
-            (horizontalBarDisplay.value = showHorizontalBar(refObject, props)) && initHorizontalScrollBar(refObject) && (horizontalInitialize = true);
-        });
-        let scrollbarInitGather = () => {
-            // 计算是否需要显示滚动条
-            if (verticalBarDisplay.value = showVerticalBar(refObject)) {
-                recomputedScrollBarVertical(refObject);
-                // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
-                if (!verticalInitialize) {
-                    initVerticalScrollBar(refObject);
-                    verticalInitialize = false;
-                }
-            }
-            if (horizontalBarDisplay.value = showHorizontalBar(refObject, props)) {
-                recomputedScrollBarHorizontal(refObject);
-                // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
-                if (!horizontalInitialize) {
-                    initHorizontalScrollBar(refObject);
-                    horizontalInitialize = false;
-                }
-            }
-        };
+        watchEffect(scrollbarInitGather);
         // 监听容器高度的变化 同步更新滚动条的长度
         const observer = new MutationObserver(scrollbarInitGather);
         observer.observe(refObject.scrollbarContentRef.value!, { attributes: true, childList: true, subtree: true, characterData: true });
         // 监听页面是否变化
         window.addEventListener("resize", scrollbarInitGather);
+        // 监听页面容是否有图片 如果有需要等图片加载完毕再进行计算是否显示滚动条
+        let imgList = Array.from(refObject.scrollbarContentRef.value!.querySelectorAll('img'));
+        imgList.length > 0 && Promise.all(imgList.map(item => imageDomReload(item)))
+        .then(scrollbarInitGather);
     });
     // 导出方法
     expose({
@@ -114,10 +111,16 @@ export function useScrollbar(
         barStyle: computed(() => ({
             "--backgroundColor": props.color,
             "--backgroundColorHover": props.hoverColor,
-        })),
-        verticalBarDisplay,
-        horizontalBarDisplay
+        }))
     };
+}
+
+function imageDomReload(imgDom: HTMLImageElement): Promise<null> {
+    return new Promise<null>((reslove) => {
+        imgDom.onload = () => {
+            reslove(null);
+        }
+    });
 }
 
 function showVerticalBar(refObject: RefObject): boolean {
@@ -125,6 +128,7 @@ function showVerticalBar(refObject: RefObject): boolean {
     if (refObject.scrollbarContainerRef.value && refObject.scrollbarContentRef.value) {
         result = refObject.scrollbarContentRef.value.clientHeight > refObject.scrollbarContainerRef.value.clientHeight;
     }
+    refObject.scrollVerticalTrackRef.value && (refObject.scrollVerticalTrackRef.value.style.display = result ? 'block' : 'none');
     return result;
 }
 
@@ -136,6 +140,7 @@ function showHorizontalBar(refObject: RefObject, props: ScrollbarPropsType): boo
     if (refObject.scrollbarContainerRef.value && refObject.scrollbarContentRef.value) {
         result = refObject.scrollbarContentRef.value.clientWidth > refObject.scrollbarContainerRef.value.clientWidth;
     }
+    refObject.scrollHorizontalTrackRef.value && (refObject.scrollHorizontalTrackRef.value.style.display = result ? 'block' : 'none');
     return result;
 }
 
@@ -144,7 +149,6 @@ function showHorizontalBar(refObject: RefObject, props: ScrollbarPropsType): boo
  * @param refObject dom集合
  */
 function initHorizontalScrollBar(refObject: RefObject) {
-    recomputedScrollBarHorizontal(refObject);
     // 监听滚动条 实时计算滚动条位置
     let recomputedScrollBarHBind = recomputedScrollBarHorizontal.bind(null, refObject);
     refObject.scrollbarContainerRef.value?.addEventListener("scroll", recomputedScrollBarHBind);
@@ -171,18 +175,16 @@ function initHorizontalScrollBar(refObject: RefObject) {
 }
 
 function recomputedScrollBarHorizontal(refObject: RefObject): void {
-    if (!refObject.scrollHorizontalTrackRef.value) {
-        return;
-    }
+    let trackWidth = refObject.scrollbarContainerRef.value!.clientWidth - 4;
     // 滚动条相对于文档的缩小率
-    let narrowRate = refObject.scrollHorizontalTrackRef.value.clientWidth / refObject.scrollbarContentRef.value!.clientWidth;
+    let narrowRate = trackWidth / refObject.scrollbarContentRef.value!.clientWidth;
     // 计算并设置横向滚动条长度
     let horizontalScrollLength = refObject.scrollbarContainerRef.value!.clientWidth * narrowRate;
     refObject.scrollHorizontalBarRef.value!.style.width = `${horizontalScrollLength}px`;
     // 计算滚动条的偏移量
     let horizontalScrollLeft = refObject.scrollbarContainerRef.value!.scrollLeft * narrowRate;
     horizontalScrollLeft = Math.max(0, horizontalScrollLeft);
-    horizontalScrollLeft = Math.min(horizontalScrollLeft, refObject.scrollHorizontalTrackRef.value!.clientWidth - refObject.scrollHorizontalBarRef.value!.clientWidth);
+    horizontalScrollLeft = Math.min(horizontalScrollLeft, trackWidth - refObject.scrollHorizontalBarRef.value!.clientWidth);
     refObject.scrollHorizontalBarRef.value!.style.marginLeft = `${horizontalScrollLeft}px`;
 }
 
@@ -211,7 +213,6 @@ function scrollbarHorizontalMoveEvent(
  * @param refObject dom集合 
  */
 function initVerticalScrollBar(refObject: RefObject) {
-    recomputedScrollBarVertical(refObject);
     // 监听滚动条 实时计算滚动条位置
     let recomputedScrollBarHBind = recomputedScrollBarVertical.bind(null, refObject);
     refObject.scrollbarContainerRef.value?.addEventListener("scroll", recomputedScrollBarHBind);
@@ -259,17 +260,15 @@ function scrollbarVerticalMoveEvent(
 }
 
 function recomputedScrollBarVertical(refObject: RefObject): void {
-    if (!refObject.scrollVerticalTrackRef.value) {
-        return;
-    }
+    let trackHeight = refObject.scrollbarContainerRef.value!.clientHeight - 4;
     // 滚动条相对于文档的缩小率
-    let narrowRate = refObject.scrollVerticalTrackRef.value.clientHeight / refObject.scrollbarContentRef.value!.clientHeight;
+    let narrowRate = trackHeight / refObject.scrollbarContentRef.value!.clientHeight;
     // 计算并设置竖向滚动条长度
     let verticalScrollLength = refObject.scrollbarContainerRef.value!.clientHeight * narrowRate;
     refObject.scrollVerticalBarRef.value!.style.height = `${verticalScrollLength}px`;
     // 计算滚动条的高度
     let verticalScrollTop = refObject.scrollbarContainerRef.value!.scrollTop * narrowRate;
     verticalScrollTop = Math.max(0, verticalScrollTop);
-    verticalScrollTop = Math.min(verticalScrollTop, refObject.scrollVerticalTrackRef.value!.clientHeight - refObject.scrollVerticalBarRef.value!.clientHeight);
+    verticalScrollTop = Math.min(verticalScrollTop, trackHeight - refObject.scrollVerticalBarRef.value!.clientHeight);
     refObject.scrollVerticalBarRef.value!.style.marginTop = `${verticalScrollTop}px`;
 }

@@ -15,7 +15,7 @@ export default defineComponent({
         let scrollHorizontalTrackRef = ref<HTMLDivElement | null>(null);
         let scrollHorizontalBarRef = ref<HTMLDivElement | null>(null);
         let gcn = generateClassName("scrollbar");
-        let { scrollStyle, barStyle, contentStyle, verticalBarDisplay, horizontalBarDisplay } = useScrollbar(props, {
+        let { scrollStyle, barStyle, contentStyle } = useScrollbar(props, {
             scrollbarContainerRef,
             scrollbarContentRef,
             scrollVerticalBarRef,
@@ -34,8 +34,6 @@ export default defineComponent({
             scrollStyle,
             barStyle,
             contentStyle,
-            verticalBarDisplay,
-            horizontalBarDisplay,
         };
     },
 })
@@ -69,7 +67,6 @@ export default defineComponent({
                 gcn.e('vertical'),
             ]"
             ref="scrollVerticalTrackRef"
-            v-if="verticalBarDisplay"
         >
             <div
                 :class="[
@@ -84,7 +81,6 @@ export default defineComponent({
                 gcn.e('horizontal'),
             ]"
             ref="scrollHorizontalTrackRef"
-            v-if="horizontalBarDisplay"
         >
             <div
                 :class="[
