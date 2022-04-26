@@ -2,9 +2,11 @@
     overflow hidden
     position relative
     &:hover
-        .x-scrollbar__bar
-            visibility visible
-            opacity 1
+        > .x-scrollbar__vertical
+        > .x-scrollbar__horizontal
+            > .x-scrollbar__bar
+                visibility visible
+                opacity 1
     .x-scrollbar__container
         overflow scroll
         overscroll-behavior contain
@@ -38,6 +40,10 @@
         visibility hidden
         opacity 0
         transition visibility .5s, opacity .5s
-        &:hover
+        &:active
+            background-color var(--backgroundColorHover)
+            opacity 1
+            visibility visible
+        &:hover, &:active
             background-color var(--backgroundColorHover)
 

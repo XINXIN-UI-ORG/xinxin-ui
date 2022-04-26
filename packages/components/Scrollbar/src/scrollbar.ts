@@ -1,4 +1,4 @@
-import { ExtractPropTypes, computed, onMounted, watchEffect } from "vue";
+import { ExtractPropTypes, computed, onMounted, watchEffect, ref } from "vue";
 import type { Ref } from "vue";
 import { numberReg, matchNumberReg } from "@xinxin-ui/utils";
 
@@ -44,17 +44,19 @@ export function useScrollbar(
     // 滚动条是否初始化
     let verticalInitialize = false;
     let horizontalInitialize = false;
+    // 滚动条是否显示
+    let verticalBarDisplay = ref<boolean>(false);
+    let horizontalBarDisplay = ref<boolean>(false);
     onMounted(() => {
         watchEffect(() => {
             // 竖向滚动
-            showVerticalBar(refObject) && initVerticalScrollBar(refObject) && (verticalInitialize = true);
+            (verticalBarDisplay.value = showVerticalBar(refObject)) && initVerticalScrollBar(refObject) && (verticalInitialize = true);
             // 横向滚动
-            showHorizontalBar(refObject, props) && initHorizontalScrollBar(refObject) && (horizontalInitialize = true);
+            (horizontalBarDisplay.value = showHorizontalBar(refObject, props)) && initHorizontalScrollBar(refObject) && (horizontalInitialize = true);
         });
-        // 监听容器高度的变化 同步更新滚动条的长度
-        const observer = new MutationObserver(() => {
+        let scrollbarInitGather = () => {
             // 计算是否需要显示滚动条
-            if (showVerticalBar(refObject)) {
+            if (verticalBarDisplay.value = showVerticalBar(refObject)) {
                 recomputedScrollBarVertical(refObject);
                 // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
                 if (!verticalInitialize) {
@@ -62,7 +64,7 @@ export function useScrollbar(
                     verticalInitialize = false;
                 }
             }
-            if (showHorizontalBar(refObject, props)) {
+            if (horizontalBarDisplay.value = showHorizontalBar(refObject, props)) {
                 recomputedScrollBarHorizontal(refObject);
                 // 判断滚动条是否初始化过 长度超过了且没有初始化过才执行初始化方法
                 if (!horizontalInitialize) {
@@ -70,8 +72,12 @@ export function useScrollbar(
                     horizontalInitialize = false;
                 }
             }
-        });
+        };
+        // 监听容器高度的变化 同步更新滚动条的长度
+        const observer = new MutationObserver(scrollbarInitGather);
         observer.observe(refObject.scrollbarContentRef.value!, { attributes: true, childList: true, subtree: true, characterData: true });
+        // 监听页面是否变化
+        window.addEventListener("resize", scrollbarInitGather);
     });
     // 导出方法
     expose({
@@ -109,6 +115,8 @@ export function useScrollbar(
             "--backgroundColor": props.color,
             "--backgroundColorHover": props.hoverColor,
         })),
+        verticalBarDisplay,
+        horizontalBarDisplay
     };
 }
 
@@ -117,7 +125,6 @@ function showVerticalBar(refObject: RefObject): boolean {
     if (refObject.scrollbarContainerRef.value && refObject.scrollbarContentRef.value) {
         result = refObject.scrollbarContentRef.value.clientHeight > refObject.scrollbarContainerRef.value.clientHeight;
     }
-    refObject.scrollVerticalTrackRef.value && (refObject.scrollVerticalTrackRef.value.style.display = result ? 'block' : 'none');
     return result;
 }
 
@@ -129,7 +136,6 @@ function showHorizontalBar(refObject: RefObject, props: ScrollbarPropsType): boo
     if (refObject.scrollbarContainerRef.value && refObject.scrollbarContentRef.value) {
         result = refObject.scrollbarContentRef.value.clientWidth > refObject.scrollbarContainerRef.value.clientWidth;
     }
-    refObject.scrollHorizontalTrackRef.value && (refObject.scrollHorizontalTrackRef.value.style.display = result ? 'block' : 'none');
     return result;
 }
 
