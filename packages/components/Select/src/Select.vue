@@ -2,7 +2,8 @@
 import { defineComponent } from 'vue';
 import { generateClassName } from "@xinxin-ui/utils";
 import { selectProps } from "./select";
-import * as XinXinIcons from "@xinxin-ui/xinxin-icons";
+import XInput from "../../XInput/src/XInput.vue";
+import { Select } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: "x-select",
@@ -14,7 +15,8 @@ export default defineComponent({
         };
     },
     components: {
-        ...XinXinIcons,
+        XInput,
+        Select,
     },
 })
 </script>
@@ -25,27 +27,20 @@ export default defineComponent({
             gcn.bm(size),
         ]"
     >
-        <div
+        <x-input
             :class="[
-                gcn.e('options'),
+                gcn.e('input'),
             ]"
+            block
+            _cursor
+            readonly
         >
-            <div
-                :class="[
-                    gcn.e('options', 'option'),
-                ]"
-                v-for="item in options"
-            >
-                {{item.label}}
-            </div>
-        </div>
-        <div
-            :class="[
-                gcn.e('icon'),
-            ]"
-        >
-            <component :is="suffix" />
-        </div>
+            <template #suffix>
+                <Select :class="[
+                    gcn.e('input', 'icon'),
+                ]" />
+            </template>
+        </x-input>
     </div>
 </template>
 <style lang="stylus" scoped src="../style/select.styl"></style>

@@ -39,6 +39,15 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+        readonly: {
+            type: Boolean,
+            default: false,
+        },
+        // inner props
+        _cursor: {
+            type: Boolean,
+            default: false,
+        },
     },
     emits: {
         onInputChange: null,
@@ -111,6 +120,7 @@ export default defineComponent({
                 props.disabled && "x-input-disabled",
                 props.status && "x-input-" + props.status,
                 props.block ? "x-input-block" : "x-input-inline",
+                props._cursor && "x-input-cursor",
             ]),
             prefix: slots.prefix,
             suffix: slots.suffix,
@@ -315,6 +325,7 @@ function showPasswordOnGather(
             @blur="blurEvent"
             @focus="focusEvent"
             :disabled="disabled"
+            :readonly="readonly"
             :size="size"
             ref="inputRef"
         />
@@ -346,100 +357,4 @@ function showPasswordOnGather(
         <div class="x-input__border"></div>
     </div>
 </template>
-<style lang="stylus" scoped>
-@import '../../../theme-chalk/variable.styl';
-
-.x-input-block
-    display flex
-.x-input-inline
-    display inline-flex
-.x-input
-    border-radius 3px
-    padding 0 12px
-    cursor text
-    position relative
-    z-index 1
-    background-color #fff
-    vertical-align middle
-    &:hover
-        .x-input__border
-            border-color $base_theme_color
-    .x-input__border
-        border 1px solid #e0e0e6
-        transition border-color .3s, box-shadow .3s
-        position absolute
-        border-radius 3px
-        top -1px
-        left -1px
-        bottom -1px
-        right -1px
-        z-index -1
-    .x-input__input
-        height 100%
-        padding 0
-        border none
-        outline none
-        background-color transparent
-        caret-color #f5a31f
-        flex 1
-        &::-webkit-inner-spin-button, &::-webkit-outer-spin-button
-            -webkit-appearance none
-        &[type="number"]
-            -moz-appearance textfield
-        &:focus
-            ~ .x-input__border
-                border-color $base_theme_color
-                box-shadow $base_theme_shadow
-        &::placeholder
-            color #c2c2c2
-    .x-input__fix
-        height 100%
-        overflow hidden
-        display flex
-        align-items center
-        color #333639
-    .x-input__prefix
-        padding-right 12px
-    .x-input__suffix
-        padding-left 12px
-    .x-input__area
-        height 100%
-        width 16px
-        display flex
-        align-items center
-        padding-left 6px
-        .x-input__area-icon
-            color #727577
-            cursor pointer
-            vertical-align middle
-            &:hover
-                color #f5a31f
-            &:active
-                color #f19809
-.x-input-small
-    height 28px
-.x-input-normal
-    height 32px
-.x-input-large
-    height 36px
-.x-input-disabled
-    background-color #f7f7f7
-    cursor not-allowed
-    &:hover
-        .x-input__border
-            border-color #e0e0e6
-    .x-input__input
-        cursor not-allowed
-.x-input-error
-    .x-input__border
-        border-color #F56C6C
-    .x-input__input
-        caret-color #F56C6C
-        &:focus
-            ~ .x-input__border
-                border-color #F56C6C
-                box-shadow 0 0 1px 2px rgba(245, 108, 108, .25)
-    &:hover
-        .x-input__border
-            border-color #F56C6C
-</style>
+<style lang="stylus" scoped src="../style/input.styl" />

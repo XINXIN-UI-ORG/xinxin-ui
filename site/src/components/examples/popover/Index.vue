@@ -48,6 +48,7 @@ export default defineComponent({
                 :class="classes.wrapper"
                 ref="containerRef"
                 max-height="350"
+                horizontal
             >
                 <x-popover
                     :placement="placement"
@@ -75,7 +76,7 @@ export default defineComponent({
         </div>
     </div>
 </template>
-<style module="classes" lang="stylus">
+<style module="classes" lang="stylus" scoped>
 .wrapper
     border 2px dashed rgb(255, 107, 129)
     background-color rgb(40, 30, 54)

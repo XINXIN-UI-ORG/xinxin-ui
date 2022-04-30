@@ -78,7 +78,15 @@ const focusAndBlur: ExampleInfo = {
     `)
 };
 
+const readonly: ExampleInfo = {
+    title: "只读",
+    desc: format(`
+        通过设置readonly属性为true来禁止输入框输入，但不像disabled，readonly只是不允许输入，其他的和正常的input没有区别。
+    `)
+};
+
 export {
+    readonly,
     focusAndBlur,
     inputEvent,
     block,
@@ -161,6 +169,13 @@ const apiProps: ApiTable<ApiProps> = {
             describe: "输入框状态",
             type: "Stirng",
             selectList: ["error"]
+        },
+        {
+            props: "readonly",
+            describe: "只读",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"]
         },
     ],
 };

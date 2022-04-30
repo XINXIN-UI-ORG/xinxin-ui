@@ -40,20 +40,28 @@ export default defineComponent({
         let scrollbarRef = ref();
         onMounted(() => {
             scrollbarRef.value.scrollTo({
-                top: 200,
-                left: 120
+                top: 100,
+                left: 120,
             });
         });
         return {
             scrollbarRef,
+            scrollByClick() {
+                scrollbarRef.value.scrollBy({
+                    top: 100,
+                    behavior: 'smooth'
+                }); 
+            },
         };
     }
 });
 <\/script>
 <template>
+    <x-button @click="scrollByClick">scrollBy滚动</x-button>
     <x-scrollbar
         max-height="350"
         ref="scrollbarRef"
+        horizontal
     >
         <img :class="classes.context" src="/logo.png" alt="NO IMG" />
     </x-scrollbar>
@@ -69,7 +77,7 @@ export default defineComponent({
 import Horizontal from './2Horizontal.vue'
 
 const horizontalContent = `<template>
-    <x-scrollbar>
+    <x-scrollbar horizontal>
         <div :class="classes.container">
             噫吁嚱，危乎高哉！蜀道之难，难于上青天！
             蚕丛及鱼凫，开国何茫然！

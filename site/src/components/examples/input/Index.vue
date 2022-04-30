@@ -169,6 +169,24 @@ export default defineComponent({
     <x-input placeholder="触发focus&blur" @onInputBlur="inputBlur" @onInputFocus="inputFocus" block />
 </template>`
 
+import Readonly from './92Readonly.vue'
+
+const readonlyContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let inputValue = ref("");
+        return {
+            inputValue,
+        };
+    },
+})
+<\/script>
+<template>
+    <x-input placeholder="只能看不能写" v-model="inputValue" block readonly />
+</template>`
+
 import InputEvent from './9InputEvent.vue'
 
 const inputEventContent = `<script lang="ts">
@@ -239,6 +257,10 @@ export default defineComponent({
       focusAndBlurContent,
       focusAndBlurInfo: info.focusAndBlur,
 
+      Readonly,
+      readonlyContent,
+      readonlyInfo: info.readonly,
+
       InputEvent,
       inputEventContent,
       inputEventInfo: info.inputEvent,
@@ -303,11 +325,11 @@ export default defineComponent({
       </CodeExample>
 
       <CodeExample
-        id="inputEvent"
-        :code="inputEventContent"
-        :title="inputEventInfo.title"
-        :code-v-node="InputEvent"
-        :code-desc="inputEventInfo.desc"
+        id="readonly"
+        :code="readonlyContent"
+        :title="readonlyInfo.title"
+        :code-v-node="Readonly"
+        :code-desc="readonlyInfo.desc"
       >
       </CodeExample>
     </template>
@@ -354,6 +376,15 @@ export default defineComponent({
         :title="focusAndBlurInfo.title"
         :code-v-node="FocusAndBlur"
         :code-desc="focusAndBlurInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="inputEvent"
+        :code="inputEventContent"
+        :title="inputEventInfo.title"
+        :code-v-node="InputEvent"
+        :code-desc="inputEventInfo.desc"
       >
       </CodeExample>
     </template>

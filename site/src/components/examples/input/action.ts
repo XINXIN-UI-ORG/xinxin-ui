@@ -53,6 +53,11 @@ export default [
   },
   {
     key: 10,
+    link: '/component/input#readonly',
+    name: info.readonly.title,
+  },
+  {
+    key: 11,
     link: '/component/input#inputEvent',
     name: info.inputEvent.title,
   },

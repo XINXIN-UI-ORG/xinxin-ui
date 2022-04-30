@@ -148,6 +148,7 @@ export default defineComponent({
         placeholder="触发focus&blur"
         number-button
         clearable
+        block
         @onInputBlur="inputBlur"
         @onInputFocus="inputFocus"
     />
