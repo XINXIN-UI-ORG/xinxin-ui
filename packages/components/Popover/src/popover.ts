@@ -49,6 +49,15 @@ export const popoverProps = {
         type: [Number, String],
         default: undefined,
     },
+    // inner props
+    _block: {
+        type: Boolean,
+        default: false,
+    },
+    _extendWidth: {
+        type: Number,
+        default: 0,
+    },
 };
 
 export type PopoverPropsType = ExtractPropTypes<typeof popoverProps>;
@@ -104,6 +113,9 @@ export function usePopover(
                 : props.showArrow
                     ? -props.offset
                     : -4}px`,
+            "width": props._block
+                        ? popoverRefGather.triggerRef.value!.offsetWidth + props._extendWidth + 'px'
+                        : 'auto',
         })),
     };
 }
