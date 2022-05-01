@@ -1,3 +1,5 @@
+@import '../../../theme-chalk/variable.styl';
+
 .x-select
     .x-select__input
         cursor pointer
@@ -5,3 +7,28 @@
             color #b3b6bc
             width 14px
             height 14px
+.x-select__options
+    .x-select__options__item
+        padding 8px 12px
+        cursor pointer
+        display flex
+        align-items center
+        &:hover
+            background-color #f4f5f5
+            .x-select__options__item__select
+                svg
+                    color #f4f5f5
+        .x-select__options__item__select
+            margin-right 5px
+            svg
+                height 18px
+                vertical-align sub
+                color #fff
+    .x-select__options__item-selected
+        background-color #f4f5f5
+        .x-select__options__item__select
+            svg
+                color $base_theme_color !important
+        .x-select__options__item__label
+            font-weight bolder
+            color $base_theme_color

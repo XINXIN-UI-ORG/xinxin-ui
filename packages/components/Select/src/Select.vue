@@ -1,24 +1,29 @@
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 import { generateClassName } from "@xinxin-ui/utils";
-import { selectProps } from "./select";
+import { selectProps, useSelect } from "./select";
 import XInput from "../../XInput";
 import Popover from "../../Popover";
-import { Select } from "@xinxin-ui/xinxin-icons";
+import { Select, Checked } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: "x-select",
     props: selectProps,
-    setup() {
+    setup(props) {
         let gcn = generateClassName("select");
+        let { showSelectIcon } = useSelect(props);
         return {
             gcn,
+            suffixIcon: computed(() => {
+                return Select;
+            }),
+            showSelectIcon,
         };
     },
     components: {
         XInput,
-        Select,
         Popover,
+        Checked,
     },
 })
 </script>
@@ -34,24 +39,53 @@ export default defineComponent({
             placement="bottom"
             :show-arrow="false"
             _block
-            :_extend-width="4"
+            :_extend-width="2"
+            style="padding: 6px 0;"
         >
             <x-input
                 :class="[
                     gcn.e('input'),
                 ]"
-                block
+                :placeholder="placeholder"
+                :block="block"
                 _cursor
                 readonly
             >
                 <template #suffix>
-                    <Select :class="[
-                        gcn.e('input', 'icon'),
-                    ]" />
+                    <component 
+                        :class="[
+                            gcn.e('input', 'icon'),
+                        ]"
+                        :is="suffixIcon"
+                    />
                 </template>
             </x-input>
             <template #content>
-                dsfdsfsd
+                <div
+                    :class="[
+                        gcn.e('options'),
+                    ]"
+                >
+                    <div
+                        :class="[
+                            gcn.e('options', 'item'),
+                            gcn.middle('options', 'item').is('selected', item.value === modelValue),
+                        ]"
+                        v-for="item in options"
+                        :key="item.value"
+                    >
+                        <div :class="[
+                            gcn.e('options', 'item', 'select'),
+                        ]">
+                            <Checked v-if="showSelectIcon" />
+                        </div>
+                        <div :class="[
+                            gcn.e('options', 'item', 'label'),
+                        ]">
+                            {{ item.label }}
+                        </div>
+                    </div>
+                </div>
             </template>
         </Popover>
     </div>

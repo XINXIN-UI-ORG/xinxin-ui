@@ -1,18 +1,22 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     setup() {
         return {
+            value: ref("1"),
             options: [
                 {
-                    label: "rrrrrrrrr"
+                    label: "襄阳歌",
+                    value: "1"
                 },
                 {
-                    label: "ppppppppp"
+                    label: "采莲曲",
+                    value: "2"
                 },
                 {
-                    label: "cccccccc"
+                    label: "客中行",
+                    value: "3"
                 }
             ],
         };
@@ -20,5 +24,10 @@ export default defineComponent({
 })
 </script>
 <template>
-    <x-select :options="options"></x-select>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="value"
+    >
+    </x-select>
 </template>

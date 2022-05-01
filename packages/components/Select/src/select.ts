@@ -1,5 +1,7 @@
-import { ModelValueType, NormalSize } from "@xinxin-ui/typings";
-import { PropType } from "vue";
+import { NormalSize } from "@xinxin-ui/typings";
+import { PropType, ExtractPropTypes, computed } from "vue";
+
+type SelectValue = number | string;
 
 export const selectProps = {
     options: {
@@ -10,14 +12,40 @@ export const selectProps = {
         type: String as PropType<NormalSize>,
         default: "normal",
     },
-    suffix: {
+    placeholder: {
         type: String,
-        default: "Select",
+        default: ""
+    },
+    block: {
+        type: Boolean,
+        default: false
+    },
+    modelValue: {
+        type: Object as PropType<SelectValue | SelectValue[]>,
+        default: ""
     },
 };
 
+export type SelectProps = ExtractPropTypes<typeof selectProps>;
+
 type OptionItem = {
     label: string,
-    value: ModelValueType,
+    value: SelectValue,
     disabled: boolean,
 };
+
+export function useSelect(
+    props: SelectProps
+) {
+    return {
+        showSelectIcon: computed<boolean>(() => {
+            let modelValue: Array<SelectValue> = [];
+            if (Array.isArray(props.modelValue)) {
+                modelValue = props.modelValue;
+            } else {
+                modelValue.push(props.modelValue);
+            }
+            return props.options.some(item => modelValue.indexOf(item.value) !== -1);
+        }),
+    };
+}

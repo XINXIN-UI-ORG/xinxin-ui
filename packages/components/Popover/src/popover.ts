@@ -49,6 +49,7 @@ export const popoverProps = {
         type: [Number, String],
         default: undefined,
     },
+    style: Object,
     // inner props
     _block: {
         type: Boolean,
@@ -103,6 +104,7 @@ export function usePopover(
 
     return {
         popperStyle: computed(() => ({
+            ...props.style,
             "--margin": `${props.ignoreContent
                 ? 0
                 : props.showArrow
