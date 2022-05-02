@@ -1,7 +1,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { generateClassName } from "@xinxin-ui/utils";
-import { selectProps, useSelect } from "./select";
+import { selectProps, useSelect, selectEmits } from "./select";
 import XInput from "../../XInput";
 import Popover from "../../Popover";
 import { Select, Checked } from "@xinxin-ui/xinxin-icons";
@@ -9,15 +9,19 @@ import { Select, Checked } from "@xinxin-ui/xinxin-icons";
 export default defineComponent({
     name: "x-select",
     props: selectProps,
-    setup(props) {
+    emits: selectEmits,
+    setup(props, { emit }) {
         let gcn = generateClassName("select");
-        let { showSelectIcon } = useSelect(props);
+        let { showSelectIcon, visible, optionClick } = useSelect(props, emit);
         return {
             gcn,
             suffixIcon: computed(() => {
-                return Select;
+                let component = Select;
+                return component;
             }),
             showSelectIcon,
+            visible,
+            optionClick,
         };
     },
     components: {
@@ -33,9 +37,10 @@ export default defineComponent({
             gcn.base(),
             gcn.bm(size),
         ]"
+        @click="visible = !visible"
     >
         <Popover
-            trigger="click"
+            :show="visible"
             placement="bottom"
             :show-arrow="false"
             _block
@@ -55,6 +60,7 @@ export default defineComponent({
                     <component 
                         :class="[
                             gcn.e('input', 'icon'),
+                            gcn.middle('input', 'icon').is('open', visible),
                         ]"
                         :is="suffixIcon"
                     />
@@ -73,6 +79,7 @@ export default defineComponent({
                         ]"
                         v-for="item in options"
                         :key="item.value"
+                        @click="optionClick(item.value)"
                     >
                         <div :class="[
                             gcn.e('options', 'item', 'select'),

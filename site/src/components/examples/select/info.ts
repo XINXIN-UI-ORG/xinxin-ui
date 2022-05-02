@@ -4,7 +4,7 @@ import { format } from "../../../utils";
 const base: ExampleInfo = {
     title: "基础使用",
     desc: format(`
-        使用v-model绑定变量，如果radio被选中，会将value的值赋值给v-model绑定的变量，value可以是Number，String，Boolean。
+        通过options将x-select的可选值传入，options是一个数组，数组每项是一个对象，对象中可传入label和value，同时使用v-model绑定变量，当用户选中其中的项时，x-select会将options中对应的value赋值给v-model绑定的变量。
     `)
 };
 
@@ -19,9 +19,28 @@ const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
-            props: "value",
-            describe: "radio的value值，当radio被选中时，该value会被设置给v-model绑定的变量。",
-            type: 'Boolean | Number | String',
+            props: "options",
+            describe: "x-select的可选值",
+            type: 'Array<{label: string, value: string | number, disabled: boolean}>',
+        },
+        {
+            props: "size",
+            describe: "x-select组件的大小",
+            type: "String",
+            defaultValue: "normal",
+            selectList: ["small", "normal", "large"],
+        },
+        {
+            props: "placeholder",
+            describe: "x-select中的提示",
+            type: "String",
+        },
+        {
+            props: "block",
+            describe: "设置x-select为块级",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"],
         },
     ],
 };

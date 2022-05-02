@@ -8,6 +8,8 @@ import Auth from './src/auth.vue'
 
 import Checked from './src/checked.vue'
 
+import CloseSelect from './src/close-select.vue'
+
 import Close from './src/close.vue'
 
 import Components from './src/components.vue'
@@ -65,6 +67,7 @@ const componentList = [
   AuthSuccess,
   Auth,
   Checked,
+  CloseSelect,
   Close,
   Components,
   Document,
@@ -112,6 +115,7 @@ export {
   AuthSuccess,
   Auth,
   Checked,
+  CloseSelect,
   Close,
   Components,
   Document,

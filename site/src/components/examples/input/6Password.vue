@@ -12,6 +12,7 @@ export default defineComponent({
 </script>
 <template>
     <x-input placeholder="点击触发显示密码" type="password" show-password-on="click" block />
+    <div class="split"></div>
     <x-input placeholder="鼠标按下触发显示密码" type="password" show-password-on="mousedown" block>
         <template #suffix>
             <Search />

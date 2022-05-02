@@ -142,14 +142,14 @@ function throttle(callback: Function) {
 .component-desc
     margin-bottom 10px
 .show
+    :deep(.split)
+        height 10px
     :deep(button)
         margin 10px 10px 0 0
     :deep(.x-button-group)
         margin 10px 10px 0 0
         button
             margin 0
-    :deep(.x-input)
-        margin-top 10px
     :deep(.x-number-input)
         margin-top 10px
         .x-input

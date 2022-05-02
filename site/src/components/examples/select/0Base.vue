@@ -30,4 +30,6 @@ export default defineComponent({
         v-model="value"
     >
     </x-select>
+
+    {{value}}
 </template>

@@ -26,18 +26,20 @@ export default defineComponent({
 import Mode from './1Mode.vue'
 
 const modeContent = `<template>
-<x-input placeholder="小" type="text" mode="small" block />
-<x-input placeholder="中" type="text" mode="normal" block />
-<x-input placeholder="大" type="text" mode="large" block />
+    <x-input placeholder="小" type="text" mode="small" block />
+    <div class="split"></div>
+    <x-input placeholder="中" type="text" mode="normal" block />
+    <div class="split"></div>
+    <x-input placeholder="大" type="text" mode="large" block />
 </template>`
 
 import Size from './2Size.vue'
 
 const sizeContent = `<template>
     <x-input placeholder="30" type="text" size="30" />
-    <br>
+    <div class="split"></div>
     <x-input placeholder="40" type="text" size="40" />
-    <br>
+    <div class="split"></div>
     <x-input placeholder="50" type="text" size="50" />
 </template>`
 
@@ -70,14 +72,17 @@ export default defineComponent({
     <x-input placeholder="请输入" type="text" block>
         <template #prefix>Prefix</template>
     </x-input>
+    <div class="split"></div>
     <x-input placeholder="请输入" type="text" block>
         <template #suffix>Suffix</template>
     </x-input>
+    <div class="split"></div>
     <x-input placeholder="请输入" block>
         <template #prefix>
             <Search />
         </template>
     </x-input>
+    <div class="split"></div>
     <x-input placeholder="请输入" block>
         <template #suffix>
             <Search />
@@ -101,9 +106,11 @@ export default defineComponent({
 <\/script>
 <template>
     <x-input placeholder="请输入" block clearable />
+    <div class="split"></div>
     <x-input placeholder="请输入" block clearable>
         <template #suffix>Suffix</template>
     </x-input>
+    <div class="split"></div>
     <x-input placeholder="请输入" block clearable>
         <template #suffix>
             <Search />
@@ -127,6 +134,7 @@ export default defineComponent({
 <\/script>
 <template>
     <x-input placeholder="点击触发显示密码" type="password" show-password-on="click" block />
+    <div class="split"></div>
     <x-input placeholder="鼠标按下触发显示密码" type="password" show-password-on="mousedown" block>
         <template #suffix>
             <Search />

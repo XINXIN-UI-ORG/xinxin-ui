@@ -12,9 +12,11 @@ export default defineComponent({
 </script>
 <template>
     <x-input placeholder="请输入" block clearable />
+    <div class="split"></div>
     <x-input placeholder="请输入" block clearable>
         <template #suffix>Suffix</template>
     </x-input>
+    <div class="split"></div>
     <x-input placeholder="请输入" block clearable>
         <template #suffix>
             <Search />

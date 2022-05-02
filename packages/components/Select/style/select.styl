@@ -1,12 +1,16 @@
 @import '../../../theme-chalk/variable.styl';
 
 .x-select
+    display inline-block
     .x-select__input
         cursor pointer
         .x-select__input__icon
+            transition all .5s
             color #b3b6bc
             width 14px
             height 14px
+        .x-select__input__icon-open
+            transform rotate(180deg)
 .x-select__options
     .x-select__options__item
         padding 8px 12px
