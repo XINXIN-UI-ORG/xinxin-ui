@@ -1,5 +1,5 @@
 import type { VNode, ExtractPropTypes, SetupContext } from "vue";
-import { h, Comment, defineComponent, Fragment, inject, Text, withDirectives } from "vue";
+import { cloneVNode, Comment, defineComponent, Fragment, inject, Text, withDirectives } from "vue";
 import { isObject } from "@vue/shared";
 import { ReferenceInjectKey, ReferenceGather } from "@xinxin-ui/symbols";
 import { isBoolean } from "@vueuse/core";
@@ -12,7 +12,7 @@ const triggerProps = {
 };
 
 const triggerEmit = {
-    "update:popoverShow": (val) => {
+    "update:popoverShow": (val: boolean) => {
         return isBoolean(val);
     },
 };
@@ -21,11 +21,6 @@ export default defineComponent({
     props: triggerProps,
     emits: triggerEmit,
     setup(props, { slots, emit }) {
-        const defaultSlot = findFirstLegitChild(slots.default?.());
-        if (defaultSlot === null) {
-            console.warn("popover未传入合法触发器！");
-            return null;
-        }
         // 获取父组件传过来的triggerRef对象 将真实trigger dom赋值给父组件的对象供父组件操作
         const fatherReferenceGather = inject(ReferenceInjectKey, undefined);
         let { checkPopoverShow, openPopper, closePopper, clickOtherToClosePopper } = useTrigger(props, emit, fatherReferenceGather);
@@ -53,8 +48,23 @@ export default defineComponent({
             }
         };
         return () => {
+            const defaultSlot = slots.default?.();
+            if (!defaultSlot) {
+                return null;
+            }
+
+            if (defaultSlot.length > 1) {
+                console.warn('触发器只能包含一个节点!')
+                return null
+            }
+            
+            const triggerVNode = findFirstLegitChild(slots.default?.());
+            if (triggerVNode === null) {
+                console.warn("popover未传入合法触发器!");
+                return null;
+            }
             // 绑定指令 在指令中将真实dom传出去
-            return withDirectives(h(defaultSlot!, null), [
+            return withDirectives(cloneVNode(triggerVNode, null), [
                 [{
                     mounted(el) {
                         directiveFunc(el);
@@ -64,6 +74,8 @@ export default defineComponent({
                     }
                 }]
             ]);
+            // return cloneVNode(defaultSlot!, null);
+            // return cloneVNode(slots.default!()[0].children![0], null);
         };
     }
 });
@@ -88,7 +100,7 @@ function findFirstLegitChild(nodeList: VNode[] | undefined): VNode | null {
                     // 文本节点 包裹span返回
                     return wrapTextChild(currentChild);
                 case Fragment:
-                    return findFirstLegitChild(currentChild.children as Array<VNode>);
+                    return findFirstLegitChild(currentChild.children as VNode[]);
                 default:
                     return currentChild;
             }

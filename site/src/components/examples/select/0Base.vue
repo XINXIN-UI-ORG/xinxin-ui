@@ -32,4 +32,6 @@ export default defineComponent({
     </x-select>
 
     {{value}}
+
+    <x-button @click="value = '20'"></x-button>
 </template>

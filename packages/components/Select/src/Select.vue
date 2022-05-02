@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, computed } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import { generateClassName } from "@xinxin-ui/utils";
 import { selectProps, useSelect, selectEmits } from "./select";
 import XInput from "../../XInput";
@@ -12,16 +12,18 @@ export default defineComponent({
     emits: selectEmits,
     setup(props, { emit }) {
         let gcn = generateClassName("select");
-        let { showSelectIcon, visible, optionClick } = useSelect(props, emit);
+        let { selectValues, visible, optionClick, selectLabels } = useSelect(props, emit);
+        let ddd = ref("121212");
         return {
             gcn,
             suffixIcon: computed(() => {
                 let component = Select;
                 return component;
             }),
-            showSelectIcon,
+            selectValues,
             visible,
             optionClick,
+            selectLabels,
         };
     },
     components: {
@@ -47,25 +49,28 @@ export default defineComponent({
             :_extend-width="2"
             style="padding: 6px 0;"
         >
-            <x-input
-                :class="[
-                    gcn.e('input'),
-                ]"
-                :placeholder="placeholder"
-                :block="block"
-                _cursor
-                readonly
-            >
-                <template #suffix>
-                    <component 
-                        :class="[
-                            gcn.e('input', 'icon'),
-                            gcn.middle('input', 'icon').is('open', visible),
-                        ]"
-                        :is="suffixIcon"
-                    />
-                </template>
-            </x-input>
+            <template #default>
+                <x-input
+                    :class="[
+                        gcn.e('input'),
+                    ]"
+                    :placeholder="placeholder"
+                    :block="block"
+                    v-model="selectLabels[0]"
+                    _cursor
+                    readonly
+                >
+                    <template #suffix>
+                        <component 
+                            :class="[
+                                gcn.e('input', 'icon'),
+                                gcn.middle('input', 'icon').is('open', visible),
+                            ]"
+                            :is="suffixIcon"
+                        />
+                    </template>
+                </x-input>
+            </template>
             <template #content>
                 <div
                     :class="[
@@ -75,7 +80,7 @@ export default defineComponent({
                     <div
                         :class="[
                             gcn.e('options', 'item'),
-                            gcn.middle('options', 'item').is('selected', item.value === modelValue),
+                            gcn.middle('options', 'item').is('selected', selectValues.indexOf(item.value) !== -1),
                         ]"
                         v-for="item in options"
                         :key="item.value"
@@ -84,7 +89,7 @@ export default defineComponent({
                         <div :class="[
                             gcn.e('options', 'item', 'select'),
                         ]">
-                            <Checked v-if="showSelectIcon" />
+                            <Checked v-if="selectValues.length > 0" />
                         </div>
                         <div :class="[
                             gcn.e('options', 'item', 'label'),

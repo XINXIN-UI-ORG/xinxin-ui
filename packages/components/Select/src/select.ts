@@ -1,5 +1,6 @@
 import { NormalSize } from "@xinxin-ui/typings";
-import { PropType, ExtractPropTypes, computed, ref, SetupContext } from "vue";
+import { computed, ref } from "vue";
+import { ExtractPropTypes, SetupContext, PropType, nextTick } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isNumber, isString } from "@vueuse/core";
 
@@ -8,7 +9,7 @@ type SelectValue = number | string;
 export const selectProps = {
     options: {
         type: Array as PropType<Array<OptionItem>>,
-        default: [],
+        default: [] as OptionItem[],
     },
     size: {
         type: String as PropType<NormalSize>,
@@ -23,7 +24,7 @@ export const selectProps = {
         default: false
     },
     modelValue: {
-        type: Object as PropType<SelectValue | SelectValue[]>,
+        type: [String, Number, Array],
         default: ""
     },
 };
@@ -46,19 +47,41 @@ export function useSelect(
 ) {
     let visible = ref<boolean>(false);
     return {
-        showSelectIcon: computed<boolean>(() => {
-            let modelValue: Array<SelectValue> = [];
-            if (Array.isArray(props.modelValue)) {
-                modelValue = props.modelValue;
-            } else {
-                modelValue.push(props.modelValue);
-            }
-            return props.options.some(item => modelValue.indexOf(item.value) !== -1);
-        }),
+        selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
+        selectLabels: computed<string[]>(selectLabels.bind(null, props)),
         visible,
         optionClick: (value: SelectValue) => {
             emit(MODEL_VALUE_UPDATE, value);
             visible.value = false;
         },
     };
+}
+
+/**
+ * 获取用户选中的项
+ */
+function selectValues(props: SelectProps): SelectValue[] {
+    let modelValue = getModelValueList(props);
+    return props.options.filter(item => modelValue.indexOf(item.value) !== -1).map(item => item.value);
+}
+
+/**
+ * 获取用户选中的label
+ */
+function selectLabels(props: SelectProps): string[] {
+    let modelValue = getModelValueList(props);
+    return props.options.filter(item => modelValue.indexOf(item.value) !== -1).map(item => item.label);
+}
+
+/**
+ * 统一modelValue的样式 以数组形式返回
+ */
+function getModelValueList(props: SelectProps): SelectValue[] {
+    let modelValue: Array<SelectValue> = [];
+    if (Array.isArray(props.modelValue)) {
+        modelValue = props.modelValue as SelectValue[];
+    } else {
+        modelValue.push(props.modelValue);
+    }
+    return modelValue;
 }

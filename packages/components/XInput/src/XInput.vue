@@ -1,7 +1,9 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "vue";
 import type { Ref } from "vue";
+import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { ErrorMessage, PasswordShow, PasswordHide } from "@xinxin-ui/xinxin-icons";
+import { isNumber, isString } from "@vueuse/core";
 
 export default defineComponent({
     name: "x-input",
@@ -53,7 +55,7 @@ export default defineComponent({
         onInputChange: null,
         onInputBlur: null,
         onInputFocus: null,
-        "update:modelValue": null,
+        [MODEL_VALUE_UPDATE]: (value: string | number) => isNumber(value) || isString(value),
     },
     setup(props, { attrs, slots, emit, expose }) {
         let clearShow = ref<Boolean>(false);
@@ -65,12 +67,6 @@ export default defineComponent({
         const passwordIconRef = ref<HTMLSpanElement>();
         // 输入框内容清除事件
         onMounted(() => {
-            // 为input设置初始值
-            props.modelValue &&
-                inputRef.value?.setAttribute(
-                    "value",
-                    props.modelValue.toString()
-                );
             let iconShowFlag: IconShowFlag | null = null;
             if (
                 props.clearable ||
@@ -131,12 +127,6 @@ export default defineComponent({
                 }
                 return type;
             },
-            inputEvent(e: Event) {
-                const inputDom = e.target as HTMLInputElement;
-                // 获取value值更新到外面
-                emit("update:modelValue", inputDom.value);
-                emit("onInputChange", inputDom.value);
-            },
             blurEvent(e: Event) {
                 const inputDom = e.target as HTMLInputElement;
                 emit("onInputBlur", inputDom.value);
@@ -156,6 +146,16 @@ export default defineComponent({
                 e.preventDefault();
                 return false;
             },
+            modelValue: computed({
+                get() {
+                    return props.modelValue;
+                },
+                set(value: string | number) {
+                    // 获取value值更新到外面
+                    emit(MODEL_VALUE_UPDATE, value);
+                    emit("onInputChange", value);
+                }
+            }),
         };
     },
     components: {
@@ -321,13 +321,13 @@ function showPasswordOnGather(
             class="x-input__input"
             :placeholder="placeholder"
             autocomplete="new-password"
-            @input="inputEvent"
             @blur="blurEvent"
             @focus="focusEvent"
             :disabled="disabled"
             :readonly="readonly"
             :size="size"
             ref="inputRef"
+            v-model="modelValue"
         />
         <div class="x-input__area" v-if="clearable">
             <span v-show="clearShow && !disabled" ref="clearIconRef">
