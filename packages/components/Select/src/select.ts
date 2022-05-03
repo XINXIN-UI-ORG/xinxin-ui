@@ -27,6 +27,10 @@ export const selectProps = {
         type: [String, Number, Array],
         default: ""
     },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
 };
 
 export const selectEmits = {
@@ -53,7 +57,7 @@ export function useSelect(
         optionClick: (event: Event, value: SelectValue, disabled: boolean | undefined) => {
             // 如果当前项设置了禁用 则不会触发选择
             if (!!disabled) {
-                
+
                 return;
             }
             emit(MODEL_VALUE_UPDATE, value);

@@ -9,7 +9,23 @@ const base: ExampleInfo = {
     `)
 };
 
+const size: ExampleInfo = {
+    title: "尺寸",
+    desc: format(`
+        通过size尺寸可以设置x-select的大小，有small、normal、large可选。
+    `)
+};
+
+const disabled: ExampleInfo = {
+    title: "禁用",
+    desc: format(`
+        通过设置disabled属性为true来禁用x-select。
+    `)
+};
+
 export {
+    disabled,
+    size,
     base,
     apiProps,
     apiEvent
@@ -39,6 +55,20 @@ const apiProps: ApiTable<ApiProps> = {
         {
             props: "block",
             describe: "设置x-select为块级",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "size",
+            describe: "设置x-select的尺寸，有small、normal、large可选",
+            type: "String",
+            defaultValue: "normal",
+            selectList: ["small", "normal", "large"],
+        },
+        {
+            props: "disabled",
+            describe: "禁用x-select",
             type: "Boolean",
             defaultValue: "false",
             selectList: ["true", "false"],

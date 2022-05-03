@@ -41,8 +41,10 @@ export default defineComponent({
         :class="[
             gcn.base(),
             gcn.bm(size),
+            gcn.is('block', block),
+            gcn.is('disabled', disabled),
         ]"
-        @click="visible = !visible"
+        @click="!disabled && (visible = !visible)"
     >
         <Popover
             :show="visible"
@@ -60,8 +62,10 @@ export default defineComponent({
                     :placeholder="placeholder"
                     :block="block"
                     v-model="selectLabels[0]"
-                    _cursor
+                    :_cursor="!disabled"
                     readonly
+                    :mode="size"
+                    :disabled="disabled"
                 >
                     <template #suffix>
                         <component 

@@ -6,4 +6,14 @@ export default [
     link: '/component/select#base',
     name: info.base.title,
   },
+  {
+    key: 1,
+    link: '/component/select#size',
+    name: info.size.title,
+  },
+  {
+    key: 2,
+    link: '/component/select#disabled',
+    name: info.disabled.title,
+  },
 ]

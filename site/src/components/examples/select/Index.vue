@@ -16,17 +16,22 @@ export default defineComponent({
             value: ref("1"),
             options: [
                 {
-                    label: "襄阳歌",
+                    label: "襄阳歌-李白",
                     value: "1"
                 },
                 {
-                    label: "采莲曲",
+                    label: "采莲曲-李白",
                     value: "2"
                 },
                 {
-                    label: "客中行",
-                    value: "3"
-                }
+                    label: "石鼓歌-韩愈",
+                    value: "3",
+                    disabled: true,
+                },
+                {
+                    label: "客中行-李白",
+                    value: "4"
+                },
             ],
         };
     },
@@ -41,12 +46,120 @@ export default defineComponent({
     </x-select>
 </template>`
 
+import Size from './1Size.vue'
+
+const sizeContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            small: ref(""),
+            normal: ref(""),
+            large: ref(""),
+            options: [
+                {
+                    label: "古风 其十九",
+                    value: "1"
+                },
+                {
+                    label: "送别得书字",
+                    value: "2"
+                },
+                {
+                    label: "庐山谣寄卢侍御虚舟",
+                    value: "3"
+                },
+            ],
+        };
+    },
+})
+<\/script>
+<template>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="small"
+        block
+        size="small"
+    >
+    </x-select>
+    <div class="split"></div>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="normal"
+        block
+        size="normal"
+    >
+    </x-select>
+    <div class="split"></div>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="large"
+        block
+        size="large"
+    >
+    </x-select>
+</template>`
+
+import Disabled from './2Disabled.vue'
+
+const disabledContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            value: ref("1"),
+            options: [
+                {
+                    label: "襄阳歌-李白",
+                    value: "1"
+                },
+                {
+                    label: "采莲曲-李白",
+                    value: "2"
+                },
+                {
+                    label: "石鼓歌-韩愈",
+                    value: "3",
+                    disabled: true,
+                },
+                {
+                    label: "客中行-李白",
+                    value: "4"
+                },
+            ],
+        };
+    },
+})
+<\/script>
+<template>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="value"
+        disabled
+    >
+    </x-select>
+</template>`
+
 export default defineComponent({
   setup() {
     return {
       Base,
       baseContent,
       baseInfo: info.base,
+
+      Size,
+      sizeContent,
+      sizeInfo: info.size,
+
+      Disabled,
+      disabledContent,
+      disabledInfo: info.disabled,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -70,8 +183,26 @@ export default defineComponent({
         :code-desc="baseInfo.desc"
       >
       </CodeExample>
+
+      <CodeExample
+        id="disabled"
+        :code="disabledContent"
+        :title="disabledInfo.title"
+        :code-v-node="Disabled"
+        :code-desc="disabledInfo.desc"
+      >
+      </CodeExample>
     </template>
-    <template #right> </template>
+    <template #right>
+      <CodeExample
+        id="size"
+        :code="sizeContent"
+        :title="sizeInfo.title"
+        :code-v-node="Size"
+        :code-desc="sizeInfo.desc"
+      >
+      </CodeExample>
+    </template>
   </Layout>
   <Table :api-event="apiEvent" :api-props="apiProps" />
 </template>
