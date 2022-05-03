@@ -1,10 +1,10 @@
 <script lang="ts">
-import { defineComponent, computed, ref } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { generateClassName } from "@xinxin-ui/utils";
 import { selectProps, useSelect, selectEmits } from "./select";
 import XInput from "../../XInput";
 import Popover from "../../Popover";
-import { Checked, ErrorMessage, Select } from "@xinxin-ui/xinxin-icons";
+import { Checked, ErrorMessage, Select, NoData } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: "x-select",
@@ -12,22 +12,31 @@ export default defineComponent({
     emits: selectEmits,
     setup(props, { emit }) {
         let gcn = generateClassName("select");
+        let singleSelectRef = ref<InstanceType<typeof XInput>>();
         let {
             selectValues,
             visible,
+            readonly,
+            inputValue,
             optionClick,
             selectLabels,
             suffixIconShow,
             showClearBtn,
             closeClearBtn,
             clearContent,
+            optionList,
+            selectToogle,
         } = useSelect(props, emit);
         return {
             gcn,
+            singleSelectRef,
             suffixIconShow,
             selectValues,
             visible,
+            readonly,
+            inputValue,
             optionClick,
+            selectToogle,
             selectLabels,
             stopBlur(e: Event) {
                 e.preventDefault();
@@ -36,6 +45,7 @@ export default defineComponent({
             showClearBtn,
             closeClearBtn,
             clearContent,
+            optionList,
         };
     },
     components: {
@@ -44,6 +54,7 @@ export default defineComponent({
         Checked,
         ErrorMessage,
         Select,
+        NoData,
     },
 })
 </script>
@@ -55,7 +66,7 @@ export default defineComponent({
             gcn.is('block', block),
             gcn.is('disabled', disabled),
         ]"
-        @click="!disabled && (visible = !visible)"
+        @click="selectToogle"
         @mouseenter="showClearBtn"
         @mouseleave="closeClearBtn"
     >
@@ -72,13 +83,14 @@ export default defineComponent({
                     :class="[
                         gcn.e('input'),
                     ]"
-                    :placeholder="placeholder"
+                    :placeholder="selectLabels[0] || placeholder"
                     :block="block"
-                    v-model="selectLabels[0]"
+                    v-model="inputValue"
                     :_cursor="!disabled"
-                    readonly
+                    :readonly="readonly"
                     :mode="size"
                     :disabled="disabled"
+                    ref="singleSelectRef"
                 >
                     <template #suffix>
                         <Select 
@@ -105,6 +117,7 @@ export default defineComponent({
                     ]"
                     @mousedown="stopBlur"
                     @mouseup="stopBlur"
+                    v-if="optionList.length > 0"
                 >
                     <div
                         :class="[
@@ -112,7 +125,7 @@ export default defineComponent({
                             gcn.middle('options', 'item').is('selected', selectValues.indexOf(item.value) !== -1 && !item.disabled),
                             gcn.middle('options', 'item').is('disabled', item.disabled),
                         ]"
-                        v-for="item in options"
+                        v-for="item in optionList"
                         :key="item.value"
                         @click="optionClick(item.value, item.disabled)"
                     >
@@ -127,6 +140,17 @@ export default defineComponent({
                             {{ item.label }}
                         </div>
                     </div>
+                </div>
+                <div
+                    :class="[
+                        gcn.e('no-data'),
+                    ]"
+                    v-else
+                >
+                    <div :class="gcn.e('no-data', 'icon')">
+                        <no-data />
+                    </div>
+                    <div :class="gcn.e('no-data', 'text')">暂无数据</div>
                 </div>
             </template>
         </Popover>

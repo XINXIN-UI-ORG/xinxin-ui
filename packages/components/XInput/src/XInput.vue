@@ -108,6 +108,12 @@ export default defineComponent({
             getCurrentValue(): string {
                 return inputRef.value!.value;
             },
+            focus(): void {
+                inputRef.value?.focus();
+            },
+            blur(): void {
+                inputRef.value?.blur();
+            }
         });
         return {
             inputWrapperClassList: computed(() => [

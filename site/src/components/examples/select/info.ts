@@ -30,7 +30,15 @@ const clearable: ExampleInfo = {
     `)
 };
 
+const filterable: ExampleInfo = {
+    title: "可过滤",
+    desc: format(`
+        通过设置filterable属性为true可以筛选x-select中的选项。
+    `)
+};
+
 export {
+    filterable,
     clearable,
     disabled,
     size,
@@ -84,6 +92,13 @@ const apiProps: ApiTable<ApiProps> = {
         {
             props: "clearable",
             describe: "显示清除按钮",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "filterable",
+            describe: "可筛选",
             type: "Boolean",
             defaultValue: "false",
             selectList: ["true", "false"],

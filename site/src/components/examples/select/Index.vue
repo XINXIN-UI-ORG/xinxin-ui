@@ -78,7 +78,7 @@ export default defineComponent({
 <template>
     <x-select
         :options="options"
-        placeholder="Select"
+        placeholder="Small"
         v-model="small"
         block
         size="small"
@@ -87,7 +87,7 @@ export default defineComponent({
     <div class="split"></div>
     <x-select
         :options="options"
-        placeholder="Select"
+        placeholder="Normal"
         v-model="normal"
         block
         size="normal"
@@ -96,7 +96,7 @@ export default defineComponent({
     <div class="split"></div>
     <x-select
         :options="options"
-        placeholder="Select"
+        placeholder="Large"
         v-model="large"
         block
         size="large"
@@ -139,7 +139,7 @@ export default defineComponent({
 <template>
     <x-select
         :options="options"
-        placeholder="Select"
+        placeholder="Disabled"
         v-model="value"
         disabled
     >
@@ -149,6 +149,48 @@ export default defineComponent({
 import Clearable from './3Clearable.vue'
 
 const clearableContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            value: ref(0),
+            options: [
+                {
+                    label: "襄阳歌-李白",
+                    value: 1
+                },
+                {
+                    label: "采莲曲-李白",
+                    value: 2
+                },
+                {
+                    label: "石鼓歌-韩愈",
+                    value: 3,
+                    disabled: true,
+                },
+                {
+                    label: "客中行-李白",
+                    value: 4
+                },
+            ],
+        };
+    },
+})
+<\/script>
+<template>
+    <x-select
+        :options="options"
+        placeholder="Clearable"
+        v-model="value"
+        clearable
+    >
+    </x-select>
+</template>`
+
+import Filterable from './4Filterable.vue'
+
+const filterableContent = `<script lang="ts">
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
@@ -206,6 +248,10 @@ export default defineComponent({
       clearableContent,
       clearableInfo: info.clearable,
 
+      Filterable,
+      filterableContent,
+      filterableInfo: info.filterable,
+
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
     }
@@ -235,6 +281,15 @@ export default defineComponent({
         :title="disabledInfo.title"
         :code-v-node="Disabled"
         :code-desc="disabledInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="filterable"
+        :code="filterableContent"
+        :title="filterableInfo.title"
+        :code-v-node="Filterable"
+        :code-desc="filterableInfo.desc"
       >
       </CodeExample>
     </template>

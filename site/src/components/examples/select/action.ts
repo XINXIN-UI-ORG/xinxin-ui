@@ -21,4 +21,9 @@ export default [
     link: '/component/select#clearable',
     name: info.clearable.title,
   },
+  {
+    key: 4,
+    link: '/component/select#filterable',
+    name: info.filterable.title,
+  },
 ]

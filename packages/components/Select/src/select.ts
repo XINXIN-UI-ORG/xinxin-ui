@@ -1,8 +1,8 @@
 import { NormalSize } from "@xinxin-ui/typings";
-import { computed, ref } from "vue";
-import { ExtractPropTypes, SetupContext, PropType } from "vue";
+import { computed, ref, nextTick } from "vue";
+import type { ExtractPropTypes, SetupContext, PropType } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
-import { isNumber, isString } from "@vueuse/core";
+import { isNumber, isString, RafFnOptions } from "@vueuse/core";
 
 type SelectValue = number | string;
 
@@ -35,6 +35,10 @@ export const selectProps = {
         type: Boolean,
         default: false,
     },
+    filterable: {
+        type: Boolean,
+        default: false,
+    },
 };
 
 export const selectEmits = {
@@ -55,10 +59,27 @@ export function useSelect(
 ) {
     let visible = ref<boolean>(false);
     let suffixIconShow = ref<number>(0);
+    let readonly = ref<boolean>(!props.filterable);
+    let inputValue = ref<string>(selectLabels(props)[0]);
     return {
         selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
         selectLabels: computed<string[]>(selectLabels.bind(null, props)),
         visible,
+        readonly,
+        inputValue,
+        selectToogle() {
+            !props.disabled && (visible.value = !visible.value);
+            // 如果开启了过滤 当打开菜单时暂时清除内容
+            if (props.filterable) {
+                if (visible.value) {
+                    inputValue.value = '';
+                    readonly.value = !props.filterable;
+                } else {
+                    inputValue.value = selectLabels(props)[0];
+                    readonly.value = true;
+                }
+            }
+        },
         optionClick: (value: SelectValue, disabled: boolean | undefined) => {
             // 如果当前项设置了禁用 则不会触发选择
             if (!!disabled) {
@@ -66,6 +87,10 @@ export function useSelect(
             }
             emit(MODEL_VALUE_UPDATE, value);
             visible.value = false;
+            readonly.value = true;
+            nextTick(() => {
+                inputValue.value = selectLabels(props)[0];
+            });
         },
         suffixIconShow,
         showClearBtn() {
@@ -85,7 +110,13 @@ export function useSelect(
             emit(MODEL_VALUE_UPDATE, value);
             visible.value = false;
             suffixIconShow.value = 0;
-        }
+            nextTick(() => {
+                inputValue.value = selectLabels(props)[0];
+            });
+        },
+        optionList: computed<OptionItem[]>(()=> {
+            return props.options.filter(item => item.label.includes(inputValue.value));
+        }),
     };
 }
 
