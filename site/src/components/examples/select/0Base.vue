@@ -7,17 +7,22 @@ export default defineComponent({
             value: ref("1"),
             options: [
                 {
-                    label: "襄阳歌",
+                    label: "襄阳歌-李白",
                     value: "1"
                 },
                 {
-                    label: "采莲曲",
+                    label: "采莲曲-李白",
                     value: "2"
                 },
                 {
-                    label: "客中行",
-                    value: "3"
-                }
+                    label: "石鼓歌-韩愈",
+                    value: "3",
+                    disabled: true,
+                },
+                {
+                    label: "客中行-李白",
+                    value: "4"
+                },
             ],
         };
     },
@@ -30,8 +35,4 @@ export default defineComponent({
         v-model="value"
     >
     </x-select>
-
-    {{value}}
-
-    <x-button @click="value = '20'"></x-button>
 </template>

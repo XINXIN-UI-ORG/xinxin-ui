@@ -4,7 +4,8 @@ import { format } from "../../../utils";
 const base: ExampleInfo = {
     title: "基础使用",
     desc: format(`
-        通过options将x-select的可选值传入，options是一个数组，数组每项是一个对象，对象中可传入label和value，同时使用v-model绑定变量，当用户选中其中的项时，x-select会将options中对应的value赋值给v-model绑定的变量。
+        通过options将x-select的可选值传入，options是一个数组，数组每项是一个对象，对象中可传入label和value，同时使用v-model绑定变量，
+        当用户选中其中的项时，x-select会将options中对应的value赋值给v-model绑定的变量，其次通过设置options中每一项中的disabled为true可禁用其中某一项。
     `)
 };
 

@@ -13,7 +13,6 @@ export default defineComponent({
     setup(props, { emit }) {
         let gcn = generateClassName("select");
         let { selectValues, visible, optionClick, selectLabels } = useSelect(props, emit);
-        let ddd = ref("121212");
         return {
             gcn,
             suffixIcon: computed(() => {
@@ -24,6 +23,10 @@ export default defineComponent({
             visible,
             optionClick,
             selectLabels,
+            stopBlur(e: Event) {
+                e.preventDefault();
+                return false;
+            }
         };
     },
     components: {
@@ -47,7 +50,7 @@ export default defineComponent({
             :show-arrow="false"
             _block
             :_extend-width="2"
-            style="padding: 6px 0;"
+            style="padding: 0;"
         >
             <template #default>
                 <x-input
@@ -76,15 +79,18 @@ export default defineComponent({
                     :class="[
                         gcn.e('options'),
                     ]"
+                    @mousedown="stopBlur"
+                    @mouseup="stopBlur"
                 >
                     <div
                         :class="[
                             gcn.e('options', 'item'),
-                            gcn.middle('options', 'item').is('selected', selectValues.indexOf(item.value) !== -1),
+                            gcn.middle('options', 'item').is('selected', selectValues.indexOf(item.value) !== -1 && !item.disabled),
+                            gcn.middle('options', 'item').is('disabled', item.disabled),
                         ]"
                         v-for="item in options"
                         :key="item.value"
-                        @click="optionClick(item.value)"
+                        @click="optionClick($event, item.value, item.disabled)"
                     >
                         <div :class="[
                             gcn.e('options', 'item', 'select'),

@@ -50,7 +50,12 @@ export function useSelect(
         selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
         selectLabels: computed<string[]>(selectLabels.bind(null, props)),
         visible,
-        optionClick: (value: SelectValue) => {
+        optionClick: (event: Event, value: SelectValue, disabled: boolean | undefined) => {
+            // 如果当前项设置了禁用 则不会触发选择
+            if (!!disabled) {
+                
+                return;
+            }
             emit(MODEL_VALUE_UPDATE, value);
             visible.value = false;
         },
