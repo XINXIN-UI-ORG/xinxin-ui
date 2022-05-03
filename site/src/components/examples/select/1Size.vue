@@ -28,7 +28,7 @@ export default defineComponent({
 <template>
     <x-select
         :options="options"
-        placeholder="Select"
+        placeholder="Small"
         v-model="small"
         block
         size="small"
@@ -37,7 +37,7 @@ export default defineComponent({
     <div class="split"></div>
     <x-select
         :options="options"
-        placeholder="Select"
+        placeholder="Normal"
         v-model="normal"
         block
         size="normal"
@@ -46,7 +46,7 @@ export default defineComponent({
     <div class="split"></div>
     <x-select
         :options="options"
-        placeholder="Select"
+        placeholder="Large"
         v-model="large"
         block
         size="large"

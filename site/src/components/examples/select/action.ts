@@ -16,4 +16,9 @@ export default [
     link: '/component/select#disabled',
     name: info.disabled.title,
   },
+  {
+    key: 3,
+    link: '/component/select#clearable',
+    name: info.clearable.title,
+  },
 ]

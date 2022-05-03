@@ -23,7 +23,15 @@ const disabled: ExampleInfo = {
     `)
 };
 
+const clearable: ExampleInfo = {
+    title: "可清空内容",
+    desc: format(`
+        通过设置clearable属性为true可以显示清空按钮，点击可清空x-select的内容。
+    `)
+};
+
 export {
+    clearable,
     disabled,
     size,
     base,
@@ -69,6 +77,13 @@ const apiProps: ApiTable<ApiProps> = {
         {
             props: "disabled",
             describe: "禁用x-select",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "clearable",
+            describe: "显示清除按钮",
             type: "Boolean",
             defaultValue: "false",
             selectList: ["true", "false"],

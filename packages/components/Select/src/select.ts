@@ -1,6 +1,6 @@
 import { NormalSize } from "@xinxin-ui/typings";
 import { computed, ref } from "vue";
-import { ExtractPropTypes, SetupContext, PropType, nextTick } from "vue";
+import { ExtractPropTypes, SetupContext, PropType } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isNumber, isString } from "@vueuse/core";
 
@@ -31,6 +31,10 @@ export const selectProps = {
         type: Boolean,
         default: false,
     },
+    clearable: {
+        type: Boolean,
+        default: false,
+    },
 };
 
 export const selectEmits = {
@@ -50,19 +54,38 @@ export function useSelect(
     emit: SetupContext<typeof selectEmits>['emit'],
 ) {
     let visible = ref<boolean>(false);
+    let suffixIconShow = ref<number>(0);
     return {
         selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
         selectLabels: computed<string[]>(selectLabels.bind(null, props)),
         visible,
-        optionClick: (event: Event, value: SelectValue, disabled: boolean | undefined) => {
+        optionClick: (value: SelectValue, disabled: boolean | undefined) => {
             // 如果当前项设置了禁用 则不会触发选择
             if (!!disabled) {
-
                 return;
             }
             emit(MODEL_VALUE_UPDATE, value);
             visible.value = false;
         },
+        suffixIconShow,
+        showClearBtn() {
+            // 如果未开启清除或select框中没有值则不显示
+            if (!props.clearable || selectLabels(props).length === 0) {
+                return;
+            }
+            suffixIconShow.value = 1;
+        },
+        closeClearBtn() {
+            suffixIconShow.value = 0;
+        },
+        clearContent(event: Event) {
+            // 阻止select contextmenu展示
+            event.stopPropagation();
+            let value: SelectValue | SelectValue[] = "";
+            emit(MODEL_VALUE_UPDATE, value);
+            visible.value = false;
+            suffixIconShow.value = 0;
+        }
     };
 }
 

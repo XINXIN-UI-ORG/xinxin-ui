@@ -4,7 +4,7 @@ import { generateClassName } from "@xinxin-ui/utils";
 import { selectProps, useSelect, selectEmits } from "./select";
 import XInput from "../../XInput";
 import Popover from "../../Popover";
-import { Select, Checked } from "@xinxin-ui/xinxin-icons";
+import { Checked, ErrorMessage, Select } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: "x-select",
@@ -12,13 +12,19 @@ export default defineComponent({
     emits: selectEmits,
     setup(props, { emit }) {
         let gcn = generateClassName("select");
-        let { selectValues, visible, optionClick, selectLabels } = useSelect(props, emit);
+        let {
+            selectValues,
+            visible,
+            optionClick,
+            selectLabels,
+            suffixIconShow,
+            showClearBtn,
+            closeClearBtn,
+            clearContent,
+        } = useSelect(props, emit);
         return {
             gcn,
-            suffixIcon: computed(() => {
-                let component = Select;
-                return component;
-            }),
+            suffixIconShow,
             selectValues,
             visible,
             optionClick,
@@ -26,13 +32,18 @@ export default defineComponent({
             stopBlur(e: Event) {
                 e.preventDefault();
                 return false;
-            }
+            },
+            showClearBtn,
+            closeClearBtn,
+            clearContent,
         };
     },
     components: {
         XInput,
         Popover,
         Checked,
+        ErrorMessage,
+        Select,
     },
 })
 </script>
@@ -45,6 +56,8 @@ export default defineComponent({
             gcn.is('disabled', disabled),
         ]"
         @click="!disabled && (visible = !visible)"
+        @mouseenter="showClearBtn"
+        @mouseleave="closeClearBtn"
     >
         <Popover
             :show="visible"
@@ -68,12 +81,19 @@ export default defineComponent({
                     :disabled="disabled"
                 >
                     <template #suffix>
-                        <component 
+                        <Select 
                             :class="[
                                 gcn.e('input', 'icon'),
                                 gcn.middle('input', 'icon').is('open', visible),
                             ]"
-                            :is="suffixIcon"
+                            v-if="suffixIconShow === 0"
+                        />
+                        <error-message
+                            v-else-if="suffixIconShow === 1"
+                            :class="[
+                                gcn.e('input', 'clear')
+                            ]"
+                            @click="clearContent($event)"
                         />
                     </template>
                 </x-input>
@@ -94,7 +114,7 @@ export default defineComponent({
                         ]"
                         v-for="item in options"
                         :key="item.value"
-                        @click="optionClick($event, item.value, item.disabled)"
+                        @click="optionClick(item.value, item.disabled)"
                     >
                         <div :class="[
                             gcn.e('options', 'item', 'select'),

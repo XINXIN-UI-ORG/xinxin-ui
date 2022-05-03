@@ -4,13 +4,16 @@
     display inline-block
     .x-select__input
         cursor pointer
-        .x-select__input__icon
-            transition all .5s
+        .x-select__input__icon, .x-select__input__clear
+            transition transform .5s
             color #b3b6bc
             width 14px
             height 14px
         .x-select__input__icon-open
             transform rotate(180deg)
+        .x-select__input__clear
+            &:hover
+                color $base_theme_color
 .x-select-block
     display block
 .x-select-disabled
