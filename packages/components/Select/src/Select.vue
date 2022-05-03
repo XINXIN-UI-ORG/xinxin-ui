@@ -145,6 +145,8 @@ export default defineComponent({
                     :class="[
                         gcn.e('no-data'),
                     ]"
+                    @mousedown="stopBlur"
+                    @mouseup="stopBlur"
                     v-else
                 >
                     <div :class="gcn.e('no-data', 'icon')">

@@ -115,7 +115,11 @@ export function useSelect(
             });
         },
         optionList: computed<OptionItem[]>(()=> {
-            return props.options.filter(item => item.label.includes(inputValue.value));
+            let options: OptionItem[] = props.options;
+            if (props.filterable) {
+                options = props.options.filter(item => item.label.includes(inputValue.value));
+            }
+            return options;
         }),
     };
 }
