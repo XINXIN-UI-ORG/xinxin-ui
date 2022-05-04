@@ -1,9 +1,10 @@
 @import '../../../theme-chalk/variable.styl';
 
 .x-select
-    display inline-block
     .x-select__input
         cursor pointer
+        :deep(.x-input__prefix)
+            padding 0
         .x-select__input__icon, .x-select__input__clear
             transition transform .5s
             color #b3b6bc
@@ -14,6 +15,8 @@
         .x-select__input__clear
             &:hover
                 color $base_theme_color
+        .x-select__input__tag-list
+            padding-right 12px
 .x-select-block
     display block
 .x-select-disabled

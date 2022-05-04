@@ -179,7 +179,7 @@ export default defineComponent({
 })
 <\/script>
 <template>
-    <x-input placeholder="触发focus&blur" @onInputBlur="inputBlur" @onInputFocus="inputFocus" block />
+    <x-input placeholder="触发focus&blur" @onInputBlur="inputBlur" @onInputFocus="inputFocus" />
 </template>`
 
 import Readonly from './92Readonly.vue'
@@ -197,7 +197,7 @@ export default defineComponent({
 })
 <\/script>
 <template>
-    <x-input placeholder="只能看不能写" v-model="inputValue" block readonly />
+    <x-input placeholder="只能看不能写" v-model="inputValue" readonly />
 </template>`
 
 import InputEvent from './9InputEvent.vue'
@@ -218,7 +218,7 @@ export default defineComponent({
 })
 <\/script>
 <template>
-    <x-input placeholder="onInput事件" @onInputChange="inputChange" block />
+    <x-input placeholder="onInput事件" @onInputChange="inputChange" />
     <div class="show" ref="showRef"></div>
 </template>
 <style scoped>

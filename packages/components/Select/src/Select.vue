@@ -26,6 +26,9 @@ export default defineComponent({
             clearContent,
             optionList,
             selectToogle,
+            multipleFilterFlag,
+            multipleFlag,
+            placeholder,
         } = useSelect(props, emit);
         return {
             gcn,
@@ -46,6 +49,9 @@ export default defineComponent({
             closeClearBtn,
             clearContent,
             optionList,
+            multipleFilterFlag,
+            multipleFlag,
+            placeholder,
         };
     },
     components: {
@@ -83,31 +89,27 @@ export default defineComponent({
                     :class="[
                         gcn.e('input'),
                     ]"
-                    :placeholder="selectLabels[0] || placeholder"
+                    :placeholder="placeholder"
                     :block="block"
                     v-model="inputValue"
                     :_cursor="!disabled"
                     :readonly="readonly"
-                    :mode="size"
+                    :size="size"
                     :disabled="disabled"
                     ref="singleSelectRef"
+                    :_hidden-input="multipleFilterFlag"
                 >
                     <template #prefix>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
-                        <span>qqqqq</span>
+                        <div
+                            :class="[
+                                gcn.e('input', 'tag-list'),
+                            ]"
+                            v-if="multipleFlag"
+                        >
+                            <span
+                                v-for="item in selectLabels"
+                            >{{item}}</span>
+                        </div>
                     </template>
                     <template #suffix>
                         <down-select 

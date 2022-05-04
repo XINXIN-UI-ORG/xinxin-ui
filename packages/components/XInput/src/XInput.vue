@@ -46,6 +46,10 @@ export default defineComponent({
             type: Boolean,
             default: false,
         },
+        _hiddenInput: {
+            type: Boolean,
+            default: false,
+        },
     },
     emits: {
         onInputChange: null,
@@ -320,7 +324,7 @@ function showPasswordOnGather(
 </script>
 <template>
     <div :class="inputWrapperClassList" ref="inputWrapRef" @click="focus">
-        <div class="x-input__left">
+        <div :class="['x-input__left', _hiddenInput && 'x-input__left-hidden']">
             <div class="x-input__fix x-input__prefix" v-if="prefix">
                 <slot name="prefix"></slot>
             </div>
@@ -337,7 +341,7 @@ function showPasswordOnGather(
                 v-model="modelValue"
             />
         </div>
-        <div class="x-input__area" v-if="clearable" @click.stop>
+        <div class="x-input__area" v-if="clearable">
             <span v-show="clearShow && !disabled" ref="clearIconRef">
                 <ErrorMessage
                     class="x-input__area-icon"
@@ -349,7 +353,6 @@ function showPasswordOnGather(
         <div
             class="x-input__area"
             v-if="showPasswordOn && inputType() === 'password'"
-            @click.stop
         >
             <span v-show="passwordShow" ref="passwordIconRef">
                 <component

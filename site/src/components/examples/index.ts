@@ -34,6 +34,9 @@ import scrollbarAction from './scrollbar/action'
 import select from './select/Index.vue'
 import selectAction from './select/action'
 
+import tag from './tag/Index.vue'
+import tagAction from './tag/action'
+
 export {
   backtop,
   backtopAction,
@@ -59,4 +62,6 @@ export {
   scrollbarAction,
   select,
   selectAction,
+  tag,
+  tagAction,
 }

@@ -1,5 +1,5 @@
 import { MenuType, MenuListType } from "./Menu.typing";
-import { Apps20Regular, AlertOn20Filled, FormNew48Regular, NavigationUnread24Regular, WindowWrench32Filled } from "@vicons/fluent";
+import { Apps20Regular, AlertOn20Filled, FormNew48Regular, NavigationUnread24Regular, WindowWrench32Filled, WeatherRainShowersDay20Filled } from "@vicons/fluent";
 
 export const menuList: MenuListType[] = [
     {
@@ -21,6 +21,8 @@ export const menuList: MenuListType[] = [
         content: "图标",
         name: "Icon",
     },
+
+
     {
         id: 300,
         type: MenuType.category,
@@ -58,6 +60,23 @@ export const menuList: MenuListType[] = [
         content: "选择器",
         name: "Select",
     },
+
+
+    {
+        id: 600,
+        type: MenuType.category,
+        content: "展示组件",
+        icon: WeatherRainShowersDay20Filled,
+        size: 1,
+    },
+    {
+        id: 601,
+        type: MenuType.link,
+        content: "标签",
+        name: "Tag",
+    },
+
+
     {
         id: 400,
         type: MenuType.category,
@@ -71,6 +90,8 @@ export const menuList: MenuListType[] = [
         content: "回到顶部",
         name: "Back-Top",
     },
+
+
     {
         id: 200,
         type: MenuType.category,
@@ -96,6 +117,8 @@ export const menuList: MenuListType[] = [
         content: "气泡卡片",
         name: "Popover",
     },
+
+
     {
         id: 500,
         type: MenuType.category,
