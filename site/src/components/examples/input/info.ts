@@ -8,17 +8,10 @@ const base: ExampleInfo = {
     `)
 };
 
-const mode: ExampleInfo = {
-    title: "模式",
-    desc: format(`
-        通过mode设置大小，有small、normal、large可选。
-    `)
-};
-
 const size: ExampleInfo = {
-    title: "尺寸",
+    title: "大小",
     desc: format(`
-        输入框默认是行内的，通过size控制长度，可设置任意的数值。
+        通过size设置大小，有small、normal、large可选。
     `)
 };
 
@@ -57,13 +50,6 @@ const status: ExampleInfo = {
     `)
 };
 
-const block: ExampleInfo = {
-    title: "块级输入框",
-    desc: format(`
-        input框默认是行内的，如果希望input框填充整行可以通过设置block为true来实现。
-    `)
-};
-
 const inputEvent: ExampleInfo = {
     title: "事件-onInput",
     desc: format(`
@@ -89,14 +75,12 @@ export {
     readonly,
     focusAndBlur,
     inputEvent,
-    block,
     status,
     password,
     clear,
     fix,
     disabled,
     size,
-    mode,
     base,
     apiProps,
     apiEvent
@@ -114,24 +98,11 @@ const apiProps: ApiTable<ApiProps> = {
             selectList: ["text", "password", "number"],
         },
         {
-            props: "block",
-            describe: "是否显示为块级元素",
-            type: 'Boolean',
-            defaultValue: "false",
-            selectList: ["true", "false"],
-        },
-        {
-            props: "mode",
+            props: "size",
             describe: "设置输入框的尺寸",
             type: 'Stirng',
             defaultValue: "normal",
             selectList: ["small", "normal", "large"],
-        },
-        {
-            props: "size",
-            describe: "当输入框为行内元素时，可以配置输入框长度",
-            type: 'Number',
-            defaultValue: "20",
         },
         {
             props: "disabled",
@@ -160,9 +131,8 @@ const apiProps: ApiTable<ApiProps> = {
         {
             props: "show-password-on",
             describe: "是否展示显示密码按钮",
-            type: "Boolean",
-            defaultValue: "false",
-            selectList: ["true", "false"]
+            type: "String",
+            selectList: ["click", "mousedown"]
         },
         {
             props: "status",

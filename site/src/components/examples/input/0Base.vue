@@ -11,5 +11,5 @@ export default defineComponent({
 })
 </script>
 <template>
-    <x-input placeholder="请输入" v-model="inputValue" block />
+    <x-input placeholder="请输入" v-model="inputValue" />
 </template>

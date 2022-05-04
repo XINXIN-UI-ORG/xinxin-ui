@@ -1,15 +1,16 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "vue";
-import type { Ref } from "vue";
+import type { Ref, PropType } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
+import { NormalSize } from "@xinxin-ui/typings";
 import { ErrorMessage, PasswordShow, PasswordHide } from "@xinxin-ui/xinxin-icons";
 import { isNumber, isString } from "@vueuse/core";
 
 export default defineComponent({
     name: "x-input",
     props: {
-        mode: {
-            type: String,
+        size: {
+            type: String as PropType<NormalSize>,
             default: "normal",
         },
         modelValue: {
@@ -32,14 +33,9 @@ export default defineComponent({
             type: String,
             default: undefined,
         },
-        placeholder: String,
-        size: {
-            type: [Number, String],
-            default: 20,
-        },
-        block: {
-            type: Boolean,
-            default: false,
+        placeholder: {
+            type: String,
+            default: "",
         },
         readonly: {
             type: Boolean,
@@ -61,6 +57,7 @@ export default defineComponent({
         let clearShow = ref<Boolean>(false);
         let passwordShow = ref<Boolean>(false);
         let passwordIcon = ref<Boolean>(false);
+        let focusFlag = ref<boolean>(false);
         const inputRef = ref<HTMLInputElement>();
         const inputWrapRef = ref<HTMLDivElement>();
         const clearIconRef = ref<HTMLSpanElement>();
@@ -119,11 +116,11 @@ export default defineComponent({
         return {
             inputWrapperClassList: computed(() => [
                 "x-input",
-                "x-input-" + props.mode,
+                "x-input-" + props.size,
                 props.disabled && "x-input-disabled",
                 props.status && "x-input-" + props.status,
-                props.block ? "x-input-block" : "x-input-inline",
                 props._cursor && "x-input-cursor",
+                focusFlag.value && 'x-input-focus',
             ]),
             focus,
             prefix: slots.prefix,
@@ -136,10 +133,12 @@ export default defineComponent({
                 return type;
             },
             blurEvent(e: Event) {
+                focusFlag.value = false;
                 const inputDom = e.target as HTMLInputElement;
                 emit("onInputBlur", inputDom.value);
             },
             focusEvent(e: Event) {
+                focusFlag.value = true;
                 const inputDom = e.target as HTMLInputElement;
                 emit("onInputFocus", inputDom.value);
             },
@@ -321,23 +320,24 @@ function showPasswordOnGather(
 </script>
 <template>
     <div :class="inputWrapperClassList" ref="inputWrapRef" @click="focus">
-        <div class="x-input__fix x-input__prefix" v-if="prefix">
-            <slot name="prefix"></slot>
+        <div class="x-input__left">
+            <div class="x-input__fix x-input__prefix" v-if="prefix">
+                <slot name="prefix"></slot>
+            </div>
+            <input
+                :type="inputType()"
+                class="x-input__input"
+                :placeholder="placeholder"
+                autocomplete="new-password"
+                @blur="blurEvent"
+                @focus="focusEvent"
+                :disabled="disabled"
+                :readonly="readonly"
+                ref="inputRef"
+                v-model="modelValue"
+            />
         </div>
-        <input
-            :type="inputType()"
-            class="x-input__input"
-            :placeholder="placeholder"
-            autocomplete="new-password"
-            @blur="blurEvent"
-            @focus="focusEvent"
-            :disabled="disabled"
-            :readonly="readonly"
-            :size="size"
-            ref="inputRef"
-            v-model="modelValue"
-        />
-        <div class="x-input__area" v-if="clearable">
+        <div class="x-input__area" v-if="clearable" @click.stop>
             <span v-show="clearShow && !disabled" ref="clearIconRef">
                 <ErrorMessage
                     class="x-input__area-icon"
@@ -349,6 +349,7 @@ function showPasswordOnGather(
         <div
             class="x-input__area"
             v-if="showPasswordOn && inputType() === 'password'"
+            @click.stop
         >
             <span v-show="passwordShow" ref="passwordIconRef">
                 <component
@@ -362,7 +363,6 @@ function showPasswordOnGather(
         <div class="x-input__fix x-input__suffix" v-if="suffix">
             <slot name="suffix"></slot>
         </div>
-        <div class="x-input__border"></div>
     </div>
 </template>
 <style lang="stylus" scoped src="../style/input.styl" />

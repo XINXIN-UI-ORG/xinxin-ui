@@ -20,27 +20,24 @@ export default defineComponent({
 })
 <\/script>
 <template>
-    <x-input placeholder="请输入" v-model="inputValue" block />
+    <x-input placeholder="请输入" v-model="inputValue" />
 </template>`
 
-import Mode from './1Mode.vue'
+import Size from './1Size.vue'
 
-const modeContent = `<template>
-    <x-input placeholder="小" type="text" mode="small" block />
-    <div class="split"></div>
-    <x-input placeholder="中" type="text" mode="normal" block />
-    <div class="split"></div>
-    <x-input placeholder="大" type="text" mode="large" block />
-</template>`
+const sizeContent = `<script lang="ts" setup>
+import { ref } from "vue";
 
-import Size from './2Size.vue'
-
-const sizeContent = `<template>
-    <x-input placeholder="30" type="text" size="30" />
+let small = ref("");
+let normal = ref("");
+let large = ref("");
+<\/script>
+<template>
+    <x-input placeholder="小" type="text" size="small" v-model="small" />
     <div class="split"></div>
-    <x-input placeholder="40" type="text" size="40" />
+    <x-input placeholder="中" type="text" size="normal" v-model="normal" />
     <div class="split"></div>
-    <x-input placeholder="50" type="text" size="50" />
+    <x-input placeholder="大" type="text" size="large" v-model="large" />
 </template>`
 
 import Disabled from './3Disabled.vue'
@@ -50,18 +47,23 @@ const disabledContent = `<template>
         placeholder="请输入"
         type="text"
         :disabled="true"
-        block
     />
 </template>`
 
 import Fix from './4Fix.vue'
 
 const fixContent = `<script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { Search } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     setup() {
+        return {
+            v1: ref(""),
+            v2: ref(""),
+            v3: ref(""),
+            v4: ref(""),
+        };
     },
     components: {
         Search
@@ -69,21 +71,21 @@ export default defineComponent({
 })
 <\/script>
 <template>
-    <x-input placeholder="请输入" type="text" block>
+    <x-input placeholder="请输入" type="text" v-model="v1">
         <template #prefix>Prefix</template>
     </x-input>
     <div class="split"></div>
-    <x-input placeholder="请输入" type="text" block>
+    <x-input placeholder="请输入" type="text" v-model="v2">
         <template #suffix>Suffix</template>
     </x-input>
     <div class="split"></div>
-    <x-input placeholder="请输入" block>
+    <x-input placeholder="请输入" v-model="v3">
         <template #prefix>
             <Search />
         </template>
     </x-input>
     <div class="split"></div>
-    <x-input placeholder="请输入" block>
+    <x-input placeholder="请输入" v-model="v4">
         <template #suffix>
             <Search />
         </template>
@@ -93,11 +95,16 @@ export default defineComponent({
 import Clear from './5Clear.vue'
 
 const clearContent = `<script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { Search } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     setup() {
+        return {
+            v1: ref(""),
+            v2: ref(""),
+            v3: ref(""),
+        };
     },
     components: {
         Search
@@ -105,13 +112,13 @@ export default defineComponent({
 })
 <\/script>
 <template>
-    <x-input placeholder="请输入" block clearable />
+    <x-input placeholder="请输入" clearable v-model="v1" />
     <div class="split"></div>
-    <x-input placeholder="请输入" block clearable>
+    <x-input placeholder="请输入" clearable v-model="v2">
         <template #suffix>Suffix</template>
     </x-input>
     <div class="split"></div>
-    <x-input placeholder="请输入" block clearable>
+    <x-input placeholder="请输入" clearable v-model="v3">
         <template #suffix>
             <Search />
         </template>
@@ -121,11 +128,15 @@ export default defineComponent({
 import Password from './6Password.vue'
 
 const passwordContent = `<script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { Search } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     setup() {
+        return {
+            click: ref(""),
+            mousedown: ref(""),
+        };
     },
     components: {
         Search
@@ -133,9 +144,9 @@ export default defineComponent({
 })
 <\/script>
 <template>
-    <x-input placeholder="点击触发显示密码" type="password" show-password-on="click" block />
+    <x-input placeholder="点击触发显示密码" type="password" show-password-on="click" v-model="click" />
     <div class="split"></div>
-    <x-input placeholder="鼠标按下触发显示密码" type="password" show-password-on="mousedown" block>
+    <x-input placeholder="鼠标按下触发显示密码" type="password" show-password-on="mousedown" v-model="mousedown">
         <template #suffix>
             <Search />
         </template>
@@ -146,12 +157,6 @@ import Status from './7Status.vue'
 
 const statusContent = `<template>
     <x-input placeholder="错误状态" status="error" />
-</template>`
-
-import Block from './8Block.vue'
-
-const blockContent = `<template>
-    <x-input placeholder="块级输入" block />
 </template>`
 
 import FocusAndBlur from './91FocusAndBlur.vue'
@@ -229,10 +234,6 @@ export default defineComponent({
       baseContent,
       baseInfo: info.base,
 
-      Mode,
-      modeContent,
-      modeInfo: info.mode,
-
       Size,
       sizeContent,
       sizeInfo: info.size,
@@ -256,10 +257,6 @@ export default defineComponent({
       Status,
       statusContent,
       statusInfo: info.status,
-
-      Block,
-      blockContent,
-      blockInfo: info.block,
 
       FocusAndBlur,
       focusAndBlurContent,
@@ -297,61 +294,6 @@ export default defineComponent({
       </CodeExample>
 
       <CodeExample
-        id="size"
-        :code="sizeContent"
-        :title="sizeInfo.title"
-        :code-v-node="Size"
-        :code-desc="sizeInfo.desc"
-      >
-      </CodeExample>
-
-      <CodeExample
-        id="fix"
-        :code="fixContent"
-        :title="fixInfo.title"
-        :code-v-node="Fix"
-        :code-desc="fixInfo.desc"
-      >
-      </CodeExample>
-
-      <CodeExample
-        id="password"
-        :code="passwordContent"
-        :title="passwordInfo.title"
-        :code-v-node="Password"
-        :code-desc="passwordInfo.desc"
-      >
-      </CodeExample>
-
-      <CodeExample
-        id="block"
-        :code="blockContent"
-        :title="blockInfo.title"
-        :code-v-node="Block"
-        :code-desc="blockInfo.desc"
-      >
-      </CodeExample>
-
-      <CodeExample
-        id="readonly"
-        :code="readonlyContent"
-        :title="readonlyInfo.title"
-        :code-v-node="Readonly"
-        :code-desc="readonlyInfo.desc"
-      >
-      </CodeExample>
-    </template>
-    <template #right>
-      <CodeExample
-        id="mode"
-        :code="modeContent"
-        :title="modeInfo.title"
-        :code-v-node="Mode"
-        :code-desc="modeInfo.desc"
-      >
-      </CodeExample>
-
-      <CodeExample
         id="disabled"
         :code="disabledContent"
         :title="disabledInfo.title"
@@ -375,6 +317,43 @@ export default defineComponent({
         :title="statusInfo.title"
         :code-v-node="Status"
         :code-desc="statusInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="readonly"
+        :code="readonlyContent"
+        :title="readonlyInfo.title"
+        :code-v-node="Readonly"
+        :code-desc="readonlyInfo.desc"
+      >
+      </CodeExample>
+    </template>
+    <template #right>
+      <CodeExample
+        id="size"
+        :code="sizeContent"
+        :title="sizeInfo.title"
+        :code-v-node="Size"
+        :code-desc="sizeInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="fix"
+        :code="fixContent"
+        :title="fixInfo.title"
+        :code-v-node="Fix"
+        :code-desc="fixInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="password"
+        :code="passwordContent"
+        :title="passwordInfo.title"
+        :code-v-node="Password"
+        :code-desc="passwordInfo.desc"
       >
       </CodeExample>
 

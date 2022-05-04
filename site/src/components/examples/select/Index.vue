@@ -196,6 +196,48 @@ import { defineComponent, ref } from "vue";
 export default defineComponent({
     setup() {
         return {
+            value: ref(""),
+            options: [
+                {
+                    label: "襄阳歌-李白",
+                    value: "1"
+                },
+                {
+                    label: "采莲曲-李白",
+                    value: "2"
+                },
+                {
+                    label: "石鼓歌-韩愈",
+                    value: "3",
+                    disabled: true,
+                },
+                {
+                    label: "客中行-李白",
+                    value: "4"
+                },
+            ],
+        };
+    },
+})
+<\/script>
+<template>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="value"
+        filterable
+    >
+    </x-select>
+</template>`
+
+import Multiple from './5Multiple.vue'
+
+const multipleContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
             value: ref("1"),
             options: [
                 {
@@ -251,6 +293,10 @@ export default defineComponent({
       Filterable,
       filterableContent,
       filterableInfo: info.filterable,
+
+      Multiple,
+      multipleContent,
+      multipleInfo: info.multiple,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -309,6 +355,15 @@ export default defineComponent({
         :title="clearableInfo.title"
         :code-v-node="Clearable"
         :code-desc="clearableInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="multiple"
+        :code="multipleContent"
+        :title="multipleInfo.title"
+        :code-v-node="Multiple"
+        :code-desc="multipleInfo.desc"
       >
       </CodeExample>
     </template>

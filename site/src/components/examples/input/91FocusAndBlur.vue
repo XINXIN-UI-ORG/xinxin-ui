@@ -16,5 +16,5 @@ export default defineComponent({
 })
 </script>
 <template>
-    <x-input placeholder="触发focus&blur" @onInputBlur="inputBlur" @onInputFocus="inputFocus" block />
+    <x-input placeholder="触发focus&blur" @onInputBlur="inputBlur" @onInputFocus="inputFocus" />
 </template>

@@ -37,7 +37,15 @@ const filterable: ExampleInfo = {
     `)
 };
 
+const multiple: ExampleInfo = {
+    title: "多选",
+    desc: format(`
+        通过设置multiple属性为true可以开启x-select多选。
+    `)
+};
+
 export {
+    multiple,
     filterable,
     clearable,
     disabled,
@@ -99,6 +107,13 @@ const apiProps: ApiTable<ApiProps> = {
         {
             props: "filterable",
             describe: "可筛选",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "multiple",
+            describe: "可多选",
             type: "Boolean",
             defaultValue: "false",
             selectList: ["true", "false"],

@@ -11,5 +11,5 @@ export default defineComponent({
 })
 </script>
 <template>
-    <x-input placeholder="只能看不能写" v-model="inputValue" block readonly />
+    <x-input placeholder="只能看不能写" v-model="inputValue" readonly />
 </template>

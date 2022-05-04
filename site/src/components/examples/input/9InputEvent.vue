@@ -14,7 +14,7 @@ export default defineComponent({
 })
 </script>
 <template>
-    <x-input placeholder="onInput事件" @onInputChange="inputChange" block />
+    <x-input placeholder="onInput事件" @onInputChange="inputChange" />
     <div class="show" ref="showRef"></div>
 </template>
 <style scoped>

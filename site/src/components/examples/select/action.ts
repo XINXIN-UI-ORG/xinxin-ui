@@ -26,4 +26,9 @@ export default [
     link: '/component/select#filterable',
     name: info.filterable.title,
   },
+  {
+    key: 5,
+    link: '/component/select#multiple',
+    name: info.multiple.title,
+  },
 ]

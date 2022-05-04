@@ -92,6 +92,23 @@ export default defineComponent({
                     :disabled="disabled"
                     ref="singleSelectRef"
                 >
+                    <template #prefix>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                        <span>qqqqq</span>
+                    </template>
                     <template #suffix>
                         <down-select 
                             :class="[
