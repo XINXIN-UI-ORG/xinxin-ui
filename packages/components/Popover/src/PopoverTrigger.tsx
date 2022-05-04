@@ -1,5 +1,5 @@
 import type { VNode, ExtractPropTypes, SetupContext } from "vue";
-import { cloneVNode, Comment, defineComponent, Fragment, inject, Text, withDirectives } from "vue";
+import { cloneVNode, Comment, defineComponent, Fragment, inject, Text, withDirectives, onBeforeUnmount } from "vue";
 import { isObject } from "@vue/shared";
 import { ReferenceInjectKey, ReferenceGather } from "@xinxin-ui/symbols";
 import { isBoolean } from "@vueuse/core";
@@ -45,6 +45,9 @@ export default defineComponent({
                 }
                 // 点击其他地方隐藏popover
                 document.addEventListener('click', clickOtherToClosePopper);
+                onBeforeUnmount(() => {
+                    document.removeEventListener('click', clickOtherToClosePopper);
+                });
             }
         };
         return () => {
@@ -74,8 +77,6 @@ export default defineComponent({
                     }
                 }]
             ]);
-            // return cloneVNode(defaultSlot!, null);
-            // return cloneVNode(slots.default!()[0].children![0], null);
         };
     }
 });

@@ -1,8 +1,8 @@
 import { NormalSize } from "@xinxin-ui/typings";
-import { computed, ref, nextTick } from "vue";
+import { computed, ref, nextTick, onBeforeUnmount } from "vue";
 import type { ExtractPropTypes, SetupContext, PropType } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
-import { isNumber, isString, RafFnOptions } from "@vueuse/core";
+import { isNumber, isString } from "@vueuse/core";
 
 type SelectValue = number | string;
 
@@ -61,6 +61,15 @@ export function useSelect(
     let suffixIconShow = ref<number>(0);
     let readonly = ref<boolean>(!props.filterable);
     let inputValue = ref<string>(selectLabels(props)[0]);
+    // 点击其他地方关闭popover
+    let closeSelectMenu = (): void => {
+        visible.value = false;
+        inputValue.value = selectLabels(props)[0];
+    };
+    document.addEventListener("click", closeSelectMenu);
+    onBeforeUnmount(() => {
+        document.removeEventListener("click", closeSelectMenu);
+    });
     return {
         selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
         selectLabels: computed<string[]>(selectLabels.bind(null, props)),

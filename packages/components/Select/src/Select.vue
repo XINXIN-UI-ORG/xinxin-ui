@@ -66,7 +66,7 @@ export default defineComponent({
             gcn.is('block', block),
             gcn.is('disabled', disabled),
         ]"
-        @click="selectToogle"
+        @click.stop="selectToogle"
         @mouseenter="showClearBtn"
         @mouseleave="closeClearBtn"
     >
@@ -117,6 +117,7 @@ export default defineComponent({
                     ]"
                     @mousedown="stopBlur"
                     @mouseup="stopBlur"
+                    @click.stop
                     v-if="optionList.length > 0"
                 >
                     <div
@@ -147,6 +148,7 @@ export default defineComponent({
                     ]"
                     @mousedown="stopBlur"
                     @mouseup="stopBlur"
+                    @click.stop
                     v-else
                 >
                     <div :class="gcn.e('no-data', 'icon')">
