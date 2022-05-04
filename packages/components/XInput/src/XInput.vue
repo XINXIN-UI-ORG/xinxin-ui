@@ -98,6 +98,9 @@ export default defineComponent({
             // 开启监听
             iconShowFlag?.init();
         });
+        let focus = (): void => {
+            inputRef.value?.focus();
+        };
         // 提供操作input的方法
         expose({
             changeInputValue(value: string) {
@@ -108,9 +111,7 @@ export default defineComponent({
             getCurrentValue(): string {
                 return inputRef.value!.value;
             },
-            focus(): void {
-                inputRef.value?.focus();
-            },
+            focus,
             blur(): void {
                 inputRef.value?.blur();
             }
@@ -124,6 +125,7 @@ export default defineComponent({
                 props.block ? "x-input-block" : "x-input-inline",
                 props._cursor && "x-input-cursor",
             ]),
+            focus,
             prefix: slots.prefix,
             suffix: slots.suffix,
             inputType: () => {
@@ -318,7 +320,7 @@ function showPasswordOnGather(
 }
 </script>
 <template>
-    <div :class="inputWrapperClassList" ref="inputWrapRef">
+    <div :class="inputWrapperClassList" ref="inputWrapRef" @click="focus">
         <div class="x-input__fix x-input__prefix" v-if="prefix">
             <slot name="prefix"></slot>
         </div>

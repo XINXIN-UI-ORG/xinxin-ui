@@ -45,11 +45,11 @@ export default defineComponent({
                 }
                 // 点击其他地方隐藏popover
                 document.addEventListener('click', clickOtherToClosePopper);
-                onBeforeUnmount(() => {
-                    document.removeEventListener('click', clickOtherToClosePopper);
-                });
             }
         };
+        onBeforeUnmount(() => {
+            document.removeEventListener('click', clickOtherToClosePopper);
+        });
         return () => {
             const defaultSlot = slots.default?.();
             if (!defaultSlot) {

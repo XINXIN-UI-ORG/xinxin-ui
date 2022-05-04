@@ -4,7 +4,7 @@ import { generateClassName } from "@xinxin-ui/utils";
 import { selectProps, useSelect, selectEmits } from "./select";
 import XInput from "../../XInput";
 import Popover from "../../Popover";
-import { Checked, ErrorMessage, Select, NoData } from "@xinxin-ui/xinxin-icons";
+import { Checked, ErrorMessage, DownSelect, NoData } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: "x-select",
@@ -53,7 +53,7 @@ export default defineComponent({
         Popover,
         Checked,
         ErrorMessage,
-        Select,
+        DownSelect,
         NoData,
     },
 })
@@ -93,7 +93,7 @@ export default defineComponent({
                     ref="singleSelectRef"
                 >
                     <template #suffix>
-                        <Select 
+                        <down-select 
                             :class="[
                                 gcn.e('input', 'icon'),
                                 gcn.middle('input', 'icon').is('open', visible),
@@ -133,7 +133,7 @@ export default defineComponent({
                         <div :class="[
                             gcn.e('options', 'item', 'select'),
                         ]">
-                            <Checked v-if="selectValues.length > 0" />
+                            <checked v-if="selectValues.length > 0" />
                         </div>
                         <div :class="[
                             gcn.e('options', 'item', 'label'),

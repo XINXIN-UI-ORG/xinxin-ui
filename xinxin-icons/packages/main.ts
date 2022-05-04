@@ -16,6 +16,8 @@ import Components from './src/components.vue'
 
 import Document from './src/document.vue'
 
+import DownSelect from './src/down-select.vue'
+
 import Down from './src/down.vue'
 
 import ErrorMessage from './src/error-message.vue'
@@ -48,8 +50,6 @@ import Rocket from './src/rocket.vue'
 
 import Search from './src/search.vue'
 
-import Select from './src/select.vue'
-
 import SourceCode from './src/source-code.vue'
 
 import Star from './src/star.vue'
@@ -73,6 +73,7 @@ const componentList = [
   Close,
   Components,
   Document,
+  DownSelect,
   Down,
   ErrorMessage,
   Error,
@@ -89,7 +90,6 @@ const componentList = [
   Restart,
   Rocket,
   Search,
-  Select,
   SourceCode,
   Star,
   SuccessMessage,
@@ -122,6 +122,7 @@ export {
   Close,
   Components,
   Document,
+  DownSelect,
   Down,
   ErrorMessage,
   Error,
@@ -138,7 +139,6 @@ export {
   Restart,
   Rocket,
   Search,
-  Select,
   SourceCode,
   Star,
   SuccessMessage,
