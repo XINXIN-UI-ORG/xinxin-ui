@@ -1,0 +1,132 @@
+@import "../../../theme-chalk/variable.styl";
+
+.x-tag-default
+    border 1px solid #e0e0e6
+    color #333639
+    .x-tag__close
+        &:hover
+            border 1px solid #333639
+
+.x-tag-info
+    border 1px solid #d9ecff
+    color #409eff
+    &.x-tag-plain
+        background-color #ecf5ff
+    &.x-tag-ghost
+        border-color #409eff
+    &.x-tag-fill
+        background-color #409eff
+        color #fff
+        border-color #409eff
+        .x-tag__close
+            &:hover
+                background-color #80befe
+    .x-tag__close
+        &:hover
+            background-color #409eff
+            svg
+                color #fff
+
+.x-tag-success
+    border 1px solid #41b8832b
+    color #41b883
+    &.x-tag-plain
+        background-color #41b88321
+    &.x-tag-ghost
+        border-color #41b883
+    &.x-tag-fill
+        background-color #41b883
+        color #fff
+        border-color #41b883
+        .x-tag__close
+            &:hover
+                background-color #83deb6
+    .x-tag__close
+        &:hover
+            background-color #41b883
+            svg
+                color #fff
+
+.x-tag-warning
+    border 1px solid #f5a31f2b
+    color $base_theme_color
+    &.x-tag-plain
+        background-color #f5a31f21
+    &.x-tag-ghost
+        border-color $base_theme_color
+    &.x-tag-fill
+        background-color $base_theme_color
+        color #fff
+        border-color $base_theme_color
+        .x-tag__close
+            &:hover
+                background-color #f6c87d
+    .x-tag__close
+        &:hover
+            background-color $base_theme_color
+            svg
+                color #fff
+
+.x-tag-error
+    border 1px solid #fde2e2
+    color #f56c6c
+    &.x-tag-plain
+        background-color #fef0f0
+    &.x-tag-ghost
+        border-color #f56c6c
+    &.x-tag-fill
+        background-color #f56c6c
+        color #fff
+        border-color #f56c6c
+        .x-tag__close
+            &:hover
+                background-color #fca4a4
+    .x-tag__close
+        &:hover
+            background-color #f56c6c
+            svg
+                color #fff
+
+.x-tag-small
+    height 20px !important
+    padding 0 7px !important
+.x-tag-large
+    height 32px !important
+    padding 0 11px !important
+
+.x-tag-round
+    border-radius 22px !important
+
+.x-tag
+    border-radius 4px
+    height 24px
+    display inline-flex
+    font-size 12px
+    white-space nowrap
+    align-items center
+    padding 0 9px
+    box-sizing border-box
+    .x-tag__close
+        margin-left 6px
+        line-height 1
+        display inline-flex
+        align-items center
+        justify-content center
+        cursor pointer
+        box-sizing border-box
+        border 1px solid transparent
+        border-radius 50%
+        svg
+            width 12px
+            height 12px
+    .x-tag__content
+        line-height 1
+
+.fade-leave-from
+    visibility visible
+    opacity 1
+.fade-leave-active
+    transition opacity .5s, visibility .5s
+.fade-leave-to
+    visibility hidden
+    opacity 0

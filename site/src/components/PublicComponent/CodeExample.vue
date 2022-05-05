@@ -144,6 +144,8 @@ function throttle(callback: Function) {
 .show
     :deep(.split)
         height 10px
+    :deep(.separator)
+        margin-right 10px
     :deep(button)
         margin 10px 10px 0 0
     :deep(.x-button-group)
