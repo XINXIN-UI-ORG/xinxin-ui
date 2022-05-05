@@ -67,16 +67,17 @@ export function usePopover(
     popoverContentRef: Ref<HTMLDivElement | null>,
     popoverArrow: Ref<HTMLDivElement | null>,
     props: PopoverPropsType,
+    expose: (exposed?: Record<string, any>) => void,
 ) {
     // 注册reference
     let popoverRefGather: ReferenceGather = {
         triggerRef: ref<HTMLElement | null>(null),
         popperRef: popoverContentRef,
     };
+    let popperInstance: any;
     provide(ReferenceInjectKey, popoverRefGather);
     // 定位popper
     onMounted(() => {
-        let popperInstance: any;
         watch(
             () => popoverContentRef.value,
             (popoverContentRef) => {
@@ -102,6 +103,12 @@ export function usePopover(
         });
     });
 
+    // 导出组件
+    expose({
+        update() {
+            popperInstance && popperInstance.update();
+        }
+    });
     return {
         popperStyle: computed(() => ({
             ...props.style,

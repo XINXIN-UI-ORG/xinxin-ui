@@ -1,9 +1,10 @@
 import { NormalSize } from "@xinxin-ui/typings";
 import { computed, ref, nextTick, onBeforeUnmount } from "vue";
-import type { ExtractPropTypes, SetupContext, PropType } from "vue";
+import type { ExtractPropTypes, SetupContext, PropType, Ref } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isNumber, isString } from "@vueuse/core";
 import { Log } from "@xinxin-ui/utils";
+import type Popover from "../../Popover";
 
 type SelectValue = number | string;
 
@@ -65,6 +66,7 @@ type OptionItem = {
 export function useSelect(
     props: SelectProps,
     emit: SetupContext<typeof selectEmits>['emit'],
+    popoverRef: Ref<InstanceType<typeof Popover> | undefined>,
 ) {
     let visible = ref<boolean>(false);
     let suffixIconShow = ref<number>(0);
@@ -122,6 +124,8 @@ export function useSelect(
                     // 否则添加
                     newValue.push(value);
                 }
+                // 重新计算selectmenu的位置
+                popoverRef.value?.update();
             } else {
                 if (Array.isArray(props.modelValue)) {
                     Log.standardLogout("绑定的变量是数组, 是否启用multiple开启多选模式?");

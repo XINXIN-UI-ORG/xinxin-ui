@@ -13,7 +13,7 @@ export default defineComponent({
     emits: selectEmits,
     setup(props, { emit }) {
         let gcn = generateClassName("select");
-        let singleSelectRef = ref<InstanceType<typeof XInput>>();
+        let popoverRef = ref<InstanceType<typeof Popover>>();
         let {
             selectValues,
             selectOptions,
@@ -31,10 +31,10 @@ export default defineComponent({
             multipleFilterFlag,
             multipleFlag,
             placeholder,
-        } = useSelect(props, emit);
+        } = useSelect(props, emit, popoverRef);
         return {
             gcn,
-            singleSelectRef,
+            popoverRef,
             selectOptions,
             suffixIconShow,
             selectValues,
@@ -87,6 +87,7 @@ export default defineComponent({
             _block
             :_extend-width="2"
             style="padding: 0;"
+            ref="popoverRef"
         >
             <template #default>
                 <x-input

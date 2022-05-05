@@ -9,7 +9,7 @@ export default defineComponent({
     name: "x-popover",
     props: popoverProps,
     inheritAttrs: false,
-    setup(props: PopoverPropsType) {
+    setup(props: PopoverPropsType, { expose }) {
         let gcn = generateClassName("popover");
         let popoverShow = ref<boolean>(false);
         watchEffect(() => {
@@ -21,7 +21,7 @@ export default defineComponent({
         let popoverContentRef = ref<HTMLDivElement | null>(null);
         // arrow内容
         let popoverArrow = ref<HTMLDivElement | null>(null);
-        let { popperStyle } = usePopover(popoverContentRef, popoverArrow, props);
+        let { popperStyle } = usePopover(popoverContentRef, popoverArrow, props, expose);
         return {
             gcn,
             popoverContentRef,
