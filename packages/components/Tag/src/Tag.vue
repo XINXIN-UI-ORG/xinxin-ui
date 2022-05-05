@@ -48,7 +48,7 @@ export default defineComponent({
                     gcn.e('close'),
                 ]"
                 v-if="closeable"
-                @click="tagDisappear"
+                @click="tagDisappear($event)"
             >
                 <close />
             </i>

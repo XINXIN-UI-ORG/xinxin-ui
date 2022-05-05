@@ -83,6 +83,7 @@ export function useSelect(
     return {
         selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
         selectLabels: computed<string[]>(selectLabels.bind(null, props)),
+        selectOptions: computed<OptionItem[]>(selectOptions.bind(null, props)),
         visible,
         readonly,
         inputValue,
@@ -99,7 +100,8 @@ export function useSelect(
                 }
             }
         },
-        optionClick: (value: SelectValue, disabled: boolean | undefined) => {
+        optionClick: (e: Event, value: SelectValue, disabled: boolean | undefined) => {
+            e.stopPropagation();
             // 如果当前项设置了禁用 则不会触发选择
             if (!!disabled) {
                 return;
@@ -194,6 +196,14 @@ function getInputValue(props: SelectProps): string {
         return '';
     }
     return selectLabels(props)[0];
+}
+
+/**
+ * 获取用户选中的数据
+ */
+function selectOptions(props: SelectProps): OptionItem[] {
+    let modelValue = getModelValueList(props);
+    return props.options.filter(item => modelValue.indexOf(item.value) !== -1);
 }
 
 /**

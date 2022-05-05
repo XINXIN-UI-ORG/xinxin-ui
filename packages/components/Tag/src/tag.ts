@@ -30,6 +30,10 @@ export const tagProps = {
         type: Boolean,
         default: false,
     },
+    autoClose: {
+        type: Boolean,
+        default: true,
+    },
 };
 
 export type TagProps = ExtractPropTypes<typeof tagProps>;
@@ -47,9 +51,9 @@ export function useTag(
 
     return {
         autoVisible,
-        tagDisappear() {
-            let closeable = true;
-            emit('close', (isClose: boolean) => (closeable = isClose));
+        tagDisappear(e: Event) {
+            let closeable = props.autoClose;
+            emit('close', e);
             if (closeable) {
                 emit("update:visible", false);
                 autoVisible.value = false;

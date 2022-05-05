@@ -4,6 +4,7 @@ import { generateClassName } from "@xinxin-ui/utils";
 import { selectProps, useSelect, selectEmits } from "./select";
 import XInput from "../../XInput";
 import Popover from "../../Popover";
+import Tag from "../../Tag";
 import { Checked, ErrorMessage, DownSelect, NoData } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
@@ -15,6 +16,7 @@ export default defineComponent({
         let singleSelectRef = ref<InstanceType<typeof XInput>>();
         let {
             selectValues,
+            selectOptions,
             visible,
             readonly,
             inputValue,
@@ -33,6 +35,7 @@ export default defineComponent({
         return {
             gcn,
             singleSelectRef,
+            selectOptions,
             suffixIconShow,
             selectValues,
             visible,
@@ -61,6 +64,7 @@ export default defineComponent({
         ErrorMessage,
         DownSelect,
         NoData,
+        Tag,
     },
 })
 </script>
@@ -106,9 +110,14 @@ export default defineComponent({
                             ]"
                             v-if="multipleFlag"
                         >
-                            <span
-                                v-for="item in selectLabels"
-                            >{{item}}</span>
+                            <tag
+                                v-for="item in selectOptions"
+                                closeable
+                                type="warning"
+                                @close="optionClick($event, item.value, false)"
+                            >
+                                {{item.label}}
+                            </tag>
                         </div>
                     </template>
                     <template #suffix>
@@ -147,7 +156,7 @@ export default defineComponent({
                         ]"
                         v-for="item in optionList"
                         :key="item.value"
-                        @click="optionClick(item.value, item.disabled)"
+                        @click="optionClick($event, item.value, item.disabled)"
                     >
                         <div :class="[
                             gcn.e('options', 'item', 'select'),
