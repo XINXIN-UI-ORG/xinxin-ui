@@ -115,6 +115,7 @@ export default defineComponent({
                                 closeable
                                 type="warning"
                                 @close="optionClick($event, item.value, false)"
+                                :auto-close="false"
                             >
                                 {{item.label}}
                             </tag>
