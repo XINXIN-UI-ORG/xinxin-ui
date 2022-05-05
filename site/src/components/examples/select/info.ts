@@ -44,7 +44,15 @@ const multiple: ExampleInfo = {
     `)
 };
 
+const multipleCollapse: ExampleInfo = {
+    title: "多选折叠",
+    desc: format(`
+        如果有时觉得选项太多，可以通过设置collapse-tags属性为true可以开启x-select多选折叠，可以使用collapse-tags-tooltip属性启用鼠标悬停在折叠标签上显示具体的所选值。
+    `)
+};
+
 export {
+    multipleCollapse,
     multiple,
     filterable,
     clearable,
@@ -114,6 +122,20 @@ const apiProps: ApiTable<ApiProps> = {
         {
             props: "multiple",
             describe: "可多选",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "collapse-tags",
+            describe: "多选折叠",
+            type: "Boolean",
+            defaultValue: "false",
+            selectList: ["true", "false"],
+        },
+        {
+            props: "collapse-tags-tooltip",
+            describe: "多选折叠提示",
             type: "Boolean",
             defaultValue: "false",
             selectList: ["true", "false"],

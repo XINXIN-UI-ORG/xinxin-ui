@@ -33,11 +33,10 @@ export default defineComponent({
     setup() {
         let visible = ref<boolean>(true);
         return {
-            preventClose(callback: Function) {
-                XMessage("点击这里不会触发关闭");
-                callback(false);
-            },
             visible,
+            closeHandler() {
+                XMessage("设置了不允许自动关闭");
+            }
         };
     },
 });
@@ -59,19 +58,19 @@ export default defineComponent({
 
     <div class="split"></div>
 
-    <x-tag closeable @close="preventClose" v-model:visible="visible">乌夜啼</x-tag>
+    <x-tag closeable :auto-close="false" @close="closeHandler" v-model:visible="visible">乌夜啼</x-tag>
 
     <span class="separator"></span>
-    <x-tag type="info" closeable @close="preventClose" v-model:visible="visible">梁甫吟</x-tag>
+    <x-tag type="info" closeable :auto-close="false" @close="closeHandler" v-model:visible="visible">梁甫吟</x-tag>
     
     <span class="separator"></span>
-    <x-tag type="success" closeable @close="preventClose" v-model:visible="visible">战城南</x-tag>
+    <x-tag type="success" closeable :auto-close="false" @close="closeHandler" v-model:visible="visible">战城南</x-tag>
     
     <span class="separator"></span>
-    <x-tag type="warning" closeable @close="preventClose" v-model:visible="visible">北风行</x-tag>
+    <x-tag type="warning" closeable :auto-close="false" @close="closeHandler" v-model:visible="visible">北风行</x-tag>
     
     <span class="separator"></span>
-    <x-tag type="error" closeable @close="preventClose" v-model:visible="visible">襄阳歌</x-tag>
+    <x-tag type="error" closeable :auto-close="false" @close="closeHandler" v-model:visible="visible">襄阳歌</x-tag>
 
     <div class="split"></div>
     <x-button @click="visible = false">手动关闭</x-button>
@@ -153,19 +152,19 @@ const themeContent = `<template>
 import Round from './4Round.vue'
 
 const roundContent = `<template>
-    <x-tag>乌夜啼</x-tag>
+    <x-tag round>乌夜啼</x-tag>
 
     <span class="separator"></span>
-    <x-tag type="info">梁甫吟</x-tag>
+    <x-tag type="info" round>梁甫吟</x-tag>
     
     <span class="separator"></span>
-    <x-tag type="success">战城南</x-tag>
+    <x-tag type="success" round>战城南</x-tag>
     
     <span class="separator"></span>
-    <x-tag type="warning">北风行</x-tag>
+    <x-tag type="warning" round>北风行</x-tag>
     
     <span class="separator"></span>
-    <x-tag type="error">襄阳歌</x-tag>
+    <x-tag type="error" round>襄阳歌</x-tag>
 </template>`
 
 export default defineComponent({

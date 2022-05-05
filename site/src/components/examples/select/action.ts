@@ -31,4 +31,9 @@ export default [
     link: '/component/select#multiple',
     name: info.multiple.title,
   },
+  {
+    key: 6,
+    link: '/component/select#multipleCollapse',
+    name: info.multipleCollapse.title,
+  },
 ]

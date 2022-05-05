@@ -68,16 +68,15 @@ export default defineComponent({
 <template>
     <x-select
         :options="options"
-        placeholder="未开启过滤"
+        placeholder="仅折叠"
         v-model="value1"
         multiple
-        clearable
     >
     </x-select>
     <div class="split"></div>
     <x-select
         :options="options"
-        placeholder="开启过滤"
+        placeholder="鼠标移入折叠处显示具体选项"
         v-model="value2"
         multiple
         filterable

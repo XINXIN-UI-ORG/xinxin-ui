@@ -155,7 +155,7 @@ export function useSelect(
         clearContent(event: Event) {
             // 阻止select contextmenu展示
             event.stopPropagation();
-            let value: SelectValue | SelectValue[] = "";
+            let value: SelectValue | SelectValue[] = props.multiple ? [] : "";
             emit(MODEL_VALUE_UPDATE, value);
             visible.value = false;
             suffixIconShow.value = 0;
