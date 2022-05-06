@@ -3,6 +3,7 @@ import { cloneVNode, Comment, defineComponent, Fragment, inject, Text, withDirec
 import { isObject } from "@vue/shared";
 import { ReferenceInjectKey, ReferenceGather } from "@xinxin-ui/symbols";
 import { isBoolean } from "@vueuse/core";
+import { Log } from "@xinxin-ui/utils";
 
 const triggerProps = {
     popoverShow: Boolean,
@@ -57,13 +58,13 @@ export default defineComponent({
             }
 
             if (defaultSlot.length > 1) {
-                console.warn('触发器只能包含一个节点!')
+                Log.standardLogout('触发器只能包含一个节点!');
                 return null
             }
             
             const triggerVNode = findFirstLegitChild(slots.default?.());
             if (triggerVNode === null) {
-                console.warn("popover未传入合法触发器!");
+                Log.standardLogout("popover未传入合法触发器!");
                 return null;
             }
             // 绑定指令 在指令中将真实dom传出去

@@ -71,6 +71,7 @@ export default defineComponent({
         placeholder="仅折叠"
         v-model="value1"
         multiple
+        collapse-tags
     >
     </x-select>
     <div class="split"></div>
@@ -79,7 +80,8 @@ export default defineComponent({
         placeholder="鼠标移入折叠处显示具体选项"
         v-model="value2"
         multiple
-        filterable
+        collapse-tags
+        collapse-tags-tooltip
     >
     </x-select>
 </template>

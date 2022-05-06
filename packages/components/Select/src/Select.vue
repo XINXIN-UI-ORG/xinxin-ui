@@ -14,6 +14,7 @@ export default defineComponent({
     setup(props, { emit }) {
         let gcn = generateClassName("select");
         let popoverRef = ref<InstanceType<typeof Popover>>();
+        let collapseTagPopoverRef = ref<InstanceType<typeof Popover>>();
         let {
             selectValues,
             selectOptions,
@@ -31,10 +32,11 @@ export default defineComponent({
             multipleFilterFlag,
             multipleFlag,
             placeholder,
-        } = useSelect(props, emit, popoverRef);
+        } = useSelect(props, emit, popoverRef, collapseTagPopoverRef);
         return {
             gcn,
             popoverRef,
+            collapseTagPopoverRef,
             selectOptions,
             suffixIconShow,
             selectValues,
@@ -105,22 +107,93 @@ export default defineComponent({
                     :_hidden-input="multipleFilterFlag"
                 >
                     <template #prefix>
-                        <div
-                            :class="[
-                                gcn.e('input', 'tag-list'),
-                            ]"
+                        <template
                             v-if="multipleFlag"
                         >
-                            <tag
-                                v-for="item in selectOptions"
-                                closeable
-                                type="warning"
-                                @close="optionClick($event, item.value, false)"
-                                :auto-close="false"
+                            <!-- 基础多选 -->
+                            <div
+                                :class="[
+                                    gcn.e('input', 'tag-list'),
+                                ]"
+                                v-if="!collapseTags"
                             >
-                                {{item.label}}
-                            </tag>
-                        </div>
+                                <tag
+                                    v-for="item in selectOptions"
+                                    closeable
+                                    type="warning"
+                                    @close="optionClick($event, item.value, false)"
+                                    :auto-close="false"
+                                >
+                                    {{item.label}}
+                                </tag>
+                            </div>
+                            <!-- 带折叠 -->
+                            <div
+                                v-if="collapseTags && !collapseTagsTooltip"
+                                :class="[
+                                    gcn.e('input', 'tag-list'),
+                                ]"
+                            >
+                                <tag
+                                    closeable
+                                    type="warning"
+                                    @close="optionClick($event, selectOptions[0].value, false)"
+                                    :auto-close="false"
+                                >
+                                    {{selectOptions[0].label}}
+                                </tag>
+                                <tag
+                                    v-if="selectOptions.length > 1"
+                                    type="warning"
+                                    :auto-close="false"
+                                >
+                                    +{{selectOptions.length - 1}}
+                                </tag>
+                            </div>
+                            <!-- 折叠带popover -->
+                            <div
+                                v-if="collapseTags && collapseTagsTooltip"
+                                :class="[
+                                    gcn.e('input', 'tag-list'),
+                                ]"
+                            >
+                                <tag
+                                    closeable
+                                    type="warning"
+                                    @close="optionClick($event, selectOptions[0].value, false)"
+                                    :auto-close="false"
+                                >
+                                    {{selectOptions[0].label}}
+                                </tag>
+                                <popover
+                                    placement="bottom"
+                                    trigger="hover"
+                                    v-if="selectOptions.length > 1"
+                                    ref="collapseTagPopoverRef"
+                                    style="max-width: 300px"
+                                >
+                                    <tag
+                                        v-if="selectOptions.length > 1"
+                                        type="warning"
+                                        :auto-close="false"
+                                    >
+                                        <span style="font-size: 14px;">+</span>{{selectOptions.length - 1}}
+                                    </tag>
+                                    <template #content>
+                                        <tag
+                                            v-for="item in selectOptions.slice(1)"
+                                            closeable
+                                            type="warning"
+                                            @close="optionClick($event, item.value, false)"
+                                            :auto-close="false"
+                                            style="margin: 3px 3px 3px 0;"
+                                        >
+                                            {{item.label}}
+                                        </tag>
+                                    </template>
+                                </popover>
+                            </div>
+                        </template>
                     </template>
                     <template #suffix>
                         <down-select 

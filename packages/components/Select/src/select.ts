@@ -45,6 +45,14 @@ export const selectProps = {
         type: Boolean,
         default: false,
     },
+    collapseTags: {
+        type: Boolean,
+        default: false,
+    },
+    collapseTagsTooltip: {
+        type: Boolean,
+        default: false,
+    },
 };
 
 export const selectEmits = {
@@ -67,6 +75,7 @@ export function useSelect(
     props: SelectProps,
     emit: SetupContext<typeof selectEmits>['emit'],
     popoverRef: Ref<InstanceType<typeof Popover> | undefined>,
+    collapseTagPopoverRef: Ref<InstanceType<typeof Popover> | undefined>,
 ) {
     let visible = ref<boolean>(false);
     let suffixIconShow = ref<number>(0);
@@ -126,6 +135,7 @@ export function useSelect(
                 }
                 // 重新计算selectmenu的位置
                 popoverRef.value?.update();
+                collapseTagPopoverRef.value?.update();
             } else {
                 if (Array.isArray(props.modelValue)) {
                     Log.standardLogout("绑定的变量是数组, 是否启用multiple开启多选模式?");
@@ -157,7 +167,7 @@ export function useSelect(
             event.stopPropagation();
             let value: SelectValue | SelectValue[] = props.multiple ? [] : "";
             emit(MODEL_VALUE_UPDATE, value);
-            visible.value = false;
+            !props.multiple && (visible.value = false);
             suffixIconShow.value = 0;
             nextTick(() => {
                 inputValue.value = getInputValue(props);
