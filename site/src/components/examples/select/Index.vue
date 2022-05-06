@@ -305,6 +305,7 @@ export default defineComponent({
         placeholder="未开启过滤"
         v-model="value1"
         multiple
+        clearable
     >
     </x-select>
     <div class="split"></div>
@@ -390,18 +391,120 @@ export default defineComponent({
 <template>
     <x-select
         :options="options"
-        placeholder="未开启过滤"
+        placeholder="仅折叠"
         v-model="value1"
         multiple
+        collapse-tags
     >
     </x-select>
     <div class="split"></div>
     <x-select
         :options="options"
-        placeholder="开启过滤"
+        placeholder="鼠标移入折叠处显示具体选项"
         v-model="value2"
         multiple
-        filterable
+        collapse-tags
+        collapse-tags-tooltip
+    >
+    </x-select>
+</template>`
+
+import Group from './7Group.vue'
+
+const groupContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            value: ref("1"),
+            options: [
+                {
+                    type: 'group',
+                    label: "李白诗集",
+                    key: "libai",
+                    children: [
+                        {
+                            label: "襄阳歌",
+                            value: "1",
+                            key: "1",
+                        },
+                        {
+                            label: "采莲曲",
+                            value: "2",
+                            key: "2",
+                        },
+                        {
+                            label: "客中行",
+                            value: "3",
+                            key: "3"
+                        },
+                    ],
+                },
+                {
+                    type: 'group',
+                    label: "韩愈诗集",
+                    key: "hanyu",
+                    children: [
+                        {
+                            label: "石鼓歌",
+                            value: "4",
+                        },
+                        {
+                            label: "听颖师弹琴",
+                            value: "5"
+                        },
+                        {
+                            label: "谒衡岳庙遂宿岳寺题门楼",
+                            value: "6"
+                        },
+                        {
+                            label: "八月十五夜赠张功曹",
+                            value: "7"
+                        },
+                        {
+                            label: "调张籍",
+                            value: "8"
+                        },
+                    ],
+                },
+                {
+                    type: 'group',
+                    label: "柳宗元诗集",
+                    key: "liuzongyuan",
+                    children: [
+                        {
+                            label: "江雪",
+                            value: "9",
+                        },
+                        {
+                            label: "晨诣超师院读禅经",
+                            value: "10"
+                        },
+                        {
+                            label: "登柳州城楼寄漳汀封连四州",
+                            value: "11"
+                        },
+                        {
+                            label: "溪居",
+                            value: "12"
+                        },
+                        {
+                            label: "饮酒",
+                            value: "13"
+                        },
+                    ],
+                },
+            ],
+        };
+    },
+})
+<\/script>
+<template>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="value"
     >
     </x-select>
 </template>`
@@ -436,6 +539,10 @@ export default defineComponent({
       MultipleCollapse,
       multipleCollapseContent,
       multipleCollapseInfo: info.multipleCollapse,
+
+      Group,
+      groupContent,
+      groupInfo: info.group,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -512,6 +619,15 @@ export default defineComponent({
         :title="multipleInfo.title"
         :code-v-node="Multiple"
         :code-desc="multipleInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="group"
+        :code="groupContent"
+        :title="groupInfo.title"
+        :code-v-node="Group"
+        :code-desc="groupInfo.desc"
       >
       </CodeExample>
     </template>

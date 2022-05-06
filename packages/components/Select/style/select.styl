@@ -17,49 +17,10 @@
                 color $base_theme_color
         .x-select__input__tag-list
             padding-right 12px
+            overflow hidden
             :deep(.x-tag)
-                margin 3px 3px 3px 0
+                margin 1.5px 3px 1.5px 0
 .x-select-block
     display block
 .x-select-disabled
     cursor not-allowed
-
-.x-select__options
-    padding 6px 0
-    .x-select__options__item
-        padding 8px 12px
-        cursor pointer
-        display flex
-        align-items center
-        &:hover
-            background-color #f4f5f5
-            .x-select__options__item__select
-                svg
-                    color #f4f5f5
-        .x-select__options__item__select
-            margin-right 5px
-            svg
-                height 18px
-                vertical-align sub
-                color #fff
-    .x-select__options__item-selected
-        background-color #f4f5f5
-        .x-select__options__item__select
-            svg
-                color $base_theme_color !important
-        .x-select__options__item__label
-            font-weight bolder
-            color $base_theme_color
-    .x-select__options__item-disabled
-        cursor not-allowed
-        color #c8c8c8
-.x-select__no-data
-    padding 12px 0
-    .x-select__no-data__icon
-        text-align center
-        svg
-            width 50px
-            height 50px
-    .x-select__no-data__text
-        color #b0b1b2
-        text-align center

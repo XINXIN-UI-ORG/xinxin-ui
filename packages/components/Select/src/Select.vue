@@ -6,6 +6,7 @@ import XInput from "../../XInput";
 import Popover from "../../Popover";
 import Tag from "../../Tag";
 import { Checked, ErrorMessage, DownSelect, NoData } from "@xinxin-ui/xinxin-icons";
+import SelectMenu from "./SelectMenu.vue";
 
 export default defineComponent({
     name: "x-select",
@@ -32,6 +33,7 @@ export default defineComponent({
             multipleFilterFlag,
             multipleFlag,
             placeholder,
+            changeSelect,
         } = useSelect(props, emit, popoverRef, collapseTagPopoverRef);
         return {
             gcn,
@@ -46,10 +48,6 @@ export default defineComponent({
             optionClick,
             selectToogle,
             selectLabels,
-            stopBlur(e: Event) {
-                e.preventDefault();
-                return false;
-            },
             showClearBtn,
             closeClearBtn,
             clearContent,
@@ -57,18 +55,18 @@ export default defineComponent({
             multipleFilterFlag,
             multipleFlag,
             placeholder,
+            changeSelect,
         };
     },
     components: {
         XInput,
         Popover,
-        Checked,
         ErrorMessage,
         DownSelect,
-        NoData,
         Tag,
+        SelectMenu,
     },
-})
+});
 </script>
 <template>
     <div
@@ -90,6 +88,7 @@ export default defineComponent({
             :_extend-width="2"
             style="padding: 0;"
             ref="popoverRef"
+            :max-height="260"
         >
             <template #default>
                 <x-input
@@ -171,13 +170,14 @@ export default defineComponent({
                                     v-if="selectOptions.length > 1"
                                     ref="collapseTagPopoverRef"
                                     style="max-width: 300px"
+                                    :max-height="260"
                                 >
                                     <tag
                                         v-if="selectOptions.length > 1"
                                         type="warning"
                                         :auto-close="false"
                                     >
-                                        <span style="font-size: 14px;">+</span>{{selectOptions.length - 1}}
+                                        +{{selectOptions.length - 1}}
                                     </tag>
                                     <template #content>
                                         <tag
@@ -186,7 +186,7 @@ export default defineComponent({
                                             type="warning"
                                             @close="optionClick($event, item.value, false)"
                                             :auto-close="false"
-                                            style="margin: 3px 3px 3px 0;"
+                                            style="margin: 1.5px 3px 1.5px 0;"
                                         >
                                             {{item.label}}
                                         </tag>
@@ -214,51 +214,11 @@ export default defineComponent({
                 </x-input>
             </template>
             <template #content>
-                <div
-                    :class="[
-                        gcn.e('options'),
-                    ]"
-                    @mousedown="stopBlur"
-                    @mouseup="stopBlur"
-                    @click.stop
-                    v-if="optionList.length > 0"
-                >
-                    <div
-                        :class="[
-                            gcn.e('options', 'item'),
-                            gcn.middle('options', 'item').is('selected', selectValues.indexOf(item.value) !== -1 && !item.disabled),
-                            gcn.middle('options', 'item').is('disabled', item.disabled),
-                        ]"
-                        v-for="item in optionList"
-                        :key="item.value"
-                        @click="optionClick($event, item.value, item.disabled)"
-                    >
-                        <div :class="[
-                            gcn.e('options', 'item', 'select'),
-                        ]">
-                            <checked v-if="selectValues.length > 0" />
-                        </div>
-                        <div :class="[
-                            gcn.e('options', 'item', 'label'),
-                        ]">
-                            {{ item.label }}
-                        </div>
-                    </div>
-                </div>
-                <div
-                    :class="[
-                        gcn.e('no-data'),
-                    ]"
-                    @mousedown="stopBlur"
-                    @mouseup="stopBlur"
-                    @click.stop
-                    v-else
-                >
-                    <div :class="gcn.e('no-data', 'icon')">
-                        <no-data />
-                    </div>
-                    <div :class="gcn.e('no-data', 'text')">暂无数据</div>
-                </div>
+                <select-menu
+                    :option-list="optionList"
+                    :select-values="selectValues"
+                    @change-select="changeSelect"
+                />
             </template>
         </Popover>
     </div>

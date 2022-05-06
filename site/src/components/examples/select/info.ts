@@ -51,7 +51,15 @@ const multipleCollapse: ExampleInfo = {
     `)
 };
 
+const group: ExampleInfo = {
+    title: "选项组",
+    desc: format(`
+        将选项分组展示。
+    `)
+};
+
 export {
+    group,
     multipleCollapse,
     multiple,
     filterable,

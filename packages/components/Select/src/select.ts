@@ -6,7 +6,7 @@ import { isNumber, isString } from "@vueuse/core";
 import { Log } from "@xinxin-ui/utils";
 import type Popover from "../../Popover";
 
-type SelectValue = number | string;
+export type SelectValue = number | string;
 
 export const selectProps = {
     options: {
@@ -65,8 +65,21 @@ export const selectEmits = {
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
 
-type OptionItem = {
+export type OptionItem = {
     label: string,
+    value: SelectValue,
+    disabled?: boolean,
+    type?: SelectTypeEnum,
+    children?: OptionItem[],
+};
+
+export enum SelectTypeEnum {
+    GROUP,
+    ITEM,
+};
+
+type OptionClickObj = {
+    e: Event,
     value: SelectValue,
     disabled: boolean,
 };
@@ -90,7 +103,47 @@ export function useSelect(
     onBeforeUnmount(() => {
         document.removeEventListener("click", closeSelectMenu);
     });
-
+    // 选中或反选select
+    const optionClick = (e: Event, value: SelectValue, disabled: boolean) => {
+        e.stopPropagation();
+        // 如果当前项设置了禁用 则不会触发选择
+        if (disabled) {
+            return;
+        }
+        let newValue: SelectValue[] | SelectValue = props.multiple ? [] : value;
+        if (props.multiple) {
+            // 如果开启了多选，则将选中的数据插入到modelValue中
+            if (!Array.isArray(props.modelValue)) {
+                Log.standardLogout("绑定的变量不是数组，无法开启多选模式。");
+                return;
+            }
+            newValue = props.modelValue as SelectValue[];
+            let index = newValue.indexOf(value);
+            if (index !== -1) {
+                // 如果当前选项已经选中 则去除
+                newValue.splice(index, 1);
+            } else {
+                // 否则添加
+                newValue.push(value);
+            }
+            // 重新计算selectmenu的位置
+            popoverRef.value?.update();
+            collapseTagPopoverRef.value?.update();
+        } else {
+            if (Array.isArray(props.modelValue)) {
+                Log.standardLogout("绑定的变量是数组, 是否启用multiple开启多选模式?");
+                return;
+            }
+            // 如果未开启多选 则直接关闭selectmenu、将输入框只读并将选中数据展示到输入框中
+            visible.value = false;
+            readonly.value = true;
+            nextTick(() => {
+                inputValue.value = getInputValue(props);
+            });
+        }
+        // 更新modelValue
+        emit(MODEL_VALUE_UPDATE, newValue);
+    };
     return {
         selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
         selectLabels: computed<string[]>(selectLabels.bind(null, props)),
@@ -111,46 +164,7 @@ export function useSelect(
                 }
             }
         },
-        optionClick: (e: Event, value: SelectValue, disabled: boolean | undefined) => {
-            e.stopPropagation();
-            // 如果当前项设置了禁用 则不会触发选择
-            if (!!disabled) {
-                return;
-            }
-            let newValue: SelectValue[] | SelectValue = props.multiple ? [] : value;
-            if (props.multiple) {
-                // 如果开启了多选，则将选中的数据插入到modelValue中
-                if (!Array.isArray(props.modelValue)) {
-                    Log.standardLogout("绑定的变量不是数组，无法开启多选模式。");
-                    return;
-                }
-                newValue = props.modelValue as SelectValue[];
-                let index = newValue.indexOf(value);
-                if (index !== -1) {
-                    // 如果当前选项已经选中 则去除
-                    newValue.splice(index, 1);
-                } else {
-                    // 否则添加
-                    newValue.push(value);
-                }
-                // 重新计算selectmenu的位置
-                popoverRef.value?.update();
-                collapseTagPopoverRef.value?.update();
-            } else {
-                if (Array.isArray(props.modelValue)) {
-                    Log.standardLogout("绑定的变量是数组, 是否启用multiple开启多选模式?");
-                    return;
-                }
-                // 如果未开启多选 则直接关闭selectmenu、将输入框只读并将选中数据展示到输入框中
-                visible.value = false;
-                readonly.value = true;
-                nextTick(() => {
-                    inputValue.value = getInputValue(props);
-                });
-            }
-            // 更新modelValue
-            emit(MODEL_VALUE_UPDATE, newValue);
-        },
+        optionClick,
         suffixIconShow,
         showClearBtn() {
             // 如果未开启清除或select框中没有值则不显示
@@ -174,11 +188,13 @@ export function useSelect(
             });
         },
         optionList: computed<OptionItem[]>(()=> {
-            let options: OptionItem[] = props.options;
+            let options: OptionItem[];
             if (props.filterable) {
-                options = props.options.filter(item => item.label.includes(inputValue.value));
+                options = filterOptionList(inputValue.value, props.options);
+            } else {
+                options = props.options;
             }
-            return options;
+            return getFlatOptionList(options);
         }),
         multipleFilterFlag: computed<boolean>(() => {
             // 当select模式为multiple且开启了可搜索并且已经选了最少一个值
@@ -201,7 +217,26 @@ export function useSelect(
             }
             return placeholder;
         }),
+        changeSelect(changeObj: OptionClickObj) {
+            optionClick(changeObj.e, changeObj.value, changeObj.disabled);
+        },
     };
+}
+
+function filterOptionList(filterValue: string, optionList: OptionItem[]): OptionItem[] {
+    const copyOptionList = JSON.parse(JSON.stringify(optionList)) as OptionItem[];
+    return copyOptionList.filter(option => {
+        if (option.type === SelectTypeEnum.GROUP) {
+            // 如果是选项组 则针对选项组内的children数据进行筛选
+            if (option.children) {
+                option.children = option.children.filter(child => child.label.includes(filterValue));
+            }
+            // 如果筛选之后组中有值则保留该组 否则去除该组
+            return option.children && option.children.length > 0;
+        }
+        // 如果是单项，则过滤单项
+        return option.label.includes(filterValue);
+    });
 }
 
 function getInputValue(props: SelectProps): string {
@@ -217,7 +252,8 @@ function getInputValue(props: SelectProps): string {
  */
 function selectOptions(props: SelectProps): OptionItem[] {
     let modelValue = getModelValueList(props);
-    return props.options.filter(item => modelValue.indexOf(item.value) !== -1);
+    return getFlatOptionList(props.options)
+            .filter(item => item.type !== SelectTypeEnum.GROUP && modelValue.indexOf(item.value) !== -1);
 }
 
 /**
@@ -225,7 +261,9 @@ function selectOptions(props: SelectProps): OptionItem[] {
  */
 function selectValues(props: SelectProps): SelectValue[] {
     let modelValue = getModelValueList(props);
-    return props.options.filter(item => modelValue.indexOf(item.value) !== -1).map(item => item.value);
+    return getFlatOptionList(props.options)
+            .filter(item => item.type !== SelectTypeEnum.GROUP && modelValue.indexOf(item.value) !== -1)
+            .map(item => item.value);
 }
 
 /**
@@ -233,7 +271,21 @@ function selectValues(props: SelectProps): SelectValue[] {
  */
 function selectLabels(props: SelectProps): string[] {
     let modelValue = getModelValueList(props);
-    return props.options.filter(item => modelValue.indexOf(item.value) !== -1).map(item => item.label);
+    return getFlatOptionList(props.options)
+            .filter(item => item.type !== SelectTypeEnum.GROUP && modelValue.indexOf(item.value) !== -1)
+            .map(item => item.label);
+}
+
+// 获取展平后的select选项集合 可能存在选项组的情况 需要展平
+function getFlatOptionList(optionList: OptionItem[]): OptionItem[] {
+    return optionList.flatMap(item => {
+        let result: OptionItem[] = [item];
+        if (item.type === SelectTypeEnum.GROUP && item.children) {
+            // 如果是group类型，将内容展平
+            result = [...result, ...item.children];
+        }
+        return result;
+    });
 }
 
 /**

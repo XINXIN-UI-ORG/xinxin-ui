@@ -17,6 +17,7 @@ import {
     Popover,
     Scrollbar,
     Tag,
+    SelectTypeEnum,
 } from "@xinxin-ui/components";
 
 // package下组件列表
@@ -75,4 +76,9 @@ export {
     Popover,
     Scrollbar,
     Tag,
+};
+
+// 导出类型
+export {
+    SelectTypeEnum,
 };
