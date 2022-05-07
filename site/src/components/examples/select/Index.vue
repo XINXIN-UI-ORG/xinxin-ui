@@ -413,38 +413,38 @@ import Group from './7Group.vue'
 
 const groupContent = `<script lang="ts">
 import { defineComponent, ref } from "vue";
+import { SelectTypeEnum } from "xinxin-ui";
 
 export default defineComponent({
     setup() {
         return {
             value: ref("1"),
+            multipleValue: ref([]),
+            multipleValueCollapse: ref([]),
             options: [
                 {
-                    type: 'group',
+                    type: SelectTypeEnum.GROUP,
                     label: "李白诗集",
-                    key: "libai",
+                    value: "libai",
                     children: [
                         {
                             label: "襄阳歌",
                             value: "1",
-                            key: "1",
                         },
                         {
                             label: "采莲曲",
                             value: "2",
-                            key: "2",
                         },
                         {
                             label: "客中行",
                             value: "3",
-                            key: "3"
                         },
                     ],
                 },
                 {
-                    type: 'group',
+                    type: SelectTypeEnum.GROUP,
                     label: "韩愈诗集",
-                    key: "hanyu",
+                    value: "hanyu",
                     children: [
                         {
                             label: "石鼓歌",
@@ -469,9 +469,9 @@ export default defineComponent({
                     ],
                 },
                 {
-                    type: 'group',
+                    type: SelectTypeEnum.GROUP,
                     label: "柳宗元诗集",
-                    key: "liuzongyuan",
+                    value: "liuzongyuan",
                     children: [
                         {
                             label: "江雪",
@@ -494,6 +494,129 @@ export default defineComponent({
                             value: "13"
                         },
                     ],
+                },
+            ],
+        };
+    },
+})
+<\/script>
+<template>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="value"
+        filterable
+    >
+    </x-select>
+    <div class="split"></div>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="multipleValue"
+        multiple
+        filterable
+    >
+    </x-select>
+    <div class="split"></div>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="multipleValueCollapse"
+        multiple
+        filterable
+        collapse-tags
+        collapse-tags-tooltip
+    >
+    </x-select>
+</template>`
+
+import Event from './8Event.vue'
+
+const eventContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+import { XMessage } from "xinxin-ui";
+
+export default defineComponent({
+    setup() {
+        return {
+            value: ref("1"),
+            multipleValue: ref([]),
+            options: [
+                {
+                    label: "襄阳歌-李白",
+                    value: "1"
+                },
+                {
+                    label: "采莲曲-李白",
+                    value: "2"
+                },
+                {
+                    label: "石鼓歌-韩愈",
+                    value: "3",
+                    disabled: true,
+                },
+                {
+                    label: "客中行-李白",
+                    value: "4"
+                },
+            ],
+            focus(value: string) {
+                XMessage("focus事件触发!" + value);
+            },
+            blur(value: string) {
+                XMessage("blur事件触发!" + value);
+            },
+        };
+    },
+})
+<\/script>
+<template>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="value"
+        @focus="focus"
+        @blur="blur"
+    >
+    </x-select>
+    <div class="split"></div>
+    <x-select
+        :options="options"
+        placeholder="Select"
+        v-model="multipleValue"
+        multiple
+        @focus="focus"
+        @blur="blur"
+    >
+    </x-select>
+</template>`
+
+import VirtualSelect from './9VirtualSelect.vue'
+
+const virtualSelectContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            value: ref("1"),
+            options: [
+                {
+                    label: "襄阳歌-李白",
+                    value: "1"
+                },
+                {
+                    label: "采莲曲-李白",
+                    value: "2"
+                },
+                {
+                    label: "石鼓歌-韩愈",
+                    value: "3",
+                    disabled: true,
+                },
+                {
+                    label: "客中行-李白",
+                    value: "4"
                 },
             ],
         };
@@ -544,6 +667,14 @@ export default defineComponent({
       groupContent,
       groupInfo: info.group,
 
+      Event,
+      eventContent,
+      eventInfo: info.event,
+
+      VirtualSelect,
+      virtualSelectContent,
+      virtualSelectInfo: info.virtualSelect,
+
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
     }
@@ -593,6 +724,15 @@ export default defineComponent({
         :code-desc="multipleCollapseInfo.desc"
       >
       </CodeExample>
+
+      <CodeExample
+        id="event"
+        :code="eventContent"
+        :title="eventInfo.title"
+        :code-v-node="Event"
+        :code-desc="eventInfo.desc"
+      >
+      </CodeExample>
     </template>
     <template #right>
       <CodeExample
@@ -628,6 +768,15 @@ export default defineComponent({
         :title="groupInfo.title"
         :code-v-node="Group"
         :code-desc="groupInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="virtualSelect"
+        :code="virtualSelectContent"
+        :title="virtualSelectInfo.title"
+        :code-v-node="VirtualSelect"
+        :code-desc="virtualSelectInfo.desc"
       >
       </CodeExample>
     </template>

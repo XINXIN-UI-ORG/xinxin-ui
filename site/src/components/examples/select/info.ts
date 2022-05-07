@@ -58,7 +58,25 @@ const group: ExampleInfo = {
     `)
 };
 
+const event: ExampleInfo = {
+    title: "事件",
+    desc: format(`
+        通过@focus和@blur提供select聚焦和失焦时触发的事件。
+        如果你问我select更新所选值时的change事件怎么没有？点击清除按钮清空所选值的clear-value事件怎么没有？多选时点击tag删除某一项的delete-tag事件怎么没有？
+        我觉得这些都可以通过监听传入的value值实现，或许你需要在多选的情况下通过以上提到的事件来单独获取某一被选中和删除的值，那个嘛，以后再说吧~~~
+    `)
+};
+
+const virtualSelect: ExampleInfo = {
+    title: "虚拟列表",
+    desc: format(`
+        超多选项，超多超多超多，嗯，超多。
+    `)
+};
+
 export {
+    virtualSelect,
+    event,
     group,
     multipleCollapse,
     multiple,
@@ -154,5 +172,13 @@ const apiProps: ApiTable<ApiProps> = {
 const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
     content: [
+        {
+            event: "focus",
+            describe: "select聚焦事件"
+        },
+        {
+            event: "blur",
+            describe: "select失焦事件"
+        },
     ],
 };

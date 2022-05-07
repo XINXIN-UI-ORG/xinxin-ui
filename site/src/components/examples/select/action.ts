@@ -41,4 +41,14 @@ export default [
     link: '/component/select#group',
     name: info.group.title,
   },
+  {
+    key: 8,
+    link: '/component/select#event',
+    name: info.event.title,
+  },
+  {
+    key: 9,
+    link: '/component/select#virtualSelect',
+    name: info.virtualSelect.title,
+  },
 ]

@@ -323,7 +323,13 @@ function showPasswordOnGather(
 }
 </script>
 <template>
-    <div :class="inputWrapperClassList" ref="inputWrapRef" @click="focus">
+    <div
+        :class="inputWrapperClassList"
+        ref="inputWrapRef"
+        @click="focus"
+        @mousedown="stopBlur"
+        @mouseup="stopBlur"
+    >
         <div :class="['x-input__left', _hiddenInput && 'x-input__left-hidden']">
             <div class="x-input__fix x-input__prefix" v-if="prefix">
                 <slot name="prefix"></slot>

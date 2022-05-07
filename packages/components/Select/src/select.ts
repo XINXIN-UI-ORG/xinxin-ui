@@ -61,6 +61,16 @@ export const selectEmits = {
             isNumber(value) ||
             value.every(item => isString(item) || isNumber(item));
     },
+    focus: (value: SelectValue | SelectValue[]) => {
+        return isString(value) ||
+            isNumber(value) ||
+            value.every(item => isString(item) || isNumber(item));
+    },
+    blur: (value: SelectValue | SelectValue[]) => {
+        return isString(value) ||
+            isNumber(value) ||
+            value.every(item => isString(item) || isNumber(item));
+    },
 };
 
 export type SelectProps = ExtractPropTypes<typeof selectProps>;

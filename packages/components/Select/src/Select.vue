@@ -56,6 +56,12 @@ export default defineComponent({
             multipleFlag,
             placeholder,
             changeSelect,
+            focus() {
+                emit("focus", props.modelValue as any);
+            },
+            blur() {
+                emit("blur", props.modelValue as any);
+            },
         };
     },
     components: {
@@ -104,6 +110,8 @@ export default defineComponent({
                     :disabled="disabled"
                     ref="singleSelectRef"
                     :_hidden-input="multipleFilterFlag"
+                    @onInputFocus="focus"
+                    @onInputBlur="blur"
                 >
                     <template #prefix>
                         <template
