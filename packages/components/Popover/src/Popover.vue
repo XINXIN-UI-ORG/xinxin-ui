@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref, watchEffect } from "vue";
-import { popoverProps, usePopover, PopoverPropsType } from "./popover";
+import { popoverProps, usePopover, PopoverPropsType, popoverEmits } from "./popover";
 import { generateClassName } from "@xinxin-ui/utils";
 import PopoverTrigger from "./PopoverTrigger";
 import XScrollbar from "../../Scrollbar";
@@ -8,8 +8,9 @@ import XScrollbar from "../../Scrollbar";
 export default defineComponent({
     name: "x-popover",
     props: popoverProps,
+    emits: popoverEmits,
     inheritAttrs: false,
-    setup(props: PopoverPropsType, { expose }) {
+    setup(props: PopoverPropsType, { expose, emit }) {
         let gcn = generateClassName("popover");
         let popoverShow = ref<boolean>(false);
         watchEffect(() => {
@@ -21,13 +22,14 @@ export default defineComponent({
         let popoverContentRef = ref<HTMLDivElement | null>(null);
         // arrow内容
         let popoverArrow = ref<HTMLDivElement | null>(null);
-        let { popperStyle } = usePopover(popoverContentRef, popoverArrow, props, expose);
+        let { popperStyle, popoverScroll } = usePopover(popoverContentRef, popoverArrow, props, expose, emit);
         return {
             gcn,
             popoverContentRef,
             popoverShow,
             popoverArrow,
             popperStyle,
+            popoverScroll,
         };
     },
     components: {
@@ -59,6 +61,7 @@ export default defineComponent({
             >
                 <x-scrollbar
                     :max-height="maxHeight"
+                    @scroll="popoverScroll"
                 >
                     <div
                         v-if="title"

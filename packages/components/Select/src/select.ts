@@ -1,10 +1,12 @@
 import { NormalSize } from "@xinxin-ui/typings";
-import { computed, ref, nextTick, onBeforeUnmount } from "vue";
+import { computed, ref, nextTick, onBeforeUnmount, watchEffect, reactive } from "vue";
 import type { ExtractPropTypes, SetupContext, PropType, Ref } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isNumber, isString } from "@vueuse/core";
 import { Log } from "@xinxin-ui/utils";
 import type Popover from "../../Popover";
+import { ScrollPosition } from "../../Scrollbar/src/scrollbar";
+import { VirtualList, ContainerState } from "@xinxin-ui/utils";
 
 export type SelectValue = number | string;
 
@@ -154,6 +156,26 @@ export function useSelect(
         // 更新modelValue
         emit(MODEL_VALUE_UPDATE, newValue);
     };
+    // 渲染数据
+    const virtualList = new VirtualList<OptionItem>(260);
+    const containerState = reactive<ContainerState>({
+        height: 0,
+        translate: 0,
+    });
+    let optionList = ref<OptionItem[]>([]);
+    watchEffect(()=> {
+        let options: OptionItem[];
+        if (props.filterable) {
+            options = filterOptionList(inputValue.value, props.options);
+        } else {
+            options = props.options;
+        }
+        options = getFlatOptionList(options);
+        // 虚拟化列表
+        virtualList.dataList = options;
+        options = virtualList.updateDataList(0, containerState);
+        optionList.value = options;
+    });
     return {
         selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
         selectLabels: computed<string[]>(selectLabels.bind(null, props)),
@@ -162,7 +184,14 @@ export function useSelect(
         readonly,
         inputValue,
         selectToogle() {
-            !props.disabled && (visible.value = !visible.value);
+            if (props.disabled) {
+                return;
+            }
+            visible.value = !visible.value;
+            if (visible.value) {
+                optionList.value = virtualList.updateDataList(0, containerState);
+                console.log("=========================");
+            }
             // 如果开启了过滤 当打开菜单时暂时清除内容
             if (props.filterable) {
                 if (visible.value) {
@@ -197,15 +226,7 @@ export function useSelect(
                 inputValue.value = getInputValue(props);
             });
         },
-        optionList: computed<OptionItem[]>(()=> {
-            let options: OptionItem[];
-            if (props.filterable) {
-                options = filterOptionList(inputValue.value, props.options);
-            } else {
-                options = props.options;
-            }
-            return getFlatOptionList(options);
-        }),
+        optionList,
         multipleFilterFlag: computed<boolean>(() => {
             // 当select模式为multiple且开启了可搜索并且已经选了最少一个值
             // 该条件针对部分需要选值后才开启的特效
@@ -230,6 +251,26 @@ export function useSelect(
         changeSelect(changeObj: OptionClickObj) {
             optionClick(changeObj.e, changeObj.value, changeObj.disabled);
         },
+        selectMenuScroll(scrollPosition: ScrollPosition) {
+            // 监听虚拟列表
+            optionList.value = virtualList.updateDataList(scrollPosition.scrollTop, containerState);
+        },
+        containerStyle: computed(() => {
+            if (!virtualList.isVirtualList()) {
+                return;
+            }
+            return {
+                "height": `${containerState.height}px`,
+            };
+        }),
+        menuStyle: computed(() => {
+            if (!virtualList.isVirtualList()) {
+                return;
+            }
+            return {
+                "transform": `translateY(${containerState.translate}px)`,
+            };
+        }),
     };
 }
 

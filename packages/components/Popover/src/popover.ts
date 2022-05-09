@@ -1,8 +1,9 @@
 import { PlacementType } from "@xinxin-ui/typings";
-import type { ExtractPropTypes, PropType, Ref } from "vue";
+import type { ExtractPropTypes, PropType, Ref, SetupContext } from "vue";
 import { onMounted, provide, ref, unref, watch, computed } from "vue";
 import { usePopper } from "@xinxin-ui/utils";
 import { ReferenceGather, ReferenceInjectKey } from "@xinxin-ui/symbols";
+import { ScrollPosition } from "../../Scrollbar/src/scrollbar";
 
 export const popoverProps = {
     content: {
@@ -63,11 +64,16 @@ export const popoverProps = {
 
 export type PopoverPropsType = ExtractPropTypes<typeof popoverProps>;
 
+export const popoverEmits = {
+    popoverScroll: null,
+};
+
 export function usePopover(
     popoverContentRef: Ref<HTMLDivElement | null>,
     popoverArrow: Ref<HTMLDivElement | null>,
     props: PopoverPropsType,
     expose: (exposed?: Record<string, any>) => void,
+    emit: SetupContext<typeof popoverEmits>['emit'],
 ) {
     // 注册reference
     let popoverRefGather: ReferenceGather = {
@@ -126,6 +132,9 @@ export function usePopover(
                         ? popoverRefGather.triggerRef.value!.offsetWidth + props._extendWidth + 'px'
                         : 'auto',
         })),
+        popoverScroll(scrollPosition: ScrollPosition) {
+            emit("popoverScroll", scrollPosition);
+        }
     };
 }
 

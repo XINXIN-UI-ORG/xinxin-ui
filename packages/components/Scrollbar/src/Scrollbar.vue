@@ -1,13 +1,14 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { generateClassName } from "@xinxin-ui/utils";
-import { scrollbarProps, useScrollbar } from "./scrollbar";
+import { scrollbarProps, useScrollbar, scrollbarEmits } from "./scrollbar";
 import type { ScrollbarPropsType } from "./scrollbar";
 
 export default defineComponent({
     name: "x-scrollbar",
     props: scrollbarProps,
-    setup(props: ScrollbarPropsType, { expose }) {
+    emits: scrollbarEmits,
+    setup(props: ScrollbarPropsType, { expose, emit }) {
         let scrollbarContainerRef = ref<HTMLDivElement | null>(null);
         let scrollbarContentRef = ref<HTMLDivElement | null>(null);
         let scrollVerticalBarRef = ref<HTMLDivElement | null>(null);
@@ -22,7 +23,7 @@ export default defineComponent({
             scrollVerticalTrackRef,
             scrollHorizontalTrackRef,
             scrollHorizontalBarRef,
-        }, expose);
+        }, expose, emit);
         return {
             scrollHorizontalTrackRef,
             scrollHorizontalBarRef,
@@ -34,6 +35,10 @@ export default defineComponent({
             scrollStyle,
             barStyle,
             contentStyle,
+            stopBlur(e: Event) {
+                e.preventDefault();
+                return false;
+            },
         };
     },
 })
@@ -74,6 +79,9 @@ export default defineComponent({
                     gcn.e('bar'),
                 ]"
                 ref="scrollVerticalBarRef"
+                @click.stop
+                @mousedown="stopBlur"
+                @mouseup="stopBlur"
             />
         </div>
         <div
@@ -88,6 +96,9 @@ export default defineComponent({
                     gcn.e('bar'),
                 ]"
                 ref="scrollHorizontalBarRef"
+                @click.stop
+                @mousedown="stopBlur"
+                @mouseup="stopBlur"
             />
         </div>
     </div>

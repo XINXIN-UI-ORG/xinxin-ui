@@ -3,27 +3,16 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     setup() {
+        let options = [] as any;
+        for (let i = 0; i < 1000; i++) {
+            options.push({
+                label: "襄阳歌-李白" + i,
+                value: i,
+            });
+        }
         return {
             value: ref("1"),
-            options: [
-                {
-                    label: "襄阳歌-李白",
-                    value: "1"
-                },
-                {
-                    label: "采莲曲-李白",
-                    value: "2"
-                },
-                {
-                    label: "石鼓歌-韩愈",
-                    value: "3",
-                    disabled: true,
-                },
-                {
-                    label: "客中行-李白",
-                    value: "4"
-                },
-            ],
+            options,
         };
     },
 });
@@ -33,6 +22,7 @@ export default defineComponent({
         :options="options"
         placeholder="Select"
         v-model="value"
+        filterable
     >
     </x-select>
 </template>

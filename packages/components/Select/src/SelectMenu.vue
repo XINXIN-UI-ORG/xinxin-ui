@@ -10,7 +10,7 @@ export default defineComponent({
     emits: selectMenuEmits,
     setup(_, { emit }) {
         let gcn = generateClassName("select");
-        let { selectItemClick }  = useSelectMenu(emit);
+        let { selectItemClick } = useSelectMenu(emit);
         return {
             gcn,
             stopBlur(e: Event) {

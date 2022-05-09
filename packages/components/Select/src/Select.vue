@@ -5,7 +5,7 @@ import { selectProps, useSelect, selectEmits } from "./select";
 import XInput from "../../XInput";
 import Popover from "../../Popover";
 import Tag from "../../Tag";
-import { Checked, ErrorMessage, DownSelect, NoData } from "@xinxin-ui/xinxin-icons";
+import { ErrorMessage, DownSelect } from "@xinxin-ui/xinxin-icons";
 import SelectMenu from "./SelectMenu.vue";
 
 export default defineComponent({
@@ -34,6 +34,9 @@ export default defineComponent({
             multipleFlag,
             placeholder,
             changeSelect,
+            selectMenuScroll,
+            containerStyle,
+            menuStyle,
         } = useSelect(props, emit, popoverRef, collapseTagPopoverRef);
         return {
             gcn,
@@ -62,6 +65,9 @@ export default defineComponent({
             blur() {
                 emit("blur", props.modelValue as any);
             },
+            selectMenuScroll,
+            containerStyle,
+            menuStyle,
         };
     },
     components: {
@@ -95,6 +101,7 @@ export default defineComponent({
             style="padding: 0;"
             ref="popoverRef"
             :max-height="260"
+            @popover-scroll="selectMenuScroll"
         >
             <template #default>
                 <x-input
@@ -222,11 +229,14 @@ export default defineComponent({
                 </x-input>
             </template>
             <template #content>
-                <select-menu
-                    :option-list="optionList"
-                    :select-values="selectValues"
-                    @change-select="changeSelect"
-                />
+                <div :style="containerStyle">
+                    <select-menu
+                        :option-list="optionList"
+                        :select-values="selectValues"
+                        @change-select="changeSelect"
+                        :style="menuStyle"
+                    />
+                </div>
             </template>
         </Popover>
     </div>

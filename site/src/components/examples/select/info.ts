@@ -89,14 +89,13 @@ export {
     apiEvent
 }
 
-
 const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
             props: "options",
             describe: "x-select的可选值",
-            type: 'Array<{label: string, value: string | number, disabled: boolean}>',
+            type: 'Array<{label: string, value: string | number, disabled: boolean, type: SelectTypeEnum, children: Array}>',
         },
         {
             props: "size",

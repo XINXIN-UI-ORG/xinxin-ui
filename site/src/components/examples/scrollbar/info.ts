@@ -81,5 +81,10 @@ const apiEvent: ApiTable<ApiEvent> = {
             describe: "相对于滚动条现在的位置，将滚动条滚动相对距离。",
             props: ["{ left?: number, top?: number, behavior?: string }"]
         },
+        {
+            event: "scroll",
+            describe: "滚动事件",
+            props: ["{}"],
+        },
     ],
 };

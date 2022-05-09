@@ -135,5 +135,10 @@ const apiProps: ApiTable<ApiProps> = {
 const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
     content: [
+        {
+            event: "popoverScroll",
+            describe: "当popover被限制高度后会出现滚动条，该事件可以监听到popover内的滚动。",
+            props: ["scrollPosition"],
+        },
     ],
 };

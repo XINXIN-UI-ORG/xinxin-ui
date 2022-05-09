@@ -1,5 +1,5 @@
-import { ExtractPropTypes, computed, onMounted, watchEffect, ref } from "vue";
-import type { Ref } from "vue";
+import { ExtractPropTypes, computed, onMounted, watchEffect } from "vue";
+import type { Ref, SetupContext } from "vue";
 import { numberReg, matchNumberReg } from "@xinxin-ui/utils";
 
 export const scrollbarProps = {
@@ -23,6 +23,10 @@ export const scrollbarProps = {
 
 export type ScrollbarPropsType = ExtractPropTypes<typeof scrollbarProps>;
 
+export const scrollbarEmits = {
+    scroll: null,
+};
+
 type RefName = {
     scrollbarContainerRef: string;
     scrollbarContentRef: string;
@@ -36,10 +40,16 @@ type RefObject = {
     [key in keyof RefName]: Ref<HTMLDivElement | null>;
 };
 
+export type ScrollPosition = {
+    scrollTop: number,
+    scrollLeft: number,
+};
+
 export function useScrollbar(
     props: ScrollbarPropsType,
     refObject: RefObject,
     expose: (exposed?: Record<string, any>) => void,
+    emit: SetupContext<typeof scrollbarEmits>['emit'],
 ) {
     // 滚动条是否初始化
     let verticalInitialize = false;
@@ -75,6 +85,13 @@ export function useScrollbar(
         let imgList = Array.from(refObject.scrollbarContentRef.value!.querySelectorAll('img'));
         imgList.length > 0 && Promise.all(imgList.map(item => imageDomReload(item)))
         .then(scrollbarInitGather);
+        // 监听滚动方法
+        refObject.scrollbarContainerRef.value?.addEventListener("scroll", () => {
+            emit("scroll", {
+                "scrollTop": refObject.scrollbarContainerRef.value?.scrollTop,
+                "scrollLeft": refObject.scrollbarContainerRef.value?.scrollLeft,
+            } as ScrollPosition);
+        });
     });
     // 导出方法
     expose({
@@ -226,7 +243,7 @@ function initVerticalScrollBar(refObject: RefObject) {
         let scrollbarMoveEventBind = scrollbarVerticalMoveEvent.bind(null, startHeight, refObject, originMargin, originScroll);
         document.addEventListener("mousemove", scrollbarMoveEventBind, false);
         // 取消事件
-        let cancelEvent = () => {
+        let cancelEvent = (e: Event) => {
             document.removeEventListener("mousemove", scrollbarMoveEventBind);
             document.removeEventListener("mouseup", cancelEvent);
             // 开启滚动监听
