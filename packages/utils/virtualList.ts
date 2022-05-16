@@ -5,16 +5,23 @@ export type ContainerState = {
     translate: number,
 };
 
+/**
+ * 列表项数据缓存
+ */
+type ListItemCache = {
+    // 当前项的索引
+    index: number;
+    // 当前项的高度
+    selfHeight: number;
+    // 当前项距离顶部的高度
+    offset: number;
+};
+
 export class VirtualList<T> {
-    item_height: number = 38;
+    /**
+     * 待展示的所有元素
+     */
     private _dataList: Array<T>;
-
-    private _viewPortHeight: number;
-
-    constructor(viewPortHeight: number) {
-        this._dataList = [];
-        this._viewPortHeight = viewPortHeight;
-    }
 
     get dataList(): T[] {
         return this._dataList;
@@ -24,39 +31,83 @@ export class VirtualList<T> {
         this._dataList = list;
     }
 
+    /**
+     * 视口高度
+     */
+    private _viewPortHeight: number;
+
+    /**
+     * 列表项的数据缓存
+     */
+    private _listDataCaches: Array<ListItemCache> = [];
+
+    private defaultItemHeight = 30;
+
+    constructor(viewPortHeight: number) {
+        this._dataList = [];
+        this._viewPortHeight = viewPortHeight;
+    }
+
+    /**
+     * 初始化缓存信息
+     */
+    private initCache(): void {
+        let offset = 0;
+        for (let i = 0; i < this._dataList.length; i++) {
+            this._listDataCaches.push({
+                index: i,
+                selfHeight: this.defaultItemHeight,
+                offset,
+            });
+            offset += this.defaultItemHeight;
+        }
+    }
+
+    /**
+     * 根据滚动条高度实时更新待展示的list
+     * @param scrollTop 
+     * @param containerState 
+     * @returns 
+     */
     public updateDataList(scrollTop: number, containerState: UnwrapNestedRefs<ContainerState>): Array<T> {
         if (!this.isVirtualList()) {
             return this._dataList;
         }
-        // 获取起始跟结束idindex
-        let startIndex = this.startIndex(scrollTop);
-        let endIndex = this.endIndex(startIndex);
-        console.log(scrollTop, startIndex);
+        this.initCache();
+        
+        // 获取起始跟结束index
+        let startIndex = this.findFirstIndex(scrollTop);
+        let endIndex = this.findFirstIndex(scrollTop + this._viewPortHeight);
         // 更新容器的高度和偏移量
         containerState.height = this.getContainerHeight();
-        containerState.translate = this.getTranslate(startIndex);
-        return this._dataList.slice(startIndex, endIndex);
-    }
-
-    private getContainerHeight(): number {
-        return this._dataList.length * this.item_height;
-    }
-
-    private getTranslate(index: number): number {
-        return index * this.item_height;
+        containerState.translate = this._listDataCaches[startIndex].offset;
+        return this._dataList.slice(startIndex, Math.min(endIndex + 1, this._dataList.length));
     }
 
     /**
-     * 获取当前滚动条对应需要渲染的列表的起始index
-     * @param scrollTop 
-     * @returns 
+     * 滚动区域总高度
+     * @returns { number }
      */
-    private startIndex(scrollTop: number) {
-        return Math.floor(scrollTop / this.item_height);
+    private getContainerHeight(): number {
+        const lastItem = this._listDataCaches[this._listDataCaches.length - 1];
+        return lastItem.offset + lastItem.selfHeight;
     }
 
-    private endIndex(startIndex: number) {
-        return startIndex + Math.ceil(this._viewPortHeight / this.item_height);
+    /**
+     * 计算滚动到指定高度时应该显示的第一个元素索引
+     * @param height
+     * @returns 
+     */
+    private findFirstIndex(height: number) {
+        let total = 0;
+        for (let i = 0; i < this._dataList.length; i++) {
+            total += this._listDataCaches[i].selfHeight;
+            // 判断是否需要开始显示数据
+            if (total >= height || i === this._dataList.length - 1) {
+                return i;
+            }
+        }
+        return 0;
     }
 
     public isVirtualList(): boolean {

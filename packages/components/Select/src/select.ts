@@ -190,7 +190,6 @@ export function useSelect(
             visible.value = !visible.value;
             if (visible.value) {
                 optionList.value = virtualList.updateDataList(0, containerState);
-                console.log("=========================");
             }
             // 如果开启了过滤 当打开菜单时暂时清除内容
             if (props.filterable) {
