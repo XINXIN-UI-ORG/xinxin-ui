@@ -78,6 +78,7 @@ export const selectEmits = {
 export type SelectProps = ExtractPropTypes<typeof selectProps>;
 
 export type OptionItem = {
+    index?: number;
     label: string,
     value: SelectValue,
     disabled?: boolean,
@@ -172,7 +173,7 @@ export function useSelect(
         }
         options = getFlatOptionList(options);
         // 虚拟化列表
-        virtualList.dataList = options;
+        virtualList.setDataList(options);
         options = virtualList.updateDataList(0, containerState);
         optionList.value = options;
     });
@@ -270,6 +271,9 @@ export function useSelect(
                 "transform": `translateY(${containerState.translate}px)`,
             };
         }),
+        updateCache(data: { index: number, height: number }) {
+            virtualList.updateCache(data.index, data.height);
+        }
     };
 }
 

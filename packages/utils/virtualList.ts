@@ -21,14 +21,18 @@ export class VirtualList<T> {
     /**
      * 待展示的所有元素
      */
-    private _dataList: Array<T>;
+    private _dataList: T[] = [];
 
-    get dataList(): T[] {
-        return this._dataList;
-    }
+    public setDataList(list: T[]) {
+        this._dataList = [];
+        this._listDataCaches = [];
 
-    set dataList(list: T[]) {
-        this._dataList = list;
+        // 转换list 编上index
+        list.forEach((item, index) => {
+            (item as any).index = index;
+            this._dataList.push(item);
+        });
+        this.initCache();
     }
 
     /**
@@ -44,7 +48,6 @@ export class VirtualList<T> {
     private defaultItemHeight = 30;
 
     constructor(viewPortHeight: number) {
-        this._dataList = [];
         this._viewPortHeight = viewPortHeight;
     }
 
@@ -69,12 +72,11 @@ export class VirtualList<T> {
      * @param containerState 
      * @returns 
      */
-    public updateDataList(scrollTop: number, containerState: UnwrapNestedRefs<ContainerState>): Array<T> {
+    public updateDataList(scrollTop: number, containerState: UnwrapNestedRefs<ContainerState>): T[] {
         if (!this.isVirtualList()) {
             return this._dataList;
         }
-        this.initCache();
-        
+
         // 获取起始跟结束index
         let startIndex = this.findFirstIndex(scrollTop);
         let endIndex = this.findFirstIndex(scrollTop + this._viewPortHeight);
@@ -112,5 +114,20 @@ export class VirtualList<T> {
 
     public isVirtualList(): boolean {
         return this._dataList.length > 100;
+    }
+
+    public updateCache(index: number, height: number): void {
+        const dataItem = this._listDataCaches[index];
+        if (dataItem) {
+            dataItem.selfHeight = height;
+            this._listDataCaches[index] = dataItem;
+            
+            // 向后更新offset
+            for (let i = index + 1; i < this._listDataCaches.length; i++) {
+                const prevItem = this._listDataCaches[i - 1];
+                const currentItem = this._listDataCaches[i];
+                currentItem.offset = prevItem.offset + prevItem.selfHeight;
+            }
+        }
     }
 }

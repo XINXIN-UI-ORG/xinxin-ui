@@ -5,8 +5,8 @@ import { selectProps, useSelect, selectEmits } from "./select";
 import XInput from "../../XInput";
 import Popover from "../../Popover";
 import Tag from "../../Tag";
-import { ErrorMessage, DownSelect } from "@xinxin-ui/xinxin-icons";
-import SelectMenu from "./SelectMenu.vue";
+import { ErrorMessage, DownSelect, NoData } from "@xinxin-ui/xinxin-icons";
+import SelectItem from "./selectItem.vue";
 
 export default defineComponent({
     name: "x-select",
@@ -37,6 +37,7 @@ export default defineComponent({
             selectMenuScroll,
             containerStyle,
             menuStyle,
+            updateCache,
         } = useSelect(props, emit, popoverRef, collapseTagPopoverRef);
         return {
             gcn,
@@ -65,9 +66,14 @@ export default defineComponent({
             blur() {
                 emit("blur", props.modelValue as any);
             },
+            stopBlur(e: Event) {
+                e.preventDefault();
+                return false;
+            },
             selectMenuScroll,
             containerStyle,
             menuStyle,
+            updateCache,
         };
     },
     components: {
@@ -76,7 +82,8 @@ export default defineComponent({
         ErrorMessage,
         DownSelect,
         Tag,
-        SelectMenu,
+        SelectItem,
+        NoData,
     },
 });
 </script>
@@ -230,12 +237,43 @@ export default defineComponent({
             </template>
             <template #content>
                 <div :style="containerStyle">
-                    <select-menu
-                        :option-list="optionList"
-                        :select-values="selectValues"
-                        @change-select="changeSelect"
+                    <div
                         :style="menuStyle"
-                    />
+                        :class="[
+                            gcn.e('options'),
+                        ]"
+                        @mousedown="stopBlur"
+                        @mouseup="stopBlur"
+                        @click.stop
+                        v-if="optionList.length > 0"
+                    >
+                        <template
+                            v-for="item in optionList"
+                            :key="item.value"
+                        >
+                            <select-item
+                                :index="item.index"
+                                :data="item"
+                                :select-values="selectValues"
+                                @change-select="changeSelect"
+                                @update-cache="updateCache"
+                            />
+                        </template>
+                    </div>
+                    <div
+                        :class="[
+                            gcn.e('no-data'),
+                        ]"
+                        @mousedown="stopBlur"
+                        @mouseup="stopBlur"
+                        @click.stop
+                        v-else
+                    >
+                        <div :class="gcn.e('no-data', 'icon')">
+                            <no-data />
+                        </div>
+                        <div :class="gcn.e('no-data', 'text')">暂无数据</div>
+                    </div>
                 </div>
             </template>
         </Popover>

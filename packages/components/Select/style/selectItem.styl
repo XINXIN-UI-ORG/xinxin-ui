@@ -1,0 +1,33 @@
+@import '../../../theme-chalk/variable.styl';
+
+.x-select__options__group
+    font-weight bolder
+    padding 3px 0 3px 8px
+    color #bdbec0
+.x-select__options__item
+    padding 8px 12px
+    cursor pointer
+    display flex
+    align-items center
+    &:hover
+        background-color #f4f5f5
+        .x-select__options__item__select
+            svg
+                color #f4f5f5
+    .x-select__options__item__select
+        margin-right 5px
+        svg
+            height 18px
+            vertical-align sub
+            color #fff
+.x-select__options__item-selected
+    background-color #f4f5f5
+    .x-select__options__item__select
+        svg
+            color $base_theme_color !important
+    .x-select__options__item__label
+        font-weight bolder
+        color $base_theme_color
+.x-select__options__item-disabled
+    cursor not-allowed
+    color #c8c8c8
