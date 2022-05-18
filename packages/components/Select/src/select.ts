@@ -160,8 +160,8 @@ export function useSelect(
     // 渲染数据
     const virtualList = new VirtualList<OptionItem>(260);
     const containerState = reactive<ContainerState>({
-        height: 0,
-        translate: 0,
+        height: 'auto',
+        translate: '0',
     });
     let optionList = ref<OptionItem[]>([]);
     watchEffect(()=> {
@@ -172,6 +172,7 @@ export function useSelect(
             options = props.options;
         }
         options = getFlatOptionList(options);
+        
         // 虚拟化列表
         virtualList.setDataList(options);
         options = virtualList.updateDataList(0, containerState);
@@ -255,22 +256,12 @@ export function useSelect(
             // 监听虚拟列表
             optionList.value = virtualList.updateDataList(scrollPosition.scrollTop, containerState);
         },
-        containerStyle: computed(() => {
-            if (!virtualList.isVirtualList()) {
-                return;
-            }
-            return {
-                "height": `${containerState.height}px`,
-            };
-        }),
-        menuStyle: computed(() => {
-            if (!virtualList.isVirtualList()) {
-                return;
-            }
-            return {
-                "transform": `translateY(${containerState.translate}px)`,
-            };
-        }),
+        containerStyle: computed(() => ({
+            "height": containerState.height,
+        })),
+        menuStyle: computed(() => ({
+            "transform": `translateY(${containerState.translate}px)`,
+        })),
         updateCache(data: { index: number, height: number }) {
             virtualList.updateCache(data.index, data.height);
         }

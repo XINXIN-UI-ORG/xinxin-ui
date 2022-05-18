@@ -87,7 +87,7 @@ export default defineComponent({
     .component__menu
         margin-left -280px
         position fixed !important
-        z-index 1
+        z-index 100
         .component__menu__toogle
             right calc(0% - 36px) !important
         &.active

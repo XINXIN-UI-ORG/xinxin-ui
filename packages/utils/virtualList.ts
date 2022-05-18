@@ -1,8 +1,8 @@
 import { UnwrapNestedRefs } from "vue";
 
 export type ContainerState = {
-    height: number,
-    translate: number,
+    height: string,
+    translate: string,
 };
 
 /**
@@ -74,15 +74,18 @@ export class VirtualList<T> {
      */
     public updateDataList(scrollTop: number, containerState: UnwrapNestedRefs<ContainerState>): T[] {
         if (!this.isVirtualList()) {
+            containerState.height = 'auto';
+            containerState.translate = '0';
             return this._dataList;
         }
 
         // 获取起始跟结束index
         let startIndex = this.findFirstIndex(scrollTop);
         let endIndex = this.findFirstIndex(scrollTop + this._viewPortHeight);
+
         // 更新容器的高度和偏移量
-        containerState.height = this.getContainerHeight();
-        containerState.translate = this._listDataCaches[startIndex].offset;
+        containerState.height = `${this.getContainerHeight()}px`;
+        containerState.translate = `${this._listDataCaches[startIndex].offset}px`;
         return this._dataList.slice(startIndex, Math.min(endIndex + 1, this._dataList.length));
     }
 

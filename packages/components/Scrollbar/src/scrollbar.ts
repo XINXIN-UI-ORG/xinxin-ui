@@ -1,4 +1,4 @@
-import { ExtractPropTypes, computed, onMounted, watchEffect } from "vue";
+import { ExtractPropTypes, computed, onMounted, watchEffect, onUnmounted } from "vue";
 import type { Ref, SetupContext } from "vue";
 import { numberReg, matchNumberReg } from "@xinxin-ui/utils";
 
@@ -77,20 +77,23 @@ export function useScrollbar(
     onMounted(() => {
         watchEffect(scrollbarInitGather);
         // 监听容器高度的变化 同步更新滚动条的长度
-        const observer = new MutationObserver(scrollbarInitGather);
-        observer.observe(refObject.scrollbarContentRef.value!, { attributes: true, childList: true, subtree: true, characterData: true });
+        const observe = new ResizeObserver(scrollbarInitGather);
+        observe.observe(refObject.scrollbarContentRef.value!);
+
         // 监听页面是否变化
         window.addEventListener("resize", scrollbarInitGather);
-        // 监听页面容是否有图片 如果有需要等图片加载完毕再进行计算是否显示滚动条
-        let imgList = Array.from(refObject.scrollbarContentRef.value!.querySelectorAll('img'));
-        imgList.length > 0 && Promise.all(imgList.map(item => imageDomReload(item)))
-        .then(scrollbarInitGather);
+
         // 监听滚动方法
         refObject.scrollbarContainerRef.value?.addEventListener("scroll", () => {
             emit("scroll", {
                 "scrollTop": refObject.scrollbarContainerRef.value?.scrollTop,
                 "scrollLeft": refObject.scrollbarContainerRef.value?.scrollLeft,
             } as ScrollPosition);
+        });
+
+        onUnmounted(() => {
+            observe.disconnect();
+            window.removeEventListener("resize", scrollbarInitGather);
         });
     });
     // 导出方法
@@ -128,14 +131,6 @@ export function useScrollbar(
             "--backgroundColorHover": props.hoverColor,
         }))
     };
-}
-
-function imageDomReload(imgDom: HTMLImageElement): Promise<null> {
-    return new Promise<null>((reslove) => {
-        imgDom.onload = () => {
-            reslove(null);
-        }
-    });
 }
 
 function showVerticalBar(refObject: RefObject): boolean {
