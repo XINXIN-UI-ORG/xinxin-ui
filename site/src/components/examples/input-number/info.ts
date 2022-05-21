@@ -50,7 +50,15 @@ const focusAndBlur: ExampleInfo = {
     `)
 };
 
+const status: ExampleInfo = {
+    title: "输入框状态",
+    desc: format(`
+        设置status为error可触发输入框错误状态，错误状态会修改边框的样式。
+    `)
+};
+
 export {
+    status,
     focusAndBlur,
     onInput,
     disabled,
@@ -74,17 +82,11 @@ const apiProps: ApiTable<ApiProps> = {
             selectList: ["true", "false"],
         },
         {
-            props: "mode",
+            props: "size",
             describe: "设置输入框的尺寸",
             type: 'Stirng',
             defaultValue: "normal",
             selectList: ["small", "normal", "large"],
-        },
-        {
-            props: "size",
-            describe: "当输入框为行内元素时，可以配置输入框长度",
-            type: 'Number',
-            defaultValue: "20",
         },
         {
             props: "disabled",

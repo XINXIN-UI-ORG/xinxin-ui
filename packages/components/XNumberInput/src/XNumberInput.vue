@@ -41,6 +41,11 @@ export default defineComponent({
                     ? "x-number-input-inline"
                     : "x-number-input-block",
             ]),
+            statusClass: computed(() => {
+                return attrs.status === undefined
+                        ? ''
+                        : 'x-number-input__' + attrs.status;
+            }),
             disabled,
             xInputRef,
             upValue,
@@ -169,7 +174,13 @@ function modifyValue(
             @onInputBlur="blurInput"
             class="x-number-input__input"
         />
-        <div class="x-number-input__button" v-if="numberButton">
+        <div
+            :class="[
+                'x-number-input__button',
+                statusClass,
+            ]"
+            v-if="numberButton"
+        >
             <div
                 :class="[
                     'x-number-input__button__top',
@@ -205,7 +216,7 @@ function modifyValue(
         flex 1
     .x-number-input__button
         border 1px solid #e0e0e6
-        margin -1px 0 1px 5px
+        margin 0 0 0 5px
         border-radius 4px
         overflow hidden
         cursor pointer
@@ -232,6 +243,10 @@ function modifyValue(
                 background-color #f7f7f7
             &:active
                 background-color #f7f7f7
+    .x-number-input__error
+        border-color #F56C6C
+        .asa-icon
+            color #F56C6C !important
 .x-number-input-small
     height 30px
 .x-number-input-normal

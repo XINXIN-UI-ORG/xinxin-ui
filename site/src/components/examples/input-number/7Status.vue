@@ -1,0 +1,9 @@
+<template>
+    <x-number-input
+        placeholder="输入框状态"
+        number-button
+        clearable
+        block
+        status="error"
+    />
+</template>

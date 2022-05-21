@@ -74,7 +74,15 @@ const virtualSelect: ExampleInfo = {
     `)
 };
 
+const status: ExampleInfo = {
+    title: "输入框状态",
+    desc: format(`
+        设置status为error可触发输入框错误状态，错误状态会修改边框的样式。
+    `)
+};
+
 export {
+    status,
     virtualSelect,
     event,
     group,
@@ -164,6 +172,13 @@ const apiProps: ApiTable<ApiProps> = {
             type: "Boolean",
             defaultValue: "false",
             selectList: ["true", "false"],
+        },
+        {
+            props: "status",
+            describe: "错误状态",
+            type: "String",
+            defaultValue: "--",
+            selectList: ["error"],
         },
     ],
 };

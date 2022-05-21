@@ -36,4 +36,9 @@ export default [
     link: '/component/input-number#focusAndBlur',
     name: info.focusAndBlur.title,
   },
+  {
+    key: 7,
+    link: '/component/input-number#status',
+    name: info.status.title,
+  },
 ]

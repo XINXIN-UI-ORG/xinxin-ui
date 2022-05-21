@@ -14,6 +14,7 @@ export default defineComponent({
     emits: selectEmits,
     setup(props, { emit }) {
         let gcn = generateClassName("select");
+        let selectDom = ref<HTMLDivElement>();
         let popoverRef = ref<InstanceType<typeof Popover>>();
         let collapseTagPopoverRef = ref<InstanceType<typeof Popover>>();
         let {
@@ -38,9 +39,10 @@ export default defineComponent({
             containerStyle,
             menuStyle,
             updateCache,
-        } = useSelect(props, emit, popoverRef, collapseTagPopoverRef);
+        } = useSelect(props, emit, popoverRef, collapseTagPopoverRef, selectDom);
         return {
             gcn,
+            selectDom,
             popoverRef,
             collapseTagPopoverRef,
             selectOptions,
@@ -98,6 +100,7 @@ export default defineComponent({
         @click.stop="selectToogle"
         @mouseenter="showClearBtn"
         @mouseleave="closeClearBtn"
+        ref="selectDom"
     >
         <Popover
             :show="visible"
@@ -126,6 +129,7 @@ export default defineComponent({
                     :_hidden-input="multipleFilterFlag"
                     @onInputFocus="focus"
                     @onInputBlur="blur"
+                    :status="status"
                 >
                     <template #prefix>
                         <template

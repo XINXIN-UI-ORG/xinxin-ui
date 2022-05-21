@@ -154,6 +154,18 @@ export default defineComponent({
     />
 </template>`
 
+import Status from './7Status.vue'
+
+const statusContent = `<template>
+    <x-number-input
+        placeholder="输入框状态"
+        number-button
+        clearable
+        block
+        status="error"
+    />
+</template>`
+
 export default defineComponent({
   setup() {
     return {
@@ -184,6 +196,10 @@ export default defineComponent({
       FocusAndBlur,
       focusAndBlurContent,
       focusAndBlurInfo: info.focusAndBlur,
+
+      Status,
+      statusContent,
+      statusInfo: info.status,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -260,6 +276,15 @@ export default defineComponent({
         :title="onInputInfo.title"
         :code-v-node="OnInput"
         :code-desc="onInputInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="status"
+        :code="statusContent"
+        :title="statusInfo.title"
+        :code-v-node="Status"
+        :code-desc="statusInfo.desc"
       >
       </CodeExample>
     </template>

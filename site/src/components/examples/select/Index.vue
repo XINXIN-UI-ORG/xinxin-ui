@@ -591,15 +591,15 @@ export default defineComponent({
     </x-select>
 </template>`
 
-import VirtualSelect from './9VirtualSelect.vue'
+import Status from './91Status.vue'
 
-const virtualSelectContent = `<script lang="ts">
+const statusContent = `<script lang="ts">
 import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     setup() {
         return {
-            value: ref("1"),
+            value: ref("0"),
             options: [
                 {
                     label: "襄阳歌-李白",
@@ -626,8 +626,40 @@ export default defineComponent({
 <template>
     <x-select
         :options="options"
+        placeholder="错误状态"
+        v-model="value"
+        status="error"
+    >
+    </x-select>
+</template>`
+
+import VirtualSelect from './9VirtualSelect.vue'
+
+const virtualSelectContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let options = [] as any;
+        for (let i = 0; i < 1000; i++) {
+            options.push({
+                label: "襄阳歌-李白" + i,
+                value: i,
+            });
+        }
+        return {
+            value: ref("1"),
+            options,
+        };
+    },
+});
+<\/script>
+<template>
+    <x-select
+        :options="options"
         placeholder="Select"
         v-model="value"
+        filterable
     >
     </x-select>
 </template>`
@@ -670,6 +702,10 @@ export default defineComponent({
       Event,
       eventContent,
       eventInfo: info.event,
+
+      Status,
+      statusContent,
+      statusInfo: info.status,
 
       VirtualSelect,
       virtualSelectContent,
@@ -733,6 +769,15 @@ export default defineComponent({
         :code-desc="eventInfo.desc"
       >
       </CodeExample>
+
+      <CodeExample
+        id="virtualSelect"
+        :code="virtualSelectContent"
+        :title="virtualSelectInfo.title"
+        :code-v-node="VirtualSelect"
+        :code-desc="virtualSelectInfo.desc"
+      >
+      </CodeExample>
     </template>
     <template #right>
       <CodeExample
@@ -772,11 +817,11 @@ export default defineComponent({
       </CodeExample>
 
       <CodeExample
-        id="virtualSelect"
-        :code="virtualSelectContent"
-        :title="virtualSelectInfo.title"
-        :code-v-node="VirtualSelect"
-        :code-desc="virtualSelectInfo.desc"
+        id="status"
+        :code="statusContent"
+        :title="statusInfo.title"
+        :code-v-node="Status"
+        :code-desc="statusInfo.desc"
       >
       </CodeExample>
     </template>

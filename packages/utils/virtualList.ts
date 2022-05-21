@@ -104,15 +104,33 @@ export class VirtualList<T> {
      * @returns 
      */
     private findFirstIndex(height: number) {
-        let total = 0;
-        for (let i = 0; i < this._dataList.length; i++) {
-            total += this._listDataCaches[i].selfHeight;
-            // 判断是否需要开始显示数据
-            if (total >= height || i === this._dataList.length - 1) {
-                return i;
+        // 二分查找元素
+        let low = 0;
+        let high = this._dataList.length - 1;
+        while (low <= high) {
+            let middle = Math.floor((high + low) / 2);
+            let middleCache = this._listDataCaches[middle];
+            if (this.isTargetLine(middleCache, height)) {
+                return middle;
+            } else if (this.isAboveLine(middleCache, height)) {
+                low = middle + 1;
+            } else {
+                high = middle - 1;
             }
         }
-        return 0;
+        return high;
+    }
+
+    private isTargetLine(middleCache: ListItemCache, height: number): boolean {
+        return middleCache.offset <= height && middleCache.offset + middleCache.selfHeight >= height;
+    }
+
+    private isBelowLine(middleCache: ListItemCache, height: number): boolean {
+        return middleCache.offset > height;
+    }
+    
+    private isAboveLine(middleCache: ListItemCache, height: number): boolean {
+        return middleCache.offset + middleCache.selfHeight < height;
     }
 
     public isVirtualList(): boolean {

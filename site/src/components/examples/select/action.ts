@@ -48,6 +48,11 @@ export default [
   },
   {
     key: 9,
+    link: '/component/select#status',
+    name: info.status.title,
+  },
+  {
+    key: 10,
     link: '/component/select#virtualSelect',
     name: info.virtualSelect.title,
   },

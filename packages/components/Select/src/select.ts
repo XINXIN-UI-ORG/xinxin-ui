@@ -1,5 +1,5 @@
 import { NormalSize } from "@xinxin-ui/typings";
-import { computed, ref, nextTick, onBeforeUnmount, watchEffect, reactive } from "vue";
+import { computed, ref, nextTick, onBeforeUnmount, watchEffect, reactive, onMounted, watch } from "vue";
 import type { ExtractPropTypes, SetupContext, PropType, Ref } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isNumber, isString } from "@vueuse/core";
@@ -55,6 +55,10 @@ export const selectProps = {
         type: Boolean,
         default: false,
     },
+    status: {
+        type: String,
+        default: undefined,
+    },
 };
 
 export const selectEmits = {
@@ -102,6 +106,7 @@ export function useSelect(
     emit: SetupContext<typeof selectEmits>['emit'],
     popoverRef: Ref<InstanceType<typeof Popover> | undefined>,
     collapseTagPopoverRef: Ref<InstanceType<typeof Popover> | undefined>,
+    selectDom: Ref<HTMLDivElement | undefined>,
 ) {
     let visible = ref<boolean>(false);
     let suffixIconShow = ref<number>(0);
@@ -113,6 +118,18 @@ export function useSelect(
         inputValue.value = getInputValue(props);
     };
     document.addEventListener("click", closeSelectMenu);
+
+    // 监听select视口变化
+    onMounted(() => {
+        const observe = new ResizeObserver(() => {
+            popoverRef.value?.update();
+            popoverRef.value?.updatePopoverWidth();
+            collapseTagPopoverRef.value?.update();
+        });
+        observe.observe(selectDom.value!);
+    });
+
+    // 解绑相应事件
     onBeforeUnmount(() => {
         document.removeEventListener("click", closeSelectMenu);
     });
@@ -157,6 +174,7 @@ export function useSelect(
         // 更新modelValue
         emit(MODEL_VALUE_UPDATE, newValue);
     };
+
     // 渲染数据
     const virtualList = new VirtualList<OptionItem>(260);
     const containerState = reactive<ContainerState>({
@@ -164,7 +182,7 @@ export function useSelect(
         translate: '0',
     });
     let optionList = ref<OptionItem[]>([]);
-    watchEffect(()=> {
+    let recomputedOptionList = () => {
         let options: OptionItem[];
         if (props.filterable) {
             options = filterOptionList(inputValue.value, props.options);
@@ -175,9 +193,14 @@ export function useSelect(
         
         // 虚拟化列表
         virtualList.setDataList(options);
-        options = virtualList.updateDataList(0, containerState);
-        optionList.value = options;
-    });
+        optionList.value = virtualList.updateDataList(0, containerState);
+        
+    };
+    recomputedOptionList();
+    watch(() => props.filterable, recomputedOptionList);
+    watch(() => inputValue.value, recomputedOptionList);
+    watch(() => props.options, recomputedOptionList);
+
     return {
         selectValues: computed<SelectValue[]>(selectValues.bind(null, props)),
         selectLabels: computed<string[]>(selectLabels.bind(null, props)),
@@ -257,10 +280,11 @@ export function useSelect(
             optionList.value = virtualList.updateDataList(scrollPosition.scrollTop, containerState);
         },
         containerStyle: computed(() => ({
+            "margin": "6px 0",
             "height": containerState.height,
         })),
         menuStyle: computed(() => ({
-            "transform": `translateY(${containerState.translate}px)`,
+            "transform": `translateY(${containerState.translate})`,
         })),
         updateCache(data: { index: number, height: number }) {
             virtualList.updateCache(data.index, data.height);

@@ -75,6 +75,9 @@ export function usePopover(
     expose: (exposed?: Record<string, any>) => void,
     emit: SetupContext<typeof popoverEmits>['emit'],
 ) {
+    // 计算父级dom宽度
+    let fatherWidth = ref<number>(0);
+
     // 注册reference
     let popoverRefGather: ReferenceGather = {
         triggerRef: ref<HTMLElement | null>(null),
@@ -107,13 +110,19 @@ export function usePopover(
                 placement: placement,
             });
         });
+
+        // 获取父级元素宽度
+        fatherWidth.value = popoverRefGather.triggerRef.value!.offsetWidth;
     });
 
     // 导出组件
     expose({
         update() {
             popperInstance && popperInstance.update();
-        }
+        },
+        updatePopoverWidth() {
+            fatherWidth.value = popoverRefGather.triggerRef.value!.offsetWidth;
+        },
     });
     return {
         popperStyle: computed(() => ({
@@ -129,7 +138,7 @@ export function usePopover(
                     ? -props.offset
                     : -4}px`,
             "width": props._block
-                        ? popoverRefGather.triggerRef.value!.offsetWidth + props._extendWidth + 'px'
+                        ? fatherWidth.value + props._extendWidth + 'px'
                         : 'auto',
         })),
         popoverScroll(scrollPosition: ScrollPosition) {
