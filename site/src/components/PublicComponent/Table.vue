@@ -19,33 +19,33 @@ export default defineComponent({
 
 <template>
     <div class="footer">
-        <div class="api" v-if="apiProps.content.length !== 0 || apiEvent.content.length !== 0">
+        <div class="api" v-if="apiProps!.content.length !== 0 || apiEvent!.content.length !== 0">
             <h2 id="api">API</h2>
-            <div class="attr" v-if="apiProps.content.length !== 0">
+            <div class="attr" v-if="apiProps!.content.length !== 0">
                 <h3 id="props">属性</h3>
                 <n-table striped :single-line="false">
                     <thead>
                         <tr>
-                            <th v-for="(item, index) in apiProps.header" :key="index"
+                            <th v-for="(item, index) in apiProps!.header" :key="index"
                             style="font-weight: bolder;">
                                 {{ item }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, key) in apiProps.content" :key="key">
+                        <tr v-for="(item, key) in apiProps!.content" :key="key">
                             <td>{{item.props || '--'}}</td>
                             <td>{{item.describe || '--'}}</td>
                             <td>
-                                <n-tag type="success">{{item.type}}</n-tag>
+                                <x-tag type="success">{{item.type}}</x-tag>
                             </td>
                             <td>{{item.defaultValue || '--'}}</td>
                             <td>
                                 <template v-if="item.selectList">
                                     <n-space>
-                                        <n-tag type="info" v-for="(item, id) in item.selectList" :key="id">
+                                        <x-tag type="info" v-for="(item, id) in item.selectList" :key="id">
                                             {{item}}
-                                        </n-tag>
+                                        </x-tag>
                                     </n-space>
                                 </template>
                                 <template v-else>
@@ -56,27 +56,27 @@ export default defineComponent({
                     </tbody>
                 </n-table>
             </div>
-            <div class="event" v-if="apiEvent.content.length !== 0">
+            <div class="event" v-if="apiEvent!.content.length !== 0">
                 <h3 id="event">事件</h3>
                 <n-table striped :single-line="false">
                     <thead>
                         <tr>
-                            <th v-for="(item, index) in apiEvent.header" :key="index"
+                            <th v-for="(item, index) in apiEvent!.header" :key="index"
                             style="font-weight: bolder;">
                                 {{ item }}
                             </th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr v-for="(item, key) in apiEvent.content" :key="key">
+                        <tr v-for="(item, key) in apiEvent!.content" :key="key">
                             <td>{{item.event}}</td>
                             <td>{{item.describe}}</td>
                             <td>
                                 <template v-if="item.result">
                                     <n-space>
-                                        <n-tag type="warning" v-for="(item, id) in item.result" :key="id">
+                                        <x-tag type="warning" v-for="(item, id) in item.result" :key="id">
                                             {{item}}
-                                        </n-tag>
+                                        </x-tag>
                                     </n-space>
                                 </template>
                                 <template v-else>
@@ -86,9 +86,9 @@ export default defineComponent({
                             <td>
                                 <template v-if="item.props">
                                     <n-space>
-                                        <n-tag type="error" v-for="(item, id) in item.props" :key="id">
+                                        <x-tag type="error" v-for="(item, id) in item.props" :key="id">
                                             {{item}}
-                                        </n-tag>
+                                        </x-tag>
                                     </n-space>
                                 </template>
                                 <template v-else>

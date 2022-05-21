@@ -34,6 +34,9 @@ import scrollbarAction from './scrollbar/action'
 import select from './select/Index.vue'
 import selectAction from './select/action'
 
+import switchinput from './switch-input/Index.vue'
+import switchinputAction from './switch-input/action'
+
 import tag from './tag/Index.vue'
 import tagAction from './tag/action'
 
@@ -62,6 +65,8 @@ export {
   scrollbarAction,
   select,
   selectAction,
+  switchinput,
+  switchinputAction,
   tag,
   tagAction,
 }

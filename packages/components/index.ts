@@ -23,3 +23,5 @@ export * from "./XTop";
 export * from "./Scrollbar";
 
 export * from "./Tag";
+
+export * from "./Switch";

@@ -40,4 +40,5 @@ const componentNameDesc = {
     "back-top": "返回页面顶部。",
     "scrollbar": "默认的滚动条也太难看了，不过这个肯定没有默认的好用~~",
     "tag": "加了个皮肤，你还认识它嘛？",
+    "switch-input": "它是没有组织的checkbox。",
 };
