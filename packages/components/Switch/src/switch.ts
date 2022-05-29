@@ -67,6 +67,7 @@ export function useSwitch(
     let displayWidth = ref<number>(0);
     let activePadding = ref<number>(0);
     let inactivePadding = ref<number>(0);
+    let animateTime = ref<string>("0");
     let offset = 6;
 
     onMounted(() => {
@@ -74,6 +75,9 @@ export function useSwitch(
             displayWidth.value = Math.max(10, activeRef.value!.clientWidth, inactiveRef.value!.clientWidth) + offset;
             activePadding.value = Math.abs(displayWidth.value - activeRef.value!.clientWidth);
             inactivePadding.value = Math.abs(displayWidth.value - inactiveRef.value!.clientWidth);
+            setTimeout(() => {
+                animateTime.value = '.3s';
+            }, 200);
         });
         observe.observe(activeRef.value!);
         observe.observe(inactiveRef.value!);
@@ -107,6 +111,7 @@ export function useSwitch(
             "--offset": `${offset}px`,
             "--active-color": props.activeColor,
             "--inactive-color": props.inactiveColor,
+            "--time": animateTime.value,
         })),
         activeStyle: computed<CSSProperties>(() => ({
             "margin-left": `${activePadding.value}px`,
