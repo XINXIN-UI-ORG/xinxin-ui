@@ -53,6 +53,7 @@ export const switchProps = {
 
 export const switchEmits = {
     [MODEL_VALUE_UPDATE]: (value: ModelValueType) => isBoolean(value) || isString(value) || isNumber(value),
+    changeValue: (value: ModelValueType) => isBoolean(value) || isString(value) || isNumber(value),
 };
 
 export type SwitchProps = ExtractPropTypes<typeof switchProps>;
@@ -89,10 +90,13 @@ export function useSwitch(
                 const status = props.beforeChange();
                 if (typeof status === 'boolean' && status) {
                     emit(MODEL_VALUE_UPDATE, convertValue);
+                    emit("changeValue", convertValue);
+                    return;
                 }
                 if (status instanceof Promise) {
                     status.then(() => {
                         emit(MODEL_VALUE_UPDATE, convertValue);
+                        emit("changeValue", convertValue);
                     });
                 }
             }

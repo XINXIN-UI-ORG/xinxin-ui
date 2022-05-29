@@ -163,11 +163,15 @@ import Change from './6Change.vue'
 
 const changeContent = `<script lang="ts">
 import { defineComponent, ref } from "vue";
+import { XMessage } from "xinxin-ui";
 
 export default defineComponent({
     setup() {
         return {
             value: ref<string>("金陵酒肆留别"),
+            change(value: string) {
+                XMessage(value);
+            },
         };
     },
 });
@@ -177,9 +181,29 @@ export default defineComponent({
         v-model="value"
         active-value="听蜀僧浚弹琴"
         inactive-value="金陵酒肆留别"
+        @change-value="change"
     ></x-switch>
-    <br>
-    {{ value }}
+</template>`
+
+import CustomerIcon from './7CustomerIcon.vue'
+
+const customerIconContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            value: ref<boolean>(false),
+        };
+    },
+});
+<\/script>
+<template>
+    <x-switch v-model="value">
+        <template #icon>
+            🤔
+        </template>
+    </x-switch>
 </template>`
 
 export default defineComponent({
@@ -212,6 +236,10 @@ export default defineComponent({
       Change,
       changeContent,
       changeInfo: info.change,
+
+      CustomerIcon,
+      customerIconContent,
+      customerIconInfo: info.customerIcon,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -288,6 +316,15 @@ export default defineComponent({
         :title="selectValueInfo.title"
         :code-v-node="SelectValue"
         :code-desc="selectValueInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="customerIcon"
+        :code="customerIconContent"
+        :title="customerIconInfo.title"
+        :code-v-node="CustomerIcon"
+        :code-desc="customerIconInfo.desc"
       >
       </CodeExample>
     </template>

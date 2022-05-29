@@ -50,7 +50,15 @@ const change: ExampleInfo = {
     `)
 };
 
+const customerIcon: ExampleInfo = {
+    title: "自定义切换图标",
+    desc: format(`
+        通过icon插槽可以自定义切换时的图标。
+    `)
+};
+
 export {
+    customerIcon,
     change,
     selectValue,
     loading,
@@ -131,7 +139,7 @@ const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
     content: [
         {
-            event: "change",
+            event: "change-value",
             describe: "当switch值变化时触发",
             props: ["value"],
         },

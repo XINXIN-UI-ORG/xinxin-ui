@@ -68,6 +68,10 @@ export default defineComponent({
                     gcn.e('action'),
                 ]"
             >
+                <slot
+                    name="icon"
+                    v-if="!loading"
+                />
                 <load
                     :class="gcn.e('action', 'load')"
                     v-if="loading"

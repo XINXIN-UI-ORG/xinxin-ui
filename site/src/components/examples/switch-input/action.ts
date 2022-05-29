@@ -36,4 +36,9 @@ export default [
     link: '/component/switch-input#change',
     name: info.change.title,
   },
+  {
+    key: 7,
+    link: '/component/switch-input#customerIcon',
+    name: info.customerIcon.title,
+  },
 ]
