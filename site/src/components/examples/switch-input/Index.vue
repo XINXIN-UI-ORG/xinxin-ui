@@ -102,8 +102,21 @@ import { defineComponent, ref } from "vue";
 
 export default defineComponent({
     setup() {
+        let loading = ref<boolean>(false);
+
         return {
             value: ref<boolean>(false),
+            value2: ref<boolean>(false),
+            loading,
+            beforeChange() {
+                loading.value = true;
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        loading.value = false;
+                        resolve(true);
+                    }, 2000);
+                });
+            },
         };
     },
 });
@@ -111,9 +124,62 @@ export default defineComponent({
 <template>
     <x-switch
         v-model="value"
-        disabled
+        loading
     >
     </x-switch>
+    &nbsp;
+    <x-switch
+        v-model="value2"
+        :loading="loading"
+        :before-change="beforeChange"
+    >
+    </x-switch>
+</template>`
+
+import SelectValue from './5SelectValue.vue'
+
+const selectValueContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            value: ref<string>("金陵酒肆留别"),
+        };
+    },
+});
+<\/script>
+<template>
+    <x-switch
+        v-model="value"
+        active-value="听蜀僧浚弹琴"
+        inactive-value="金陵酒肆留别"
+    ></x-switch>
+    <br>
+    {{ value }}
+</template>`
+
+import Change from './6Change.vue'
+
+const changeContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        return {
+            value: ref<string>("金陵酒肆留别"),
+        };
+    },
+});
+<\/script>
+<template>
+    <x-switch
+        v-model="value"
+        active-value="听蜀僧浚弹琴"
+        inactive-value="金陵酒肆留别"
+    ></x-switch>
+    <br>
+    {{ value }}
 </template>`
 
 export default defineComponent({
@@ -138,6 +204,14 @@ export default defineComponent({
       Loading,
       loadingContent,
       loadingInfo: info.loading,
+
+      SelectValue,
+      selectValueContent,
+      selectValueInfo: info.selectValue,
+
+      Change,
+      changeContent,
+      changeInfo: info.change,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -179,6 +253,15 @@ export default defineComponent({
         :code-desc="loadingInfo.desc"
       >
       </CodeExample>
+
+      <CodeExample
+        id="change"
+        :code="changeContent"
+        :title="changeInfo.title"
+        :code-v-node="Change"
+        :code-desc="changeInfo.desc"
+      >
+      </CodeExample>
     </template>
     <template #right>
       <CodeExample
@@ -196,6 +279,15 @@ export default defineComponent({
         :title="disabledInfo.title"
         :code-v-node="Disabled"
         :code-desc="disabledInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="selectValue"
+        :code="selectValueContent"
+        :title="selectValueInfo.title"
+        :code-v-node="SelectValue"
+        :code-desc="selectValueInfo.desc"
       >
       </CodeExample>
     </template>

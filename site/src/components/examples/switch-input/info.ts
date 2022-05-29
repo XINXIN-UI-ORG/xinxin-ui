@@ -36,7 +36,23 @@ const loading: ExampleInfo = {
     `)
 };
 
+const selectValue: ExampleInfo = {
+    title: "自定义选中的值",
+    desc: format(`
+        使用active-value和inactive-value制定选中的值，可以是String、Number、Boolean类型。
+    `)
+};
+
+const change: ExampleInfo = {
+    title: "change事件",
+    desc: format(`
+        当switch值发生变化时触发。
+    `)
+};
+
 export {
+    change,
+    selectValue,
     loading,
     disabled,
     content,
@@ -93,11 +109,31 @@ const apiProps: ApiTable<ApiProps> = {
             defaultValue: "false",
             selectList: ["true", "false"],
         },
+        {
+            props: "before-change",
+            describe: "若返回 false 或者返回 Promise 且被 reject，则停止切换；否则正常切换。",
+            type: "Function",
+        },
+        {
+            props: "active-value",
+            describe: "激活时的值",
+            type: 'String | Number | Boolean',
+        },
+        {
+            props: "inactive-value",
+            describe: "未激活时的值",
+            type: 'String | Number | Boolean',
+        },
     ],
 };
 
 const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
     content: [
+        {
+            event: "change",
+            describe: "当switch值变化时触发",
+            props: ["value"],
+        },
     ],
 };

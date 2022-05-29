@@ -1,9 +1,8 @@
 import type { PropType, ExtractPropTypes, SetupContext, Ref, CSSProperties } from "vue";
-import type { NormalSize } from "@xinxin-ui/typings";
+import { NormalSize, ModelValueTypeVue, ModelValueType } from "@xinxin-ui/typings";
 import { computed, ref, onMounted } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
-import { isBoolean } from "@vueuse/core";
-import { offset } from "@popperjs/core";
+import { isBoolean, isNumber, isString } from "@vueuse/core";
 
 export const switchProps = {
     size: {
@@ -11,7 +10,7 @@ export const switchProps = {
         default: "normal"
     },
     modelValue: {
-        type: Boolean,
+        type: ModelValueTypeVue,
         default: false,
     },
     activeColor: {
@@ -34,10 +33,26 @@ export const switchProps = {
         type: Boolean,
         default: false,
     },
+    loading: {
+        type: Boolean,
+        default: false,
+    },
+    beforeChange: {
+        type: Function as PropType<() => boolean | Promise<boolean>>,
+        default: () => true,
+    },
+    activeValue: {
+        type: ModelValueTypeVue,
+        default: true,
+    },
+    inactiveValue: {
+        type: ModelValueTypeVue,
+        default: false,
+    },
 };
 
 export const switchEmits = {
-    [MODEL_VALUE_UPDATE]: (value: boolean) => isBoolean(value),
+    [MODEL_VALUE_UPDATE]: (value: ModelValueType) => isBoolean(value) || isString(value) || isNumber(value),
 };
 
 export type SwitchProps = ExtractPropTypes<typeof switchProps>;
@@ -66,10 +81,20 @@ export function useSwitch(
     return {
         modelValue: computed<boolean>({
             get() {
-                return props.modelValue;
+                return props.modelValue === props.activeValue;
             },
             set(value) {
-                emit(MODEL_VALUE_UPDATE, value);
+                // 根据选中的boolean值获取用户激活或未激活的值进行设置
+                const convertValue = value ? props.activeValue : props.inactiveValue;
+                const status = props.beforeChange();
+                if (typeof status === 'boolean' && status) {
+                    emit(MODEL_VALUE_UPDATE, convertValue);
+                }
+                if (status instanceof Promise) {
+                    status.then(() => {
+                        emit(MODEL_VALUE_UPDATE, convertValue);
+                    });
+                }
             }
         }),
         displayStyle: computed(() => ({

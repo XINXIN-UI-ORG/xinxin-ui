@@ -2,6 +2,7 @@
 import { defineComponent, ref } from "vue";
 import { generateClassName } from "@xinxin-ui/utils";
 import { switchProps, useSwitch } from "./switch";
+import { Load } from "@xinxin-ui/xinxin-icons";
 
 export default defineComponent({
     name: 'x-switch',
@@ -27,6 +28,9 @@ export default defineComponent({
             inactiveStyle,
         };
     },
+    components: {
+        Load,
+    },
 });
 </script>
 <template>
@@ -36,6 +40,8 @@ export default defineComponent({
             gcn.bm(size),
             gcn.is('select', modelValue),
             gcn.is('disabled', disabled),
+            gcn.is('loading', loading),
+            gcn.is('active', !disabled && !loading),
         ]"
         :style="(displayStyle as any)"
     >
@@ -45,7 +51,7 @@ export default defineComponent({
             ]"
             type="checkbox"
             v-model="modelValue"
-            :disabled="disabled"
+            :disabled="disabled || loading"
         />
         <div
             :class="gcn.e('display')"
@@ -62,6 +68,10 @@ export default defineComponent({
                     gcn.e('action'),
                 ]"
             >
+                <load
+                    :class="gcn.e('action', 'load')"
+                    v-if="loading"
+                />
             </div>
             <div
                 :class="gcn.e('inactive')"

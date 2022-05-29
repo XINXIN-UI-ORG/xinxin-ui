@@ -26,4 +26,14 @@ export default [
     link: '/component/switch-input#loading',
     name: info.loading.title,
   },
+  {
+    key: 5,
+    link: '/component/switch-input#selectValue',
+    name: info.selectValue.title,
+  },
+  {
+    key: 6,
+    link: '/component/switch-input#change',
+    name: info.change.title,
+  },
 ]

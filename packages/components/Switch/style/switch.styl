@@ -1,3 +1,5 @@
+@import "../../../theme-chalk/variable.styl";
+
 .x-switch
     position relative
     display inline-block
@@ -11,12 +13,6 @@
     transition background-color var(--time) var(--animation)
     --animation cubic-bezier(0.4, 0, 0.2, 1)
     --time .3s
-    &:active
-        .x-switch__display
-            .x-switch__action
-                margin 2px
-                padding-left var(--offset)
-                border-radius 22px
     .x-switch__input
         position absolute
         inset 0
@@ -31,6 +27,11 @@
         .x-switch__action
             margin 2px calc(2px + var(--offset)) 2px 2px
             transition margin var(--time) var(--animation), padding var(--time) var(--animation)
+            display flex
+            align-items center
+            justify-content center
+            .x-switch__action__load
+                color $base_theme_color
         .x-switch__active, .x-switch__inactive
             height 100%
             overflow hidden
@@ -79,3 +80,11 @@
 .x-switch-disabled
     cursor not-allowed
     opacity .5
+
+.x-switch-active
+    &:active
+        .x-switch__display
+            .x-switch__action
+                margin 2px
+                padding-left var(--offset)
+                border-radius 22px
