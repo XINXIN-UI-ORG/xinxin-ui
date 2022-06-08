@@ -25,3 +25,5 @@ export * from "./Scrollbar";
 export * from "./Tag";
 
 export * from "./Switch";
+
+export * from "./Form";

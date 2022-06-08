@@ -66,6 +66,12 @@ export const menuList: MenuListType[] = [
         content: "开关",
         name: "Switch-Input",
     },
+    {
+        id: 307,
+        type: MenuType.link,
+        content: "表单",
+        name: "Form",
+    },
 
 
     {
