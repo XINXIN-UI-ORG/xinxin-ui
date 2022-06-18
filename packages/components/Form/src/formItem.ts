@@ -17,7 +17,7 @@ enum UpdateWidthEnum {
 };
 
 export function useFormItem(
-    labelRef: Ref<HTMLLabelElement | undefined>
+    labelRef: Ref<HTMLLabelElement>
 ) {
     const xForm = inject(FormKey);
     
@@ -26,7 +26,7 @@ export function useFormItem(
         // 当宽度改变时更新form中保存宽度的数组
         xForm?.registerLabelWidth(newVal, oldVal);
         // 更新每个form-item的label
-        console.log("=========================", xForm?.autoMaxLabelWidth);
+        xForm?.updateAllLabelWidth(xForm.autoMaxLabelWidth);
     });
 
     const updateLabelWidth = (type = UpdateWidthEnum.UPDATE) => {
@@ -46,5 +46,6 @@ export function useFormItem(
 
     onMounted(() => {
         updateLabelWidth(UpdateWidthEnum.UPDATE);
+        xForm?.registerLabel(labelRef);
     });
 }

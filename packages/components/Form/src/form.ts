@@ -1,10 +1,12 @@
 import { provide, reactive, computed, ref } from "vue";
+import type { Ref } from "vue";
 import { FormKey } from "@xinxin-ui/symbols";
 
 export function useForm() {
 
     const formRef = reactive({
         ...formLabelWidth(),
+        ...formLabel(),
     });
 
     provide(FormKey, formRef);
@@ -44,5 +46,30 @@ function formLabelWidth() {
         autoMaxLabelWidth,
         registerLabelWidth,
         cancellationLabelWidth,
+    };
+}
+
+function formLabel() {
+    const labelList = ref<Array<Ref<HTMLLabelElement>>>([]);
+
+    const registerLabel = (labelRef: Ref<HTMLLabelElement>) => {
+        labelList.value.push(labelRef);
+    };
+
+    const cancellationLabel = (labelRef: Ref<HTMLLabelElement>) => {
+        const index = labelList.value.indexOf(labelRef);
+        index > -1 && labelList.value.splice(index, 1);
+    };
+
+    const updateAllLabelWidth = (width: string) => {
+        labelList.value.forEach(label => {
+            label.value.style.width = width;
+        });
+    };
+
+    return {
+        registerLabel,
+        cancellationLabel,
+        updateAllLabelWidth,
     };
 }
