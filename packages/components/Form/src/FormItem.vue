@@ -1,5 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
+import type { Ref } from "vue";
 import { generateClassName } from "@xinxin-ui/utils";
 import { formItemProps } from "./formItem";
 import { useFormItem } from "./formItem";
@@ -10,7 +11,7 @@ export default defineComponent({
     setup() {
         let gcn = generateClassName('form-item');
         let labelRef = ref<HTMLLabelElement>();
-        useFormItem(labelRef);
+        useFormItem(labelRef as Ref<HTMLLabelElement>);
 
         return {
             gcn,

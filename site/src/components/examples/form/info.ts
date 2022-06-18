@@ -8,8 +8,16 @@ const base: ExampleInfo = {
     `)
 };
 
+const size: ExampleInfo = {
+    title: "尺寸控制",
+    desc: format(`
+        可以通过size控制表单的尺寸，同时设置label-position可以控制label的位置。
+    `)
+};
+
 export {
     base,
+    size,
     apiProps,
     apiEvent
 }
@@ -19,11 +27,18 @@ const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
-            props: "type",
-            describe: "tag的类型",
+            props: "label-position",
+            describe: "文字描述的位置",
             type: 'String',
-            defaultValue: "default",
-            selectList: ["default", "info", "success", "warning", "error"],
+            defaultValue: "left",
+            selectList: ["left", "right", "top"],
+        },
+        {
+            props: "size",
+            describe: "表单尺寸",
+            type: 'String',
+            defaultValue: "normal",
+            selectList: ["small", "normal", "large"],
         },
     ],
 };

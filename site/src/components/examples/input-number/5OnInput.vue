@@ -18,7 +18,6 @@ export default defineComponent({
         placeholder="数字输入"
         number-button
         clearable
-        block
         @onInputChange="inputChange"
     />
     <div class="show" ref="showRef"></div>

@@ -13,6 +13,8 @@ export interface FormContext {
     cancellationLabel: (labelRef: Ref<HTMLLabelElement>) => void;
     // 更新所有的label
     updateAllLabelWidth: (width: string) => void;
+
+    labelPosition: String;
 };
 
 export const FormKey: InjectionKey<FormContext> = Symbol("xForm");

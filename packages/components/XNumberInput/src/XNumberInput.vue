@@ -36,10 +36,7 @@ export default defineComponent({
         return {
             numberInputClassList: computed(() => [
                 "x-number-input",
-                "x-number-input-" + (<string>attrs.mode ?? "normal"),
-                attrs.block === undefined || attrs.block === false
-                    ? "x-number-input-inline"
-                    : "x-number-input-block",
+                "x-number-input-" + (<string>attrs.size ?? "normal"),
             ]),
             statusClass: computed(() => {
                 return attrs.status === undefined
@@ -207,11 +204,8 @@ function modifyValue(
     </div>
 </template>
 <style lang="stylus" scoped>
-.x-number-input-block
-    display flex
-.x-number-input-inline
-    display inline-flex
 .x-number-input
+    display flex
     .x-number-input__input
         flex 1
     .x-number-input__button

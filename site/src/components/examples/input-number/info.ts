@@ -75,13 +75,6 @@ const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
-            props: "block",
-            describe: "是否显示为块级元素",
-            type: 'Boolean',
-            defaultValue: "false",
-            selectList: ["true", "false"],
-        },
-        {
             props: "size",
             describe: "设置输入框的尺寸",
             type: 'Stirng',

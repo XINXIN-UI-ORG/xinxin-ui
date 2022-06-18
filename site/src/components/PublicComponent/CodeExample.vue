@@ -152,10 +152,6 @@ function throttle(callback: Function) {
         margin 10px 10px 0 0
         button
             margin 0
-    :deep(.x-number-input)
-        margin-top 10px
-        .x-input
-            margin-top 0 !important
 :deep(.site-tag)
     background-color #f4f4f8
     border-radius 4px

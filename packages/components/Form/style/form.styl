@@ -1,0 +1,48 @@
+.x-form
+    :deep(.x-form-item)
+        margin-bottom 18px
+        .x-form-item__label
+            display block
+
+.x-form-left, .x-form-right
+    :deep(.x-form-item)
+        display flex
+        .x-form-item__label
+            display flex
+            align-items center
+            font-size 14px
+        .x-form-item__input
+            flex 1
+    &.x-form-small
+        :deep(.x-form-item)
+            .x-form-item__label
+                margin-right 12px
+                font-size 12px
+    &.x-form-normal
+        :deep(.x-form-item)
+            .x-form-item__label
+                margin-right 12px
+    &.x-form-large
+        :deep(.x-form-item)
+            .x-form-item__label
+                margin-right 12px
+
+.x-form-right
+    :deep(.x-form-item)
+        .x-form-item__label
+            justify-content flex-end
+
+.x-form-top
+    &.x-form-small
+        :deep(.x-form-item)
+            .x-form-item__label
+                font-size 12px
+                margin-bottom 4px
+    &.x-form-normal
+        :deep(.x-form-item)
+            .x-form-item__label
+                margin-bottom 8px
+    &.x-form-large
+        :deep(.x-form-item)
+            .x-form-item__label
+                margin-bottom 12px

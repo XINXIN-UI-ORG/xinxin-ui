@@ -11,5 +11,5 @@ export default defineComponent({
 })
 </script>
 <template>
-    <x-number-input placeholder="基础使用" block v-model="inputValue" />
+    <x-number-input placeholder="基础使用" v-model="inputValue" />
 </template>
