@@ -15,6 +15,14 @@ export interface FormContext {
     updateAllLabelWidth: (width: string) => void;
 
     labelPosition: String;
+
+    size: string;
 };
 
 export const FormKey: InjectionKey<FormContext> = Symbol("xForm");
+
+export interface FormItemToComponent {
+    size: string;
+};
+
+export const FormItemToComponentKey: InjectionKey<FormItemToComponent> = Symbol("xFormItemToComponent");

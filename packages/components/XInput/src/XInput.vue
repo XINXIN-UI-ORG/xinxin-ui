@@ -1,56 +1,14 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref } from "vue";
-import type { Ref, PropType } from "vue";
+import type { Ref } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
-import { NormalSize } from "@xinxin-ui/typings";
 import { ErrorMessage, PasswordShow, PasswordHide } from "@xinxin-ui/xinxin-icons";
 import { isNumber, isString } from "@vueuse/core";
+import { inputProps, useInput } from "./input";
 
 export default defineComponent({
     name: "x-input",
-    props: {
-        size: {
-            type: String as PropType<NormalSize>,
-            default: "normal",
-        },
-        modelValue: {
-            type: [String, Number],
-            default: "",
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
-        },
-        clearable: {
-            type: Boolean,
-            default: false,
-        },
-        showPasswordOn: {
-            type: String,
-            default: undefined,
-        },
-        status: {
-            type: String,
-            default: undefined,
-        },
-        placeholder: {
-            type: String,
-            default: "",
-        },
-        readonly: {
-            type: Boolean,
-            default: false,
-        },
-        // inner props
-        _cursor: {
-            type: Boolean,
-            default: false,
-        },
-        _hiddenInput: {
-            type: Boolean,
-            default: false,
-        },
-    },
+    props: inputProps,
     emits: {
         onInputChange: null,
         onInputBlur: null,
@@ -102,6 +60,8 @@ export default defineComponent({
         let focus = (): void => {
             inputRef.value?.focus();
         };
+
+        let { xFormItem } = useInput(props);
         // 提供操作input的方法
         expose({
             changeInputValue(value: string) {
@@ -117,10 +77,11 @@ export default defineComponent({
                 inputRef.value?.blur();
             }
         });
+
         return {
             inputWrapperClassList: computed(() => [
                 "x-input",
-                "x-input-" + props.size,
+                "x-input-" + xFormItem.size,
                 props.disabled && "x-input-disabled",
                 props.status && "x-input-" + props.status,
                 props._cursor && "x-input-cursor",

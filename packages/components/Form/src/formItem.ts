@@ -1,6 +1,6 @@
 import type { ExtractPropTypes, Ref } from "vue";
-import { inject, ref, watch, onMounted, nextTick } from "vue";
-import { FormKey } from "@xinxin-ui/symbols";
+import { inject, ref, watch, onMounted, nextTick, provide, reactive, toRefs } from "vue";
+import { FormKey, FormItemToComponentKey, FormContext } from "@xinxin-ui/symbols";
 
 export const formItemProps = {
     label: {
@@ -34,7 +34,7 @@ export function useFormItem(
             if (type === UpdateWidthEnum.UPDATE) {
                 if (labelRef.value) {
                     const labelRealWidth = parseFloat(window.getComputedStyle(labelRef.value).width);
-                    computedWidth.value = labelRealWidth === NaN ? 0 : labelRealWidth;
+                    computedWidth.value = labelRealWidth ? labelRealWidth : 0;
                 }
             }
 
@@ -48,4 +48,16 @@ export function useFormItem(
         updateLabelWidth(UpdateWidthEnum.UPDATE);
         xForm?.registerLabel(labelRef);
     });
+
+    provideToChildrenComponent(xForm);
+}
+
+function provideToChildrenComponent(xForm: FormContext | undefined) {
+    if (!xForm) {
+        return;
+    }
+
+    provide(FormItemToComponentKey, reactive({
+        ...toRefs(xForm),
+    }));
 }
