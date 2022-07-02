@@ -4,6 +4,7 @@ import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isString } from "@vue/shared";
 import { isBoolean, isNumber } from "@vueuse/core";
 import { NormalSize } from "@xinxin-ui/typings";
+import { FormItemToComponentKey } from "@xinxin-ui/symbols";
 
 export const radioProps = {
     modelValue: {
@@ -91,12 +92,16 @@ export function radioGather(
             radioInputRef.value?.focus();
         }
     });
+
+    let formItem = inject(FormItemToComponentKey, {
+        size: size.value
+    });
     return {
         checkValue,
         blurEvent,
         focusEvent,
         inputName,
         disabled,
-        size,
+        formItem,
     };
 }

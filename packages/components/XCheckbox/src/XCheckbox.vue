@@ -11,12 +11,13 @@ export default defineComponent({
     inheritAttrs: false,
     setup(props, { emit }) {
         const gcn = generateClassName("checkbox");
-        const { checked, name, disabled } = checkboxGather(props, emit);
+        const { checked, name, disabled, formItem } = checkboxGather(props, emit);
         return {
             gcn,
             checked,
             name,
             disabled,
+            formItem,
         };
     },
     components: {
@@ -32,6 +33,7 @@ export default defineComponent({
             gcn.is('checked', indeterminate || checked),
             gcn.is('disabled', disabled),
             gcn.is('card', card),
+            gcn.bm(formItem.size),
         ]"
     >
         <input
@@ -95,8 +97,6 @@ export default defineComponent({
         align-items center
         justify-content center
         vertical-align text-bottom
-        width 16px
-        height 16px
         box-sizing border-box
         border-radius 3px
         border 1px solid #b0b1b2
@@ -145,4 +145,22 @@ export default defineComponent({
     &:hover
         .x-checkbox__selector
             border-color #b0b1b2
+
+.x-checkbox-small
+    .x-checkbox__selector
+        width 14px
+        height 14px
+    .x-checkbox__label
+        font-size 12px
+        vertical-align bottom
+
+.x-checkbox-normal
+    .x-checkbox__selector
+        width 16px
+        height 16px
+
+.x-checkbox-large
+    .x-checkbox__selector
+        width 18px
+        height 18px
 </style>

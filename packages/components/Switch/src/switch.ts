@@ -1,8 +1,9 @@
 import type { PropType, ExtractPropTypes, SetupContext, Ref, CSSProperties } from "vue";
 import { NormalSize, ModelValueTypeVue, ModelValueType } from "@xinxin-ui/typings";
-import { computed, ref, onMounted } from "vue";
+import { computed, ref, onMounted, inject } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isBoolean, isNumber, isString } from "@vueuse/core";
+import { FormItemToComponentKey } from "@xinxin-ui/symbols";
 
 export const switchProps = {
     size: {
@@ -83,6 +84,10 @@ export function useSwitch(
         observe.observe(inactiveRef.value!);
     });
 
+    let formItem = inject(FormItemToComponentKey, {
+        size: props.size,
+    });
+
     return {
         modelValue: computed<boolean>({
             get() {
@@ -119,5 +124,6 @@ export function useSwitch(
         inactiveStyle: computed<CSSProperties>(() => ({
             "margin-right": `${inactivePadding.value}px`,
         })),
+        formItem,
     };
 }

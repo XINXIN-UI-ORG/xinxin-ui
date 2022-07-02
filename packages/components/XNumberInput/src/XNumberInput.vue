@@ -2,22 +2,12 @@
 import { computed, ComputedRef, defineComponent, Ref, ref } from "vue";
 import XInput from "../../XInput";
 import { Up, Down } from "@xinxin-ui/xinxin-icons";
+import { numberInputProps, NumberInputProps, useNumberInput } from "./numberInput";
 
 export default defineComponent({
     name: "x-number-input",
-    props: {
-        numberButton: {
-            type: Boolean,
-            default: false,
-        },
-        step: {
-            type: [String, Number],
-            default: 1,
-        },
-        min: Number,
-        max: Number,
-    },
-    setup(props, { attrs }) {
+    props: numberInputProps,
+    setup(props: NumberInputProps, { attrs }) {
         let xInputRef = ref();
         let upBtnRef = ref<HTMLDivElement>();
         let downBtnRef = ref<HTMLDivElement>();
@@ -33,10 +23,12 @@ export default defineComponent({
             downBtnRef,
             disabled
         );
+
+        let { formItem } = useNumberInput(attrs);
         return {
             numberInputClassList: computed(() => [
                 "x-number-input",
-                "x-number-input-" + (<string>attrs.size ?? "normal"),
+                "x-number-input-" + (formItem.size ?? "normal"),
             ]),
             statusClass: computed(() => {
                 return attrs.status === undefined

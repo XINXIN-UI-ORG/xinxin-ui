@@ -266,6 +266,28 @@ export default defineComponent({
     </x-checkbox-group>
 </template>`
 
+import Size from './9Size.vue'
+
+const sizeContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let checkboxValue = ref(false);
+        return {
+            checkboxValue,
+        };
+    },
+})
+<\/script>
+<template>
+    <x-checkbox v-model:checked="checkboxValue" size="small">陌上桑</x-checkbox>
+    &nbsp;
+    <x-checkbox v-model:checked="checkboxValue" size="normal">乌夜啼</x-checkbox>
+    &nbsp;
+    <x-checkbox v-model:checked="checkboxValue" size="large">梁甫吟</x-checkbox>
+</template>`
+
 export default defineComponent({
   setup() {
     return {
@@ -304,6 +326,10 @@ export default defineComponent({
       CheckboxButton,
       checkboxButtonContent,
       checkboxButtonInfo: info.checkboxButton,
+
+      Size,
+      sizeContent,
+      sizeInfo: info.size,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -398,6 +424,15 @@ export default defineComponent({
         :title="changeInfo.title"
         :code-v-node="Change"
         :code-desc="changeInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="size"
+        :code="sizeContent"
+        :title="sizeInfo.title"
+        :code-v-node="Size"
+        :code-desc="sizeInfo.desc"
       >
       </CodeExample>
     </template>

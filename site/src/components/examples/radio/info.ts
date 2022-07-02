@@ -64,7 +64,15 @@ const radioButtonSize: ExampleInfo = {
     `)
 };
 
+const size: ExampleInfo = {
+    title: "尺寸",
+    desc: format(`
+        通过size属性设置单选框的大小，可选值有small、normal、large。
+    `)
+};
+
 export {
+    size,
     radioButtonSize,
     radioButton,
     change,

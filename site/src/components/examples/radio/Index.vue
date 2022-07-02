@@ -227,6 +227,28 @@ export default defineComponent({
     </x-radio-group>
 </template>`
 
+import Size from './9Size.vue'
+
+const sizeContent = `<script lang="ts">
+import { defineComponent, ref } from "vue";
+
+export default defineComponent({
+    setup() {
+        let radioValue = ref("0");
+        return {
+            radioValue
+        };
+    },
+})
+<\/script>
+<template>
+    <x-radio v-model="radioValue" value="0" size="small">战城南</x-radio>
+    &nbsp;
+    <x-radio v-model="radioValue" value="1" size="normal">北风行</x-radio>
+    &nbsp;
+    <x-radio v-model="radioValue" value="2" size="large">襄阳歌</x-radio>
+</template>`
+
 export default defineComponent({
   setup() {
     return {
@@ -265,6 +287,10 @@ export default defineComponent({
       RadioButtonSize,
       radioButtonSizeContent,
       radioButtonSizeInfo: info.radioButtonSize,
+
+      Size,
+      sizeContent,
+      sizeInfo: info.size,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -359,6 +385,15 @@ export default defineComponent({
         :title="radioButtonInfo.title"
         :code-v-node="RadioButton"
         :code-desc="radioButtonInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="size"
+        :code="sizeContent"
+        :title="sizeInfo.title"
+        :code-v-node="Size"
+        :code-desc="sizeInfo.desc"
       >
       </CodeExample>
     </template>

@@ -3,6 +3,7 @@ import { isBoolean } from "@vueuse/core";
 import { checkboxGroupInjectKey } from "@xinxin-ui/symbols";
 import { ModelValueTypeVue, NormalSize } from "@xinxin-ui/typings";
 import { groupCombineItemStatus } from "@xinxin-ui/constants";
+import { FormItemToComponentKey } from "@xinxin-ui/symbols";
 
 export const checkboxProps = {
     checked: {
@@ -81,10 +82,14 @@ export function checkboxGather(
             }
         }
     });
+    
+    let formItem = inject(FormItemToComponentKey, {
+        size: isGroup.value ? checkboxGroupProps!.size : props.size,
+    });
     return {
         checked,
         name: groupCombineItemStatus<string>(isGroup.value, props.name, checkboxGroupProps ? checkboxGroupProps.name : ''),
         disabled: groupCombineItemStatus<boolean>(isGroup.value, props.disabled, checkboxGroupProps ? checkboxGroupProps.disabled : false),
-        size: isGroup.value ? checkboxGroupProps!.size : props.size,
+        formItem,
     };
 }

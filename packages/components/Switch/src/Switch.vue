@@ -16,6 +16,7 @@ export default defineComponent({
             displayStyle,
             activeStyle,
             inactiveStyle,
+            formItem,
         } = useSwitch(props, emit, activeRef, inactiveRef);
 
         return {
@@ -26,6 +27,7 @@ export default defineComponent({
             displayStyle,
             activeStyle,
             inactiveStyle,
+            formItem,
         };
     },
     components: {
@@ -37,7 +39,7 @@ export default defineComponent({
     <label
         :class="[
             gcn.base(),
-            gcn.bm(size),
+            gcn.bm(formItem.size),
             gcn.is('select', modelValue),
             gcn.is('disabled', disabled),
             gcn.is('loading', loading),

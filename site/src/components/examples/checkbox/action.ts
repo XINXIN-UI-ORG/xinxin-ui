@@ -46,4 +46,9 @@ export default [
     link: '/component/checkbox#checkboxButton',
     name: info.checkboxButton.title,
   },
+  {
+    key: 9,
+    link: '/component/checkbox#size',
+    name: info.size.title,
+  },
 ]

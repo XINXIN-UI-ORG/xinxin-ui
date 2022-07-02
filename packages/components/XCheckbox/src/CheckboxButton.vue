@@ -9,13 +9,13 @@ export default defineComponent({
     emits: checkboxEmits,
     setup(props, { emit }) {
         let gcn = generateClassName("checkbox-button");
-        let { checked, name, disabled, size } = checkboxGather(props, emit);
+        let { checked, name, disabled, formItem } = checkboxGather(props, emit);
         return {
             gcn,
             checked,
             name,
             disabled,
-            size,
+            formItem,
         };
     },
 })
@@ -26,7 +26,7 @@ export default defineComponent({
             gcn.base(),
             gcn.is('checked', checked),
             gcn.is('disabled', disabled),
-            gcn.bm(size),
+            gcn.bm(formItem.size),
         ]"
     >
         <input

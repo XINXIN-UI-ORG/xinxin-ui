@@ -11,7 +11,7 @@ export default defineComponent({
     setup(props, { emit, slots }) {
         let gcn = generateClassName("radio");
         let radioInputRef = ref<HTMLInputElement>();
-        let { checkValue, blurEvent, focusEvent, inputName, disabled } = radioGather(props, emit, radioInputRef);
+        let { checkValue, blurEvent, focusEvent, inputName, disabled, formItem } = radioGather(props, emit, radioInputRef);
         return {
             radioInputRef,
             checkValue,
@@ -21,6 +21,7 @@ export default defineComponent({
             focusEvent,
             inputName,
             disabled,
+            formItem,
         };
     },
 });
@@ -32,6 +33,7 @@ export default defineComponent({
             gcn.is('disabled', disabled),
             gcn.is('checked', checkValue === value),
             gcn.is('card', card),
+            gcn.bm(formItem.size),
         ]"
         tag="radio"
     >
@@ -83,9 +85,6 @@ export default defineComponent({
     cursor pointer
     box-sizing border-box
     .x-radio__icon
-        flex 0 0 16px
-        height 16px
-        width 16px
         position relative
         .x-radio__icon__input
             position absolute
@@ -164,4 +163,25 @@ export default defineComponent({
         color $base_theme_disabled_color
         .x-radio__description__second-text
             color $base_theme_disabled_second-text-color
+
+.x-radio-small
+    .x-radio__icon
+        flex 0 0 14px
+        width 14px
+        height 14px
+    .x-radio__description
+        font-size 12px
+        margin-left 6px
+
+.x-radio-normal
+    .x-radio__icon
+        flex 0 0 16px
+        width 16px
+        height 16px
+
+.x-radio-large
+    .x-radio__icon
+        flex 0 0 18px
+        width 18px
+        height 18px
 </style>

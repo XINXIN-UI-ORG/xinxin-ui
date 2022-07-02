@@ -64,7 +64,15 @@ const checkboxButton: ExampleInfo = {
     `)
 };
 
+const size: ExampleInfo = {
+    title: "尺寸",
+    desc: format(`
+        使用size属性可以设置复选框大小。
+    `)
+};
+
 export {
+    size,
     checkboxButton,
     change,
     groupDisabled,

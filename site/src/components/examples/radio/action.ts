@@ -46,4 +46,9 @@ export default [
     link: '/component/radio#radioButtonSize',
     name: info.radioButtonSize.title,
   },
+  {
+    key: 9,
+    link: '/component/radio#size',
+    name: info.size.title,
+  },
 ]
