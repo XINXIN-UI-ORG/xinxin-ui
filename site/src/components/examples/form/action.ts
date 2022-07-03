@@ -11,4 +11,9 @@ export default [
     link: '/component/form#size',
     name: info.size.title,
   },
+  {
+    key: 2,
+    link: '/component/form#validation',
+    name: info.validation.title,
+  },
 ]

@@ -101,6 +101,9 @@ export default defineComponent({
                 focusFlag.value = false;
                 const inputDom = e.target as HTMLInputElement;
                 emit("onInputBlur", inputDom.value);
+                
+                // 触发表单规则校验
+                xFormItem.blur?.(inputDom.value);
             },
             focusEvent(e: Event) {
                 focusFlag.value = true;

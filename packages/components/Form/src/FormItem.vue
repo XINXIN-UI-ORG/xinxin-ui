@@ -2,39 +2,41 @@
 import { defineComponent, ref } from "vue";
 import type { Ref } from "vue";
 import { generateClassName } from "@xinxin-ui/utils";
-import { formItemProps } from "./formItem";
+import { formItemProps, FormItemProps } from "./formItem";
 import { useFormItem } from "./formItem";
 
 export default defineComponent({
     name: "x-form-item",
     props: formItemProps,
-    setup() {
+    setup(props: FormItemProps) {
         let gcn = generateClassName('form-item');
         let labelRef = ref<HTMLLabelElement>();
-        useFormItem(labelRef as Ref<HTMLLabelElement>);
+        let { required } = useFormItem(labelRef as Ref<HTMLLabelElement>, props);
 
         return {
             gcn,
             labelRef,
+            required,
         };
     },
 });
 </script>
 <template>
-    <div
+    <label
         :class="[
             gcn.base(),
         ]"
     >
-        <label
+        <div
             :class="gcn.e('label')"
             ref="labelRef"
         >
             {{ label }}
-        </label>
+            <span v-if="required" :class="gcn.e('label', 'required')">*</span>
+        </div>
         <div :class="gcn.e('input')">
             <slot />
         </div>
-    </div>
+    </label>
 </template>
 <style lang="stylus" scoped src="../style/formItem.styl" />

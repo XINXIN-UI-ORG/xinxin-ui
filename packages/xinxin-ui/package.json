@@ -21,6 +21,7 @@
   "author": "Eric Jin",
   "license": "MIT",
   "dependencies": {
-    "@xinxin-ui/components": "workspace:^1.0.0"
+    "@xinxin-ui/components": "workspace:^1.0.0",
+    "@xinxin-ui/symbols": "workspace:*"
   }
 }

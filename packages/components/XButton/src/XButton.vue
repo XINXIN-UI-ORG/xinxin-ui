@@ -1,6 +1,7 @@
 <script lang="ts">
-import { computed, defineComponent, PropType, ref } from "vue";
+import { computed, defineComponent, PropType, ref, inject } from "vue";
 import type { ButtonType, ButtonSize } from "./XButton.types";
+import { FormItemToComponentKey } from "@xinxin-ui/symbols";
 import {
     buttonOutter,
     buttonSize,
@@ -39,6 +40,10 @@ export default defineComponent({
     },
     inheritAttrs: false,
     setup(props, { attrs }) {
+        let formItem = inject(FormItemToComponentKey, {
+            size: props.size,
+        });
+
         const clickAnimateRef = ref<HTMLDivElement>();
         // 劫持用户点击事件
         function clickBtn(e: MouseEvent) {
@@ -66,7 +71,7 @@ export default defineComponent({
                 attrs.ghost as string
             ) ?? {};
             // 设置按钮大小
-            style = Object.assign(style, buttonSize[props.size] ?? {});
+            style = Object.assign(style, buttonSize[formItem.size] ?? {});
             // 设置按钮轮廓
             style = Object.assign(style, buttonOutter.default);
             if (attrs.round !== undefined) {

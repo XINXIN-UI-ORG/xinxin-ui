@@ -1,6 +1,6 @@
 import { provide, reactive, computed, ref, toRefs } from "vue";
 import type { Ref, ExtractPropTypes, PropType } from "vue";
-import { FormKey } from "@xinxin-ui/symbols";
+import { FormKey, FormRules } from "@xinxin-ui/symbols";
 import { NormalSize } from "@xinxin-ui/typings";
 
 type Position = "left" | "right" | "top";
@@ -12,7 +12,11 @@ export const formProps = {
     },
     size: {
         type: String as PropType<NormalSize>,
-        default: 'normal'
+        default: 'normal',
+    },
+    rules: {
+        type: Object as PropType<FormRules>,
+        default: {},
     },
 };
 
@@ -24,6 +28,8 @@ export function useForm(props: FormProps) {
         ...formLabelWidth(),
         ...formLabel(),
         ...toRefs(props),
+        rules: props.rules,
+
     });
 
     provide(FormKey, formRef);

@@ -22,6 +22,7 @@ import {
     Form,
     FormItem,
 } from "@xinxin-ui/components";
+import type { FormRules } from "@xinxin-ui/symbols";
 
 // package下组件列表
 const components = [
@@ -90,4 +91,5 @@ export {
 // 导出类型
 export {
     SelectTypeEnum,
+    FormRules,
 };

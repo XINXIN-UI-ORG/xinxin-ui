@@ -70,8 +70,10 @@ importers:
   packages/xinxin-ui:
     specifiers:
       '@xinxin-ui/components': workspace:^1.0.0
+      '@xinxin-ui/symbols': workspace:*
     dependencies:
       '@xinxin-ui/components': link:../components
+      '@xinxin-ui/symbols': link:../symbols
 
   site:
     specifiers:
