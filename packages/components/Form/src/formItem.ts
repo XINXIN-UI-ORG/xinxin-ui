@@ -21,6 +21,11 @@ enum UpdateWidthEnum {
     REMOVE,
 };
 
+const TRIGGER = {
+    CHANGE: 'change',
+    BLUR: 'blur'
+};
+
 export function useFormItem(
     labelRef: Ref<HTMLLabelElement>,
     props: FormItemProps,
@@ -28,6 +33,7 @@ export function useFormItem(
     const xForm = inject(FormKey);
     // 表单规则集合
     const rules = xForm?.rules;
+    const errorMsg = ref<string>("");
     
     const computedWidth = ref<number>(0);
     watch(computedWidth, (newVal: number, oldVal: number) => {
@@ -57,14 +63,16 @@ export function useFormItem(
         xForm?.registerLabel(labelRef);
     });
 
-    
     // 判断当前字段是否必选
     const required = isRequired(rules, props.ruleName);
     
-    provideToChildrenComponent(xForm, rules, props.ruleName);
+    provideToChildrenComponent(xForm, rules, props.ruleName, ({ error }) => {
+        errorMsg.value = error;
+    });
     
     return {
         required,
+        errorMsg,
     };
 }
 
@@ -91,7 +99,12 @@ function isRequired(rules: FormRules | undefined, ruleName: string): boolean {
     return false;
 }
 
-function provideToChildrenComponent(xForm: FormContext | undefined, rules: FormRules | undefined, ruleName: string) {
+function provideToChildrenComponent(
+    xForm: FormContext | undefined,
+    rules: FormRules | undefined,
+    ruleName: string,
+    errorFn: ({ error: string }) => void
+) {
     if (!xForm) {
         return;
     }
@@ -115,16 +128,32 @@ function provideToChildrenComponent(xForm: FormContext | undefined, rules: FormR
             validateMap.set(rule.trigger, validationList);
         }
 
+        // change的验证全部都要放一份到blur中
+        const changeValidations = validateMap.get(TRIGGER.CHANGE);
+        if (changeValidations) {
+            const blurValidations = validateMap.get(TRIGGER.BLUR) || [];
+            validateMap.set(TRIGGER.BLUR, [...blurValidations, ...changeValidations]);
+        }
+
         // 组合校验方法
         validateMap.forEach((validationFuncList, trigger) => {
-            validateGather[trigger] = (userInput: ModelValueType) => {
-                for (let validationFunc of validationFuncList) {
-                    if (validationFunc[0]?.(userInput, validationFunc[1])) {
+            validateGather[trigger] = (userInput: ModelValueType, statusSet: (status: string) => void) => {
+                for (let [validationFunc, rule] of validationFuncList) {
+                    if (validationFunc?.(userInput, rule)) {
                         // 验证失败
-                        console.log(validationFunc[1].message);
+                        errorFn({
+                            error: rule.message,
+                        });
+                        // 修改输入框的样式
+                        statusSet('error');
                         return;
                     }
                 }
+                // 验证通过
+                errorFn({
+                    error: ''
+                });
+                statusSet('none');
             };
         });
     }
@@ -142,7 +171,7 @@ const buildInValidatorRules = {
     required(value: ModelValueType) {
         return value === "";
     },
-    min(value: ModelValueType, rule: RuleItem) {
-        return String(value).length < rule.min!;
+    minLength(value: ModelValueType, rule: RuleItem) {
+        return String(value).length < rule.minLength!;
     },
 };

@@ -5,6 +5,7 @@ import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { ErrorMessage, PasswordShow, PasswordHide } from "@xinxin-ui/xinxin-icons";
 import { isNumber, isString } from "@vueuse/core";
 import { inputProps, useInput } from "./input";
+import { generateClassName } from "@xinxin-ui/utils";
 
 export default defineComponent({
     name: "x-input",
@@ -24,6 +25,9 @@ export default defineComponent({
         const inputWrapRef = ref<HTMLDivElement>();
         const clearIconRef = ref<HTMLSpanElement>();
         const passwordIconRef = ref<HTMLSpanElement>();
+        const gcn = generateClassName('input');
+        const formStatus = ref<string>("");
+
         // 输入框内容清除事件
         onMounted(() => {
             let iconShowFlag: IconShowFlag | null = null;
@@ -79,14 +83,8 @@ export default defineComponent({
         });
 
         return {
-            inputWrapperClassList: computed(() => [
-                "x-input",
-                "x-input-" + xFormItem.size,
-                props.disabled && "x-input-disabled",
-                props.status && "x-input-" + props.status,
-                props._cursor && "x-input-cursor",
-                focusFlag.value && 'x-input-focus',
-            ]),
+            gcn,
+            xFormItem,
             focus,
             prefix: slots.prefix,
             suffix: slots.suffix,
@@ -103,7 +101,10 @@ export default defineComponent({
                 emit("onInputBlur", inputDom.value);
                 
                 // 触发表单规则校验
-                xFormItem.blur?.(inputDom.value);
+                xFormItem.blur?.(inputDom.value, (status: string) => {
+                    // 校验错误 触发错误样式
+                    formStatus.value = status;
+                });
             },
             focusEvent(e: Event) {
                 focusFlag.value = true;
@@ -129,7 +130,17 @@ export default defineComponent({
                     // 获取value值更新到外面
                     emit(MODEL_VALUE_UPDATE, value);
                     emit("onInputChange", value);
+                    
+                    // 校验表单
+                    xFormItem.change?.(value, (status: string) => {
+                        // 校验错误 触发错误样式
+                        formStatus.value = status;
+                    });
                 }
+            }),
+            focusFlag,
+            status: computed<string>(() => {
+                return formStatus.value || props.status;
             }),
         };
     },
@@ -288,7 +299,14 @@ function showPasswordOnGather(
 </script>
 <template>
     <div
-        :class="inputWrapperClassList"
+        :class="[
+            gcn.base(),
+            gcn.bm(xFormItem.size),
+            gcn.is('disabled', disabled),
+            gcn.bm(status),
+            gcn.is('cursor', _cursor),
+            gcn.is('focus', focusFlag),
+        ]"
         ref="inputWrapRef"
         @click="focus"
         @mousedown="stopBlur"

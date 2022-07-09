@@ -16,11 +16,12 @@ export default defineComponent({
         const rules = reactive<FormRules>({
             name: [
                 { required: true, message: "请填写名称", trigger: "blur" },
-                { min: 6, message: "最小长度超限", trigger: 'blur' },
-                { max: 10, message: "最大长度超限", trigger: 'blur' },
+                { minLength: 6, message: "最少需要6个字符", trigger: 'change' },
+                { maxLength: 10, message: "最大长度超限", trigger: 'blur' },
             ],
             age: [
                 { required: true, message: "请输入年龄", trigger: "blur" },
+                { minLength: 6, message: "最少需要6个字符", trigger: 'change' },
             ],
         });
 

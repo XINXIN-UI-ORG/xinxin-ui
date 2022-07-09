@@ -26,7 +26,7 @@ export const inputProps = {
     },
     status: {
         type: String,
-        default: undefined,
+        default: "none",
     },
     placeholder: {
         type: String,

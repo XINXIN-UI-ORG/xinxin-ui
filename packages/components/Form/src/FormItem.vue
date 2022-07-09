@@ -11,18 +11,19 @@ export default defineComponent({
     setup(props: FormItemProps) {
         let gcn = generateClassName('form-item');
         let labelRef = ref<HTMLLabelElement>();
-        let { required } = useFormItem(labelRef as Ref<HTMLLabelElement>, props);
+        let { required, errorMsg } = useFormItem(labelRef as Ref<HTMLLabelElement>, props);
 
         return {
             gcn,
             labelRef,
             required,
+            errorMsg,
         };
     },
 });
 </script>
 <template>
-    <label
+    <div
         :class="[
             gcn.base(),
         ]"
@@ -36,7 +37,15 @@ export default defineComponent({
         </div>
         <div :class="gcn.e('input')">
             <slot />
+            <transition name="error">
+                <span
+                    v-if="errorMsg.length > 0"
+                    :class="gcn.e('input', 'error')"
+                >
+                    {{ errorMsg }}
+                </span>
+            </transition>
         </div>
-    </label>
+    </div>
 </template>
 <style lang="stylus" scoped src="../style/formItem.styl" />

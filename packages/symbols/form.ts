@@ -56,12 +56,12 @@ export interface FormItemToComponent {
     /**
      * 输入框change事件
      */
-    change?: (value: ModelValueType) => void;
+    change?: (value: ModelValueType, statusSet: (status: string) => void) => void;
 
     /**
      * 输入框blur事件
      */
-    blur?: (value: ModelValueType) => void;
+    blur?: (value: ModelValueType, statusSet: (status: string) => void) => void;
 };
 
 export const FormItemToComponentKey: InjectionKey<FormItemToComponent> = Symbol("xFormItemToComponent");
@@ -87,12 +87,12 @@ export interface RuleItem {
     trigger: "blur" | "change"
 
     /**
-     * 最小字符限制
+     * 最短字符长度限制
      */
-    min?: number;
+    minLength?: number;
 
     /**
-     * 最大字符限制
+     * 最大字符长度限制
      */
-    max?: number;
+    maxLength?: number;
 };

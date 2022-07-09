@@ -3,3 +3,20 @@
         .x-form-item__label__required
             color #f00
             padding-left 3px
+    .x-form-item__input
+        position relative
+        .x-form-item__input__error
+            position absolute
+            line-height 1
+            color #F56C6C
+            left 0
+            bottom -3px
+            font-size 12px
+            transform-origin top center
+            transform translateY(100%) scaleY(1)
+        .error-enter-from, .error-leave-to
+            transform translateY(100%) scaleY(0)
+        .error-enter-to, .error-leave-from
+            transform translateY(100%) scaleY(1)
+        .error-enter-active, .error-leave-active
+            transition transform .3s

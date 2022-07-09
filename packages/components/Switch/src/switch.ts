@@ -73,9 +73,9 @@ export function useSwitch(
 
     onMounted(() => {
         const observe = new ResizeObserver(() => {
-            displayWidth.value = Math.max(10, activeRef.value!.clientWidth, inactiveRef.value!.clientWidth) + offset;
-            activePadding.value = Math.abs(displayWidth.value - activeRef.value!.clientWidth);
-            inactivePadding.value = Math.abs(displayWidth.value - inactiveRef.value!.clientWidth);
+            displayWidth.value = Math.max(10, activeRef.value?.clientWidth || 0, inactiveRef.value?.clientWidth || 0) + offset;
+            activePadding.value = Math.abs(displayWidth.value - (activeRef.value?.clientWidth || 0));
+            inactivePadding.value = Math.abs(displayWidth.value - (inactiveRef.value?.clientWidth || 0));
             setTimeout(() => {
                 animateTime.value = '.3s';
             }, 200);
