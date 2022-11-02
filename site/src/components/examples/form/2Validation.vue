@@ -1,9 +1,10 @@
 <script lang="ts">
-import { defineComponent, reactive } from "vue";
-import { FormRules } from "xinxin-ui";
+import { defineComponent, reactive, ref } from "vue";
+import { FormRules, FormInstance } from "xinxin-ui";
 
 export default defineComponent({
     setup() {
+        const formRef = ref<FormInstance>();
         const form = reactive({
             name: "",
             age: "",
@@ -26,6 +27,7 @@ export default defineComponent({
         });
 
         return {
+            formRef,
             form,
             options: [
                 {
@@ -46,12 +48,19 @@ export default defineComponent({
                 },
             ],
             rules,
+            submitForm(formIns: FormInstance | undefined) {
+                if (!formIns) {
+                    return;
+                }
+
+                formIns.validate();
+            }, 
         };
     },
 });
 </script>
 <template>
-    <x-form :rules="rules">
+    <x-form :rules="rules" ref="formRef">
         <x-form-item label="姓名" rule-name="name">
             <x-input placeholder="请输入姓名" v-model="form.name" />
         </x-form-item>
@@ -93,7 +102,7 @@ export default defineComponent({
             </x-radio-group>
         </x-form-item>
         <x-form-item>
-            <x-button type="warning">提交</x-button>
+            <x-button type="warning" @click="submitForm(formRef)">提交</x-button>
             <x-button type="success">取消</x-button>
         </x-form-item>
     </x-form>

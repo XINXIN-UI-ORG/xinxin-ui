@@ -6,9 +6,15 @@ import { useForm, formProps, FormProps } from "./form";
 export default defineComponent({
     name: "x-form",
     props: formProps,
-    setup(props: FormProps) {
-        let gcn = generateClassName('form');
+    setup(props: FormProps, { expose }) {
+        const gcn = generateClassName('form');
         useForm(props);
+
+        expose({
+            validate() {
+                alert(123456);
+            },
+        });
 
         return {
             gcn,

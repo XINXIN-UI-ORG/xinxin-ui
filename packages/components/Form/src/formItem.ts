@@ -85,8 +85,9 @@ function getInputRule(rules: FormRules | undefined, ruleName: string): RuleItem[
 
 /**
  * 判断当前输入项是否必选
+ * 
  * @param rules 规则集合
- * @param ruleName 但钱输入项规则
+ * @param ruleName 当前输入项规则
  * @returns 是否必选
  */
 function isRequired(rules: FormRules | undefined, ruleName: string): boolean {
@@ -109,12 +110,12 @@ function provideToChildrenComponent(
         return;
     }
 
-    let validateGather = {};
-    let validateMap = new Map<string, any[][]>();
+    const validateGather = {};
+    const validateMap = new Map<string, any[][]>();
     const ruleList = getInputRule(rules, ruleName);
     if (ruleList) {
         // 获取规则对应的校验方法
-        for (let rule of ruleList) {
+        for (const rule of ruleList) {
             let validationList: any[][] = [];
             if (validateMap.has(rule.trigger)) {
                 validationList = validateMap.get(rule.trigger)!;
@@ -138,7 +139,7 @@ function provideToChildrenComponent(
         // 组合校验方法
         validateMap.forEach((validationFuncList, trigger) => {
             validateGather[trigger] = (userInput: ModelValueType, statusSet: (status: string) => void) => {
-                for (let [validationFunc, rule] of validationFuncList) {
+                for (const [validationFunc, rule] of validationFuncList) {
                     if (validationFunc?.(userInput, rule)) {
                         // 验证失败
                         errorFn({

@@ -19,8 +19,8 @@ import {
     Tag,
     SelectTypeEnum,
     Switch,
-    Form,
-    FormItem,
+    XForm,
+    XFormItem,
 } from "@xinxin-ui/components";
 import type { FormRules } from "@xinxin-ui/symbols";
 
@@ -44,8 +44,8 @@ const components = [
     Scrollbar,
     Tag,
     Switch,
-    Form,
-    FormItem,
+    XForm,
+    XFormItem,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -84,8 +84,8 @@ export {
     Scrollbar,
     Tag,
     Switch,
-    Form,
-    FormItem,
+    XForm,
+    XFormItem,
 };
 
 // 导出类型
@@ -93,3 +93,5 @@ export {
     SelectTypeEnum,
     FormRules,
 };
+
+export type FormInstance = InstanceType<typeof XForm>;

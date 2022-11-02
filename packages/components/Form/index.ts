@@ -1,10 +1,10 @@
 import Form from "./src/Form.vue";
 import FormItem from "./src/FormItem.vue";
-import { App } from "vue";
+import { withIntsall, withNoopInstall } from "@xinxin-ui/utils";
 
-Form.install = (app: App) => {};
-FormItem.install = (app: App) => {};
 
-export { Form, FormItem };
+export const XForm = withIntsall(Form, { FormItem });
 
-export default Form;
+export default XForm;
+
+export const XFormItem = withNoopInstall(FormItem);

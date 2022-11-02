@@ -65,7 +65,7 @@ export default defineComponent({
             inputRef.value?.focus();
         };
 
-        let { xFormItem } = useInput(props);
+        const { xFormItem } = useInput(props);
         // 提供操作input的方法
         expose({
             changeInputValue(value: string) {
