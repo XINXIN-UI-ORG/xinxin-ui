@@ -1,7 +1,7 @@
 <script lang="ts">
 import { computed, defineComponent, PropType, ref, inject } from "vue";
 import type { ButtonType, ButtonSize } from "./XButton.types";
-import { FormItemToComponentKey } from "@xinxin-ui/symbols";
+import { FormItemKey } from "@xinxin-ui/symbols";
 import {
     buttonOutter,
     buttonSize,
@@ -40,7 +40,7 @@ export default defineComponent({
     },
     inheritAttrs: false,
     setup(props, { attrs }) {
-        let formItem = inject(FormItemToComponentKey, {
+        const formItem = inject(FormItemKey, {
             size: props.size,
         });
 

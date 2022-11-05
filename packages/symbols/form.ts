@@ -46,25 +46,25 @@ export interface FormContext {
      * 设置Form的校验规则
      */
     rules: FormRules;
+
+    /**
+     * 表单数据
+     */
+    model?: Record<string, unknown>;
+
+    /**
+     * 将FormItem发送到Form中
+     */
+    addFormItem: (formItem: FormItemContext) => void;
 };
 
-export const FormKey: InjectionKey<FormContext> = Symbol("xForm");
-
-export interface FormItemToComponent {
+export interface FormItemContext {
     size: string;
+    validate?: (trigger: string, callback?: any) => void;
+}
 
-    /**
-     * 输入框change事件
-     */
-    change?: (value: ModelValueType, statusSet: (status: string) => void) => void;
-
-    /**
-     * 输入框blur事件
-     */
-    blur?: (value: ModelValueType, statusSet: (status: string) => void) => void;
-};
-
-export const FormItemToComponentKey: InjectionKey<FormItemToComponent> = Symbol("xFormItemToComponent");
+export const FormKey: InjectionKey<FormContext> = Symbol('xForm');
+export const FormItemKey: InjectionKey<FormItemContext> = Symbol('xFormItem');
 
 export interface FormRules {
     [propName: string]: Array<RuleItem>;

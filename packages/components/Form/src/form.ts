@@ -1,9 +1,13 @@
 import { provide, reactive, computed, ref, toRefs } from "vue";
 import type { Ref, ExtractPropTypes, PropType } from "vue";
-import { FormKey, FormRules } from "@xinxin-ui/symbols";
+import { FormKey, FormRules, FormItemContext } from "@xinxin-ui/symbols";
 import { NormalSize } from "@xinxin-ui/typings";
 
 type Position = "left" | "right" | "top";
+
+export interface Callback {
+    (isValid: boolean, invalidField: any): void;
+};
 
 export const formProps = {
     labelPosition: {
@@ -18,23 +22,40 @@ export const formProps = {
         type: Object as PropType<FormRules>,
         default: {},
     },
+    model: Object,
 };
 
 export type FormProps = ExtractPropTypes<typeof formProps>;
 
 export function useForm(props: FormProps) {
+    const formItems: FormItemContext[] = [];
+
+    const addFormItem = (formItem: FormItemContext) => {
+        if (!formItem) {
+            return;
+        }
+    
+        formItems.push(formItem);
+    };
+
+    // 所有formItem的验证
+    const validate = (callback?: Callback) => {
+        console.log("11111", formItems);
+    };
 
     const formRef = reactive({
         ...formLabelWidth(),
         ...formLabel(),
         ...toRefs(props),
-        rules: props.rules,
-
+        addFormItem,
     });
 
     provide(FormKey, formRef);
-}
 
+    return {
+        validate,
+    };
+}
 
 function formLabelWidth() {
     const labelWidthList = ref<Array<number>>([]);

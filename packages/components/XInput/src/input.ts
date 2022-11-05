@@ -1,6 +1,6 @@
 import { inject } from "vue";
 import type { ExtractPropTypes, PropType } from "vue";
-import { FormItemToComponentKey } from "@xinxin-ui/symbols";
+import { FormItemKey } from "@xinxin-ui/symbols";
 import { NormalSize } from "@xinxin-ui/typings";
 
 export const inputProps = {
@@ -50,7 +50,7 @@ export const inputProps = {
 export function useInput(
     props: ExtractPropTypes<typeof inputProps>
 ): any {
-    const xFormItem = inject(FormItemToComponentKey, {
+    const xFormItem = inject(FormItemKey, {
         size: props.size,
     });
 

@@ -3,7 +3,7 @@ import { NormalSize, ModelValueTypeVue, ModelValueType } from "@xinxin-ui/typing
 import { computed, ref, onMounted, inject } from "vue";
 import { MODEL_VALUE_UPDATE } from "@xinxin-ui/constants";
 import { isBoolean, isNumber, isString } from "@vueuse/core";
-import { FormItemToComponentKey } from "@xinxin-ui/symbols";
+import { FormItemKey } from "@xinxin-ui/symbols";
 
 export const switchProps = {
     size: {
@@ -84,7 +84,7 @@ export function useSwitch(
         observe.observe(inactiveRef.value!);
     });
 
-    let formItem = inject(FormItemToComponentKey, {
+    const formItem = inject(FormItemKey, {
         size: props.size,
     });
 

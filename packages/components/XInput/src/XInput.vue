@@ -99,12 +99,6 @@ export default defineComponent({
                 focusFlag.value = false;
                 const inputDom = e.target as HTMLInputElement;
                 emit("onInputBlur", inputDom.value);
-                
-                // 触发表单规则校验
-                xFormItem.blur?.(inputDom.value, (status: string) => {
-                    // 校验错误 触发错误样式
-                    formStatus.value = status;
-                });
             },
             focusEvent(e: Event) {
                 focusFlag.value = true;
@@ -130,12 +124,6 @@ export default defineComponent({
                     // 获取value值更新到外面
                     emit(MODEL_VALUE_UPDATE, value);
                     emit("onInputChange", value);
-                    
-                    // 校验表单
-                    xFormItem.change?.(value, (status: string) => {
-                        // 校验错误 触发错误样式
-                        formStatus.value = status;
-                    });
                 }
             }),
             focusFlag,

@@ -10,7 +10,7 @@ export default defineComponent({
     setup(props, { emit }) {
         let gcn = generateClassName("radio-button");
         let radioInputRef = ref<HTMLInputElement>();
-        let { checkValue, blurEvent, focusEvent, inputName, disabled, formItem } = radioGather(props, emit, radioInputRef);
+        const { checkValue, blurEvent, focusEvent, inputName, disabled, formItem } = radioGather(props, emit, radioInputRef);
         return {
             gcn,
             radioInputRef,

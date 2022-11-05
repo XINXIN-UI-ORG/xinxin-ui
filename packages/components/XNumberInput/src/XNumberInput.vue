@@ -13,7 +13,7 @@ export default defineComponent({
         let downBtnRef = ref<HTMLDivElement>();
         const formStatus = ref<string>('');
 
-        let { formItem } = useNumberInput(attrs);
+        const { formItem } = useNumberInput(attrs);
         // 是否禁用
         let disabled = computed(() => {
             return !(attrs.disabled === undefined || attrs.disabled === false);
@@ -24,17 +24,7 @@ export default defineComponent({
             props,
             upBtnRef,
             downBtnRef,
-            disabled,
-            (value: number) => {
-                formItem.blur?.(value, (status: string) => {
-                    formStatus.value = status;
-                });
-            },
-            (value: number) => {
-                formItem.change?.(value, (status: string) => {
-                    formStatus.value = status;
-                });
-            },
+            disabled
         );
 
         return {
@@ -43,7 +33,7 @@ export default defineComponent({
                 "x-number-input-" + (formItem.size ?? "normal"),
             ]),
             statusClass: computed(() => {
-                let status = formStatus.value || attrs.status || 'none';
+                const status = formStatus.value || attrs.status || 'none';
                 return `x-number-input__${status}`;
             }),
             disabled,
@@ -68,9 +58,7 @@ function modifyValue(
     props: any,
     upBtnRef: Ref<HTMLDivElement | undefined>,
     downBtnRef: Ref<HTMLDivElement | undefined>,
-    disabled: ComputedRef<boolean>,
-    blurCallback: (value: number) => void,
-    changeCallback: (value: number) => void,
+    disabled: ComputedRef<boolean>
 ): {
     [propsName: string]: (param: any) => void;
 } {
@@ -124,8 +112,6 @@ function modifyValue(
         xInputRef.value.changeInputValue((((currentValue * decimalLength) - (stepLen * decimalLength)) / decimalLength).toString());
     };
     let disabledBtn = (inputValue: string) => {
-        changeCallback(xInputRef.value.getCurrentValue());
-
         if (inputValue === "") {
             upBtnRef.value!.classList.remove("x-number-input__button__disable");
             downBtnRef.value!.classList.remove(
@@ -148,8 +134,6 @@ function modifyValue(
         }
     };
     let blurInput = (inputValue: string) => {
-        blurCallback(xInputRef.value.getCurrentValue());
-
         if (inputValue === "") {
             return;
         }

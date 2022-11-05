@@ -1,6 +1,6 @@
 import { inject } from "vue";
 import type { ExtractPropTypes } from "vue";
-import { FormItemToComponentKey } from "@xinxin-ui/symbols";
+import { FormItemKey } from "@xinxin-ui/symbols";
 
 export const numberInputProps = {
     numberButton: {
@@ -20,7 +20,7 @@ export type NumberInputProps = ExtractPropTypes<typeof numberInputProps>;
 export function useNumberInput(
     attrs: any,
 ) {
-    const formItem = inject(FormItemToComponentKey, {
+    const formItem = inject(FormItemKey, {
         size: attrs.size,
     });
 
