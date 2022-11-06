@@ -6,6 +6,7 @@ import { ErrorMessage, PasswordShow, PasswordHide } from "@xinxin-ui/xinxin-icon
 import { isNumber, isString } from "@vueuse/core";
 import { inputProps, useInput } from "./input";
 import { generateClassName } from "@xinxin-ui/utils";
+import { TriggerEnum, ValidateStatusEnum } from "@xinxin-ui/typings";
 
 export default defineComponent({
     name: "x-input",
@@ -26,7 +27,6 @@ export default defineComponent({
         const clearIconRef = ref<HTMLSpanElement>();
         const passwordIconRef = ref<HTMLSpanElement>();
         const gcn = generateClassName('input');
-        const formStatus = ref<string>("");
 
         // 输入框内容清除事件
         onMounted(() => {
@@ -99,6 +99,7 @@ export default defineComponent({
                 focusFlag.value = false;
                 const inputDom = e.target as HTMLInputElement;
                 emit("onInputBlur", inputDom.value);
+                xFormItem.validate?.(TriggerEnum.blur);
             },
             focusEvent(e: Event) {
                 focusFlag.value = true;
@@ -128,7 +129,8 @@ export default defineComponent({
             }),
             focusFlag,
             status: computed<string>(() => {
-                return formStatus.value || props.status;
+                const formStatus = xFormItem.validateStatus === ValidateStatusEnum.failed ? 'error' : '';
+                return formStatus || props.status || 'none';
             }),
         };
     },

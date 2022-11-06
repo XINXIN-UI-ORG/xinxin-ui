@@ -11,13 +11,13 @@ export default defineComponent({
     setup(props: FormItemProps) {
         let gcn = generateClassName('form-item');
         let labelRef = ref<HTMLLabelElement>();
-        let { required, errorMsg } = useFormItem(labelRef as Ref<HTMLLabelElement>, props);
+        let { required, validateMessage } = useFormItem(labelRef as Ref<HTMLLabelElement>, props);
 
         return {
             gcn,
             labelRef,
             required,
-            errorMsg,
+            validateMessage,
         };
     },
 });
@@ -39,10 +39,10 @@ export default defineComponent({
             <slot />
             <transition name="error">
                 <span
-                    v-if="errorMsg.length > 0"
+                    v-if="validateMessage.length > 0"
                     :class="gcn.e('input', 'error')"
                 >
-                    {{ errorMsg }}
+                    {{ validateMessage }}
                 </span>
             </transition>
         </div>

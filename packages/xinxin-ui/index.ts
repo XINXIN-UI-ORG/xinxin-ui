@@ -22,7 +22,7 @@ import {
     XForm,
     XFormItem,
 } from "@xinxin-ui/components";
-import type { FormRules } from "@xinxin-ui/symbols";
+import type { FormRules } from "@xinxin-ui/typings";
 
 // package下组件列表
 const components = [
@@ -93,5 +93,7 @@ export {
     SelectTypeEnum,
     FormRules,
 };
+
+export { TriggerEnum } from "@xinxin-ui/typings";;
 
 export type FormInstance = InstanceType<typeof XForm>;

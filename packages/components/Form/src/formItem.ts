@@ -1,17 +1,20 @@
 import { ExtractPropTypes, reactive, Ref } from "vue";
 import { inject, ref, watch, onMounted, nextTick, computed, provide, toRefs } from "vue";
-import { FormKey, FormContext, FormRules, RuleItem, FormItemKey } from "@xinxin-ui/symbols";
-import { ModelValueType } from "@xinxin-ui/typings";
+import { FormKey, FormContext, FormItemKey } from "@xinxin-ui/symbols";
+import { ModelValueType, TriggerEnum, ValidateFieldCallback, FormRules, RuleItem, ValidateStatusEnum } from "@xinxin-ui/typings";
 import { get } from "lodash";
+import { NOOP } from "@vue/shared";
+import AsyncValidator from "async-validator";
+
 
 export const formItemProps = {
     label: {
         type: String,
-        default: "",
+        default: '',
     },
     prop: {
         type: String,
-        default: "",
+        default: '',
     },
 };
 
@@ -22,11 +25,6 @@ enum UpdateWidthEnum {
     REMOVE,
 };
 
-const TRIGGER = {
-    CHANGE: 'change',
-    BLUR: 'blur'
-};
-
 export function useFormItem(
     labelRef: Ref<HTMLLabelElement>,
     props: FormItemProps,
@@ -34,8 +32,9 @@ export function useFormItem(
     const xForm = inject(FormKey, {} as FormContext);
     // 表单规则集合
     const rules = xForm.rules;
-    const errorMsg = ref<string>('');
-    
+    const validateMessage = ref<string>('');
+    const validateStatus = ref<ValidateStatusEnum>(ValidateStatusEnum.uninitialized);
+
     const computedWidth = ref<number>(0);
     watch(computedWidth, (newVal: number, oldVal: number) => {
         // 当宽度改变时更新form中保存宽度的数组
@@ -75,11 +74,60 @@ export function useFormItem(
 
     // 判断当前字段是否必选
     const required = isRequired(rules, props.prop);
+    const validate = (
+        trigger: TriggerEnum,
+        callback: ValidateFieldCallback = NOOP,
+    ) => {
+        // 通过trigger获取指定的rule
+        const rules = getTriggerRule(trigger);
+        if (!rules || rules.length === 0) {
+            callback();
+            return;
+        }
+
+        validateStatus.value = ValidateStatusEnum.validating;
+        validateMessage.value = '';
+        rules.forEach(rule => Reflect.deleteProperty(rule, 'trigger'));
+        // 生成校验器
+        const descriptor = {
+            [props.prop]: rules,
+        };
+        const validator = new AsyncValidator(descriptor);
+        const model = {
+            [props.prop]: fieldValue.value,
+        };
+        validator.validate(model, { firstFields: true }, (errors, fields) => {
+            validateMessage.value = errors ? errors[0].message || '' : '';     
+            validateStatus.value = errors ? ValidateStatusEnum.failed : ValidateStatusEnum.success;
+            
+            callback(validateMessage.value, fields);
+        });
+    };
+    const getTriggerRule = (trigger: TriggerEnum) => {
+        const rules: RuleItem[] = get(xForm.rules, props.prop, []);
+        if (!trigger) {
+            return rules.map(rule => ({ ...rule }));
+        }
+
+        return rules.filter(rule => {
+            // 如果未设置trigger则任何情况下都进行该条规则校验
+            if (!rule.trigger) {
+                return true;
+            }
+
+            if (Array.isArray(rule.trigger)) {
+                return rule.trigger.includes(trigger);
+            } else {
+                return rule.trigger === trigger;
+            }
+        }).map(rule => ({ ...rule }));
+    };
 
     const xFormItem = reactive({
         ...toRefs(props),
         ...toRefs(xForm),
         validate,
+        validateStatus,
     });
 
     onMounted(() => {
@@ -90,15 +138,11 @@ export function useFormItem(
     });
 
     provide(FormItemKey, xFormItem);
-    
+
     return {
         required,
-        errorMsg,
+        validateMessage,
     };
-}
-
-function validate() {
-
 }
 
 function getInputRule(rules: FormRules | undefined, ruleName: string): RuleItem[] | undefined {
@@ -124,80 +168,3 @@ function isRequired(rules: FormRules | undefined, ruleName: string): boolean {
     }
     return false;
 }
-
-// function provideToChildrenComponent(
-//     xForm: FormContext | undefined,
-//     rules: FormRules | undefined,
-//     ruleName: string,
-//     errorFn: ({ error: string }) => void
-// ) {
-//     if (!xForm) {
-//         return;
-//     }
-
-//     const validateGather = {};
-//     const validateMap = new Map<string, any[][]>();
-//     const ruleList = getInputRule(rules, ruleName);
-//     if (ruleList) {
-//         // 获取规则对应的校验方法
-//         for (const rule of ruleList) {
-//             let validationList: any[][] = [];
-//             if (validateMap.has(rule.trigger)) {
-//                 validationList = validateMap.get(rule.trigger)!;
-//             }
-
-//             Object.keys(rule).forEach(key => {
-//                 if (!!buildInValidatorRules[key]) {
-//                     validationList.push([buildInValidatorRules[key], rule]);
-//                 }
-//             });
-//             validateMap.set(rule.trigger, validationList);
-//         }
-
-//         // change的验证全部都要放一份到blur中
-//         const changeValidations = validateMap.get(TRIGGER.CHANGE);
-//         if (changeValidations) {
-//             const blurValidations = validateMap.get(TRIGGER.BLUR) || [];
-//             validateMap.set(TRIGGER.BLUR, [...blurValidations, ...changeValidations]);
-//         }
-
-//         // 组合校验方法
-//         validateMap.forEach((validationFuncList, trigger) => {
-//             validateGather[trigger] = (userInput: ModelValueType, statusSet: (status: string) => void) => {
-//                 for (const [validationFunc, rule] of validationFuncList) {
-//                     if (validationFunc?.(userInput, rule)) {
-//                         // 验证失败
-//                         errorFn({
-//                             error: rule.message,
-//                         });
-//                         // 修改输入框的样式
-//                         statusSet('error');
-//                         return;
-//                     }
-//                 }
-//                 // 验证通过
-//                 errorFn({
-//                     error: ''
-//                 });
-//                 statusSet('none');
-//             };
-//         });
-//     }
-
-//     provide(FormItemToComponentKey, reactive({
-//         ...toRefs(xForm),
-//         ...validateGather
-//     }));
-// }
-
-/**
- * 表单校验内置规则
- */
-const buildInValidatorRules = {
-    required(value: ModelValueType) {
-        return value === "";
-    },
-    minLength(value: ModelValueType, rule: RuleItem) {
-        return String(value).length < rule.minLength!;
-    },
-};

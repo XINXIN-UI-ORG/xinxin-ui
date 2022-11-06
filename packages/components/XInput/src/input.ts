@@ -1,16 +1,16 @@
-import { inject } from "vue";
+import { inject, watch } from "vue";
 import type { ExtractPropTypes, PropType } from "vue";
 import { FormItemKey } from "@xinxin-ui/symbols";
-import { NormalSize } from "@xinxin-ui/typings";
+import { NormalSize, TriggerEnum } from "@xinxin-ui/typings";
 
 export const inputProps = {
     size: {
         type: String as PropType<NormalSize>,
-        default: "normal",
+        default: 'normal',
     },
     modelValue: {
         type: [String, Number],
-        default: "",
+        default: '',
     },
     disabled: {
         type: Boolean,
@@ -26,11 +26,11 @@ export const inputProps = {
     },
     status: {
         type: String,
-        default: "none",
+        default: 'none',
     },
     placeholder: {
         type: String,
-        default: "",
+        default: '',
     },
     readonly: {
         type: Boolean,
@@ -53,6 +53,13 @@ export function useInput(
     const xFormItem = inject(FormItemKey, {
         size: props.size,
     });
+
+    watch(
+        () => props.modelValue,
+        () => {
+            xFormItem.validate?.(TriggerEnum.change);
+        },
+    );
 
     return {
         xFormItem,

@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { reactive, ref } from "vue";
-import type { FormRules, FormInstance } from "xinxin-ui";
+import { FormRules, FormInstance, XMessage } from "xinxin-ui";
+import { TriggerEnum } from "xinxin-ui";
 
 const formRef = ref<FormInstance>();
 const form = reactive({
@@ -14,15 +15,31 @@ const form = reactive({
 
 const rules = reactive<FormRules>({
     name: [
-        { required: true, message: "请填写名称", trigger: "blur" },
-        { minLength: 6, message: "最少需要6个字符", trigger: 'change' },
-        { maxLength: 10, message: "最大长度超限", trigger: 'blur' },
+        { required: true, message: "请填写名称", trigger: TriggerEnum.blur },
+        { min: 6, message: "最少需要6个字符", trigger: [TriggerEnum.blur, TriggerEnum.change] },
+        { max: 20, message: "名称长度不能超过20个字符", trigger: TriggerEnum.blur },
+        { pattern: /^[a-z]+$/, message: "名称中不能有数字", trigger: TriggerEnum.blur },
     ],
     age: [
-        { required: true, message: "请输入年龄", trigger: "blur" },
-        { minLength: 6, message: "最少需要6个字符", trigger: 'change' },
+        { required: true, message: "请输入年龄", trigger: TriggerEnum.blur },
+        { validator: checkAge, trigger: [TriggerEnum.change, TriggerEnum.blur] },
     ],
 });
+
+function checkAge(rule: any, value: any, callback: any) {
+    if (!value) {
+        callback(new Error('请输入年龄'));
+        return;
+    }
+
+    setTimeout(() => {
+        if (value < 18) {
+            callback(new Error('年龄太小了'));
+        } else {
+            callback();
+        }
+    }, 3000);
+}
 
 const options = [
     {
@@ -48,15 +65,24 @@ const submitForm = (formIns: FormInstance | undefined) => {
         return;
     }
 
-    formIns.validate();
+    formIns.validate((valid, fields) => {
+        if (valid) {
+            XMessage({
+                message: '提交成功',
+                type: 'success'
+            });
+        } else {
+            console.log(fields);
+            XMessage({
+                message: '验证失败',
+                type: 'error'
+            });
+        }
+    });
 };
 </script>
 <template>
-    <x-form
-    :rules="rules"
-    :model="form"
-    ref="formRef"
-    >
+    <x-form :rules="rules" :model="form" ref="formRef">
         <x-form-item label="姓名" prop="name">
             <x-input placeholder="请输入姓名" v-model="form.name" />
         </x-form-item>

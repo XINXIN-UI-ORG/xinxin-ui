@@ -3,6 +3,7 @@ import { computed, ComputedRef, defineComponent, Ref, ref } from "vue";
 import XInput from "../../XInput";
 import { Up, Down } from "@xinxin-ui/xinxin-icons";
 import { numberInputProps, NumberInputProps, useNumberInput } from "./numberInput";
+import { ValidateStatusEnum } from "@xinxin-ui/typings";
 
 export default defineComponent({
     name: "x-number-input",
@@ -11,9 +12,8 @@ export default defineComponent({
         let xInputRef = ref();
         let upBtnRef = ref<HTMLDivElement>();
         let downBtnRef = ref<HTMLDivElement>();
-        const formStatus = ref<string>('');
 
-        const { formItem } = useNumberInput(attrs);
+        const { xFormItem } = useNumberInput(attrs);
         // 是否禁用
         let disabled = computed(() => {
             return !(attrs.disabled === undefined || attrs.disabled === false);
@@ -30,10 +30,11 @@ export default defineComponent({
         return {
             numberInputClassList: computed(() => [
                 "x-number-input",
-                "x-number-input-" + (formItem.size ?? "normal"),
+                "x-number-input-" + (xFormItem.size ?? "normal"),
             ]),
             statusClass: computed(() => {
-                const status = formStatus.value || attrs.status || 'none';
+                const formStatus = xFormItem.validateStatus === ValidateStatusEnum.failed ? 'error' : '';
+                const status = formStatus || attrs.status || 'none';
                 return `x-number-input__${status}`;
             }),
             disabled,

@@ -22,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "@xinxin-ui/components": "workspace:^1.0.0",
-    "@xinxin-ui/symbols": "workspace:*"
+    "@xinxin-ui/symbols": "workspace:*",
+    "@xinxin-ui/typings": "workspace:^1.0.0"
   }
 }

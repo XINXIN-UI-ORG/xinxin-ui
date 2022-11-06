@@ -1,5 +1,5 @@
 import type { InjectionKey, Ref } from "vue";
-import type { ModelValueType } from "@xinxin-ui/typings";
+import type { FormRules, TriggerEnum, ValidateStatusEnum, ValidateFieldCallback } from "@xinxin-ui/typings";
 
 export interface FormContext {
     /**
@@ -60,39 +60,9 @@ export interface FormContext {
 
 export interface FormItemContext {
     size: string;
-    validate?: (trigger: string, callback?: any) => void;
+    validate?: (trigger: TriggerEnum | null, callback?: ValidateFieldCallback) => void;
+    validateStatus?: ValidateStatusEnum;
 }
 
 export const FormKey: InjectionKey<FormContext> = Symbol('xForm');
 export const FormItemKey: InjectionKey<FormItemContext> = Symbol('xFormItem');
-
-export interface FormRules {
-    [propName: string]: Array<RuleItem>;
-};
-
-export interface RuleItem {
-    /**
-     * 字段是否必须选
-     */
-    required?: boolean;
-    
-    /**
-     * 错误提示文字
-     */
-    message: string;
-
-    /**
-     * 触发校验方式
-     */
-    trigger: "blur" | "change"
-
-    /**
-     * 最短字符长度限制
-     */
-    minLength?: number;
-
-    /**
-     * 最大字符长度限制
-     */
-    maxLength?: number;
-};

@@ -20,11 +20,11 @@ export type NumberInputProps = ExtractPropTypes<typeof numberInputProps>;
 export function useNumberInput(
     attrs: any,
 ) {
-    const formItem = inject(FormItemKey, {
+    const xFormItem = inject(FormItemKey, {
         size: attrs.size,
     });
 
     return {
-        formItem,
+        xFormItem,
     };
 }
