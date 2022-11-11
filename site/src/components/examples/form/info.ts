@@ -22,7 +22,15 @@ const validation: ExampleInfo = {
     `)
 };
 
+const addItem: ExampleInfo = {
+    title: "添加/删除表单项",
+    desc: format(`
+        动态添加或删除单个表单字段的验证规则规则。
+    `)
+};
+
 export {
+    addItem,
     validation,
     base,
     size,

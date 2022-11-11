@@ -75,7 +75,7 @@ export function useFormItem(
     // 判断当前字段是否必选
     const required = isRequired(rules, props.prop);
     const validate = (
-        trigger: TriggerEnum,
+        trigger: TriggerEnum | null,
         callback: ValidateFieldCallback = NOOP,
     ) => {
         // 通过trigger获取指定的rule
@@ -103,7 +103,7 @@ export function useFormItem(
             callback(validateMessage.value, fields);
         });
     };
-    const getTriggerRule = (trigger: TriggerEnum) => {
+    const getTriggerRule = (trigger: TriggerEnum | null) => {
         const rules: RuleItem[] = get(xForm.rules, props.prop, []);
         if (!trigger) {
             return rules.map(rule => ({ ...rule }));
@@ -145,13 +145,6 @@ export function useFormItem(
     };
 }
 
-function getInputRule(rules: FormRules | undefined, ruleName: string): RuleItem[] | undefined {
-    if (rules) {
-        return rules[ruleName];
-    }
-    return undefined;
-}
-
 /**
  * 判断当前输入项是否必选
  * 
@@ -161,10 +154,11 @@ function getInputRule(rules: FormRules | undefined, ruleName: string): RuleItem[
  */
 function isRequired(rules: FormRules | undefined, ruleName: string): boolean {
     // 获取当前输入项的规则
-    const ruleList = getInputRule(rules, ruleName);
+    const ruleList = get(rules, ruleName, []);
     if (ruleList) {
         // 只要有任意一个规则设置了必选则认为当前输入框必选
         return ruleList.some(rule => !!rule.required);
     }
+
     return false;
 }
