@@ -36,57 +36,59 @@ export default defineComponent({
 });
 </script>
 <template>
-    <label
-        :class="[
-            gcn.base(),
-            gcn.bm(formItem.size),
-            gcn.is('select', modelValue),
-            gcn.is('disabled', disabled),
-            gcn.is('loading', loading),
-            gcn.is('active', !disabled && !loading),
-        ]"
-        :style="(displayStyle as any)"
-    >
-        <input
+    <div class="x-switch-wrap">
+        <label
             :class="[
-                gcn.e('input'),
+                gcn.base(),
+                gcn.bm(formItem.size),
+                gcn.is('select', modelValue),
+                gcn.is('disabled', disabled),
+                gcn.is('loading', loading),
+                gcn.is('active', !disabled && !loading),
             ]"
-            type="checkbox"
-            v-model="modelValue"
-            :disabled="disabled || loading"
-        />
-        <div
-            :class="gcn.e('display')"
+            :style="(displayStyle as any)"
         >
-            <div
-                :class="gcn.e('active')"
-                ref="activeRef"
-                :style="activeStyle"
-            >
-                {{ activeText }}
-            </div>
-            <div
+            <input
                 :class="[
-                    gcn.e('action'),
+                    gcn.e('input'),
                 ]"
-            >
-                <slot
-                    name="icon"
-                    v-if="!loading"
-                />
-                <load
-                    :class="gcn.e('action', 'load')"
-                    v-if="loading"
-                />
-            </div>
+                type="checkbox"
+                v-model="modelValue"
+                :disabled="disabled || loading"
+            />
             <div
-                :class="gcn.e('inactive')"
-                ref="inactiveRef"
-                :style="inactiveStyle"
+                :class="gcn.e('display')"
             >
-                {{ inactiveText }}
+                <div
+                    :class="gcn.e('active')"
+                    ref="activeRef"
+                    :style="activeStyle"
+                >
+                    {{ activeText }}
+                </div>
+                <div
+                    :class="[
+                        gcn.e('action'),
+                    ]"
+                >
+                    <slot
+                        name="icon"
+                        v-if="!loading"
+                    />
+                    <load
+                        :class="gcn.e('action', 'load')"
+                        v-if="loading"
+                    />
+                </div>
+                <div
+                    :class="gcn.e('inactive')"
+                    ref="inactiveRef"
+                    :style="inactiveStyle"
+                >
+                    {{ inactiveText }}
+                </div>
             </div>
-        </div>
-    </label>
+        </label>
+    </div>
 </template>
 <style scoped lang="stylus" src="../style/switch.styl" />

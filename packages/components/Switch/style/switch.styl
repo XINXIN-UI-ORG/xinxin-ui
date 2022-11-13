@@ -1,89 +1,93 @@
 @import "../../../theme-chalk/variable.styl";
 
-.x-switch
-    position relative
-    display inline-block
-    overflow hidden
-    user-select none
-    cursor pointer
-    border-radius 22px
-    box-sizing border-box
-    color #fff
-    background-color var(--inactive-color)
-    transition background-color var(--time) var(--animation)
-    --animation cubic-bezier(0.4, 0, 0.2, 1)
-    .x-switch__input
-        position absolute
-        inset 0
-        opacity 0
-        z-index -1
-        outline none
-    .x-switch__display
-        height 100%
-        display flex
-        margin-left var(--in-display-width)
-        transition margin-left var(--time) var(--animation)
-        .x-switch__action
-            margin 2px calc(2px + var(--offset)) 2px 2px
-            transition margin var(--time) var(--animation), padding var(--time) var(--animation)
-            display flex
-            align-items center
-            justify-content center
-            .x-switch__action__load
-                color $base_theme_color
-        .x-switch__active, .x-switch__inactive
+.x-switch-wrap
+    display inline-flex
+    height 32px
+    align-items center
+    .x-switch
+        position relative
+        display inline-block
+        overflow hidden
+        user-select none
+        cursor pointer
+        border-radius 22px
+        box-sizing border-box
+        color #fff
+        background-color var(--inactive-color)
+        transition background-color var(--time) var(--animation)
+        --animation cubic-bezier(0.4, 0, 0.2, 1)
+        .x-switch__input
+            position absolute
+            inset 0
+            opacity 0
+            z-index -1
+            outline none
+        .x-switch__display
             height 100%
-            overflow hidden
-            transition width var(--time) var(--animation)
-            width fit-content
-            flex 0 0 fit-content
+            display flex
+            margin-left var(--in-display-width)
+            transition margin-left var(--time) var(--animation)
+            .x-switch__action
+                margin 2px calc(2px + var(--offset)) 2px 2px
+                transition margin var(--time) var(--animation), padding var(--time) var(--animation)
+                display flex
+                align-items center
+                justify-content center
+                .x-switch__action__load
+                    color $base_theme_color
+            .x-switch__active, .x-switch__inactive
+                height 100%
+                overflow hidden
+                transition width var(--time) var(--animation)
+                width fit-content
+                flex 0 0 fit-content
 
-.x-switch-small
-    height 18px
-    width calc(var(--display-width) + 14px + 4px + var(--offset))
-    .x-switch__display
-        .x-switch__action
-            height 14px
-            width 14px
-            background-color #fff
-            border-radius 50%
-            flex 0 0 14px
-.x-switch-normal
-    height 22px
-    width calc(var(--display-width) + 18px + 4px + var(--offset))
-    .x-switch__display
-        .x-switch__action
-            height 18px
-            width 18px
-            background-color #fff
-            border-radius 50%
-            flex 0 0 18px
-.x-switch-large
-    height 26px
-    width calc(var(--display-width) + 22px + 4px + var(--offset))
-    .x-switch__display
-        .x-switch__action
-            height 22px
-            width 22px
-            background-color #fff
-            border-radius 50%
-            flex 0 0 22px
-
-.x-switch-select
-    background-color var(--active-color)
-    .x-switch__display
-        margin-left 0
-        .x-switch__action
-            margin 2px 2px 2px calc(2px + var(--offset))
-
-.x-switch-disabled
-    cursor not-allowed
-    opacity .5
-
-.x-switch-active
-    &:active
+    .x-switch-small
+        height 18px
+        width calc(var(--display-width) + 14px + 4px + var(--offset))
         .x-switch__display
             .x-switch__action
-                margin 2px
-                padding-left var(--offset)
-                border-radius 22px
+                height 14px
+                width 14px
+                background-color #fff
+                border-radius 50%
+                flex 0 0 14px
+    .x-switch-normal
+        height 22px
+        width calc(var(--display-width) + 18px + 4px + var(--offset))
+        .x-switch__display
+            .x-switch__action
+                height 18px
+                width 18px
+                background-color #fff
+                border-radius 50%
+                flex 0 0 18px
+    .x-switch-large
+        height 26px
+        width calc(var(--display-width) + 22px + 4px + var(--offset))
+        .x-switch__display
+            .x-switch__action
+                height 22px
+                width 22px
+                background-color #fff
+                border-radius 50%
+                flex 0 0 22px
+
+    .x-switch-select
+        background-color var(--active-color)
+        .x-switch__display
+            margin-left 0
+            .x-switch__action
+                margin 2px 2px 2px calc(2px + var(--offset))
+
+    .x-switch-disabled
+        cursor not-allowed
+        opacity .5
+
+    .x-switch-active
+        &:active
+            .x-switch__display
+                .x-switch__action
+                    margin 2px
+                    padding-left var(--offset)
+                    border-radius 22px

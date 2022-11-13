@@ -44,6 +44,9 @@ const components = [
     Scrollbar,
     Tag,
     Switch,
+];
+
+const newComponents = [
     XForm,
     XFormItem,
 ];
@@ -56,6 +59,12 @@ const install: any = (app: App) => {
             app.use(component);
         }
         app.component(component.name, component);
+    });
+
+    newComponents.forEach((component: any) => {
+        if (component.install) {
+            app.use(component);
+        }
     });
 };
 
