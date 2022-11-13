@@ -1,7 +1,7 @@
-import { ExtractPropTypes, reactive, Ref } from "vue";
-import { inject, ref, watch, onMounted, nextTick, computed, provide, toRefs } from "vue";
+import { ExtractPropTypes, PropType, reactive, Ref } from "vue";
+import { inject, ref, watch, onMounted, nextTick, computed, provide, toRefs, onBeforeUnmount } from "vue";
 import { FormKey, FormContext, FormItemKey } from "@xinxin-ui/symbols";
-import { ModelValueType, TriggerEnum, ValidateFieldCallback, FormRules, RuleItem, ValidateStatusEnum } from "@xinxin-ui/typings";
+import { TriggerEnum, ValidateFieldCallback, FormRules, RuleItem, ValidateStatusEnum } from "@xinxin-ui/typings";
 import { get } from "lodash";
 import { NOOP } from "@vue/shared";
 import AsyncValidator from "async-validator";
@@ -16,6 +16,7 @@ export const formItemProps = {
         type: String,
         default: '',
     },
+    rules: [Object, Array] as PropType<RuleItem | RuleItem[]>,
 };
 
 export type FormItemProps = ExtractPropTypes<typeof formItemProps>;
@@ -73,13 +74,14 @@ export function useFormItem(
     });
 
     // 判断当前字段是否必选
-    const required = isRequired(rules, props.prop);
+    const required = isRequired(rules, props);
     const validate = (
         trigger: TriggerEnum | null,
         callback: ValidateFieldCallback = NOOP,
     ) => {
         // 通过trigger获取指定的rule
-        const rules = getTriggerRule(trigger);
+        const selfRules = Array.isArray(props.rules) ? props.rules : [props.rules ?? {} as RuleItem];
+        const rules: Array<RuleItem> = [...getTriggerRule(trigger), ...selfRules];
         if (!rules || rules.length === 0) {
             callback();
             return;
@@ -122,18 +124,22 @@ export function useFormItem(
             }
         }).map(rule => ({ ...rule }));
     };
-
     const xFormItem = reactive({
         ...toRefs(props),
         ...toRefs(xForm),
         validate,
         validateStatus,
     });
-
     onMounted(() => {
         if (props.prop) {
             // 将当前的FormItem发送到Form中
             xForm.addFormItem(xFormItem);
+        }
+    });
+    onBeforeUnmount(() => {
+        if (props.prop) {
+            // 防止输入项删除后继续验证
+            xForm.removeFormItem(xFormItem);
         }
     });
 
@@ -149,12 +155,13 @@ export function useFormItem(
  * 判断当前输入项是否必选
  * 
  * @param rules 规则集合
- * @param ruleName 当前输入项规则
+ * @param props 外部规则
  * @returns 是否必选
  */
-function isRequired(rules: FormRules | undefined, ruleName: string): boolean {
+function isRequired(rules: FormRules | undefined, props: FormItemProps): boolean {
     // 获取当前输入项的规则
-    const ruleList = get(rules, ruleName, []);
+    const selfRules = Array.isArray(props.rules) ? props.rules : [props.rules ?? {} as RuleItem];
+    const ruleList: Array<RuleItem> = [...get(rules, props.prop, []), ...selfRules];
     if (ruleList) {
         // 只要有任意一个规则设置了必选则认为当前输入框必选
         return ruleList.some(rule => !!rule.required);

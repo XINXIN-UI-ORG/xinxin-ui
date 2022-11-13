@@ -56,6 +56,11 @@ export interface FormContext {
      * 将FormItem发送到Form中
      */
     addFormItem: (formItem: FormItemContext) => void;
+
+    /**
+     * 将FormItem从Form中删除
+     */
+    removeFormItem: (formItem: FormItemContext) => void;
 };
 
 export interface FormItemContext {

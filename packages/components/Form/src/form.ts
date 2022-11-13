@@ -34,6 +34,9 @@ export function useForm(props: FormProps) {
 
     formItems.push(formItem);
   };
+  const removeFormItem = (formItem: FormItemContext) => {
+    formItems.splice(formItems.indexOf(formItem), 1);
+  };
 
   // 所有formItem的验证
   const validate = (callback?: ValidateCallback) => {
@@ -87,6 +90,7 @@ export function useForm(props: FormProps) {
     ...formLabel(),
     ...toRefs(props),
     addFormItem,
+    removeFormItem,
   });
 
   provide(FormKey, formRef);
@@ -146,7 +150,9 @@ function formLabel() {
 
   const updateAllLabelWidth = (width: string) => {
     labelList.value.forEach(label => {
-      label.value.style.width = width;
+      if (label.value) {
+        label.value.style.width = width;
+      }
     });
   };
 

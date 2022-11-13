@@ -18,7 +18,7 @@ const size: ExampleInfo = {
 const validation: ExampleInfo = {
     title: "表单验证",
     desc: format(`
-        表单可以提供校验用户输入的功能，只需在form的rules中传入验证的规则，并在form-item中加入rule-name中加上需要验证的规则名称即可。
+        表单可以提供校验用户输入的功能，只需在form的rules中传入验证的规则，并给form-item的prop属性赋上相应的访问路径。
     `)
 };
 
@@ -68,6 +68,12 @@ const apiProps: ApiTable<ApiProps> = {
             defaultValue: "{}",
         },
         {
+            props: "model",
+            describe: "表单数据",
+            type: 'Object',
+            defaultValue: "{}",
+        },
+        {
             props: "FormItem标签属性",
             describe: "--------------------",
             type: "--------------------",
@@ -78,8 +84,8 @@ const apiProps: ApiTable<ApiProps> = {
             type: 'String',
         },
         {
-            props: "rule-name",
-            describe: "字段验证规则名称",
+            props: "prop",
+            describe: "规则以及表单值访问路径，该路径需要能正确访问到Form中model和rules配置的相关属性保证在验证时能读到准确的值和规则",
             type: 'String',
         },
     ],
