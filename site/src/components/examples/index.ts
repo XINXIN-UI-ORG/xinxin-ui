@@ -43,6 +43,9 @@ import switchinputAction from './switch-input/action'
 import tag from './tag/Index.vue'
 import tagAction from './tag/action'
 
+import upload from './upload/Index.vue'
+import uploadAction from './upload/action'
+
 export {
   backtop,
   backtopAction,
@@ -74,4 +77,6 @@ export {
   switchinputAction,
   tag,
   tagAction,
+  upload,
+  uploadAction,
 }

@@ -21,6 +21,7 @@ import {
     Switch,
     XForm,
     XFormItem,
+    XUpload,
 } from "@xinxin-ui/components";
 import type { FormRules } from "@xinxin-ui/typings";
 
@@ -49,6 +50,7 @@ const components = [
 const newComponents = [
     XForm,
     XFormItem,
+    XUpload,
 ];
 
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
@@ -95,6 +97,7 @@ export {
     Switch,
     XForm,
     XFormItem,
+    XUpload,
 };
 
 // 导出类型

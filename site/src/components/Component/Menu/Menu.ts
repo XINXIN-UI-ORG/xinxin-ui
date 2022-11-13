@@ -28,7 +28,7 @@ export const menuList: MenuListType[] = [
         type: MenuType.category,
         content: "表单组件",
         icon: FormNew48Regular,
-        size: 5,
+        size: 8,
     },
     {
         id: 301,
@@ -71,6 +71,12 @@ export const menuList: MenuListType[] = [
         type: MenuType.link,
         content: "表单",
         name: "Form",
+    },
+    {
+        id: 308,
+        type: MenuType.link,
+        content: "上传",
+        name: "Upload",
     },
 
 

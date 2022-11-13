@@ -42,4 +42,5 @@ const componentNameDesc = {
     "tag": "加了个皮肤，你还认识它嘛？",
     "switch-input": "它是没有组织的checkbox。",
     "form": "将一组输入框组合起来。",
+    "upload": "轻松上传，可点击可拖拽。",
 };
