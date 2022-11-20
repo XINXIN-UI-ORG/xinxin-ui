@@ -99,7 +99,7 @@ export default defineComponent({
   <h2 id="icon_gather">图标集合</h2>
   <div class="gather">
     <span class="search">
-      <x-input placeholder="搜索图标" size="30" @onInputChange="searchIcon" />
+      <x-input placeholder="搜索图标" size="normal" @onInputChange="searchIcon" />
     </span>
     <div class="icon-wrap">
       <div class="icon-item" v-for="(item, index) in iconList" :key="index">

@@ -1,0 +1,21 @@
+@import '../../../theme-chalk/variable.styl';
+
+.x-upload
+    display inline-block
+    cursor pointer
+    user-select none
+    .x-upload__file
+        display none
+    .x-upload__default
+        background-color $base_theme_color
+        color #fff
+        padding 5px 15px
+        border-radius 2px
+        .x-upload__default__icon
+            vertical-align text-bottom
+            margin-right 5px
+            width 20px
+            height 20px
+    &:hover
+        .x-upload__default
+            background-color #f6b54c
