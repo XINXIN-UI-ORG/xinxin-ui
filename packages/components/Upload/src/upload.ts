@@ -25,7 +25,7 @@ interface UploadFile {
 
 export type UploadProps = ExtractPropTypes<typeof uploadProps>;
 
-export default function () {
+export function useUpload () {
     const fileList = reactive<UploadFile[]>([]);
     
     const fileOnChange = (event: Event) => {

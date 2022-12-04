@@ -1,6 +1,6 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import useUpload, { uploadProps } from './upload';
+import { uploadProps, useUpload } from './upload';
 import { generateClassName } from '@xinxin-ui/utils';
 import { Upload, File, Close } from '@xinxin-ui/xinxin-icons';
 

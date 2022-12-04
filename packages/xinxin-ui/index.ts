@@ -23,6 +23,7 @@ import {
     XFormItem,
     XUpload,
 } from "@xinxin-ui/components";
+import { CustomerDirective, ClickHidden } from '@xinxin-ui/directives';
 import type { FormRules } from "@xinxin-ui/typings";
 
 // package下组件列表
@@ -53,6 +54,10 @@ const newComponents = [
     XUpload,
 ];
 
+const directives = [
+    ClickHidden,
+];
+
 // 定义安装方法 如果使用use注册插件，则将packages中所有组件注册
 const install: any = (app: App) => {
     components.forEach((component: any) => {
@@ -67,6 +72,10 @@ const install: any = (app: App) => {
         if (component.install) {
             app.use(component);
         }
+    });
+
+    directives.forEach((directive: CustomerDirective) => {
+        app.directive(directive.name, directive);
     });
 };
 

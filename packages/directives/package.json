@@ -1,0 +1,17 @@
+{
+  "name": "@xinxin-ui/directives",
+  "version": "1.0.0",
+  "description": "xinxinUi directives",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "xinxin-UI",
+    "UI",
+    "vue3",
+    "directives"
+  ],
+  "author": "",
+  "license": "ISC"
+}

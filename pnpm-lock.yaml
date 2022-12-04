@@ -44,12 +44,14 @@ importers:
   packages/components:
     specifiers:
       '@xinxin-ui/constants': workspace:^1.0.0
+      '@xinxin-ui/directives': workspace:^1.0.0
       '@xinxin-ui/symbols': workspace:^1.0.0
       '@xinxin-ui/typings': workspace:^1.0.0
       '@xinxin-ui/utils': workspace:^1.0.0
       '@xinxin-ui/xinxin-icons': workspace:^1.0.0
     dependencies:
       '@xinxin-ui/constants': link:../constants
+      '@xinxin-ui/directives': link:../directives
       '@xinxin-ui/symbols': link:../symbols
       '@xinxin-ui/typings': link:../typings
       '@xinxin-ui/utils': link:../utils
@@ -72,10 +74,12 @@ importers:
   packages/xinxin-ui:
     specifiers:
       '@xinxin-ui/components': workspace:^1.0.0
+      '@xinxin-ui/directives': workspace:*
       '@xinxin-ui/symbols': workspace:*
       '@xinxin-ui/typings': workspace:^1.0.0
     dependencies:
       '@xinxin-ui/components': link:../components
+      '@xinxin-ui/directives': link:../directives
       '@xinxin-ui/symbols': link:../symbols
       '@xinxin-ui/typings': link:../typings
 
