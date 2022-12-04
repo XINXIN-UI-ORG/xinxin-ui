@@ -4,7 +4,7 @@ import { format } from "../../../utils";
 const base: ExampleInfo = {
     title: "基础使用",
     desc: format(`
-        最基础的上传组件用法。
+        最基础的上传组件用法，通过设置upload-text可以自定义上传文件的内容，通过limit和on-exceed可以限制文件上传个数和定义超出限制时的行为。
     `)
 };
 

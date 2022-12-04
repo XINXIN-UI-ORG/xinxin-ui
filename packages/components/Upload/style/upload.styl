@@ -4,18 +4,95 @@
     display inline-block
     cursor pointer
     user-select none
+    font-size 14px
     .x-upload__file
         display none
     .x-upload__default
-        background-color $base_theme_color
-        color #fff
+        background-color #f4f5f5
+        color $base_theme_color
         padding 5px 15px
         border-radius 2px
+        display inline-block
         .x-upload__default__icon
             vertical-align text-bottom
-            margin-right 5px
+            margin-right 8px
             width 20px
             height 20px
-    &:hover
-        .x-upload__default
-            background-color #f6b54c
+        &:hover
+            background-color #eceded
+    .x-upload__files
+        margin-top 5px
+        .x-upload__files__block
+            display inline-flex
+            margin-right 8px
+            margin-bottom 8px
+            height 52px
+            background-color #f4f5f5
+            border-radius 4px
+            overflow hidden
+            &:hover
+                background-color #eceded
+            .x-upload__files__block__display
+                height 100%
+                width 52px
+                padding 8px
+                box-sizing border-box
+                .x-upload__files__block__display__img
+                    width 100%
+                    height 100%
+                    border-radius 4px
+                    overflow hidden
+                    img
+                        width 100%
+                        height 100%
+                .x-upload__files__block__display__normal-file
+                    height 100%
+                    background-color #a7abb0
+                    border-radius 4px
+                    position relative
+                    .x-upload__document
+                        color #fff
+                        width 18px
+                        height 18px
+                        position absolute
+                        top 50%
+                        left 50%
+                        transform translate(-50%, -50%)
+            .x-upload__files__block__main
+                width 180px
+                display flex
+                flex-direction column
+                padding 8px 0
+                box-sizing border-box
+                .x-upload__files__block__main__info
+                    flex 1
+                    display flex
+                    justify-content space-between
+                    align-items center
+                    .x-upload__files__block__main__info__name
+                        font-weight bolder
+                        overflow hidden
+                        text-overflow ellipsis
+                        white-space nowrap
+                    .x-upload__files__block__main__info__size
+                        color #909399
+                        font-size 13px
+                        margin-left 8px
+                .x-upload__files__block__main__progress
+                    font-size 12px
+                    line-height 1
+            .x-upload__files__block__close
+                margin 15px 10px
+                border-radius 4px
+                width 22px
+                height 22px
+                &:hover
+                    background-color #e2e4e4
+                &:active
+                    background-color #d4d6d6
+                .x-upload__close
+                    color #474a4d
+                    width 18px
+                    height 18px
+                    margin 2px
+
