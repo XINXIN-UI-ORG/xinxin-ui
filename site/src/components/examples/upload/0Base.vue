@@ -1,3 +1,36 @@
+<script lang="ts" setup>
+import { ref } from 'vue';
+import { UploadFile, XMessage } from 'xinxin-ui';
+
+const fileList = ref<UploadFile[]>([
+  {
+    name: 'avatar.jpg',
+    url: 'https://avatars.githubusercontent.com/u/34062997?s=40&v=4',
+    type: 'image/jpg',
+    size: 130,
+  },
+  {
+    name: 'test.txt',
+    url: 'https://avatars.githubusercontent.com/u/34062997?s=40&v=4',
+    size: 150,
+  },
+]);
+
+function fileExceedLimit(files: FileList, fileList: UploadFile[]) {
+    XMessage({
+        type: 'error',
+        message: '文件上传个数超过限制',
+    });
+
+    console.log('本次上传的文件：', files, '已上传的文件列表：', fileList);
+}
+</script>
 <template>
-    <x-upload></x-upload>
+    <x-upload
+        v-model:file-list="fileList"
+        :limit="5"
+        @on-exceed="fileExceedLimit"
+        action="http://localhost:30000/api/uploadimg"
+        method="POST"
+    ></x-upload>
 </template>

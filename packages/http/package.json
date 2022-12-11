@@ -1,0 +1,17 @@
+{
+  "name": "@xinxin-ui/http",
+  "version": "1.0.0",
+  "description": "xinxin-ui的ajax请求库",
+  "main": "index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "http",
+    "ajax",
+    "xinxin-ui",
+    "fetch"
+  ],
+  "author": "eric jin",
+  "license": "ISC"
+}

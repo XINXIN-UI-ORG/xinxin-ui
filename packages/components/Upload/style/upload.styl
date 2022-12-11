@@ -22,6 +22,8 @@
             background-color #eceded
     .x-upload__files
         margin-top 5px
+        display flex
+        flex-wrap wrap
         .x-upload__files__block
             display inline-flex
             margin-right 8px
@@ -59,7 +61,7 @@
                         left 50%
                         transform translate(-50%, -50%)
             .x-upload__files__block__main
-                width 180px
+                width 150px
                 display flex
                 flex-direction column
                 padding 8px 0
@@ -81,6 +83,27 @@
                 .x-upload__files__block__main__progress
                     font-size 12px
                     line-height 1
+                    .x-upload__files__block__main__progress__wrap
+                        height 4px
+                        border-radius 22px
+                        background-color #eaebeb
+                        overflow hidden
+                        margin-bottom 5px
+                        .x-upload__files__block__main__progress__bar
+                            height 100%
+                            border-radius 22px
+                            background-color #3bb346
+                            transition width .3s
+                    .x-upload__files__block__main__progress__error
+                        display flex
+                        color #f93920
+                        align-items center
+                        .x-upload__error-icon
+                            margin-right 2px
+                            width 14px
+                            height 14px
+                        div
+                            margin-top 1px
             .x-upload__files__block__close
                 margin 15px 10px
                 border-radius 4px
@@ -95,4 +118,16 @@
                     width 18px
                     height 18px
                     margin 2px
+        .x-upload__files__block-success
+            background-color #e1f3d8
+            &:hover
+                background-color #e1f3d8
+            .x-upload__files__block__close:hover
+                background-color #d7e7cf
+        .x-upload__files__block-fail
+            background-color #fef2ed
+            &:hover
+                background-color #feddd2
+            .x-upload__files__block__close:hover
+                background-color #f3d5ca
 

@@ -115,6 +115,12 @@ export {
     FormRules,
 };
 
-export { TriggerEnum } from "@xinxin-ui/typings";;
+export { TriggerEnum } from "@xinxin-ui/typings";
+
+export type { UploadFile } from '@xinxin-ui/typings';
 
 export type FormInstance = InstanceType<typeof XForm>;
+
+export { axe, axeGet, axePost } from '@xinxin-ui/http';
+
+export type { AxeOption } from '@xinxin-ui/http';

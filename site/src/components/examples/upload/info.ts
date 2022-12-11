@@ -19,11 +19,33 @@ const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
-            props: "type",
-            describe: "tag的类型",
+            props: "limit",
+            describe: "上传文件个数限制，不设置时无限制",
+            type: 'Number | null',
+            defaultValue: "null",
+        },
+        {
+            props: 'v-model:file-list',
+            describe: '初始化文件列表',
+            type: 'Ref<UploadFile[]>',
+            defaultValue: '[]',
+        },
+        {
+            props: 'action',
+            describe: '文件上传的链接',
             type: 'String',
-            defaultValue: "default",
-            selectList: ["default", "info", "success", "warning", "error"],
+        },
+        {
+            props: 'method',
+            describe: '上传方式',
+            type: 'GET | POST | PUT | DELETE',
+            defaultValue: 'GET',
+        },
+        {
+            props: 'file-name',
+            describe: '上传文件名称',
+            type: 'String',
+            defaultValue: 'file',
         },
     ],
 };
@@ -32,8 +54,10 @@ const apiEvent: ApiTable<ApiEvent> = {
     header: ['事件名', '说明', '返回值', '参数'],
     content: [
         {
-            event: "close",
-            describe: "点击关闭按钮触发事件",
+            event: "on-exceed",
+            describe: "文件上传超过限制时的回调",
+            result: ['void'],
+            props: ['file: FileList; 本次选中的文件', 'fileList: UploadFile[]; 已经上传的文件'],
         },
     ],
 };
