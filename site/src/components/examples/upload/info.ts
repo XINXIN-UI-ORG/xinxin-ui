@@ -59,5 +59,17 @@ const apiEvent: ApiTable<ApiEvent> = {
             result: ['void'],
             props: ['file: FileList; 本次选中的文件', 'fileList: UploadFile[]; 已经上传的文件'],
         },
+        {
+            event: "on-remove",
+            describe: "删除文件时的回调",
+            result: ['void'],
+            props: ['file: UploadFile; 本次选中的文件', 'fileList: UploadFile[]; 已经上传的文件'],
+        },
+        {
+            event: "before-remove",
+            describe: "删除文件前的回调",
+            result: ['void'],
+            props: ['file: UploadFile; 本次选中的文件', 'fileList: UploadFile[]; 已经上传的文件'],
+        },
     ],
 };

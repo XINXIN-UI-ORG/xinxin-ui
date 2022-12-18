@@ -1,5 +1,5 @@
 import type { ExtractPropTypes, PropType, SetupContext, Ref } from 'vue';
-import { ref, provide, watch } from 'vue';
+import { ref, provide, watch, nextTick } from 'vue';
 import { uniqueId, cloneDeep } from 'lodash';
 import { UploadKey } from '@xinxin-ui/symbols';
 import { UploadFile, FileUploadEnum } from '@xinxin-ui/typings';
@@ -35,10 +35,20 @@ export const uploadProps = {
     type: String,
     default: 'file',
   },
+  beforeRemove: {
+    type: Function as PropType<(file: UploadFile, fileList: UploadFile[]) => Promise<void> | boolean>,
+  },
 };
 
 export const uploadEmits = {
   onExceed(files: FileList, fileList: UploadFile[]) {
+    if (!files || !fileList) {
+      return false;
+    }
+
+    return true;
+  },
+  onRemove(files: UploadFile, fileList: UploadFile[]) {
     if (!files || !fileList) {
       return false;
     }
@@ -60,7 +70,10 @@ export function useUpload(
     (newFileList: UploadFile[]) => {
       fileList.value = newFileList.map(file => {
         const cloneFile = cloneDeep(file);
+        const id = cloneFile.id ?? uniqueId('upload');
+        file.id = id;
         return {
+          id: id,
           ...cloneFile,
           isImage: !!file.type?.startsWith('image'),
           status: file.status || FileUploadEnum.SUCCESS,
@@ -100,8 +113,35 @@ export function useUpload(
       }
     });
   };
+
+  const handleRemove = (file: UploadFile) => {
+    debugger
+    const doRemove = () => {
+      // 如果当前图片正在发送请求 先终止发送
+      file.cancelToken?.cancel();
+      fileList.value.splice(fileList.value.findIndex(item => item.id === file.id), 1);
+      props.fileList.splice(props.fileList.findIndex(item => item.id === file.id), 1);
+      emit('onRemove', file, props.fileList);
+      if (file.url && file.url.includes('blob:')) {
+        URL.revokeObjectURL(file.url);
+      }
+    };
+
+    if (!props.beforeRemove) {
+      doRemove();
+    } else {
+      const before = props.beforeRemove(file, fileList.value);
+      if (before instanceof Promise) {
+        before.then(() => doRemove());
+      } else {
+        before && doRemove();
+      }
+    }
+  };
+
   provide(UploadKey, {
     fileList,
+    handleRemove,
   });
 
   return {
@@ -117,19 +157,25 @@ function upload(file: File, uploadFile: UploadFile, props: UploadProps) {
   data.append(props.fileName, file);
 
   // 上传文件
+  const cancelToken = axios.CancelToken.source();
   axios({
     url: props.action,
     method: props.method,
     data,
+    cancelToken: cancelToken.token,
     onUploadProgress(progress) {
       setStatus(uploadFile.id!, props, FileUploadEnum.PROGRESS, Math.round(progress.loaded / (progress.total ?? 0) * 100));
     },
   }).then(res => {
-    setStatus(uploadFile.id!, props, FileUploadEnum.SUCCESS);
-    console.log('解析成功', res);
+    setTimeout(() => {
+      setStatus(uploadFile.id!, props, FileUploadEnum.SUCCESS);
+    }, 300);
   }).catch(() => {
-    setStatus(uploadFile.id!, props, FileUploadEnum.FAIL);
+    setTimeout(() => {
+      setStatus(uploadFile.id!, props, FileUploadEnum.FAIL);
+    }, 300);
   });
+  uploadFile.cancelToken = cancelToken;
 }
 
 function setStatus(currentId: string, props: UploadProps, status: FileUploadEnum, progress?: number) {

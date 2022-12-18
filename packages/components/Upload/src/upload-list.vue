@@ -8,7 +8,7 @@ import { FileUploadEnum } from '@xinxin-ui/typings';
 export default defineComponent({
   setup() {
     const gcn = generateClassName('upload');
-    const xUpload = inject(UploadKey);
+    const xUpload = inject(UploadKey, {});
 
     return {
       gcn,
@@ -49,7 +49,10 @@ export default defineComponent({
           </div>
           <!-- 上传进度或结果 -->
           <div :class="gcn.e('files', 'block', 'main', 'progress')">
-            <div v-if="file.status === fileStatus.PROGRESS" :class="gcn.e('files', 'block', 'main', 'progress', 'wrap')">
+            <div
+              v-if="file.status && [fileStatus.PROGRESS, fileStatus.READY].includes(file.status)"
+              :class="gcn.e('files', 'block', 'main', 'progress', 'wrap')"
+            >
               <div :class="gcn.e('files', 'block', 'main', 'progress', 'bar')" :style="'width: ' + (file.progress ?? 0) + '%'"></div>
             </div>
             <div v-else-if="file.status === fileStatus.FAIL" :class="gcn.e('files', 'block', 'main', 'progress', 'error')">
@@ -58,7 +61,7 @@ export default defineComponent({
             </div>
           </div>
         </div>
-        <div :class="gcn.e('files', 'block', 'close')">
+        <div :class="gcn.e('files', 'block', 'close')" @click="handleRemove(file)">
           <Close :class="gcn.e('close')" />
         </div>
       </div>

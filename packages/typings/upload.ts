@@ -1,3 +1,5 @@
+import type { CancelTokenSource } from 'axios';
+
 export enum FileUploadEnum {
     READY = 'ready',
     PROGRESS = 'progress',
@@ -21,4 +23,6 @@ export interface UploadFile {
     status?: FileUploadEnum;
 
     progress?: number;
+
+    cancelToken?: CancelTokenSource;
 };
