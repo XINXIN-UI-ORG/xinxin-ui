@@ -14,5 +14,8 @@
     "@xinxin-ui/typings": "workspace:^1.0.0",
     "@xinxin-ui/utils": "workspace:^1.0.0",
     "@xinxin-ui/xinxin-icons": "workspace:^1.0.0"
+  },
+  "devDependencies": {
+    "axios": "^1.2.2"
   }
 }

@@ -10,18 +10,19 @@
   "scripts": {
     "dev": "pnpm -C site dev",
     "build:types": "tsc --project ./tsconfig.json",
-    "build": "vite build && npm run build:types",
     "gen:site": "esno ./scripts/site/gc.ts",
-    "build:icons": "esno ./scripts/icons/generate.ts"
+    "build:icons": "esno ./scripts/icons/generate.ts",
+    "build:core": "pnpm -C ./packages/xinxin-ui build",
+    "build:site": "pnpm -C ./site build"
   },
   "dependencies": {
     "@popperjs/core": "^2.11.5",
     "async-validator": "^4.2.5",
-    "axios": "^1.2.1",
     "lodash": "^4.17.21",
     "vue": "^3.0.4"
   },
   "devDependencies": {
+    "@types/node": "^18.11.18",
     "@vitejs/plugin-vue": "^2.3.1",
     "@vitejs/plugin-vue-jsx": "^1.3.9",
     "@vue/shared": "^3.2.31",

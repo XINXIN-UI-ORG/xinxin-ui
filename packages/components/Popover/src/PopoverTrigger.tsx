@@ -128,7 +128,7 @@ function useTrigger(
         e?.preventDefault();
         emit("update:popoverShow", !props.popoverShow);
     };
-    let timer: NodeJS.Timer;
+    let timer: any;
     let closePopper = () => {
         if (!props.popoverShow) {
             return;

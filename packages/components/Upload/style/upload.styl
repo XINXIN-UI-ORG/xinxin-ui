@@ -229,6 +229,31 @@
             bottom 10px
             right 5px
             color #f93920
+    
+.x-upload-drag
+    display block
+    .x-upload__drag
+        border 2px dashed #e8e8e8
+        border-radius 4px
+        padding 10px 0
+        .x-upload__drag__icon
+            display flex
+            justify-content center
+            padding 10px 0
+            svg
+                color #a8abb2
+                width 25px
+                height 25px
+        .x-upload__drag__info
+            text-align center
+        .x-upload__drag__tips
+            text-align center
+        &:hover
+            border-color $base_theme_color
+            background-color $base_theme_color_opacity
+            .x-upload__drag__icon
+                svg
+                    color $base_theme_color
 .x-upload-picture
     display inline-flex
     flex-wrap wrap

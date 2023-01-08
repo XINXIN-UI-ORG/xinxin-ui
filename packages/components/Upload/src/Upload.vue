@@ -36,6 +36,7 @@ export default defineComponent({
     :class="[
       gcn.base(),
       gcn.bm(listType),
+      gcn.is('drag', drag),
     ]"
   >
     <input
@@ -76,8 +77,11 @@ export default defineComponent({
             <div :class="gcn.e('drag', 'icon')">
               <Upload />
             </div>
+            <div :class="gcn.e('drag', 'info')">
+              点击上传文件或拖拽文件到这里
+            </div>
             <div :class="gcn.e('drag', 'tips')">
-              拖拽到此处上传
+              支持任意类型文件
             </div>
           </div>
         </template>

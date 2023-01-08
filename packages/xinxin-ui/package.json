@@ -20,6 +20,10 @@
   ],
   "author": "Eric Jin",
   "license": "MIT",
+  "scripts": {
+    "build:types": "tsc --project ../../tsconfig-core.json",
+    "build": "vite build -c ../../config/core/vite.config.js && npm run build:types"
+  },
   "dependencies": {
     "@xinxin-ui/components": "workspace:^1.0.0",
     "@xinxin-ui/directives": "workspace:*",

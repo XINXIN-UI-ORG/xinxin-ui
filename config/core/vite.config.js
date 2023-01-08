@@ -10,7 +10,7 @@ export default defineConfig({
   ],
   build: {
     lib: {
-      entry: path.resolve(__dirname, './packages/xinxin-ui/index.ts'),
+      entry: path.resolve(__dirname, '../../packages/xinxin-ui/index.ts'),
       name: 'xinxin',
       fileName: (format) => `xin-xin.${format}.js`
     },

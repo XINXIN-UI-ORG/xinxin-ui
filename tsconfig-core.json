@@ -16,7 +16,7 @@
     // 只输出类型声明文件
     "emitDeclarationOnly": true,
     // 类型声明文件位置
-    "declarationDir": "./dist/typings",
+    "declarationDir": "./packages/xinxin-ui/dist/typings",
     "lib": [
       "esnext",
       "dom",
