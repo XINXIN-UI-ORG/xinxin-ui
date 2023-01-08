@@ -1,6 +1,6 @@
-import type { ExtractPropTypes, PropType, SetupContext, Ref } from 'vue';
-import { ref, provide, watch, nextTick } from 'vue';
-import { uniqueId, cloneDeep } from 'lodash';
+import { ExtractPropTypes, PropType, SetupContext, Ref, reactive } from 'vue';
+import { ref, provide, watch } from 'vue';
+import { uniqueId, cloneDeep, before } from 'lodash';
 import { UploadKey } from '@xinxin-ui/symbols';
 import { UploadFile, FileUploadEnum } from '@xinxin-ui/typings';
 import type { AXE_METHOD } from '@xinxin-ui/http';
@@ -13,7 +13,7 @@ export const uploadProps = {
   },
   fileList: {
     type: Array as PropType<UploadFile[]>,
-    default: () => [] as UploadFile[],
+    default: () => reactive<UploadFile[]>([]),
   },
   limit: {
     type: Number as PropType<number | null>,
@@ -37,6 +37,27 @@ export const uploadProps = {
   },
   beforeRemove: {
     type: Function as PropType<(file: UploadFile, fileList: UploadFile[]) => Promise<void> | boolean>,
+    default: null,
+  },
+  replace: {
+    type: Boolean,
+    default: false,
+  },
+  prompt: {
+    type: String,
+    default: '',
+  },
+  promptPosition: {
+    type: String as PropType<'right' | 'left' | 'bottom'>,
+    default: 'right',
+  },
+  beforeUpload: {
+    type: Function as PropType<(file: File) => Promise<void> | boolean>,
+    default: null,
+  },
+  listType: {
+    type: String as PropType<'card' | 'picture'>,
+    default: 'card',
   },
 };
 
@@ -103,23 +124,30 @@ export function useUpload(
       return;
     }
 
-    uploadFiles.forEach(itemFile => {
-      const file = convertFile(itemFile);
-      props.fileList.push(file);
+    fileInputRef.value.value = '';
+    uploadFiles.forEach((rawFile, index) => {
+      if (props.replace && index !== 0) {
+        return;
+      }
 
-      if (props.autoUpload) {
-        fileInputRef.value.value = '';
-        upload(itemFile, file, props);
+      if (!(props.beforeUpload instanceof Function)) {
+        upload(props, rawFile);
+      }
+  
+      // 执行上传前检查
+      const before = props.beforeUpload(rawFile);
+      if (before instanceof Promise) {
+        before.then(() => upload(props, rawFile));
+      } else {
+        before && upload(props, rawFile);
       }
     });
   };
 
   const handleRemove = (file: UploadFile) => {
-    debugger
     const doRemove = () => {
       // 如果当前图片正在发送请求 先终止发送
       file.cancelToken?.cancel();
-      fileList.value.splice(fileList.value.findIndex(item => item.id === file.id), 1);
       props.fileList.splice(props.fileList.findIndex(item => item.id === file.id), 1);
       emit('onRemove', file, props.fileList);
       if (file.url && file.url.includes('blob:')) {
@@ -150,9 +178,39 @@ export function useUpload(
 }
 
 /**
- * 上传文件
+ * 处理文件上传逻辑
+ * 
+ * @param props 组件参数 
+ * @param rawFile 当前上传的文件
  */
-function upload(file: File, uploadFile: UploadFile, props: UploadProps) {
+function upload(props: UploadProps, rawFile: File) {
+  const file = convertFile(rawFile);
+  if (props.replace) {
+    const uploadDelay = props.fileList.length ? 500 : 0;
+
+    // 移除之前的文件并添加新的文件 动画需要 延迟500ms再上传新的文件
+    props.fileList.length = 0;
+    setTimeout(() => {
+      props.fileList.push(file);
+    }, uploadDelay);
+
+  } else {
+    props.fileList.push(file);
+    
+    if (props.autoUpload) {
+      post(rawFile, file, props);
+    }
+  }
+}
+
+/**
+ * 将文件上传到服务器
+ * 
+ * @param file 待上传的文件 
+ * @param uploadFile 格式化后的文件
+ * @param props 组件参数
+ */
+function post(file: File, uploadFile: UploadFile, props: UploadProps) {
   const data = new FormData();
   data.append(props.fileName, file);
 

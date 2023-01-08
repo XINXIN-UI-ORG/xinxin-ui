@@ -45,9 +45,17 @@ export default defineComponent({
     >
     <div @click="uploadFile">
       <slot>
-        <div :class="gcn.e('default')">
-          <Upload :class="gcn.e('default', 'icon')" />
-          <span :class="gcn.e('default', 'text')">{{ uploadText }}</span>
+        <div :class="gcn.middle('position').bm(promptPosition)">
+          <div :class="gcn.e('default')">
+            <Upload :class="gcn.e('default', 'icon')" />
+            <span :class="gcn.e('default', 'text')">{{ uploadText }}</span>
+          </div>
+          <div
+            v-if="prompt"
+            :class="gcn.e('prompt')"
+          >
+            {{ prompt }}
+          </div>
         </div>
       </slot>
     </div>

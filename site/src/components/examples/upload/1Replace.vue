@@ -1,0 +1,26 @@
+<template>
+  <div>
+    <x-upload
+      action="http://localhost:30000/api/uploadimg"
+      method="POST"
+      prompt="上传文件可替换"
+      replace
+    ></x-upload>
+  </div>
+  <div>
+    <x-upload
+      action="http://localhost:30000/api/uploadimg"
+      method="POST"
+      prompt="上传文件可替换"
+      prompt-position="left"
+    ></x-upload>
+  </div>
+  <div>
+    <x-upload
+      action="http://localhost:30000/api/uploadimg"
+      method="POST"
+      prompt="上传文件可替换"
+      prompt-position="bottom"
+    ></x-upload>
+  </div>
+</template>

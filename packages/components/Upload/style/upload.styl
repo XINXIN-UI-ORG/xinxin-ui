@@ -20,6 +20,26 @@
             height 20px
         &:hover
             background-color #eceded
+    .x-upload__position-right
+        display flex
+        align-items center
+        .x-upload__prompt
+            margin-left 10px
+    .x-upload__position-left
+        display flex
+        align-items center
+        flex-direction row-reverse
+        justify-content left
+        .x-upload__prompt
+            margin-right 10px
+    .x-upload__position-bottom
+        display block
+        .x-upload__prompt
+            margin-top 10px
+    .x-upload__prompt
+        color #808080
+        font-size 12px
+
     .x-upload__files
         margin-top 5px
         display flex
@@ -130,4 +150,11 @@
                 background-color #feddd2
             .x-upload__files__block__close:hover
                 background-color #f3d5ca
+        .file-enter-active,
+        .file-leave-active
+            transition all .5s ease
+        .file-enter-from,
+        .file-leave-to
+            opacity 0
+            transform translateY(-30px)
 

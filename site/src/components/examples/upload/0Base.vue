@@ -39,7 +39,7 @@ function fileBeforeRemove(file: UploadFile, fileList: UploadFile[]) {
         setTimeout(() => {
             console.log('本次移除的文件：', file, '已上传的文件列表：', fileList);
             resolve();
-        }, 3000);
+        }, 500);
     });
 }
 </script>

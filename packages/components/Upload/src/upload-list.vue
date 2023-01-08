@@ -4,15 +4,17 @@ import { generateClassName } from '@xinxin-ui/utils';
 import { UploadKey } from '@xinxin-ui/symbols';
 import { File, Close, InfoMessage } from '@xinxin-ui/xinxin-icons';
 import { FileUploadEnum } from '@xinxin-ui/typings';
+import { NOOP } from '@vue/shared';
 
 export default defineComponent({
   setup() {
     const gcn = generateClassName('upload');
-    const xUpload = inject(UploadKey, {});
+    const { fileList, handleRemove } = inject(UploadKey, { fileList: [], handleRemove: NOOP });
 
     return {
       gcn,
-      ...xUpload,
+      fileList,
+      handleRemove,
       fileStatus: FileUploadEnum,
     };
   },
@@ -25,11 +27,15 @@ export default defineComponent({
 </script>
 <template>
   <div :class="gcn.e('files')">
-    <template v-for="file of fileList" :key="file.id">
-      <div :class="[
-        gcn.e('files', 'block'),
-        gcn.middle('files', 'block').bm(file.status!),
-      ]">
+    <TransitionGroup name="file">
+      <div
+        v-for="file of fileList"
+        :key="file.id"
+        :class="[
+          gcn.e('files', 'block'),
+          gcn.middle('files', 'block').bm(file.status!),
+        ]"
+      >
         <div :class="gcn.e('files', 'block', 'display')">
           <div v-if="file.isImage" :class="gcn.e('files', 'block', 'display', 'img')">
             <img :src="file.url">
@@ -65,7 +71,7 @@ export default defineComponent({
           <Close :class="gcn.e('close')" />
         </div>
       </div>
-    </template>
+    </TransitionGroup>
   </div>
 </template>
 <style scoped lang="stylus" src="../style/upload.styl"></style>

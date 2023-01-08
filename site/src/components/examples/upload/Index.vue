@@ -48,7 +48,7 @@ function fileBeforeRemove(file: UploadFile, fileList: UploadFile[]) {
         setTimeout(() => {
             console.log('本次移除的文件：', file, '已上传的文件列表：', fileList);
             resolve();
-        }, 3000);
+        }, 500);
     });
 }
 <\/script>
@@ -65,12 +65,120 @@ function fileBeforeRemove(file: UploadFile, fileList: UploadFile[]) {
 </template>
 `
 
+import Replace from './1Replace.vue'
+
+const replaceContent = `<template>
+  <div>
+    <x-upload
+      action="http://localhost:30000/api/uploadimg"
+      method="POST"
+      prompt="上传文件可替换"
+      replace
+    ></x-upload>
+  </div>
+  <div>
+    <x-upload
+      action="http://localhost:30000/api/uploadimg"
+      method="POST"
+      prompt="上传文件可替换"
+      prompt-position="left"
+    ></x-upload>
+  </div>
+  <div>
+    <x-upload
+      action="http://localhost:30000/api/uploadimg"
+      method="POST"
+      prompt="上传文件可替换"
+      prompt-position="bottom"
+    ></x-upload>
+  </div>
+</template>`
+
+import Limit from './2Limit.vue'
+
+const limitContent = `<script lang="ts" setup>
+import { XMessage } from 'xinxin-ui';
+
+function beforeUploadCheck(rawFile: File) {
+  console.log(rawFile.type);
+  if (!rawFile.type.includes('image')) {
+    XMessage({
+      message: '只能上传图片',
+      type: 'error',
+    });
+    return false;
+  }
+
+  if (rawFile.size / 1024 / 1024 > 1) {
+    XMessage({
+      message: '文件大小不能超过1MB',
+      type: 'error',
+    });
+    return false;
+  }
+
+  return true;
+}
+
+function beforeUploadCheckWithPromise() {
+  return new Promise<void>((resolve, reject) => {
+    setTimeout(() => {
+      if (Math.random() > 0.5) {
+        resolve()
+      } else {
+        XMessage('已取消上传');
+        reject();
+      }
+    }, 3000);
+  });
+}
+<\/script>
+<template>
+  <div>
+    <x-upload
+      action="http://localhost:30000/api/uploadimg"
+      method="POST"
+      prompt="文件大小不能超过10M且文件类型只能是图片"
+      :before-upload="beforeUploadCheck"
+    ></x-upload>
+  </div>
+  <div>
+    <x-upload
+      action="http://localhost:30000/api/uploadimg"
+      method="POST"
+      prompt="文件大小不能超过10M且文件类型只能是图片"
+      replace
+      :before-upload="beforeUploadCheckWithPromise"
+    ></x-upload>
+  </div>
+</template>`
+
+import Picture from './3Picture.vue'
+
+const pictureContent = `<script lang="ts" setup>
+<\/script>
+<template>
+  <x-upload></x-upload>
+</template>`
+
 export default defineComponent({
   setup() {
     return {
       Base,
       baseContent,
       baseInfo: info.base,
+
+      Replace,
+      replaceContent,
+      replaceInfo: info.replace,
+
+      Limit,
+      limitContent,
+      limitInfo: info.limit,
+
+      Picture,
+      pictureContent,
+      pictureInfo: info.picture,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -94,8 +202,35 @@ export default defineComponent({
         :code-desc="baseInfo.desc"
       >
       </CodeExample>
+
+      <CodeExample
+        id="limit"
+        :code="limitContent"
+        :title="limitInfo.title"
+        :code-v-node="Limit"
+        :code-desc="limitInfo.desc"
+      >
+      </CodeExample>
     </template>
-    <template #right> </template>
+    <template #right>
+      <CodeExample
+        id="replace"
+        :code="replaceContent"
+        :title="replaceInfo.title"
+        :code-v-node="Replace"
+        :code-desc="replaceInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="picture"
+        :code="pictureContent"
+        :title="pictureInfo.title"
+        :code-v-node="Picture"
+        :code-desc="pictureInfo.desc"
+      >
+      </CodeExample>
+    </template>
   </Layout>
   <Table :api-event="apiEvent" :api-props="apiProps" />
 </template>
