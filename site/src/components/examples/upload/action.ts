@@ -21,4 +21,9 @@ export default [
     link: '/component/upload#picture',
     name: info.picture.title,
   },
+  {
+    key: 4,
+    link: '/component/upload#drag',
+    name: info.drag.title,
+  },
 ]

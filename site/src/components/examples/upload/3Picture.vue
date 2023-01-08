@@ -20,8 +20,9 @@ const fileList = ref<UploadFile[]>([
 <template>
   <x-upload
     :file-list="fileList"
-    action="http://localhost:30000/api/uploadimg1"
+    action="http://localhost:30000/api/uploadimg"
     method="POST"
     list-type="picture"
+    :limit="5"
   ></x-upload>
 </template>

@@ -12,7 +12,7 @@ export default defineComponent({
   setup(props: UploadProps, { emit }) {
     const gcn = generateClassName('upload');
     const fileInputRef = ref();
-    const { fileOnChange } = useUpload(props, emit, fileInputRef);
+    const { fileOnChange, fileList } = useUpload(props, emit, fileInputRef);
 
     return {
       gcn,
@@ -21,6 +21,7 @@ export default defineComponent({
         fileInputRef.value.click();
       },
       fileOnChange,
+      fileList,
     };
   },
   components: {
@@ -48,26 +49,38 @@ export default defineComponent({
     <UploadList v-if="listType === 'picture'" />
     <div @click="uploadFile">
       <slot>
-        <!-- 卡片模式 -->
-        <div v-if="listType === 'card'" :class="gcn.middle('position').bm(promptPosition)">
-          <div :class="gcn.e('default')">
-            <Upload :class="gcn.e('default', 'icon')" />
-            <span :class="gcn.e('default', 'text')">{{ uploadText }}</span>
+        <template v-if="!drag">
+          <!-- 卡片模式 -->
+          <div v-if="listType === 'card'" :class="gcn.middle('position').bm(promptPosition)">
+            <div :class="gcn.e('default')">
+              <Upload :class="gcn.e('default', 'icon')" />
+              <span :class="gcn.e('default', 'text')">{{ uploadText }}</span>
+            </div>
+            <div
+              v-if="prompt"
+              :class="gcn.e('prompt')"
+            >
+              {{ prompt }}
+            </div>
           </div>
+          <!-- 图片模式 -->
           <div
-            v-if="prompt"
-            :class="gcn.e('prompt')"
+            v-else-if="listType === 'picture' && fileList.length < (limit ?? Infinity)"
+            :class="gcn.e('picture')"  
           >
-            {{ prompt }}
+            <Add />
           </div>
-        </div>
-        <!-- 图片模式 -->
-        <div
-          v-else-if="listType === 'picture'"
-          :class="gcn.e('picture')"  
-        >
-          <Add />
-        </div>
+        </template>
+        <template v-else>
+          <div :class="gcn.e('drag')">
+            <div :class="gcn.e('drag', 'icon')">
+              <Upload />
+            </div>
+            <div :class="gcn.e('drag', 'tips')">
+              拖拽到此处上传
+            </div>
+          </div>
+        </template>
       </slot>
     </div>
     <!-- 上传文件列表 -->

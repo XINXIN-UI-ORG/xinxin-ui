@@ -25,11 +25,19 @@ const limit: ExampleInfo = {
 const picture: ExampleInfo = {
   title: "图片墙",
   desc: format(`
-    通过设置listType为picture来切换图片墙模式。
+    通过设置listType为picture来切换图片墙模式，当上传的文件达到了设置的limit上限，上传入口会自动隐藏。
+  `),
+};
+
+const drag: ExampleInfo = {
+  title: "拖拽上传",
+  desc: format(`
+    通过设置drag为true实现拖拽上传，你可以将文件拖拽到特定区域以进行上传。
   `),
 };
 
 export {
+  drag,
   picture,
   limit,
   replace,
@@ -105,6 +113,12 @@ const apiProps: ApiTable<ApiProps> = {
       describe: '图片模式',
       type: 'picture | card',
       defaultValue: 'card',
+    },
+    {
+      props: 'drag',
+      describe: '拖拽上传',
+      type: 'Boolean',
+      defaultValue: 'false',
     },
   ],
 };

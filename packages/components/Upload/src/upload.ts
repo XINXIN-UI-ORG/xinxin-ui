@@ -59,6 +59,10 @@ export const uploadProps = {
     type: String as PropType<ListType>,
     default: 'card',
   },
+  drag: {
+    type: Boolean,
+    default: false,
+  },
 };
 
 export const uploadEmits = {
@@ -176,6 +180,7 @@ export function useUpload(
 
   return {
     fileOnChange,
+    fileList,
   };
 }
 
