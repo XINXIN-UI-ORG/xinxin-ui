@@ -1,8 +1,8 @@
 import { ExtractPropTypes, PropType, SetupContext, Ref, reactive } from 'vue';
 import { ref, provide, watch } from 'vue';
-import { uniqueId, cloneDeep, before } from 'lodash';
+import { uniqueId, cloneDeep } from 'lodash';
 import { UploadKey } from '@xinxin-ui/symbols';
-import { UploadFile, FileUploadEnum } from '@xinxin-ui/typings';
+import { UploadFile, FileUploadEnum, ListType } from '@xinxin-ui/typings';
 import type { AXE_METHOD } from '@xinxin-ui/http';
 import axios from 'axios';
 
@@ -56,7 +56,7 @@ export const uploadProps = {
     default: null,
   },
   listType: {
-    type: String as PropType<'card' | 'picture'>,
+    type: String as PropType<ListType>,
     default: 'card',
   },
 };
@@ -132,6 +132,7 @@ export function useUpload(
 
       if (!(props.beforeUpload instanceof Function)) {
         upload(props, rawFile);
+        return;
       }
   
       // 执行上传前检查
@@ -170,6 +171,7 @@ export function useUpload(
   provide(UploadKey, {
     fileList,
     handleRemove,
+    listType: props.listType,
   });
 
   return {

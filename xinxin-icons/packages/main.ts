@@ -1,5 +1,7 @@
 import type { App } from 'vue'
 
+import Add from './src/add.vue'
+
 import Arrow from './src/arrow.vue'
 
 import AuthSuccess from './src/auth-success.vue'
@@ -69,6 +71,7 @@ import Upload from './src/upload.vue'
 import WarningMessage from './src/warning-message.vue'
 
 const componentList = [
+  Add,
   Arrow,
   AuthSuccess,
   Auth,
@@ -120,6 +123,7 @@ export default {
 }
 
 export {
+  Add,
   Arrow,
   AuthSuccess,
   Auth,

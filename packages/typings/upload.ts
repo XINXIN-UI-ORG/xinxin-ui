@@ -26,3 +26,5 @@ export interface UploadFile {
 
     cancelToken?: CancelTokenSource;
 };
+
+export type ListType = 'card' | 'picture';

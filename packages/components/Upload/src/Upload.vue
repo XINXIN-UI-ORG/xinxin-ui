@@ -2,7 +2,7 @@
 import { defineComponent, ref } from 'vue';
 import { uploadProps, useUpload, UploadProps, uploadEmits } from './upload';
 import { generateClassName } from '@xinxin-ui/utils';
-import { Upload } from '@xinxin-ui/xinxin-icons';
+import { Upload, Add } from '@xinxin-ui/xinxin-icons';
 import UploadList from './upload-list.vue';
 
 export default defineComponent({
@@ -26,6 +26,7 @@ export default defineComponent({
   components: {
     Upload,
     UploadList,
+    Add,
   },
 });
 </script>
@@ -33,6 +34,7 @@ export default defineComponent({
   <div
     :class="[
       gcn.base(),
+      gcn.bm(listType),
     ]"
   >
     <input
@@ -43,9 +45,11 @@ export default defineComponent({
       ref="fileInputRef"
       @change="fileOnChange"
     >
+    <UploadList v-if="listType === 'picture'" />
     <div @click="uploadFile">
       <slot>
-        <div :class="gcn.middle('position').bm(promptPosition)">
+        <!-- 卡片模式 -->
+        <div v-if="listType === 'card'" :class="gcn.middle('position').bm(promptPosition)">
           <div :class="gcn.e('default')">
             <Upload :class="gcn.e('default', 'icon')" />
             <span :class="gcn.e('default', 'text')">{{ uploadText }}</span>
@@ -57,10 +61,17 @@ export default defineComponent({
             {{ prompt }}
           </div>
         </div>
+        <!-- 图片模式 -->
+        <div
+          v-else-if="listType === 'picture'"
+          :class="gcn.e('picture')"  
+        >
+          <Add />
+        </div>
       </slot>
     </div>
     <!-- 上传文件列表 -->
-    <UploadList />
+    <UploadList v-if="listType === 'card'" />
   </div>
 </template>
 <style scoped lang="stylus" src="../style/upload.styl"></style>
