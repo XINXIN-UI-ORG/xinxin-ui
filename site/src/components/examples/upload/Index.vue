@@ -177,9 +177,10 @@ const fileList = ref<UploadFile[]>([
 <template>
   <x-upload
     :file-list="fileList"
-    action="http://localhost:30000/api/uploadimg1"
+    action="http://localhost:30000/api/uploadimg"
     method="POST"
     list-type="picture"
+    :limit="5"
   ></x-upload>
 </template>`
 
@@ -188,7 +189,35 @@ import Drag from './4Drag.vue'
 const dragContent = `<script lang="ts" setup>
 <\/script>
 <template>
-  <x-upload></x-upload>
+  <x-upload
+    action="http://localhost:30000/api/uploadimg"
+    method="POST"
+    drag
+  ></x-upload>
+
+  <x-upload
+    action="http://localhost:30000/api/uploadimg"
+    method="POST"
+    drag
+  >
+    <template #dragMain>
+      上传文件拖拽到这里
+    </template>
+    <template #dragText>
+      支持上传图片
+    </template>
+  </x-upload>
+</template>`
+
+import ManualUpload from './5ManualUpload.vue'
+
+const manualUploadContent = `<script lang="ts" setup>
+<\/script>
+<template>
+  <x-upload
+    action="http://localhost:30000/api/uploadimg"
+    method="POST"
+  ></x-upload>
 </template>`
 
 export default defineComponent({
@@ -213,6 +242,10 @@ export default defineComponent({
       Drag,
       dragContent,
       dragInfo: info.drag,
+
+      ManualUpload,
+      manualUploadContent,
+      manualUploadInfo: info.manualUpload,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -271,6 +304,15 @@ export default defineComponent({
         :title="pictureInfo.title"
         :code-v-node="Picture"
         :code-desc="pictureInfo.desc"
+      >
+      </CodeExample>
+
+      <CodeExample
+        id="manualUpload"
+        :code="manualUploadContent"
+        :title="manualUploadInfo.title"
+        :code-v-node="ManualUpload"
+        :code-desc="manualUploadInfo.desc"
       >
       </CodeExample>
     </template>

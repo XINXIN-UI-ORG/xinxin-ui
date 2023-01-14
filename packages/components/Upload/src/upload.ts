@@ -90,6 +90,8 @@ export function useUpload(
   fileInputRef: Ref<HTMLInputElement>,
 ) {
   const fileList = ref<UploadFile[]>([]);
+  const dragOver = ref<boolean>(false);
+
   watch(
     props.fileList,
     (newFileList: UploadFile[]) => {
@@ -118,6 +120,10 @@ export function useUpload(
       return;
     }
 
+    fileUpload(files);
+  };
+
+  const fileUpload = (files: FileList) => {
     if (props.limit && props.fileList.length + files.length > props.limit) {
       emit('onExceed', files, props.fileList);
       return;
@@ -172,6 +178,22 @@ export function useUpload(
     }
   };
 
+  const dragDrop = (event: DragEvent) => {
+    dragOver.value = false;
+    const files = event.dataTransfer?.files;
+    if (!files) {
+      return;
+    }
+
+    fileUpload(files);
+  };
+
+  const submit = () => {
+    fileList.value
+    .filter(file => file.status === FileUploadEnum.READY)
+    .forEach(file => post(file.raw!, file, props));
+  };
+
   provide(UploadKey, {
     fileList,
     handleRemove,
@@ -181,6 +203,9 @@ export function useUpload(
   return {
     fileOnChange,
     fileList,
+    dragOver,
+    dragDrop,
+    submit,
   };
 }
 
@@ -271,6 +296,7 @@ function convertFile(file: File) {
     id: uniqueId('upload'),
     progress: 0,
     status: FileUploadEnum.READY,
+    raw: file,
   };
 
   if (file.type.startsWith('image')) {

@@ -124,3 +124,5 @@ export type FormInstance = InstanceType<typeof XForm>;
 export { axe, axeGet, axePost } from '@xinxin-ui/http';
 
 export type { AxeOption } from '@xinxin-ui/http';
+
+export type UploadInstance = InstanceType<typeof XUpload>;

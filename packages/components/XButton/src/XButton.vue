@@ -38,7 +38,6 @@ export default defineComponent({
             default: undefined,
         },
     },
-    inheritAttrs: false,
     setup(props, { attrs }) {
         const formItem = inject(FormItemKey, {
             size: props.size,

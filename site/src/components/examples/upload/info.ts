@@ -32,11 +32,19 @@ const picture: ExampleInfo = {
 const drag: ExampleInfo = {
   title: "拖拽上传",
   desc: format(`
-    通过设置drag为true实现拖拽上传，你可以将文件拖拽到特定区域以进行上传。
+    通过设置drag为true实现拖拽上传，你可以将文件拖拽到特定区域以进行上传，同时通过dragMain和dragText插槽可以自定义上传内容。
+  `),
+};
+
+const manualUpload: ExampleInfo = {
+  title: "手动上传",
+  desc: format(`
+    通过设置auto-upload为false来设置手动上传，使用uploadTrigger插槽还可以设置一个上传按钮。
   `),
 };
 
 export {
+  manualUpload,
   drag,
   picture,
   limit,

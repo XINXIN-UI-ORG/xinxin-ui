@@ -26,4 +26,9 @@ export default [
     link: '/component/upload#drag',
     name: info.drag.title,
   },
+  {
+    key: 5,
+    link: '/component/upload#manualUpload',
+    name: info.manualUpload.title,
+  },
 ]

@@ -12,7 +12,13 @@ export default defineComponent({
   setup(props: UploadProps, { emit }) {
     const gcn = generateClassName('upload');
     const fileInputRef = ref();
-    const { fileOnChange, fileList } = useUpload(props, emit, fileInputRef);
+    const {
+      fileOnChange,
+      fileList,
+      dragOver,
+      dragDrop,
+      submit,
+    } = useUpload(props, emit, fileInputRef);
 
     return {
       gcn,
@@ -22,6 +28,9 @@ export default defineComponent({
       },
       fileOnChange,
       fileList,
+      dragOver,
+      dragDrop,
+      submit,
     };
   },
   components: {
@@ -57,6 +66,7 @@ export default defineComponent({
               <Upload :class="gcn.e('default', 'icon')" />
               <span :class="gcn.e('default', 'text')">{{ uploadText }}</span>
             </div>
+            <slot name="uploadTrigger"></slot>
             <div
               v-if="prompt"
               :class="gcn.e('prompt')"
@@ -73,15 +83,27 @@ export default defineComponent({
           </div>
         </template>
         <template v-else>
-          <div :class="gcn.e('drag')">
+          <div
+            :class="[
+              gcn.e('drag'),
+              gcn.middle('drag').is('over', dragOver),
+            ]"
+            @dragover.prevent="dragOver = true"
+            @dragleave.prevent="dragOver = false"
+            @drop.prevent="dragDrop($event)"
+          >
             <div :class="gcn.e('drag', 'icon')">
               <Upload />
             </div>
             <div :class="gcn.e('drag', 'info')">
-              点击上传文件或拖拽文件到这里
+              <slot name="dragMain">
+                点击上传文件或拖拽文件到这里
+              </slot>
             </div>
             <div :class="gcn.e('drag', 'tips')">
-              支持任意类型文件
+              <slot name="dragText">
+                支持任意类型文件
+              </slot>
             </div>
           </div>
         </template>

@@ -25,6 +25,8 @@ export interface UploadFile {
     progress?: number;
 
     cancelToken?: CancelTokenSource;
+    
+    raw?: File;
 };
 
 export type ListType = 'card' | 'picture';
