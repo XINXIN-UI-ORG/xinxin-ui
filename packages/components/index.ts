@@ -29,3 +29,5 @@ export * from "./Switch";
 export * from "./Form";
 
 export * from './Upload';
+
+export * from './Progress';

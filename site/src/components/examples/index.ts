@@ -28,6 +28,9 @@ import messageAction from './message/action'
 import popover from './popover/Index.vue'
 import popoverAction from './popover/action'
 
+import progress from './progress/Index.vue'
+import progressAction from './progress/action'
+
 import radio from './radio/Index.vue'
 import radioAction from './radio/action'
 
@@ -67,6 +70,8 @@ export {
   messageAction,
   popover,
   popoverAction,
+  progress,
+  progressAction,
   radio,
   radioAction,
   scrollbar,

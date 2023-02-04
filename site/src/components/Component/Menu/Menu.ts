@@ -135,6 +135,12 @@ export const menuList: MenuListType[] = [
         content: "气泡卡片",
         name: "Popover",
     },
+    {
+        id: 204,
+        type: MenuType.link,
+        content: "进度条",
+        name: "Progress",
+    },
 
 
     {

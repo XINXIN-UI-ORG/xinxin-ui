@@ -22,6 +22,7 @@ import {
     XForm,
     XFormItem,
     XUpload,
+    XProgress,
 } from "@xinxin-ui/components";
 import { CustomerDirective, ClickHidden } from '@xinxin-ui/directives';
 import type { FormRules } from "@xinxin-ui/typings";
@@ -52,6 +53,7 @@ const newComponents = [
     XForm,
     XFormItem,
     XUpload,
+    XProgress,
 ];
 
 const directives = [
@@ -107,6 +109,7 @@ export {
     XForm,
     XFormItem,
     XUpload,
+    XProgress,
 };
 
 // 导出类型
