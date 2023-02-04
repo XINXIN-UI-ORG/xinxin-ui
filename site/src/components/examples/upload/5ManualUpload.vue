@@ -16,14 +16,10 @@ function uploadFiles() {
     :auto-upload="false"
   >
     <template #uploadTrigger>
-      <x-button dashed type="success" class="manual-upload" @click="uploadFiles">开始上传</x-button>
+      <x-button dashed type="success" class="manual-upload" @click="uploadFiles" style="margin: 0;">开始上传</x-button>
     </template>
   </x-upload>
 </template>
-<style lang="stylus">
-.x-button
-  margin 0 !important
-</style>
 <style lang="stylus" scoped>
 .manual-upload
   margin-left 10px !important
