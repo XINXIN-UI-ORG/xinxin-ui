@@ -44,4 +44,6 @@ const componentNameDesc = {
     "form": "将一组输入框组合起来。",
     "upload": "轻松上传，可点击可拖拽。",
     "progress": "用于展示操作进度，告知用户当前状态和预期。",
+    'modal': '展示点什么东西。',
+    'alert': '系统警告、提示、成功信息。',
 };

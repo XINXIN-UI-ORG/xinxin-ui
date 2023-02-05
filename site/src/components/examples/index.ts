@@ -1,3 +1,6 @@
+import alert from './alert/Index.vue'
+import alertAction from './alert/action'
+
 import backtop from './back-top/Index.vue'
 import backtopAction from './back-top/action'
 
@@ -25,6 +28,9 @@ import loadingAction from './loading/action'
 import message from './message/Index.vue'
 import messageAction from './message/action'
 
+import modal from './modal/Index.vue'
+import modalAction from './modal/action'
+
 import popover from './popover/Index.vue'
 import popoverAction from './popover/action'
 
@@ -50,6 +56,8 @@ import upload from './upload/Index.vue'
 import uploadAction from './upload/action'
 
 export {
+  alert,
+  alertAction,
   backtop,
   backtopAction,
   button,
@@ -68,6 +76,8 @@ export {
   loadingAction,
   message,
   messageAction,
+  modal,
+  modalAction,
   popover,
   popoverAction,
   progress,

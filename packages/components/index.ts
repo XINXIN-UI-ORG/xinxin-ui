@@ -31,3 +31,7 @@ export * from "./Form";
 export * from './Upload';
 
 export * from './Progress';
+
+export * from './Modal';
+
+export * from './Alert';

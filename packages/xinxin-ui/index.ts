@@ -23,6 +23,8 @@ import {
     XFormItem,
     XUpload,
     XProgress,
+    XModal,
+    XAlert,
 } from "@xinxin-ui/components";
 import { CustomerDirective, ClickHidden } from '@xinxin-ui/directives';
 import type { FormRules } from "@xinxin-ui/typings";
@@ -47,6 +49,7 @@ const components = [
     Scrollbar,
     Tag,
     Switch,
+    XAlert,
 ];
 
 const newComponents = [
@@ -54,6 +57,7 @@ const newComponents = [
     XFormItem,
     XUpload,
     XProgress,
+    XModal,
 ];
 
 const directives = [
@@ -67,6 +71,7 @@ const install: any = (app: App) => {
             // 执行每个组件的install方法
             app.use(component);
         }
+
         app.component(component.name, component);
     });
 
@@ -110,6 +115,8 @@ export {
     XFormItem,
     XUpload,
     XProgress,
+    XModal,
+    XAlert,
 };
 
 // 导出类型

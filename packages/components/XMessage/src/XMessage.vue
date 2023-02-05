@@ -49,7 +49,7 @@ export default defineComponent({
     },
     setup(props) {
         let messageShow = ref(false);
-        let timer: number;
+        let timer: any;
         onMounted(() => {
             messageShow.value = true;
             timer = setTimeout(() => {

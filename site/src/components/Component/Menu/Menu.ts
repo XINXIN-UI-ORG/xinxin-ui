@@ -138,6 +138,18 @@ export const menuList: MenuListType[] = [
     {
         id: 204,
         type: MenuType.link,
+        content: '警告提示',
+        name: "Alert",
+    },
+    {
+        id: 205,
+        type: MenuType.link,
+        content: '模态对话框',
+        name: "Modal",
+    },
+    {
+        id: 206,
+        type: MenuType.link,
         content: "进度条",
         name: "Progress",
     },
