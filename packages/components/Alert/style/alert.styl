@@ -1,0 +1,26 @@
+.x-alert
+  position fixed
+  inset 0
+  background-color rgba(0, 0, 0, .3)
+  z-index 10000
+  .x-alert__box
+    position absolute
+    top 50%
+    left 50%
+    transform translate(-50%, -50%)
+    display flex
+    .x-alert__box__flag
+      width 3px
+    .x-alert__box__content
+      background-color rgba(0, 0, 0, .3)
+      padding 10px 5px
+      margin 0 3px
+      font-weight bolder
+      font-size 26px
+
+.x-alert-error
+  background-color rgba(245, 108, 108, .3)
+  .x-alert__box
+    color #f56c6c
+    .x-alert__box__flag
+      background-color #f56c6c

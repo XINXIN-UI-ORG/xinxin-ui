@@ -2,7 +2,10 @@
 import { XAlert } from 'xinxin-ui';
 
 function alertError() {
-  XAlert();
+  XAlert({
+    type: 'error',
+    message: '即将突破洛希极限',
+  });
 }
 
 </script>
