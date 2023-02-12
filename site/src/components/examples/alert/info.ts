@@ -8,7 +8,15 @@ const base: ExampleInfo = {
     `)
 };
 
+const simple: ExampleInfo = {
+    title: "极简风格",
+    desc: format(`
+        style设置simple可以展示极简风格。
+    `)
+};
+
 export {
+    simple,
     base,
     apiProps,
     apiEvent

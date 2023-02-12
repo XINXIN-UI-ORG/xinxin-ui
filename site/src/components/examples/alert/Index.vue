@@ -11,12 +11,56 @@ const baseContent = `<script lang="ts" setup>
 import { XAlert } from 'xinxin-ui';
 
 function alertError() {
-  XAlert();
+  const close = XAlert({
+    type: 'error',
+    message: '即将突破洛希极限',
+  });
+
+  setTimeout(close, 3000);
 }
+
+function alertWarning() {
+  const close = XAlert({
+    type: 'warning',
+    message: '即将突破洛希极限',
+  });
+
+  setTimeout(close, 3000);
+}
+
+function alertSuccess() {
+  const close = XAlert({
+    type: 'success',
+    message: '即将突破洛希极限',
+  });
+
+  setTimeout(close, 3000);
+}
+
+function alertInfo() {
+  const close = XAlert({
+    type: 'info',
+    message: '即将突破洛希极限',
+  });
+
+  setTimeout(close, 3000);
+}
+<\/script>
+<template>
+  <x-button @click="alertError" type="error">错误</x-button>
+  <x-button @click="alertWarning" type="warning">告警</x-button>
+  <x-button @click="alertSuccess" type="success">成功</x-button>
+  <x-button @click="alertInfo" type="info">信息</x-button>
+</template>`
+
+import Simple from './1Simple.vue'
+
+const simpleContent = `<script lang="ts" setup>
 
 <\/script>
 <template>
-  <x-button @click="alertError">错误</x-button>
+  知乎极简风格通知
+  <x-button>极简风格info</x-button>
 </template>`
 
 export default defineComponent({
@@ -25,6 +69,10 @@ export default defineComponent({
       Base,
       baseContent,
       baseInfo: info.base,
+
+      Simple,
+      simpleContent,
+      simpleInfo: info.simple,
 
       apiProps: info.apiProps,
       apiEvent: info.apiEvent,
@@ -49,7 +97,16 @@ export default defineComponent({
       >
       </CodeExample>
     </template>
-    <template #right> </template>
+    <template #right>
+      <CodeExample
+        id="simple"
+        :code="simpleContent"
+        :title="simpleInfo.title"
+        :code-v-node="Simple"
+        :code-desc="simpleInfo.desc"
+      >
+      </CodeExample>
+    </template>
   </Layout>
   <Table :api-event="apiEvent" :api-props="apiProps" />
 </template>
