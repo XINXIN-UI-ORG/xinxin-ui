@@ -1,9 +1,9 @@
-import { AlertOptions } from '@xinxin-ui/typings';
+import { AlertOptions, AlertClose } from '@xinxin-ui/typings';
 import { createVNode, render } from 'vue';
 import XAlertComponent from './Alert.vue';
 
 
-function XAlert(options: string | AlertOptions): void {
+function XAlert(options: string | AlertOptions): AlertClose {
   if (typeof options === 'string') {
     options = {
       type: 'info',
@@ -11,10 +11,14 @@ function XAlert(options: string | AlertOptions): void {
     };
   }
 
-  appendAlert(options);
+  const container = appendAlert(options);
+
+  return () => {
+    render(null, container);
+  };
 }
 
-function appendAlert(options: any): void {
+function appendAlert(options: any): HTMLDivElement {
   // 创建VNode
   const vm = createVNode(XAlertComponent, options);
 
@@ -26,6 +30,7 @@ function appendAlert(options: any): void {
 
   // 将容器插入到body中
   document.body.appendChild(container.firstElementChild!);
+  return container;
 }
 
 export default XAlert;

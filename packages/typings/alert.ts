@@ -7,3 +7,7 @@ export type AlertOptions = {
 
   type: AlertType,
 };
+
+export interface AlertClose {
+  (): void;
+}

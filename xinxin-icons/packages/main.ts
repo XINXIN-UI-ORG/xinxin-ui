@@ -2,6 +2,8 @@ import type { App } from 'vue'
 
 import Add from './src/add.vue'
 
+import Alert from './src/alert.vue'
+
 import Arrow from './src/arrow.vue'
 
 import AuthSuccess from './src/auth-success.vue'
@@ -72,6 +74,7 @@ import WarningMessage from './src/warning-message.vue'
 
 const componentList = [
   Add,
+  Alert,
   Arrow,
   AuthSuccess,
   Auth,
@@ -124,6 +127,7 @@ export default {
 
 export {
   Add,
+  Alert,
   Arrow,
   AuthSuccess,
   Auth,

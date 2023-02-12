@@ -6,6 +6,10 @@ export const alertProps = {
     type: String as PropType<AlertType>,
     default: 'info',
   },
+  message: {
+    type: String,
+    default: '',
+  },
 };
 
 export type AlertProps = ExtractPropTypes<typeof alertProps>;

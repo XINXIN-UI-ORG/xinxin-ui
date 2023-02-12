@@ -18,10 +18,15 @@ const apiProps: ApiTable<ApiProps> = {
     header: ['属性', '说明', '类型', '默认值', '可选值'],
     content: [
         {
-            props: "content",
-            describe: "popover弹出的内容",
+            props: 'type',
+            describe: '弹窗类型',
+            type: 'error | warngin | success | info',
+            defaultValue: 'info',
+        },
+        {
+            props: 'message',
+            describe: '弹窗消息',
             type: 'String',
-            defaultValue: "xinxin-ui"
         },
     ],
 };

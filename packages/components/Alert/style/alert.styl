@@ -16,11 +16,37 @@
       padding 10px 5px
       margin 0 3px
       font-weight bolder
-      font-size 26px
+      font-size 30px
+      display flex
+      line-height 1
+      align-items flex-end
+      .icon
+        width 60px
+        height 60px
+      .text
+        line-height 1
+        display flex
+        flex-direction column
+        align-items center
+        .text-content
+          letter-spacing 2px
+        .tips
+          font-size 24px
+          letter-spacing 5px
+          margin-top 5px
 
 .x-alert-error
-  background-color rgba(245, 108, 108, .3)
+  background-color rgba(255, 102, 115, .3)
   .x-alert__box
-    color #f56c6c
+    color #ff6673
     .x-alert__box__flag
-      background-color #f56c6c
+      background-color #ff6673
+
+.x-alert-warning
+  background-color rgba(255, 125, 0, .3)
+  .x-alert__box
+    color #ff7d00
+    .x-alert__box__flag
+      background-color #ff7d00
+    
+    
