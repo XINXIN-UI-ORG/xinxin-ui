@@ -35,6 +35,9 @@ function appendAlert(options: any): HTMLDivElement {
 
   // 将vdom渲染到挂载点下
   render(vm, container);
+  vm.props!.onDestory = () => {
+    render(null, container);
+  };
 
   // 将容器插入到body中
   document.body.appendChild(container.firstElementChild!);

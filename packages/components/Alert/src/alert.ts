@@ -10,6 +10,10 @@ export const alertProps = {
     type: String,
     default: '',
   },
+  duration: {
+    type: Number,
+    default: 3000,
+  },
 };
 
 export type AlertProps = ExtractPropTypes<typeof alertProps>;

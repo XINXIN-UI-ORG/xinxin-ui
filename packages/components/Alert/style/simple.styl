@@ -1,6 +1,6 @@
 .x-alert
   position fixed
-  top 0
+  top 40px
   left 50%
   transform translateX(-50%)
   background-color #fff
@@ -13,3 +13,24 @@
   align-items center
   box-shadow 2px 2px 12px rgba(0, 0, 0, .15)
   color #333
+.x-alert-success
+  background-color #e8ffea
+  color #00b42a
+  box-shadow 1px 1px 18px rgba(0, 0, 0, .1)
+.x-alert-warning
+  background-color #fff7e8
+  color #ff7d00
+  box-shadow 1px 1px 18px rgba(0, 0, 0, .1)
+.x-alert-error
+  background-color #ffece8
+  color #f53f3f
+  box-shadow 1px 1px 18px rgba(0, 0, 0, .1)
+
+.simple-enter-active,
+.simple-leave-active
+  transition all .8s
+.simple-enter-from,
+.simple-leave-to
+  top 0
+  opacity 0
+  transform translate(-50%, -100%)

@@ -6,6 +6,8 @@ export type AlertOptions = {
   style?: AlertStyle,
 
   type: AlertType,
+
+  duration?: number,
 };
 
 export interface AlertClose {
