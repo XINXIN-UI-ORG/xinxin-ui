@@ -1,7 +1,14 @@
 <script lang="ts" setup>
+import { XAlert } from 'xinxin-ui';
 
+function info() {
+  XAlert({
+    message: '极简风格info',
+    type: 'info',
+    style: 'simple',
+  });
+}
 </script>
 <template>
-  知乎极简风格通知
-  <x-button>极简风格info</x-button>
+  <x-button @click="info">极简风格info</x-button>
 </template>

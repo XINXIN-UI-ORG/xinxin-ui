@@ -1,7 +1,12 @@
-import { AlertOptions, AlertClose } from '@xinxin-ui/typings';
+import { AlertOptions, AlertClose, AlertStyle } from '@xinxin-ui/typings';
 import { createVNode, render } from 'vue';
-import XAlertComponent from './Alert.vue';
+import TechnologyComponent from './Alert.vue';
+import SimpleComponent from './Simple.vue';
 
+const template = {
+  'technology': TechnologyComponent,
+  'simple': SimpleComponent,
+};
 
 function XAlert(options: string | AlertOptions): AlertClose {
   if (typeof options === 'string') {
@@ -19,8 +24,11 @@ function XAlert(options: string | AlertOptions): AlertClose {
 }
 
 function appendAlert(options: any): HTMLDivElement {
+  // 判断使用哪个模板
+  const component = template[options.style || 'technology'];
+
   // 创建VNode
-  const vm = createVNode(XAlertComponent, options);
+  const vm = createVNode(component, options);
 
   // 创建挂载点
   const container = document.createElement('div');

@@ -36,6 +36,11 @@ const apiProps: ApiTable<ApiProps> = {
             describe: '弹窗消息',
             type: 'String',
         },
+        {
+            props: 'style',
+            describe: '弹窗风格',
+            type: 'technology | simple',
+        },
     ],
 };
 

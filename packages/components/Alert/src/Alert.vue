@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { generateClassName } from '@xinxin-ui/utils';
-import { defineProps, onMounted, ref } from 'vue';
+import { defineProps, ref } from 'vue';
 import { alertProps } from './alert';
 import { Alert } from '@xinxin-ui/xinxin-icons';
 
@@ -30,4 +30,4 @@ const showAlert = ref<boolean>(true);
     </div>
   </div>
 </template>
-<style lang="stylus" src="../style/alert.styl"></style>
+<style lang="stylus" src="../style/alert.styl" scoped></style>
