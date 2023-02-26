@@ -78,6 +78,12 @@ export const menuList: MenuListType[] = [
         content: "上传",
         name: "Upload",
     },
+    {
+        id: 309,
+        type: MenuType.link,
+        content: "日期选择器",
+        name: "Date-Picker",
+    },
 
 
     {

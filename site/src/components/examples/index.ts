@@ -10,6 +10,9 @@ import buttonAction from './button/action'
 import checkbox from './checkbox/Index.vue'
 import checkboxAction from './checkbox/action'
 
+import datepicker from './date-picker/Index.vue'
+import datepickerAction from './date-picker/action'
+
 import form from './form/Index.vue'
 import formAction from './form/action'
 
@@ -64,6 +67,8 @@ export {
   buttonAction,
   checkbox,
   checkboxAction,
+  datepicker,
+  datepickerAction,
   form,
   formAction,
   icon,

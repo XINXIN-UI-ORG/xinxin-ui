@@ -25,6 +25,7 @@ import {
     XProgress,
     XModal,
     XAlert,
+    XDatePicker,
 } from "@xinxin-ui/components";
 import { CustomerDirective, ClickHidden } from '@xinxin-ui/directives';
 import type { FormRules } from "@xinxin-ui/typings";
@@ -58,6 +59,7 @@ const newComponents = [
     XUpload,
     XProgress,
     XModal,
+    XDatePicker,
 ];
 
 const directives = [
@@ -117,6 +119,7 @@ export {
     XProgress,
     XModal,
     XAlert,
+    XDatePicker,
 };
 
 // 导出类型

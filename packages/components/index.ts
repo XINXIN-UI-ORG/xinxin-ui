@@ -35,3 +35,5 @@ export * from './Progress';
 export * from './Modal';
 
 export * from './Alert';
+
+export * from './DatePicker';
