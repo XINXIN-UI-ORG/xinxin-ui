@@ -79,9 +79,51 @@
     &[data-popper-reference-hidden]
         visibility: hidden;
         pointer-events: none;
-.x-popover-transition-enter-active, .x-popover-transition-leave-active
-    transition opacity .5s
-.x-popover-transition-enter-from, .x-popover-transition-leave-to
+
+.x-popover-transition-enter-active,
+.x-popover-transition-leave-active
+    transition transform 300ms, opacity 150ms
+
+.x-popover-transition-enter-from[data-popper-placement^='bottom'],
+.x-popover-transition-leave-to[data-popper-placement^='bottom']
+    transform scaleY(0)
+    transform-origin top center
     opacity 0
-.x-popover-transition-enter-to, .x-popover-transition-leave-from
+.x-popover-transition-enter-to[data-popper-placement^='bottom'],
+.x-popover-transition-leave-from[data-popper-placement^='bottom']
+    transform scaleY(1)
+    transform-origin top center
+    opacity 1
+
+.x-popover-transition-enter-from[data-popper-placement^='top'],
+.x-popover-transition-leave-to[data-popper-placement^='top']
+    transform scaleY(0)
+    transform-origin bottom center
+    opacity 0
+.x-popover-transition-enter-to[data-popper-placement^='top'],
+.x-popover-transition-leave-from[data-popper-placement^='top']
+    transform scaleY(1)
+    transform-origin bottom center
+    opacity 1
+
+.x-popover-transition-enter-from[data-popper-placement^='left'],
+.x-popover-transition-leave-to[data-popper-placement^='left']
+    transform scaleX(0)
+    transform-origin center right
+    opacity 0
+.x-popover-transition-enter-to[data-popper-placement^='left'],
+.x-popover-transition-leave-from[data-popper-placement^='left']
+    transform scaleX(1)
+    transform-origin center right
+    opacity 1
+
+.x-popover-transition-enter-from[data-popper-placement^='right'],
+.x-popover-transition-leave-to[data-popper-placement^='right']
+    transform scaleX(0)
+    transform-origin center left
+    opacity 0
+.x-popover-transition-enter-to[data-popper-placement^='right'],
+.x-popover-transition-leave-from[data-popper-placement^='right']
+    transform scaleX(1)
+    transform-origin center left
     opacity 1

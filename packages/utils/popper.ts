@@ -13,7 +13,7 @@ export function usePopper(referenceDom: HTMLElement, popperDom: HTMLElement, opt
         placement: option.placement,
         modifiers: [
             {
-                name: "offset",
+                name: 'offset',
                 options: {
                     offset: [0, option.offset ?? 12],
                 },
@@ -26,17 +26,23 @@ export function usePopper(referenceDom: HTMLElement, popperDom: HTMLElement, opt
                 },
             },
             {
-                name: "preventOverflow",
+                name: 'preventOverflow',
                 options: {
                     padding: 5,
                     boundary: option.boundary,
                 },
             },
             {
-                name: "arrow",
+                name: 'arrow',
                 options: {
                     element: option.arrowDom,
                     padding: 3,
+                },
+            },
+            {
+                name: 'computeStyles',
+                options: {
+                    gpuAcceleration: false,
                 },
             },
         ],

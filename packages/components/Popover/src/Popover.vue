@@ -1,5 +1,5 @@
 <script lang="ts">
-import { defineComponent, ref, watchEffect } from "vue";
+import { defineComponent, ref } from "vue";
 import { popoverProps, usePopover, PopoverPropsType, popoverEmits } from "./popover";
 import { generateClassName } from "@xinxin-ui/utils";
 import PopoverTrigger from "./PopoverTrigger";
@@ -12,17 +12,12 @@ export default defineComponent({
     inheritAttrs: false,
     setup(props: PopoverPropsType, { expose, emit }) {
         let gcn = generateClassName("popover");
-        let popoverShow = ref<boolean>(false);
-        watchEffect(() => {
-            if (props.show !== undefined) {
-                popoverShow.value = props.show;
-            }
-        });
+        
         // 被定位的内容
         let popoverContentRef = ref<HTMLDivElement | null>(null);
         // arrow内容
         let popoverArrow = ref<HTMLDivElement | null>(null);
-        let { popperStyle, popoverScroll } = usePopover(popoverContentRef, popoverArrow, props, expose, emit);
+        let { popperStyle, popoverScroll, popoverShow } = usePopover(popoverContentRef, popoverArrow, props, expose, emit);
         return {
             gcn,
             popoverContentRef,
@@ -41,7 +36,6 @@ export default defineComponent({
 <template>
     <popover-trigger
         v-model:popover-show="popoverShow"
-        :popover-show="popoverShow"
         :show="show"
         :trigger="trigger"
         :ignore-content="ignoreContent"
@@ -57,7 +51,7 @@ export default defineComponent({
                     gcn.base(),
                     gcn.bm(theme),
                 ]"
-                v-if="popoverShow"
+                v-show="popoverShow"
             >
                 <x-scrollbar
                     :max-height="maxHeight"

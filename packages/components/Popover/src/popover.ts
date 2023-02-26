@@ -1,6 +1,6 @@
 import { PlacementType } from "@xinxin-ui/typings";
 import type { ExtractPropTypes, PropType, Ref, SetupContext } from "vue";
-import { onMounted, provide, ref, unref, watch, computed } from "vue";
+import { onMounted, provide, ref, unref, watch, computed, watchEffect } from "vue";
 import { usePopper } from "@xinxin-ui/utils";
 import { ReferenceGather, ReferenceInjectKey } from "@xinxin-ui/symbols";
 import { ScrollPosition } from "../../Scrollbar/src/scrollbar";
@@ -75,6 +75,13 @@ export function usePopover(
     expose: (exposed?: Record<string, any>) => void,
     emit: SetupContext<typeof popoverEmits>['emit'],
 ) {
+    const popoverShow = ref<boolean>(false);
+    watchEffect(() => {
+        if (props.show !== undefined) {
+            popoverShow.value = props.show;
+        }
+    });
+
     // 计算父级dom宽度
     let fatherWidth = ref<number>(0);
 
@@ -87,24 +94,27 @@ export function usePopover(
     provide(ReferenceInjectKey, popoverRefGather);
     // 定位popper
     onMounted(() => {
-        watch(
-            () => popoverContentRef.value,
-            (popoverContentRef) => {
-                if (!popoverContentRef) {
-                    return;
-                }
-                popperInstance = usePopper(unref(popoverRefGather.triggerRef)!, popoverContentRef, {
-                    placement: props.placement,
-                    offset: props.ignoreContent
-                        ? props.showArrow
-                            ? props.offset
-                            : 4
-                        : 0,
-                    boundary: props.boundary,
-                    arrowDom: unref(popoverArrow)!,
-                });
+        const reComputedPopover = () => {
+            popperInstance = usePopper(unref(popoverRefGather.triggerRef)!, popoverContentRef.value!, {
+                placement: props.placement,
+                offset: props.ignoreContent
+                    ? props.showArrow
+                        ? props.offset
+                        : 4
+                    : 0,
+                boundary: props.boundary,
+                arrowDom: unref(popoverArrow)!,
+            });
+        };
+        reComputedPopover();
+        watchEffect(() => {
+            if (!popoverShow.value) {
+                return;
             }
-        );
+
+            reComputedPopover();
+        });
+
         watch(() => props.placement, (placement) => {
             popperInstance && popperInstance.setOptions({
                 placement: placement,
@@ -143,7 +153,8 @@ export function usePopover(
         })),
         popoverScroll(scrollPosition: ScrollPosition) {
             emit("popoverScroll", scrollPosition);
-        }
+        },
+        popoverShow,
     };
 }
 
