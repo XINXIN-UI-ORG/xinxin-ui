@@ -1,0 +1,29 @@
+@import '../../../theme-chalk/variable.styl';
+
+.x-date-picker
+  .x-date-picker__content
+    display inline-flex
+    align-items center
+    background-color #f2f3f5
+    height 32px
+    border-radius 2px
+    padding 5px 10px
+    box-sizing border-box
+    border 1px solid transparent
+    overflow hidden
+    &:hover
+      background-color #e5e6eb
+    &.x-date-picker-focus
+      border-color $base_theme_color
+      background-color #fff
+    .x-date-picker__content__icon
+      width 20px
+      height 20px
+      color #909399
+    .x-date-picker__content__input
+      background-color transparent
+      color #606266
+      border none
+      outline none
+      margin-right 10px
+      height 100%

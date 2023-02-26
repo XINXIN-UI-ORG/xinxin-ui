@@ -10,6 +10,8 @@ import AuthSuccess from './src/auth-success.vue'
 
 import Auth from './src/auth.vue'
 
+import Calendar from './src/calendar.vue'
+
 import Checked from './src/checked.vue'
 
 import CloseSelect from './src/close-select.vue'
@@ -78,6 +80,7 @@ const componentList = [
   Arrow,
   AuthSuccess,
   Auth,
+  Calendar,
   Checked,
   CloseSelect,
   Close,
@@ -131,6 +134,7 @@ export {
   Arrow,
   AuthSuccess,
   Auth,
+  Calendar,
   Checked,
   CloseSelect,
   Close,
