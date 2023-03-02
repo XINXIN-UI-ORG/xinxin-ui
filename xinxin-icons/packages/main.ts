@@ -4,6 +4,8 @@ import Add from './src/add.vue'
 
 import Alert from './src/alert.vue'
 
+import ArrowRight from './src/arrow-right.vue'
+
 import Arrow from './src/arrow.vue'
 
 import AuthSuccess from './src/auth-success.vue'
@@ -40,6 +42,8 @@ import Indeterminate from './src/indeterminate.vue'
 
 import InfoMessage from './src/info-message.vue'
 
+import Left from './src/left.vue'
+
 import Load from './src/load.vue'
 
 import Loading from './src/loading.vue'
@@ -53,6 +57,8 @@ import PasswordShow from './src/password-show.vue'
 import Refresh from './src/refresh.vue'
 
 import Restart from './src/restart.vue'
+
+import Right from './src/right.vue'
 
 import Rocket from './src/rocket.vue'
 
@@ -77,6 +83,7 @@ import WarningMessage from './src/warning-message.vue'
 const componentList = [
   Add,
   Alert,
+  ArrowRight,
   Arrow,
   AuthSuccess,
   Auth,
@@ -95,6 +102,7 @@ const componentList = [
   File,
   Indeterminate,
   InfoMessage,
+  Left,
   Load,
   Loading,
   NoData,
@@ -102,6 +110,7 @@ const componentList = [
   PasswordShow,
   Refresh,
   Restart,
+  Right,
   Rocket,
   Search,
   SourceCode,
@@ -131,6 +140,7 @@ export default {
 export {
   Add,
   Alert,
+  ArrowRight,
   Arrow,
   AuthSuccess,
   Auth,
@@ -149,6 +159,7 @@ export {
   File,
   Indeterminate,
   InfoMessage,
+  Left,
   Load,
   Loading,
   NoData,
@@ -156,6 +167,7 @@ export {
   PasswordShow,
   Refresh,
   Restart,
+  Right,
   Rocket,
   Search,
   SourceCode,

@@ -12,12 +12,12 @@ export type DatePickerProps = ExtractPropTypes<typeof datePickerProps>;
 export function useDatePicker(
   props: DatePickerProps,
 ) {
-  const inputFocus = ref<boolean>(false);
+  const inputFocus = ref<boolean>(true);
   const focusEvent = () => {
     inputFocus.value = true;
   };
   const blurEvent = () => {
-    inputFocus.value = false;
+    // inputFocus.value = false;
   };
 
   return {
