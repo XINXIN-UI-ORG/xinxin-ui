@@ -1,0 +1,37 @@
+@import '../../../theme-chalk/variable.styl';
+
+.x-date-selector
+  padding 5px 10px
+  .x-date-selector__title
+    display flex
+    justify-content space-between
+    border-bottom 1px solid #efeff5
+    padding-bottom 5px
+    .x-date-selector__title__item
+      width 25px
+      height 25px
+      text-align center
+      line-height 26px
+      margin 0 7px
+  .x-date-selector__date
+    margin-top 10px
+    border-bottom 1px solid #efeff5
+    .x-date-selector__date__line
+      display flex
+      justify-content space-between
+      margin-bottom 10px
+      .x-date-selector__date__item
+        width 25px
+        height 25px
+        line-height 26px
+        margin 0 7px
+        text-align center
+        cursor pointer
+        border-radius 3px
+        &.x-date-selector__date__item-forbidden
+          color #c9cdd4
+          &:hover
+            color #c9cdd4
+        &:hover
+          background-color #f3f3f5
+          color $base_theme_color

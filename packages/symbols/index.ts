@@ -7,3 +7,5 @@ export * from "./popover";
 export * from "./form";
 
 export * from './upload';
+
+export * from './date-picker';
