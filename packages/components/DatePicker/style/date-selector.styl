@@ -1,7 +1,46 @@
 @import '../../../theme-chalk/variable.styl';
 
-.x-date-selector
+.x-date-selector__operation-bar
+  display flex
+  height 28px
+  margin 5px 10px
+  align-items center
+  justify-content space-between
+  user-select none
+  .x-date-selector__operation-icon
+    flex 0 0 25px
+    height 25px
+    display flex
+    align-items center
+    justify-content center
+    cursor pointer
+    border-radius 50%
+    &:hover
+      background-color #e5e6eb
+      svg
+        color $base_theme_color
+    svg
+      width 16px
+      height 16px
+      color #c2c2c2
+  .x-date-selector__display
+    flex 1
+    display flex
+    justify-content center
+    & > span
+      cursor pointer
+      font-size 14px
+      height 25px
+      line-height 26px
+      padding 0 3px
+      border-radius 3px
+      &:hover
+        color $base_theme_color
+        background-color #e5e6eb
+
+.x-date-selector__selector
   padding 5px 10px
+  user-select none
   .x-date-selector__title
     display flex
     justify-content space-between
@@ -15,7 +54,6 @@
       margin 0 7px
   .x-date-selector__date
     margin-top 10px
-    border-bottom 1px solid #efeff5
     .x-date-selector__date__line
       display flex
       justify-content space-between
@@ -28,10 +66,38 @@
         text-align center
         cursor pointer
         border-radius 3px
+        position relative
+        transition all 300ms
+        &:hover
+          background-color #f3f3f5
+          color $base_theme_color
         &.x-date-selector__date__item-forbidden
           color #c9cdd4
           &:hover
             color #c9cdd4
-        &:hover
-          background-color #f3f3f5
-          color $base_theme_color
+          &.x-date-selector__date__item-select
+            background-color #f3f3f5
+        &.x-date-selector__date__item-select
+          background-color $base_theme_color
+          color #fff
+          &:hover
+            background-color $base_theme_color
+            color #fff
+          .x-date-selector__today
+            background-color #fff
+        .x-date-selector__today
+          width 4px
+          height 4px
+          border-radius 50%
+          background-color $base_theme_color
+          display block
+          position absolute
+          top 2px
+          right 2px
+
+.x-date-selector__shotcut
+  padding: 8px 15px
+  display flex
+  justify-content flex-end
+  align-items center
+  border-top 1px solid #efeff5
