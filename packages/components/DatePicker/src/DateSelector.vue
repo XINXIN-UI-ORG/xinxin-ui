@@ -16,6 +16,8 @@ const {
   nextYear,
   selectDate,
   selectCurrentDate,
+  changeYearSelector,
+  changeMonthSelector,
 } = useDatePanel();
 </script>
 <template>
@@ -38,8 +40,8 @@ const {
       <Left />
     </div>
     <div :class="gcn.e('display')">
-      <span :class="gcn.e('display', 'year')">{{ year }}年</span>
-      <span :class="gcn.e('display', 'month')">{{ ('00' + month).slice(-2) }}月</span>
+      <span :class="gcn.e('display', 'year')" @click="changeYearSelector">{{ year }}年</span>
+      <span :class="gcn.e('display', 'month')" @click="changeMonthSelector">{{ ('00' + month).slice(-2) }}月</span>
     </div>
     <div
       :class="[
@@ -96,7 +98,9 @@ const {
         dashed
         type="warning"
         @click="selectCurrentDate"
-      >此刻</XButton>
+      >
+        此刻
+      </XButton>
     </div>
   </footer>
 </template>

@@ -2,6 +2,7 @@ import { computed, ComputedRef } from "vue";
 
 /**
  * 将group和组件自己相同属性的值合并
+ * 
  * @param isGroup 是否是group模式
  * @param itemValue 组件自己的值
  * @param groupValue group的值
@@ -13,6 +14,7 @@ export function groupCombineItemStatus<T>(isGroup: boolean, itemValue: T, groupV
         if (!isGroup || itemValue) {
             return itemValue;
         }
+        
         // 否则使用group的值
         return groupValue;
     });

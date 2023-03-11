@@ -1,15 +1,19 @@
 <script lang="ts" setup>
-import { defineProps, ref } from 'vue';
+import { defineProps, ref, defineEmits } from 'vue';
 import type { Ref } from 'vue';
 import { generateClassName } from '@xinxin-ui/utils';
 import { Calendar } from '@xinxin-ui/xinxin-icons';
-import { datePickerProps, useDatePicker } from './date-picker';
+import { datePickerProps, useDatePicker, datePickerEnums } from './date-picker';
 import Popover from '../../Popover';
-import DatePanel from './DateSelector.vue';
+import DateSelector from './DateSelector.vue';
+import YearSelector from './YearSelector.vue';
+import MonthSelector from './MonthSelector.vue';
+import { SelectorViewEnum } from '@xinxin-ui/typings';
 
 const gcn = generateClassName('date-picker');
 
 const props = defineProps(datePickerProps);
+const emits = defineEmits(datePickerEnums);
 const dateDom = ref<HTMLInputElement>() as Ref<HTMLInputElement>;
 const {
   focusEvent,
@@ -18,7 +22,8 @@ const {
   userSelectDate,
   changeDate,
   backOff,
-} = useDatePicker(props, dateDom);
+  currentView,
+} = useDatePicker(props, emits, dateDom);
 </script>
 <template>
   <div :class="[
@@ -50,7 +55,9 @@ const {
       </div>
       <!-- 面板框 -->
       <template #content>
-        <DatePanel></DatePanel>
+        <date-selector v-if="currentView === SelectorViewEnum.DATE"></date-selector>
+        <year-selector v-if="currentView === SelectorViewEnum.YEAR"></year-selector>
+        <month-selector v-if="currentView === SelectorViewEnum.MONTH"></month-selector>
       </template>
     </Popover>
   </div>

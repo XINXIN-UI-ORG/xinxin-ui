@@ -2,6 +2,8 @@ import { computed, inject, Ref, ref } from "vue";
 import { cloneDeep } from 'lodash-es';
 import { datePanelInjectKey } from '@xinxin-ui/symbols';
 import { NOOP } from "@vue/shared";
+import { SelectorViewEnum } from '@xinxin-ui/typings';
+import { DATE_SELECTOR_LENGTH } from '@xinxin-ui/constants';
 
 const DATE_LIST = ['一', '二', '三', '四', '五', '六', '日'];
 
@@ -34,9 +36,24 @@ export function useDatePanel() {
     },
     set: NOOP,
   });
-  const now = new Date();
-  const year = ref<number>(userSelectDate.value.getFullYear() || now.getFullYear());
-  const month = ref<number>((userSelectDate.value.getMonth() || now.getFullYear()) + 1);
+  const year = computed<number>({
+    get() {
+      return datePicker.selectorYear;
+    },
+    set(value) {
+      datePicker.selectorYear = value;
+      return value;
+    },
+  });
+  const month = computed<number>({
+    get() {
+      return datePicker.selectorMonth;
+    },
+    set(value) {
+      datePicker.selectorMonth = value;
+      return value;
+    },
+  });
   const dateList = computed<DateItem[][]>(() => {
     return fillDateList(year.value, month.value, userSelectDate);
   });
@@ -77,6 +94,16 @@ export function useDatePanel() {
     selectDate(now.getFullYear(), now.getMonth() + 1, now.getDate());
   };
 
+  const changeYearSelector = () => {
+    datePicker.currentView = SelectorViewEnum.YEAR;
+    datePicker.selectorYear = year.value;
+  };
+
+  const changeMonthSelector = () => {
+    datePicker.currentView = SelectorViewEnum.MONTH;
+    datePicker.selectorMonth = month.value;
+  };
+
   return {
     year,
     month,
@@ -88,6 +115,8 @@ export function useDatePanel() {
     nextYear,
     selectDate,
     selectCurrentDate,
+    changeYearSelector,
+    changeMonthSelector,
   };
 }
 
@@ -137,7 +166,7 @@ function fillDateList(year: number, month: number, userSelectDate: Ref<Date>) {
   }
   
   // 填充下个月 每周七天 一共6排
-  const restDay = 42 - fillCount;
+  const restDay = DATE_SELECTOR_LENGTH - fillCount;
   for (let i = 1; i <= restDay; i++) {
     pushDate(i, 0, nextDate);
   }

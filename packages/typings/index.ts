@@ -9,3 +9,5 @@ export * from './form';
 export * from './upload';
 
 export * from './alert';
+
+export * from './date-picker';

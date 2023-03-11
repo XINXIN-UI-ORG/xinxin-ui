@@ -1,0 +1,54 @@
+@import '../../../theme-chalk/variable.styl';
+
+.x-year-selector
+  .x-year-selector__operator-bar
+    display flex
+    height 28px
+    padding 5px 10px
+    justify-content space-between
+    align-items center
+    border-bottom 1px solid #efeff5
+    .x-year-selector__icon
+      height 28px
+      width 28px
+      display flex
+      justify-content center
+      align-items center
+      border-radius 50%
+      cursor pointer
+      &:hover
+        background-color #e5e6eb
+        svg
+          color $base_theme_color
+      svg
+        color #c2c2c2
+  .x-year-selector__year-panel
+    margin 0 16px
+    display grid
+    grid-template-columns repeat(4, 65px)
+    grid-template-rows repeat(4, 55px)
+    justify-items center
+    align-items center
+    .x-year-selector__year-wrap
+      .x-year-selector__year-wrap__text
+        padding 3px 10px
+        border-radius 22px
+        cursor pointer
+        position relative
+        &:hover
+          background-color #f3f3f5
+          color $base_theme_color
+        &.x-year-selector__year-wrap__text-current
+          color $base_theme_color
+        &.x-year-selector__year-wrap__text-select
+          color #fff
+          background-color $base_theme_color
+        .x-year-selector__current-year
+          display block
+          width 5px
+          height 5px
+          position absolute
+          left calc(50% - 2.5px)
+          bottom -7px
+          background-color $base_theme_color
+          border-radius 50%
