@@ -55,6 +55,9 @@ import switchinputAction from './switch-input/action'
 import tag from './tag/Index.vue'
 import tagAction from './tag/action'
 
+import timepicker from './time-picker/Index.vue'
+import timepickerAction from './time-picker/action'
+
 import upload from './upload/Index.vue'
 import uploadAction from './upload/action'
 
@@ -97,6 +100,8 @@ export {
   switchinputAction,
   tag,
   tagAction,
+  timepicker,
+  timepickerAction,
   upload,
   uploadAction,
 }

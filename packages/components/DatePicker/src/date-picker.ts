@@ -1,6 +1,6 @@
 import { computed, ExtractPropTypes, provide, reactive, Ref, ref, SetupContext } from 'vue';
 import { datePanelInjectKey } from '@xinxin-ui/symbols';
-import { debounce } from 'lodash-es';
+import { useDebounceFn } from '@vueuse/core';
 import { SelectorViewEnum } from '@xinxin-ui/typings';
 import { MODEL_VALUE_UPDATE } from '@xinxin-ui/constants';
 
@@ -41,7 +41,7 @@ export function useDatePicker(
       emit(MODEL_VALUE_UPDATE, value);
     },
   });
-  const inputFocus = ref<boolean>(true);
+  const inputFocus = ref<boolean>(false);
   const currentView = ref<SelectorViewEnum>(SelectorViewEnum.DATE);
   const selectorYear = ref<number>(new Date(userSelectDate.value).getFullYear());
   const selectorMonth = ref<number>(new Date(userSelectDate.value).getMonth() + 1);
@@ -50,11 +50,7 @@ export function useDatePicker(
     inputFocus.value = true;
   };
 
-  const blurEvent = () => {
-    // inputFocus.value = false;
-  };
-
-  const changeDate = debounce(() => {
+  const changeDate = useDebounceFn(() => {
     const inputDate = dateDom.value.value;
     // 验证
     if (!dateFormatValidate(inputDate)) {
@@ -73,12 +69,12 @@ export function useDatePicker(
     currentView,
     selectorYear,
     selectorMonth,
+    inputFocus,
   }));
 
   return {
     inputFocus,
     focusEvent,
-    blurEvent,
     userSelectDate,
     changeDate,
     backOff,

@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { defineProps, ref, defineEmits } from 'vue';
+import { ref } from 'vue';
 import type { Ref } from 'vue';
 import { generateClassName } from '@xinxin-ui/utils';
 import { Calendar } from '@xinxin-ui/xinxin-icons';
@@ -17,7 +17,6 @@ const emits = defineEmits(datePickerEnums);
 const dateDom = ref<HTMLInputElement>() as Ref<HTMLInputElement>;
 const {
   focusEvent,
-  blurEvent,
   inputFocus,
   userSelectDate,
   changeDate,
@@ -45,7 +44,6 @@ const {
           :class="gcn.e('content', 'input')"
           :placeholder="props.placeholder"
           @focus="focusEvent"
-          @blur="blurEvent"
           :value="userSelectDate"
           @input="changeDate"
           @change="backOff"

@@ -1,9 +1,10 @@
-import { computed, inject, Ref, ref } from "vue";
+import { computed, inject, Ref } from "vue";
 import { cloneDeep } from 'lodash-es';
 import { datePanelInjectKey } from '@xinxin-ui/symbols';
 import { NOOP } from "@vue/shared";
 import { SelectorViewEnum } from '@xinxin-ui/typings';
 import { DATE_SELECTOR_LENGTH } from '@xinxin-ui/constants';
+import { useNow } from "@vueuse/core";
 
 const DATE_LIST = ['一', '二', '三', '四', '五', '六', '日'];
 
@@ -87,6 +88,7 @@ export function useDatePanel() {
     const formatDate = ('00' + date).slice(-2);
     datePicker.userSelectDate = `${newYear}-${formatMonth}-${formatDate}`;
     userSelectDate.value = new Date(datePicker.userSelectDate);
+    datePicker.inputFocus = false;
   };
 
   const selectCurrentDate = () => {
@@ -145,7 +147,7 @@ function fillDateList(year: number, month: number, userSelectDate: Ref<Date>) {
       month: date.getMonth() + 1,
       i,
       type,
-      today: isSameDay(new Date(), date),
+      today: isSameDay(useNow().value, date),
       selectDay: isSameDay(userSelectDate.value, date),
     });
 

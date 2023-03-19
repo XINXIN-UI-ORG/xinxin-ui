@@ -37,3 +37,5 @@ export * from './Modal';
 export * from './Alert';
 
 export * from './DatePicker';
+
+export * from './TimePicker';

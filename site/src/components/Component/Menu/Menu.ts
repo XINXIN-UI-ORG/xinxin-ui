@@ -84,6 +84,12 @@ export const menuList: MenuListType[] = [
         content: "日期选择器",
         name: "Date-Picker",
     },
+    {
+        id: 310,
+        type: MenuType.link,
+        content: "时间选择器",
+        name: "Time-Picker",
+    },
 
 
     {

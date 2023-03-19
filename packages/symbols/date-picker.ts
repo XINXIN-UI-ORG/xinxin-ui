@@ -9,6 +9,8 @@ interface DatePanelInject {
   selectorYear: number;
 
   selectorMonth: number;
+
+  inputFocus: boolean;
 }
 
 export const datePanelInjectKey: InjectionKey<DatePanelInject> = Symbol('x-date-panel');

@@ -72,6 +72,8 @@ import SuccessMessage from './src/success-message.vue'
 
 import Success from './src/success.vue'
 
+import Time from './src/time.vue'
+
 import Top from './src/top.vue'
 
 import Up from './src/up.vue'
@@ -117,6 +119,7 @@ const componentList = [
   Star,
   SuccessMessage,
   Success,
+  Time,
   Top,
   Up,
   Upload,
@@ -174,6 +177,7 @@ export {
   Star,
   SuccessMessage,
   Success,
+  Time,
   Top,
   Up,
   Upload,

@@ -46,5 +46,6 @@ const componentNameDesc = {
     "progress": "用于展示操作进度，告知用户当前状态和预期。",
     'modal': '展示点什么东西。',
     'alert': '系统警告、提示、成功信息。',
-    'date-picker': '比起传统的，不中用但更好看。',
+    'date-picker': '比起传统的，不一定中用但更好看。',
+    'time-picker': '用于时间选择，肥肠的好用。',
 };

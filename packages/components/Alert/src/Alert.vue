@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { generateClassName } from '@xinxin-ui/utils';
-import { defineProps, ref } from 'vue';
+import { ref } from 'vue';
 import { alertProps } from './alert';
 import { Alert } from '@xinxin-ui/xinxin-icons';
 
